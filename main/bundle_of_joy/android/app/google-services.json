@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "41762600502",
+    "firebase_url": "https://bundle-of-joy-c9c5b.firebaseio.com",
+    "project_id": "bundle-of-joy-c9c5b",
+    "storage_bucket": "bundle-of-joy-c9c5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41762600502:android:4579a2e46a988e4a85ca97",
+        "android_client_info": {
+          "package_name": "com.thebestfyp.bundle_of_joy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41762600502-736liu3u5f3s7ni0rsj0sjkith1ep17j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAux-XBL6lDiD7Ndi5WBxEPDyy5mGqSRXo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "41762600502-736liu3u5f3s7ni0rsj0sjkith1ep17j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
