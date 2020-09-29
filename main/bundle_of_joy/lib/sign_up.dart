@@ -36,7 +36,19 @@ class SignUpScreen extends StatelessWidget {
               text: "\tSign up with Facebook",
               fontSize: 20.0,
               backgroundColor: Color(0xFF4267B2),
-              onPressed: () {}, //TODO:Facebook login
+              onPressed: () {
+                signInWithFacebook().then((result){
+                  if(result!=null){
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context){
+                            return HomeScreen();
+                          }
+                      ),
+                    );
+                  }
+                });
+              }, //TODO:Facebook login
             ),
           ),
           Container(
