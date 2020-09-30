@@ -19,19 +19,8 @@ Future<String> signInWithGoogle() async {
         idToken: googleSignInAuthentication.idToken,
     );
 
-    final UserCredential authResult = await _auth.signInWithCredential(credential);
-    final User user = authResult.user;
-
-    if (user != null) {
-        assert(!user.isAnonymous);
-        assert(await user.getIdToken() != null);
-
-        final User currentUser = _auth.currentUser;
-        assert(user.uid == currentUser.uid);
-
-        print('signInWithGoogle succeeded: $user');
-
-        return '$user';
+    if(validateCredential(credential) != null){
+        return validateCredential(credential);
     }
 
     return null;
@@ -42,6 +31,46 @@ Future<String> signInWithFacebook() async {
     final result = await facebookLogin.logIn(['email']);
     final AuthCredential credential = FacebookAuthProvider.credential(result.accessToken.token);
 
+    if(validateCredential(credential) != null){
+        return validateCredential(credential);
+    }
+
+    return null;
+}
+
+Future<void> signInWithPhone(phoneNumber, smsCode) async {
+    bool phoneVerified = false;
+    await Firebase.initializeApp();
+    await _auth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        timeout: const Duration(seconds: 60),
+        verificationCompleted: (AuthCredential credential) {
+            validateCredential(credential);
+            phoneVerified = true;
+            print("Automated");
+        },
+        verificationFailed: (FirebaseAuthException e) {
+            if (e.code == 'invalid-phone-number') {
+                print('The provided phone number is not valid.');
+            }
+            phoneVerified = false;
+        },
+        codeSent: (String verificationId, int resendToken) {
+            PhoneAuthCredential credential = PhoneAuthProvider.credential(
+                verificationId: verificationId,
+                smsCode: smsCode,
+            );
+            validateCredential(credential);
+            phoneVerified = true;
+            print("SMS");
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+            // Auto-resolution timed out...
+        },
+    );
+}
+
+Future<String> validateCredential(credential) async{
     final UserCredential authResult = await _auth.signInWithCredential(credential);
     final User user = authResult.user;
 
@@ -52,11 +81,14 @@ Future<String> signInWithFacebook() async {
         final User currentUser = _auth.currentUser;
         assert(user.uid == currentUser.uid);
 
-        print('signInWithFacebook succeeded: $user');
+        print("Sign in succeeded: $user");
 
         return '$user';
     }
-    return null;
+    else{
+        print("User not found");
+        return null;
+    }
 }
 
 void signOutGoogle() async{
