@@ -4,11 +4,13 @@ import "package:flutter_signin_button/flutter_signin_button.dart";
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import "auth/auth.dart";
 import "home.dart";
+import "sign_in.dart";
 
 class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width * 0.8;
+    double fontSize = MediaQuery.of(context).size.width * 0.045;
     return Scaffold(
       backgroundColor: Color(0xFFFCFFD5),
       body: Column(
@@ -25,7 +27,7 @@ class SignUpScreen extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(bottom: 15.0, left: 25.0, right: 25.0),
             child: SignInButtonBuilder(
-              innerPadding: EdgeInsets.fromLTRB(20, 13, 25, 13),
+              innerPadding: EdgeInsets.fromLTRB(20, 13, 20, 13),
               width: width,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
@@ -33,8 +35,8 @@ class SignUpScreen extends StatelessWidget {
                 ),
               ),
               icon: FontAwesomeIcons.facebookF,
-              text: "\tSign up with Facebook",
-              fontSize: 20.0,
+              text: "Sign up with Facebook",
+              fontSize: fontSize,
               backgroundColor: Color(0xFF4267B2),
               onPressed: () {
                 signInWithFacebook().then((result){
@@ -48,13 +50,13 @@ class SignUpScreen extends StatelessWidget {
                     );
                   }
                 });
-              }, //TODO:Facebook login
+              },
             ),
           ),
           Container(
             margin: EdgeInsets.only(bottom: 15.0, left: 25.0, right: 25.0),
             child: SignInButtonBuilder(
-              innerPadding: EdgeInsets.fromLTRB(20, 13, 35, 13),
+              innerPadding: EdgeInsets.fromLTRB(20, 13, 20, 13),
               width: width,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
@@ -62,8 +64,8 @@ class SignUpScreen extends StatelessWidget {
                 ),
               ),
               icon: FontAwesomeIcons.google,
-              text: "\tSign up with Google",
-              fontSize: 20.0,
+              text: "Sign up with Google",
+              fontSize: fontSize,
               backgroundColor: Color(0xFFdb3236),
               onPressed: () {
                 signInWithGoogle().then((result){
@@ -77,7 +79,7 @@ class SignUpScreen extends StatelessWidget {
                     );
                   }
                 });
-              }, //TODO:Google login
+              },
             ),
           ),
           Row(
@@ -106,7 +108,7 @@ class SignUpScreen extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: 15.0, bottom: 15.0, left: 25.0, right: 25.0),
             child: SignInButtonBuilder(
-              innerPadding: EdgeInsets.fromLTRB(20, 13, 10, 13),
+              innerPadding: EdgeInsets.fromLTRB(20, 13, 20, 13),
               width: width,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
@@ -114,10 +116,18 @@ class SignUpScreen extends StatelessWidget {
                 ),
               ),
               icon: FontAwesomeIcons.phoneAlt,
-              text: "\tRegister with Phone Number",
-              fontSize: 20.0,
+              text: "Register with Phone Number",
+              fontSize: fontSize,
               backgroundColor: Color(0xB38702AE),
-              onPressed: () {}, //TODO:Phone login
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context){
+                        return SignInScreen(user: "new");
+                      }
+                  ),
+                );
+              },
             ),
           ),
           Row(
@@ -127,17 +137,25 @@ class SignUpScreen extends StatelessWidget {
                   "Already have an account? ",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 15.0,
+                    fontSize: fontSize-3,
                   ),
               ),
               GestureDetector(
-                onTap: (){}, //TODO:Phone login
+                onTap: (){
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context){
+                          return SignInScreen(user: "old");
+                        }
+                    ),
+                  );
+                }, //TODO:Phone login
                 child: Text(
                   "Login here",
                   style: TextStyle(
                     decoration: TextDecoration.underline,
                     color: Colors.blue,
-                    fontSize: 15.0,
+                    fontSize: fontSize-3,
                   ),
                 ),
               ),

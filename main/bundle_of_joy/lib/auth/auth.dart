@@ -19,19 +19,8 @@ Future<String> signInWithGoogle() async {
         idToken: googleSignInAuthentication.idToken,
     );
 
-    final UserCredential authResult = await _auth.signInWithCredential(credential);
-    final User user = authResult.user;
-
-    if (user != null) {
-        assert(!user.isAnonymous);
-        assert(await user.getIdToken() != null);
-
-        final User currentUser = _auth.currentUser;
-        assert(user.uid == currentUser.uid);
-
-        print('signInWithGoogle succeeded: $user');
-
-        return '$user';
+    if(validateCredential(credential) != null){
+        return validateCredential(credential);
     }
 
     return null;
@@ -42,6 +31,14 @@ Future<String> signInWithFacebook() async {
     final result = await facebookLogin.logIn(['email']);
     final AuthCredential credential = FacebookAuthProvider.credential(result.accessToken.token);
 
+    if(validateCredential(credential) != null){
+        return validateCredential(credential);
+    }
+
+    return null;
+}
+
+Future<String> validateCredential(credential) async{
     final UserCredential authResult = await _auth.signInWithCredential(credential);
     final User user = authResult.user;
 
@@ -52,15 +49,17 @@ Future<String> signInWithFacebook() async {
         final User currentUser = _auth.currentUser;
         assert(user.uid == currentUser.uid);
 
-        print('signInWithFacebook succeeded: $user');
+        print("Sign in succeeded: $user");
 
         return '$user';
     }
-    return null;
+    else{
+        print("User not found");
+        return null;
+    }
 }
 
-void signOutGoogle() async{
-    await googleSignIn.signOut();
-
+signOut() async{
+    _auth.signOut();
     print("User Signed Out");
 }
