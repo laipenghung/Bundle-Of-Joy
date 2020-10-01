@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "profile.dart";
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePageState> {
   int _selectedIndex = 0;
   String _title = "Test";
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = <Widget>[
     Text(
       "Mother-to-be",
       style: optionStyle,
@@ -34,10 +35,7 @@ class _HomePageState extends State<HomePageState> {
       "Notification",
       style: optionStyle,
     ),
-    Text(
-      "Profile",
-      style: optionStyle,
-    ),
+    ProfileTab(),
   ];
 
   void _onItemTapped(int index) {

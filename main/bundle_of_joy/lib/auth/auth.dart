@@ -38,38 +38,6 @@ Future<String> signInWithFacebook() async {
     return null;
 }
 
-Future<void> signInWithPhone(phoneNumber, smsCode) async {
-    bool phoneVerified = false;
-    await Firebase.initializeApp();
-    await _auth.verifyPhoneNumber(
-        phoneNumber: phoneNumber,
-        timeout: const Duration(seconds: 60),
-        verificationCompleted: (AuthCredential credential) {
-            validateCredential(credential);
-            phoneVerified = true;
-            print("Automated");
-        },
-        verificationFailed: (FirebaseAuthException e) {
-            if (e.code == 'invalid-phone-number') {
-                print('The provided phone number is not valid.');
-            }
-            phoneVerified = false;
-        },
-        codeSent: (String verificationId, int resendToken) {
-            PhoneAuthCredential credential = PhoneAuthProvider.credential(
-                verificationId: verificationId,
-                smsCode: smsCode,
-            );
-            validateCredential(credential);
-            phoneVerified = true;
-            print("SMS");
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-            // Auto-resolution timed out...
-        },
-    );
-}
-
 Future<String> validateCredential(credential) async{
     final UserCredential authResult = await _auth.signInWithCredential(credential);
     final User user = authResult.user;
@@ -91,8 +59,7 @@ Future<String> validateCredential(credential) async{
     }
 }
 
-void signOutGoogle() async{
-    await googleSignIn.signOut();
-
+signOut() async{
+    _auth.signOut();
     print("User Signed Out");
 }

@@ -1,9 +1,8 @@
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
-import "auth/auth.dart";
 import "home.dart";
-import 'package:firebase_core/firebase_core.dart';
+import "package:firebase_core/firebase_core.dart";
 import "package:firebase_auth/firebase_auth.dart";
 
 class SignInScreen extends StatefulWidget {
@@ -17,16 +16,131 @@ class SignInScreen extends StatefulWidget {
 class SignInScreenStat extends State<SignInScreen> {
   String newUser = "Hi new user. Welcome!";
   String oldUser = "Welcome Back! Please Sign in.";
-  String phoneNumber, smsCode;
-  final smsController = TextEditingController();
-  final phoneController = TextEditingController();
+  String phoneNumber, smsCode, verificationID;
 
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    phoneController.dispose();
-    smsController.dispose();
-    super.dispose();
+  Future<void> verifyPhone() async{
+    await Firebase.initializeApp();
+    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verID){
+      this.verificationID = verID;
+    };
+
+    final PhoneCodeSent smsCodeSent = (String verID, int resendToken){
+      this.verificationID = verID;
+      smsCodeDialog(context).then((value){
+        print("Signed in");
+      });
+    };
+
+    final PhoneVerificationCompleted verifiedSuccess = (PhoneAuthCredential credential){
+      print("Verified");
+    };
+
+    final PhoneVerificationFailed verifiedFailed = (FirebaseAuthException e){
+      print("${e.message}");
+      errorDialog(context);
+    };
+
+    if(this.phoneNumber != null) {
+      await FirebaseAuth.instance.verifyPhoneNumber(
+          phoneNumber: this.phoneNumber,
+          verificationCompleted: verifiedSuccess,
+          verificationFailed: verifiedFailed,
+          codeSent: smsCodeSent,
+          codeAutoRetrievalTimeout: autoRetrieve
+      );
+    }else{
+      errorDialog(context);
+    }
+  }
+
+  Future<bool> errorDialog(BuildContext context){
+    double fontSize = MediaQuery.of(context).size.width * 0.045;
+    return showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            backgroundColor: Color(0xFFFCFFD5),
+            title: Text(
+              "Error!",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: fontSize,
+              ),
+            ),
+            content: Text(
+              "Phone number is not valid or not found!"
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: (){Navigator.of(context).pop();},
+                  child: Text("Close"),
+              ),
+            ],
+          );
+        }
+    );
+  }
+
+  Future<bool> smsCodeDialog(BuildContext context) {
+    double fontSize = MediaQuery.of(context).size.width * 0.045;
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Color(0xFFFCFFD5),
+            title: Text(
+              "Enter SMS Code",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: fontSize,
+              ),
+            ),
+            content: TextField(
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                this.smsCode = value;
+              },
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Done"),
+                onPressed: () {
+                  User user = FirebaseAuth.instance.currentUser;
+                  if (user != null) {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context){
+                            return HomeScreen();
+                          }
+                      ),
+                    );
+                  } else {
+                    Navigator.of(context).pop();
+                    signIn();
+                  }
+                },
+              )
+            ],
+          );
+        });
+  }
+
+  signIn() {
+    final AuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationID, smsCode: smsCode);
+    FirebaseAuth.instance.signInWithCredential(credential).then((user) {
+      print("Sign in succeeded: $user");
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context){
+              return HomeScreen();
+            }
+        ),
+      );
+    }).catchError((e) {
+      print(e);
+    });
   }
 
   @override
@@ -73,22 +187,13 @@ class SignInScreenStat extends State<SignInScreen> {
               margin: EdgeInsets.only(top: 15.0, bottom: 15.0, left: 0, right: 0),
               width: width,
               child: TextField(
-                controller: phoneController,
                 decoration: InputDecoration(
                   prefixIcon: Icon(FontAwesomeIcons.phoneAlt),
-                  hintText: "Phone number",
+                  hintText: "Phone number (+6014 567 8912)",
                 ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 15.0, bottom: 15.0, left: 0, right: 0),
-              width: width,
-              child: TextField(
-                controller: smsController,
-                decoration: InputDecoration(
-                  prefixIcon: Icon(FontAwesomeIcons.key),
-                  hintText: "OTP",
-                ),
+                onChanged: (value){
+                  this.phoneNumber = value;
+                },
               ),
             ),
             Container(
@@ -108,10 +213,7 @@ class SignInScreenStat extends State<SignInScreen> {
                   ),
                 ),
                 color: Color(0xB38702AE),
-                onPressed: (){
-                  phoneNumber = phoneController.text;
-                  smsCode = smsController.text;
-                },
+                onPressed: verifyPhone,
               ),
             ),
           ],
