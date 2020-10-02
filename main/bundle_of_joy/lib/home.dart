@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 import "profile.dart";
+import 'mother-for-baby.dart';
+import 'mother-to-be.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -21,16 +23,12 @@ class HomePageState extends StatefulWidget {
 class _HomePageState extends State<HomePageState> {
   int _selectedIndex = 0;
   String _title = "Test";
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _widgetOptions = <Widget>[
-    Text(
-      "Mother-to-be",
-      style: optionStyle,
-    ),
-    Text(
-      "Mother-for-baby",
-      style: optionStyle,
-    ),
+    MotherToBeTab(),
+    MotherForBabyTab(),
     Text(
       "Notification",
       style: optionStyle,
@@ -59,11 +57,11 @@ class _HomePageState extends State<HomePageState> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            _title,
-            style: TextStyle(
-              fontSize: 25,
-              color: Colors.black,
-            ),
+          _title,
+          style: TextStyle(
+            fontSize: 25,
+            color: Colors.black,
+          ),
         ),
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
