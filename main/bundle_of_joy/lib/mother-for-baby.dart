@@ -54,12 +54,16 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
                   size: 85.0,
                 ),
               ),
-              Text(
-                title,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14.0,
+              
+              FittedBox(
+                fit: BoxFit.cover,
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14.0,
+                  ),
                 ),
               )
             ],
