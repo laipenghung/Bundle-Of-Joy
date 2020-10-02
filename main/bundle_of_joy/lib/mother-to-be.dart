@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'profile.dart';
+import 'emergencyContact.dart';
 
 class MotherToBeTab extends StatefulWidget {
   @override
@@ -42,7 +43,10 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 break;
               case 3:
                 {
-                  print("4");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EmergencyContacyTab()),
+                  );
                 }
                 break;
             }
@@ -57,12 +61,16 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                   size: 85.0,
                 ),
               ),
-              Text(
-                title,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14.0,
+
+              FittedBox(
+                fit: BoxFit.cover,
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14.0,
+                  ),
                 ),
               )
             ],
