@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">com.thebestfyp.bundle_of_joy</string>
+    <string name="facebook_app_id">352827332526316</string>
+    <string name="fb_login_protocol_scheme">fb352827332526316</string>
+</resources>

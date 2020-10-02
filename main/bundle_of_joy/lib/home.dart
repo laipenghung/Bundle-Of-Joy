@@ -1,7 +1,7 @@
-import 'package:bundle_of_joy/mother-for-baby.dart';
-import 'package:bundle_of_joy/mother-to-be.dart';
 import "package:flutter/material.dart";
 import "profile.dart";
+import 'mother-for-baby.dart';
+import 'mother-to-be.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -23,6 +23,7 @@ class HomePageState extends StatefulWidget {
 class _HomePageState extends State<HomePageState> {
   int _selectedIndex = 0;
   String _title = "Test";
+
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _widgetOptions = <Widget>[
@@ -38,27 +39,15 @@ class _HomePageState extends State<HomePageState> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      switch (index) {
-        case 0:
-          {
-            _title = "Mother-to-be";
-          }
-          break;
-        case 1:
-          {
-            _title = "Mother-for-baby";
-          }
-          break;
-        case 2:
-          {
-            _title = "Notification";
-          }
-          break;
-        case 3:
-          {
-            _title = "Profile";
-          }
-          break;
+      switch(index){
+        case 0: { _title = "Mother-to-be";}
+        break;
+        case 1: { _title = "Mother-for-baby";}
+        break;
+        case 2: { _title = "Notification";}
+        break;
+        case 3: { _title = "Profile";}
+        break;
       }
     });
   }
