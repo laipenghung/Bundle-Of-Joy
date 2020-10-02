@@ -4,6 +4,7 @@ import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import "home.dart";
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_auth/firebase_auth.dart";
+import "package:bundle_of_joy/firestore/mother.dart";
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({ this.user});
@@ -98,6 +99,7 @@ class SignInScreenStat extends State<SignInScreen> {
             ),
             content: TextField(
               keyboardType: TextInputType.number,
+              maxLength: 6,
               onChanged: (value) {
                 this.smsCode = value;
               },
@@ -109,7 +111,7 @@ class SignInScreenStat extends State<SignInScreen> {
                   User user = FirebaseAuth.instance.currentUser;
                   if (user != null) {
                     Navigator.of(context).pop();
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                           builder: (context){
                             return HomeScreen();
@@ -131,7 +133,9 @@ class SignInScreenStat extends State<SignInScreen> {
     final AuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationID, smsCode: smsCode);
     FirebaseAuth.instance.signInWithCredential(credential).then((user) {
       print("Sign in succeeded: $user");
-      Navigator.of(context).push(
+      Mother newMother = new Mother();
+      newMother.addUser(user.user);
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
             builder: (context){
               return HomeScreen();

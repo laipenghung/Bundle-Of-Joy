@@ -1,8 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
+import "package:firebase_core/firebase_core.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:google_sign_in/google_sign_in.dart";
-import "package:cloud_firestore/cloud_firestore.dart";
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import "package:flutter_facebook_login/flutter_facebook_login.dart";
+import "package:bundle_of_joy/firestore/mother.dart";
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -28,7 +28,7 @@ Future<String> signInWithGoogle() async {
 
 Future<String> signInWithFacebook() async {
     await Firebase.initializeApp();
-    final result = await facebookLogin.logIn(['email']);
+    final result = await facebookLogin.logIn(["email"]);
     final AuthCredential credential = FacebookAuthProvider.credential(result.accessToken.token);
 
     if(validateCredential(credential) != null){
@@ -50,8 +50,9 @@ Future<String> validateCredential(credential) async{
         assert(user.uid == currentUser.uid);
 
         print("Sign in succeeded: $user");
-
-        return '$user';
+        Mother newMother = new Mother();
+        newMother.addUser(user);
+        return "$user";
     }
     else{
         print("User not found");
