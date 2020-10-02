@@ -6,7 +6,12 @@ import "auth/auth.dart";
 import "home.dart";
 import "sign_in.dart";
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width * 0.8;
@@ -41,7 +46,7 @@ class SignUpScreen extends StatelessWidget {
               onPressed: () {
                 signInWithFacebook().then((result){
                   if(result!=null){
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                           builder: (context){
                             return HomeScreen();
@@ -70,7 +75,7 @@ class SignUpScreen extends StatelessWidget {
               onPressed: () {
                 signInWithGoogle().then((result){
                   if(result!=null){
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                           builder: (context){
                             return HomeScreen();

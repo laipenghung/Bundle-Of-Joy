@@ -15,7 +15,7 @@ class _ProfileState extends State<ProfileTab> {
       body: RaisedButton(
         onPressed: () {
           signOut();
-          Navigator.of(context).push(
+          Navigator.of(context).pushReplacement(
             MaterialPageRoute(
                 builder: (context){
                   return SignUpScreen();
