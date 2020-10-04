@@ -32,6 +32,7 @@ dependencies:
   flare_splash_screen: ^3.0.1
   flutter_signin_button: ^1.1.0
   font_awesome_flutter: ^8.8.1
+  persistent_bottom_nav_bar: ^2.1.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
@@ -56,6 +57,10 @@ flutter:
   assets:
     - assets/images/logo_animation.flr
     - assets/images/logo.png
+    - assets/icons/pregnant.png
+    - assets/icons/baby.png
+    - assets/icons/bell.png
+    - assets/icons/user.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

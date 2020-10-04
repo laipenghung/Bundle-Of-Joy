@@ -1,7 +1,9 @@
 import "package:flutter/material.dart";
 import "profile.dart";
-import 'mother-for-baby.dart';
-import 'mother-to-be.dart';
+import "mother-for-baby.dart";
+import "mother-to-be.dart";
+import "package:persistent_bottom_nav_bar/persistent-tab-view.dart";
+import "package:flutter/services.dart";
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -21,24 +23,62 @@ class HomePageState extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePageState> {
-  int _selectedIndex = 0;
-  String _title = "Test";
+  String _title;
+  PersistentTabController _persistentTabController;
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  final List<Widget> _widgetOptions = <Widget>[
-    MotherToBeTab(),
-    MotherForBabyTab(),
-    Text(
-      "Notification",
-      style: optionStyle,
-    ),
-    ProfileTab(),
-  ];
+  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    _title = "Mother-to-be";
+    _persistentTabController = PersistentTabController(initialIndex: 0);
+  }
+
+  List<Widget> _widgetOptions() {
+    return <Widget>[
+      MotherToBeTab(),
+      MotherForBabyTab(),
+      Text(
+        "Notification",
+        style: optionStyle,
+      ),
+      ProfileTab(),
+    ];
+  }
+
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        contentPadding: 0,
+        icon: Image.asset("assets/icons/pregnant.png"),
+        title: ("Mother-to-be"),
+        activeColor: Colors.black,
+        inactiveColor: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Image.asset("assets/icons/baby.png"),
+        title: ("Mother-for-baby"),
+        activeColor: Colors.black,
+        inactiveColor: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Image.asset("assets/icons/bell.png"),
+        title: ("Notification"),
+        activeColor: Colors.black,
+        inactiveColor: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Image.asset("assets/icons/user.png"),
+        title: ("Profile"),
+        activeColor: Colors.black,
+        inactiveColor: Colors.grey,
+      )
+    ];
+  }
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
       switch(index){
         case 0: { _title = "Mother-to-be";}
         break;
@@ -66,33 +106,31 @@ class _HomePageState extends State<HomePageState> {
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(0xFFFCFFD5),
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text("Mother-to-be"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            title: Text("Mother-for-baby"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            title: Text("Notification"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            title: Text("Profile"),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.black,
-        onTap: _onItemTapped,
+      body: PersistentTabView(
+        navBarHeight: 65,
+        padding: NavBarPadding.all(0),
+        controller: _persistentTabController,
+        screens: _widgetOptions(),
+        items: _navBarsItems(),
+        confineInSafeArea: true,
+        backgroundColor:  Color(0xFFFCFFD5),
+        handleAndroidBackButtonPress: true,
+        stateManagement: true,
+        resizeToAvoidBottomInset: true,
+        hideNavigationBarWhenKeyboardShows: true,
+        popAllScreensOnTapOfSelectedTab: true,
+        popActionScreens: PopActionScreensType.all,
+        itemAnimationProperties: ItemAnimationProperties(
+          duration: Duration(milliseconds: 500),
+          curve: Curves.ease,
+        ),
+        screenTransitionAnimation: ScreenTransitionAnimation(
+          animateTabTransition: true,
+          curve: Curves.ease,
+          duration: Duration(milliseconds: 500),
+        ),
+        navBarStyle: NavBarStyle.style3,
+        onItemSelected: (index) => _onItemTapped(index),
       ),
     );
   }

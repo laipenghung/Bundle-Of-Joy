@@ -25,10 +25,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
             switch (index) {
               case 0:
                 {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ProfileTab()),
-                  );
+                  print("1");
                 }
                 break;
               case 1:
