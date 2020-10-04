@@ -8,6 +8,7 @@ class Mother {
 
   Mother();
 
+  final User user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   void addUser(User user) async {

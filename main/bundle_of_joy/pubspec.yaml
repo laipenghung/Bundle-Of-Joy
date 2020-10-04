@@ -57,10 +57,7 @@ flutter:
   assets:
     - assets/images/logo_animation.flr
     - assets/images/logo.png
-    - assets/icons/pregnant.png
-    - assets/icons/baby.png
-    - assets/icons/bell.png
-    - assets/icons/user.png
+    - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

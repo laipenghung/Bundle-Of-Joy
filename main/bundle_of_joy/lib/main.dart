@@ -45,18 +45,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>{
       await Firebase.initializeApp();
       final FirebaseAuth _auth = FirebaseAuth.instance;
       final User user = _auth.currentUser;
-      print(user);
       return user;
     }
 
     Future<Widget> next(BuildContext context) async {
       if(await checkSignedIn() == null) {
-        print("test 1 $checkSignedIn()");
         return Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => new SignUpScreen())
         );
       }else{
-        print("test 2 $checkSignedIn()");
         return Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => new HomeScreen())
         );

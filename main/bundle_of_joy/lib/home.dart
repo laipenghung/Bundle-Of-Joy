@@ -94,12 +94,14 @@ class _HomePageState extends State<HomePageState> {
 
   @override
   Widget build(BuildContext context) {
+    double fontSize = MediaQuery.of(context).size.width * 0.08;
     return Scaffold(
       appBar: AppBar(
+        shadowColor: Colors.transparent,
         title: Text(
           _title,
           style: TextStyle(
-            fontSize: 25,
+            fontSize: fontSize,
             color: Colors.black,
           ),
         ),
