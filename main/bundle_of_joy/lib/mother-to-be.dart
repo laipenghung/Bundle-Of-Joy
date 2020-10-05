@@ -1,8 +1,7 @@
 import "package:flutter/material.dart";
-import 'profile.dart';
-import 'emergencyContact.dart';
-import 'appointmentMother.dart';
-import './emerContact/emerContactTab.dart';
+import "profile.dart";
+import "appointmentMother.dart";
+import "./emerContact/emerContactTab.dart";
 
 class MotherToBeTab extends StatefulWidget {
   @override
@@ -47,9 +46,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 {
                   Navigator.push(
                     context,
-                    
                     MaterialPageRoute(builder: (context) => EmergencyContactTab()),
-                    
                   );
                 }
                 break;
@@ -60,7 +57,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 15.0, 0, 20.0),
                 child: Icon(
-                  IconData(iconLoc, fontFamily: 'MaterialIcons'),
+                  IconData(iconLoc, fontFamily: "MaterialIcons"),
                   color: Colors.black,
                   size: 85.0,
                 ),
@@ -89,10 +86,10 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
       shrinkWrap: true,
       padding: const EdgeInsets.only(top: 20.0),
       children: <Widget>[
-        singleCard(57744, 'Appointment Management', 0),
-        singleCard(57744, 'Food Intake Tracking', 1),
-        singleCard(57744, 'Health Tracking', 2),
-        singleCard(57744, 'Emergency Contact', 3),
+        singleCard(57744, "Appointment Management", 0),
+        singleCard(57744, "Food Intake Tracking", 1),
+        singleCard(57744, "Health Tracking", 2),
+        singleCard(57744, "Emergency Contact", 3),
       ],
     ));
   }
