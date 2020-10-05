@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 import 'profile.dart';
+import 'emergencyContact.dart';
+import 'appointmentMother.dart';
 import './emerContact/emerContactTab.dart';
 
 class MotherToBeTab extends StatefulWidget {
@@ -25,7 +27,10 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
             switch (index) {
               case 0:
                 {
-                  print("1");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AppointmentMother()),
+                  );
                 }
                 break;
               case 1:
@@ -42,7 +47,9 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 {
                   Navigator.push(
                     context,
+                    
                     MaterialPageRoute(builder: (context) => EmergencyContactTab()),
+                    
                   );
                 }
                 break;
