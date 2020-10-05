@@ -1,17 +1,11 @@
 import "package:flutter/material.dart";
-import 'profile.dart';
-import 'emergencyContact.dart';
-import 'appointmentMother.dart';
-import './emerContact/emerContactTab.dart';
 
-class MotherToBeTab extends StatefulWidget {
+class MotherForBabyTab extends StatefulWidget {
   @override
-  _MotherToBeTabState createState() => _MotherToBeTabState();
+  _MotherForBabyTabState createState() => _MotherForBabyTabState();
 }
 
-class _MotherToBeTabState extends State<MotherToBeTab> {
-  //int _index = 0;
-
+class _MotherForBabyTabState extends State<MotherForBabyTab> {
   @override
   Widget build(BuildContext context) {
     singleCard(iconLoc, title, index) {
@@ -27,10 +21,10 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
             switch (index) {
               case 0:
                 {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AppointmentMother()),
-                  );
+                  //Navigator.push(
+                  //context,
+                  //MaterialPageRoute(builder: (context) => ProfileTab()),
+                  //);
                 }
                 break;
               case 1:
@@ -45,12 +39,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 break;
               case 3:
                 {
-                  Navigator.push(
-                    context,
-                    
-                    MaterialPageRoute(builder: (context) => EmergencyContactTab()),
-                    
-                  );
+                  print("4");
                 }
                 break;
             }
@@ -65,7 +54,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                   size: 85.0,
                 ),
               ),
-
+              
               FittedBox(
                 fit: BoxFit.cover,
                 child: Text(
@@ -85,15 +74,16 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
 
     return Scaffold(
         body: GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      padding: const EdgeInsets.only(top: 20.0),
-      children: <Widget>[
-        singleCard(57744, 'Appointment Management', 0),
-        singleCard(57744, 'Food Intake Tracking', 1),
-        singleCard(57744, 'Health Tracking', 2),
-        singleCard(57744, 'Emergency Contact', 3),
-      ],
-    ));
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          padding: const EdgeInsets.only(top: 20.0),
+          children: <Widget>[
+            singleCard(57744, 'Appointment Management', 0),
+            singleCard(57744, 'Vaccination Schedule', 1),
+            singleCard(57744, 'Vaccination & Growth Tracking', 2),
+            singleCard(57744, 'Care for Baby', 3),
+          ],
+      ),
+    );
   }
 }
