@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:bundle_of_joy/mother-to-be.dart';
 import 'package:flutter/material.dart';
 import 'package:contact_picker/contact_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,7 +15,7 @@ class _EmerContactAddState extends State<EmerContactAdd> {
   final ContactPicker _contactPicker = new ContactPicker();
   //Contact _contact;
   String _emerContactNo = "", _emerContactName = "";
-  EmerContact emerContact;
+  EmerContact emerContact = EmerContact();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class _EmerContactAddState extends State<EmerContactAdd> {
                   });
                   Fluttertoast.showToast(
                     msg: _emerContactName + "\n" + _emerContactNo,
-                    toastLength: Toast.LENGTH_LONG,
+                    toastLength: Toast.LENGTH_SHORT,
                   );
                 },
                 child: Text("Add from Phone Contact"),
@@ -81,7 +84,15 @@ class _EmerContactAddState extends State<EmerContactAdd> {
               height: 40,
               child: RaisedButton(
                 color: Colors.yellow,
-                //onPressed: emerContact.addEmerContact(),
+                onPressed: () {
+                  emerContact.addEmerContact(_emerContactNo);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MotherToBeTab()));
+                  Fluttertoast.showToast(
+                    msg: "Contact Added",
+                    toastLength: Toast.LENGTH_LONG,
+                  );
+                },
                 child: Text("Confirm Emergency Contact"),
               ),
             ),
