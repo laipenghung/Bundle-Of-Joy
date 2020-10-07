@@ -10,6 +10,9 @@ class EmergencyContactTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
         title: Text(
           "Emergency Contact",
           style: TextStyle(
