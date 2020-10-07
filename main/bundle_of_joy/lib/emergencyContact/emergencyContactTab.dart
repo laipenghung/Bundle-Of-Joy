@@ -1,11 +1,7 @@
-import '../emergencyContact/emergencyContactCall.dart';
 import 'package:flutter/material.dart';
 import 'emergencyContactAddScreen.dart';
 
 class EmergencyContactTab extends StatelessWidget {
-  final bool contact;
-  EmergencyContactTab({Key key, @required this.contact}) : super();
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +20,6 @@ class EmergencyContactTab extends StatelessWidget {
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
-      body: contact == true ? EmerContactCall() : AddEmerContactScreen(),
     );
   }
 }

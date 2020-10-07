@@ -74,15 +74,16 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
 
     return Scaffold(
         body: GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      padding: const EdgeInsets.only(top: 20.0),
-      children: <Widget>[
-        singleCard(57744, 'Appointment Management', 0),
-        singleCard(57744, 'Vaccination Schedule', 1),
-        singleCard(57744, 'Vaccination & Growth Tracking', 2),
-        singleCard(57744, 'Care for Baby', 3),
-      ],
-    ));
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          padding: const EdgeInsets.only(top: 20.0),
+          children: <Widget>[
+            singleCard(57744, 'Appointment Management', 0),
+            singleCard(57744, 'Vaccination Schedule', 1),
+            singleCard(57744, 'Vaccination & Growth Tracking', 2),
+            singleCard(57744, 'Care for Baby', 3),
+          ],
+      ),
+    );
   }
 }
