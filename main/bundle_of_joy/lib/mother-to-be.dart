@@ -1,8 +1,14 @@
 import "package:flutter/material.dart";
+<<<<<<< Updated upstream
 import 'profile.dart';
 import 'emergencyContact.dart';
 import 'appointmentMother.dart';
 import './emerContact/emerContactTab.dart';
+=======
+import "profile.dart";
+import "appointmentMother/appointmentMother_1.dart";
+import "emergencyContact/emergencyContactTab.dart";
+>>>>>>> Stashed changes
 
 class MotherToBeTab extends StatefulWidget {
   @override
@@ -29,7 +35,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AppointmentMother()),
+                    MaterialPageRoute(builder: (context) => AppointmentMother1()),
                   );
                 }
                 break;

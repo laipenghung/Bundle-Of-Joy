@@ -54,25 +54,25 @@ class _HomePageState extends State<HomePageState> {
         icon: Image.asset("assets/icons/pregnant.png"),
         title: ("Mother-to-be"),
         activeColor: Colors.black,
-        inactiveColor: Colors.grey,
+        inactiveColor: Colors.black.withOpacity(0.4),
       ),
       PersistentBottomNavBarItem(
         icon: Image.asset("assets/icons/baby.png"),
         title: ("Mother-for-baby"),
         activeColor: Colors.black,
-        inactiveColor: Colors.grey,
+        inactiveColor: Colors.black.withOpacity(0.4),
       ),
       PersistentBottomNavBarItem(
         icon: Image.asset("assets/icons/bell.png"),
         title: ("Notification"),
         activeColor: Colors.black,
-        inactiveColor: Colors.grey,
+        inactiveColor: Colors.black.withOpacity(0.4),
       ),
       PersistentBottomNavBarItem(
         icon: Image.asset("assets/icons/user.png"),
         title: ("Profile"),
         activeColor: Colors.black,
-        inactiveColor: Colors.grey,
+        inactiveColor: Colors.black.withOpacity(0.4),
       )
     ];
   }
@@ -98,19 +98,51 @@ class _HomePageState extends State<HomePageState> {
     return Scaffold(
       appBar: AppBar(
         shadowColor: Colors.transparent,
+<<<<<<< Updated upstream
         title: Text(
           _title,
           style: TextStyle(
             fontSize: fontSize,
             color: Colors.black,
           ),
+=======
+        toolbarHeight: MediaQuery.of(context).size.height * 0.09, //APP BAR HEIGHT
+
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(right: 10),
+              width: MediaQuery.of(context).size.height * 0.09,
+              height: MediaQuery.of(context).size.height * 0.09,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: AssetImage("assets/icons/small.png"),
+                ),
+              ),
+            ),
+
+            Text(
+              _title,
+              style: TextStyle(
+                fontFamily: 'Comfortaa',
+                fontWeight: FontWeight.bold,
+                fontSize: fontSize,
+                color: Colors.black,
+              ),
+            ),
+          ],
+>>>>>>> Stashed changes
         ),
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
       body: PersistentTabView(
-        navBarHeight: 65,
-        padding: NavBarPadding.all(0),
+        navBarHeight: MediaQuery.of(context).size.height * 0.1,
+        padding: NavBarPadding.all(4),
         controller: _persistentTabController,
         screens: _widgetOptions(),
         items: _navBarsItems(),
@@ -122,16 +154,20 @@ class _HomePageState extends State<HomePageState> {
         hideNavigationBarWhenKeyboardShows: true,
         popAllScreensOnTapOfSelectedTab: true,
         popActionScreens: PopActionScreensType.all,
+
         itemAnimationProperties: ItemAnimationProperties(
           duration: Duration(milliseconds: 500),
           curve: Curves.ease,
         ),
+        
         screenTransitionAnimation: ScreenTransitionAnimation(
           animateTabTransition: true,
           curve: Curves.ease,
           duration: Duration(milliseconds: 500),
         ),
-        navBarStyle: NavBarStyle.style3,
+        
+        navBarStyle: NavBarStyle.style14,
+        
         onItemSelected: (index) => _onItemTapped(index),
       ),
     );
