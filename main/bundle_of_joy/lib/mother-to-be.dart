@@ -1,7 +1,8 @@
 import "package:flutter/material.dart";
-import "profile.dart";
 import "appointmentMother/appointmentMother_1.dart";
 import "emergencyContact/emergencyContactTab.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
 
 class MotherToBeTab extends StatefulWidget {
   @override
@@ -9,7 +10,28 @@ class MotherToBeTab extends StatefulWidget {
 }
 
 class _MotherToBeTabState extends State<MotherToBeTab> {
-  //int _index = 0;
+  final User user = FirebaseAuth.instance.currentUser;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  bool contact;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    checkCont();
+  }
+
+  checkCont() async {
+    var data;
+    var result = await _db.collection('mother').doc(user.uid).get();
+    setState(() {
+      data = result.data()['m_emergencyContact'];
+      if (data != null) {
+        return contact = true;
+      }else{
+        return contact = false;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +68,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EmergencyContactTab()),
+                    MaterialPageRoute(builder: (context) => EmergencyContactTab(contact: contact,)),
                   );
                 }
                 break;

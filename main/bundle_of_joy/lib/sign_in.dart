@@ -168,7 +168,7 @@ class SignInScreenStat extends State<SignInScreen> {
               margin: EdgeInsets.all(70),
               alignment: Alignment.center,
               child: new Image.asset(
-                "assets/images/logo.png",
+                "assets/icons/small.pngassets/images/logo.png",
                 height: 150,
               ),
             ),
