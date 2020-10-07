@@ -15,7 +15,9 @@ class _AppointmentMotherState extends State<AppointmentMother> {
         title: Text(
           "Appointment Management",
           style: TextStyle(
-            fontSize: 25,
+            fontFamily: 'Comfortaa',
+            fontWeight: FontWeight.bold,
+            fontSize: MediaQuery.of(context).size.width * 0.05,
             color: Colors.black,
           ),
         ),
