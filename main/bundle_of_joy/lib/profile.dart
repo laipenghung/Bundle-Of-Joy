@@ -67,6 +67,7 @@ class _ProfileState extends State<ProfileTab> {
                 title,
                 style: TextStyle(
                   color: Colors.black,
+                  fontFamily: 'Comfortaa',
                   fontWeight: FontWeight.bold,
                   fontSize: fontSize,
                 ),

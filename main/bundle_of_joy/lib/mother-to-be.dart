@@ -69,6 +69,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                   title,
                   style: TextStyle(
                     color: Colors.black,
+                    fontFamily: 'Comfortaa',
                     fontWeight: FontWeight.bold,
                     fontSize: 14.0,
                   ),

@@ -34,11 +34,18 @@ class _MotherProfile extends State<MotherProfile>{
             _listItems[index],
             style: TextStyle(
               color: Colors.black,
+              fontFamily: 'Comfortaa',
               fontWeight: FontWeight.bold,
               fontSize: fontSize,
             ),
           ),
-          trailing: Text(_listInfo[index]),
+          trailing: Text(
+              _listInfo[index],
+              style: TextStyle(
+                fontFamily: 'Comfortaa',
+                fontSize: fontSize,
+              ),
+          ),
           onTap: (){
             editBox(index, document, context);
           },
@@ -171,7 +178,7 @@ class _MotherProfile extends State<MotherProfile>{
 
   @override
   Widget build(BuildContext context) {
-    double fontSize = MediaQuery.of(context).size.width * 0.06;
+    double fontSize = MediaQuery.of(context).size.width * 0.05;
     final User user = FirebaseAuth.instance.currentUser;
     DocumentReference users = FirebaseFirestore.instance.collection("mother").doc(user.uid);
 
@@ -183,6 +190,8 @@ class _MotherProfile extends State<MotherProfile>{
         title: Text(
           "Mother's Profile",
           style: TextStyle(
+            fontFamily: 'Comfortaa',
+            fontWeight: FontWeight.bold,
             fontSize: fontSize,
             color: Colors.black,
           ),
