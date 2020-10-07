@@ -1,7 +1,8 @@
 import "package:flutter/material.dart";
-import "profile.dart";
 import "appointmentMother/appointmentMother_1.dart";
 import "emergencyContact/emergencyContactTab.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
 
 class MotherToBeTab extends StatefulWidget {
   @override

@@ -27,7 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               margin: EdgeInsets.all(70),
               alignment: Alignment.center,
               child: new Image.asset(
-                "assets/images/logo.png",
+                "assets/icons/small.png",
                 height: 150,
               ),
             ),
