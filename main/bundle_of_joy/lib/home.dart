@@ -105,12 +105,6 @@ class _HomePageState extends State<HomePageState> {
     return Scaffold(
       appBar: AppBar(
         shadowColor: Colors.transparent,
-        title: Text(
-          _title,
-          style: TextStyle(
-            fontSize: fontSize,
-            color: Colors.black,
-          ),
 
         toolbarHeight: MediaQuery.of(context).size.height * 0.09, //APP BAR HEIGHT
 
