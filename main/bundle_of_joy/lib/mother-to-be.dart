@@ -1,14 +1,9 @@
 import "package:flutter/material.dart";
-<<<<<<< Updated upstream
-import 'profile.dart';
-import './emerContact/emerContactTab.dart';
-=======
 import "profile.dart";
 import "appointmentMother.dart";
 import "./emergencyContact/emergencyContactTab.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
->>>>>>> Stashed changes
 
 class MotherToBeTab extends StatefulWidget {
   @override
