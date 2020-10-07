@@ -30,7 +30,13 @@ class _HomePageState extends State<HomePageState> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values); // SHOW STATUS BAR
+    //SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]); // HIDE STATUS BAR
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle( // STATUS BAR COLOR
+      statusBarColor: Colors.black
+    ));
+
     _title = "Mother-to-be";
     _persistentTabController = PersistentTabController(initialIndex: 0);
   }
@@ -94,20 +100,47 @@ class _HomePageState extends State<HomePageState> {
 
   @override
   Widget build(BuildContext context) {
-    double fontSize = MediaQuery.of(context).size.width * 0.08;
+    double fontSize = MediaQuery.of(context).size.width * 0.06;
+    
     return Scaffold(
       appBar: AppBar(
         shadowColor: Colors.transparent,
-        title: Text(
-          _title,
-          style: TextStyle(
-            fontSize: fontSize,
-            color: Colors.black,
-          ),
+        toolbarHeight: MediaQuery.of(context).size.height * 0.09, //APP BAR HEIGHT
+
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(right: 10),
+              width: 70,
+              height: 70,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: AssetImage("assets/icons/small.png"),
+                ),
+              ),
+            ),
+
+            Text(
+              _title,
+              style: TextStyle(
+                fontFamily: 'Comfortaa',
+                fontWeight: FontWeight.bold,
+                fontSize: fontSize,
+                color: Colors.black,
+              ),
+            ),
+          ],
         ),
+
+        //automaticallyImplyLeading: false, // CENTER THE TEXT
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
+
       body: PersistentTabView(
         navBarHeight: 65,
         padding: NavBarPadding.all(0),
