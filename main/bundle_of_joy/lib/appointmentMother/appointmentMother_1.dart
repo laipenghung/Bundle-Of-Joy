@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "appointMother_build.dart";
+import "appointmentMother_build.dart";
 import "appointmentMother_2.dart";
 
 class AppointmentMother1 extends StatefulWidget {
@@ -71,7 +71,7 @@ class _AppointmentMother1State extends State<AppointmentMother1> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AppointmentMother1(name: name)),
+                    MaterialPageRoute(builder: (context) => AppointmentMother1()),
                   );
                 },
                 fillColor: Colors.black,

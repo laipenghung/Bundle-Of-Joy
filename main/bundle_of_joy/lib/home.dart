@@ -168,7 +168,7 @@ class _HomePageState extends State<HomePageState> {
           duration: Duration(milliseconds: 500),
         ),
         
-        navBarStyle: NavBarStyle.style14,
+        navBarStyle: NavBarStyle.style3,
         
         onItemSelected: (index) => _onItemTapped(index),
       ),
