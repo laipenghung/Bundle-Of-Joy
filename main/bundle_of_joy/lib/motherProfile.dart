@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import "package:flutter/cupertino.dart";
+import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
-import 'package:flutter/services.dart';
+import "package:flutter/services.dart";
 import "firestore/mother.dart";
 
 class MotherProfile extends StatefulWidget {
@@ -34,7 +34,7 @@ class _MotherProfile extends State<MotherProfile>{
             _listItems[index],
             style: TextStyle(
               color: Colors.black,
-              fontFamily: 'Comfortaa',
+              fontFamily: "Comfortaa",
               fontWeight: FontWeight.bold,
               fontSize: fontSize,
             ),
@@ -42,7 +42,7 @@ class _MotherProfile extends State<MotherProfile>{
           trailing: Text(
               _listInfo[index],
               style: TextStyle(
-                fontFamily: 'Comfortaa',
+                fontFamily: "Comfortaa",
                 fontSize: fontSize,
               ),
           ),
@@ -190,7 +190,7 @@ class _MotherProfile extends State<MotherProfile>{
         title: Text(
           "Mother's Profile",
           style: TextStyle(
-            fontFamily: 'Comfortaa',
+            fontFamily: "Comfortaa",
             fontWeight: FontWeight.bold,
             fontSize: fontSize,
             color: Colors.black,

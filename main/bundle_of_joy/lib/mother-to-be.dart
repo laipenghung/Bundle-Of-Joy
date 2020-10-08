@@ -2,6 +2,9 @@ import "package:flutter/material.dart";
 import "appointmentMother/appointmentMother_1.dart";
 import "foodIntake/foodIntake_1.dart";
 import "emergencyContact/emergencyContactTab.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
+import "MotherHealthTracking/healthTrackingTab.dart";
 
 class MotherToBeTab extends StatefulWidget {
   @override
@@ -9,9 +12,34 @@ class MotherToBeTab extends StatefulWidget {
 }
 
 class _MotherToBeTabState extends State<MotherToBeTab> {
+  final User user = FirebaseAuth.instance.currentUser;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  bool contact;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    checkCont();
+  }
+
+  checkCont() async {
+    var data;
+    var result = await _db.collection("mother").doc(user.uid).get();
+    setState(() {
+      data = result.data()["m_emergencyContact"];
+      if (data != null) {
+        return contact = true;
+      }else{
+        return contact = false;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     singleCard(iconLoc, title, index) {
+      double height = MediaQuery.of(context).size.height * 0.15;
+      double fontSize = MediaQuery.of(context).size.width * 0.045;
       return Card(
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         shape: RoundedRectangleBorder(
@@ -40,7 +68,10 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 break;
               case 2:
                 {
-                  print("3");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MotherHealthTracking()),
+                  );
                 }
                 break;
               case 3:
@@ -54,26 +85,26 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
             }
           },
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 15.0, 0, 20.0),
-                child: Icon(
-                  IconData(iconLoc, fontFamily: "MaterialIcons"),
-                  color: Colors.black,
-                  size: 85.0,
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 10.0),
+                child: Image.asset(
+                  iconLoc,
+                  height: height,
                 ),
               ),
-
               FittedBox(
                 fit: BoxFit.cover,
                 child: Text(
                   title,
                   style: TextStyle(
                     color: Colors.black,
-                    fontFamily: 'Comfortaa',
+                    fontFamily: "Comfortaa",
                     fontWeight: FontWeight.bold,
-                    fontSize: 14.0,
+                    fontSize: fontSize,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               )
             ],
@@ -84,15 +115,16 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
 
     return Scaffold(
         body: GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      padding: const EdgeInsets.only(top: 20.0),
-      children: <Widget>[
-        singleCard(57744, "Appointment Management", 0),
-        singleCard(57744, "Food Intake Tracking", 1),
-        singleCard(57744, "Health Tracking", 2),
-        singleCard(57744, "Emergency Contact", 3),
-      ],
-    ));
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          padding: const EdgeInsets.only(top: 20.0),
+          children: <Widget>[
+            singleCard("assets/icons/appointment.png", "Appointment\nManagement", 0),
+            singleCard("assets/icons/food-intake.png", "Food Intake\nTracking", 1),
+            singleCard("assets/icons/health-tracking.png", "Health\nTracking", 2),
+            singleCard("assets/icons/emergency-call.png", "Emergency\nContact", 3),
+          ],
+        ),
+    );
   }
 }
