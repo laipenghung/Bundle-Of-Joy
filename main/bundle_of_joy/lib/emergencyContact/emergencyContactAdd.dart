@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:bundle_of_joy/mother-to-be.dart';
 import 'package:flutter/material.dart';
-import 'package:contact_picker/contact_picker.dart';
+//import 'package:contact_picker/contact_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../firestore/emerContact.dart';
 
@@ -12,7 +12,7 @@ class EmerContactAdd extends StatefulWidget {
 }
 
 class _EmerContactAddState extends State<EmerContactAdd> {
-  final ContactPicker _contactPicker = new ContactPicker();
+ // final ContactPicker _contactPicker = new ContactPicker();
   //Contact _contact;
   String _emerContactNo = "", _emerContactName = "";
   EmerContact emerContact = EmerContact();
@@ -30,10 +30,10 @@ class _EmerContactAddState extends State<EmerContactAdd> {
               height: 40.0,
               child: RaisedButton(
                 onPressed: () async {
-                  Contact contact = await _contactPicker.selectContact();
+                  //Contact contact = await _contactPicker.selectContact();
                   setState(() {
-                    _emerContactNo = contact.phoneNumber.number;
-                    _emerContactName = contact.fullName;
+                    //_emerContactNo = contact.phoneNumber.number;
+                    //_emerContactName = contact.fullName;
                   });
                   Fluttertoast.showToast(
                     msg: _emerContactName + "\n" + _emerContactNo,
