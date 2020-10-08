@@ -2,7 +2,6 @@ import "package:flutter/material.dart";
 import "motherProfile.dart";
 import "auth/auth.dart";
 import "sign_up.dart";
-import "home.dart";
 
 class ProfileTab extends StatefulWidget {
 
@@ -53,9 +52,10 @@ class _ProfileState extends State<ProfileTab> {
           }
         },
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 15.0, 0, 20.0),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 10.0),
               child: Image.asset(
                 iconLoc,
                 height: height,
@@ -67,7 +67,7 @@ class _ProfileState extends State<ProfileTab> {
                 title,
                 style: TextStyle(
                   color: Colors.black,
-                  fontFamily: 'Comfortaa',
+                  fontFamily: "Comfortaa",
                   fontWeight: FontWeight.bold,
                   fontSize: fontSize,
                 ),
