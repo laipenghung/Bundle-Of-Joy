@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="efcdc95c-3bb8-4eda-bff0-8f9f923abe17" name="Default Changelist" comment="" />
+    <list default="true" id="efcdc95c-3bb8-4eda-bff0-8f9f923abe17" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/main/bundle_of_joy/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/main/bundle_of_joy/pubspec.lock" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,7 +23,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="last_opened_file_path" value="D:/Flutter SDK/flutter_windows_1.20.4-stable" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="SvnConfiguration">
@@ -42,10 +44,15 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1600853166543" />
-    <state x="461" y="162" key="SettingsEditor" timestamp="1600853302289">
+    <state x="461" y="162" key="SettingsEditor" timestamp="1602135705928">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="461" y="162" key="SettingsEditor/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1602135705928" />
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1600853302289" />
+    <state x="100" y="100" width="1720" height="840" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1602135726464">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="100" y="100" width="1720" height="840" key="com.android.tools.idea.avdmanager.AvdListDialog/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1602135726464" />
     <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1600853382450">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "appointmentMother/appointmentMother_1.dart";
+import "foodIntake/foodIntake_1.dart";
 import "emergencyContact/emergencyContactTab.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -59,7 +60,10 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 break;
               case 1:
                 {
-                  print("2");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FoodIntake1()),
+                  );
                 }
                 break;
               case 2:
@@ -74,7 +78,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EmergencyContactTab(contact: contact,)),
+                    MaterialPageRoute(builder: (context) => EmergencyContactTab()),
                   );
                 }
                 break;

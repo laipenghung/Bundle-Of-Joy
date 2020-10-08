@@ -1,11 +1,25 @@
+import 'package:bundle_of_joy/emergencyContact/emergencyContactAdd.dart';
+
 import 'emergencyContactCall.dart';
 import 'package:flutter/material.dart';
 import 'emergencyContactAddScreen.dart';
+import "package:firebase_auth/firebase_auth.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
 
 class EmergencyContactTab extends StatelessWidget {
-  final bool contact;
-  EmergencyContactTab({Key key, @required this.contact}) : super();
-  
+  final User user = FirebaseAuth.instance.currentUser;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  Future _getContact() async {
+    var x = await _db.collection('mother').doc(user.uid).get();
+    //print(x.data()['m_emergencyContact']);
+    if (x.data()['m_emergencyContact'] == null) {
+      return false;
+    }else{
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +41,25 @@ class EmergencyContactTab extends StatelessWidget {
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
-      body: contact == true ? EmerContactCall() : AddEmerContactScreen(),
+      body: FutureBuilder(
+        future: _getContact(),
+        builder: (BuildContext context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.data == true) {
+              return EmerContactCall();
+            } else {
+              return AddEmerContactScreen();
+            }
+          } else if (snapshot.hasError) {
+            print("error");
+          }
+          return CircularProgressIndicator();
+        },
+      ),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 //import 'emergencyContactAdd.dart';
-import 'package:contact_picker/contact_picker.dart';
+import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 import '../firestore/emerContact.dart';
 import 'package:bundle_of_joy/mother-to-be.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -11,8 +11,8 @@ class AddEmerContactScreen extends StatefulWidget {
 }
 
 class _AddEmerContactScreenState extends State<AddEmerContactScreen> {
-  final ContactPicker _contactPicker = new ContactPicker();
-  String _emerContactNo = "", _emerContactName = "";
+  //final ContactPicker _contactPicker = new ContactPicker();
+  String _emerContactNo = ""; //_emerContactName = "";
   EmerContact emerContact = EmerContact();
 
   @override
@@ -51,15 +51,16 @@ class _AddEmerContactScreenState extends State<AddEmerContactScreen> {
                 borderRadius: BorderRadius.circular(18),
                 side: BorderSide(width: 1.5, color: Colors.black)),
             onPressed: () async {
-              Contact contact = await _contactPicker.selectContact();
+              //Contact contact = await _contactPicker.selectContact();
+              var contact = await FlutterContactPicker.pickPhoneContact();
               setState(() {
                 _emerContactNo = contact.phoneNumber.number;
-                _emerContactName = contact.fullName;
+                //_emerContactName = contact.fullName;      #Remove comment if have to add contact name into firebse
                 emerContact.addEmerContact(_emerContactNo);
                 Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MotherToBeTab()));
+                    MaterialPageRoute(builder: (context) => MotherToBeTab()));
                 Fluttertoast.showToast(
-                  msg: "Contact Added",
+                  msg: "Contact Successfully Added",
                   toastLength: Toast.LENGTH_LONG,
                 );
               });
