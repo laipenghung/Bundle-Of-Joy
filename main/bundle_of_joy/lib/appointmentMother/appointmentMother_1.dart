@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "appointmentMother_build.dart";
 import "appointmentMother_2.dart";
+import "appointmentMother_3.dart";
 
 class AppointmentMother1 extends StatefulWidget {
   final String name;
@@ -48,8 +49,8 @@ class _AppointmentMother1State extends State<AppointmentMother1> {
               child: Column(
                 children: [
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                  HospitalRow("Hospital 1"),
-                  HospitalRow("Hospital 2"),
+                  HospitalRow("KPJ Kuching Specialist Hospital"),
+                  HospitalRow("Long many words debugging long long material page example this is"),
                   HospitalRow("Hospital 3"),
                   HospitalRow("Hospital 4"),
                   HospitalRow("Hospital 5"),
@@ -65,15 +66,11 @@ class _AppointmentMother1State extends State<AppointmentMother1> {
           mainAxisAlignment: MainAxisAlignment.center,
           
           children: [
+            // 1
             Container(
               width: 15,
               child: RawMaterialButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AppointmentMother1()),
-                  );
-                },
+                onPressed: () {},
                 fillColor: Colors.black,
                 shape: CircleBorder(
                   side: BorderSide(width: 1, color: Colors.black)
@@ -81,6 +78,7 @@ class _AppointmentMother1State extends State<AppointmentMother1> {
               )
             ),
 
+            // 2
             Container(
               width: 15,
               margin: EdgeInsets.only(left: 20),
@@ -88,7 +86,7 @@ class _AppointmentMother1State extends State<AppointmentMother1> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AppointmentMother2(name)),
+                    MaterialPageRoute(builder: (context) => AppointmentMother2(name: "Not Selected")),
                   );
                 },
                 fillColor: Color(0xFFFCFFD5),
@@ -98,11 +96,17 @@ class _AppointmentMother1State extends State<AppointmentMother1> {
               )
             ),
 
+            // 3
             Container(
               width: 15,
               margin: EdgeInsets.only(left: 20),
               child: RawMaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AppointmentMother3(name: "Not Selected",)),
+                  );
+                },
                 fillColor: Color(0xFFFCFFD5),
                 shape: CircleBorder(
                   side: BorderSide(width: 1, color: Colors.black)
@@ -110,6 +114,7 @@ class _AppointmentMother1State extends State<AppointmentMother1> {
               )
             ),
 
+            // 4
             Container(
               width: 15,
               margin: EdgeInsets.only(left: 20),

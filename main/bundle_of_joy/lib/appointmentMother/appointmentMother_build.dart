@@ -38,15 +38,22 @@ class HospitalRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(left: 20, top: 15, bottom: 30),   
+                      margin: EdgeInsets.only(left: 20, top: 5),   
+                      //color: Colors.lightBlue,
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      width: MediaQuery.of(context).size.width * 0.53,
+
                       child: Text(
                         name,
                         style: TextStyle(
                           fontFamily: 'Comfortaa',
                           fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.height * 0.025,
+                          fontSize: MediaQuery.of(context).size.height * 0.023,
                           color: Colors.black,
                         ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                        softWrap: true,
                       ),
                     ),
 
@@ -86,7 +93,7 @@ class HospitalRow extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AppointmentMother2(name)),
+              MaterialPageRoute(builder: (context) => AppointmentMother2(name: name,)),
             );
           },
         ),
