@@ -154,9 +154,21 @@ class _FoodIntake1State extends State<FoodIntake1> {
                       decoration: new InputDecoration(
                         //hintText: 'Food name..',
                         labelText: "Enter food..",
-                        border: new OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(10.0),
-                          borderSide: new BorderSide(),
+
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1,
+                          ),
+                        ),
+
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1,
+                          ),
                         ),
                       ),
 
@@ -226,9 +238,21 @@ class _FoodIntake1State extends State<FoodIntake1> {
                       keyboardType: TextInputType.number,
                       decoration: new InputDecoration(
                         labelText: "Enter blood sugar reading..",
-                        border: new OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(10.0),
-                          borderSide: new BorderSide(),
+                        
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1,
+                          ),
+                        ),
+
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1,
+                          ),
                         ),
                       ),
                       onSaved: (String value) {},
@@ -283,9 +307,21 @@ class _FoodIntake1State extends State<FoodIntake1> {
                       keyboardType: TextInputType.number,
                       decoration: new InputDecoration(
                         labelText: "Enter blood sugar reading..",
-                        border: new OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(10.0),
-                          borderSide: new BorderSide(),
+                        
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1,
+                          ),
+                        ),
+
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1,
+                          ),
                         ),
                       ),
                       onSaved: (String value) {},
