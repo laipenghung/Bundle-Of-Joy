@@ -66,19 +66,19 @@ class _HomePageState extends State<HomePageState> {
         icon: Image.asset("assets/icons/baby.png"),
         title: ("Mother-for-baby"),
         activeColor: Colors.black,
-        inactiveColor: Colors.black.withOpacity(0.4),
+        inactiveColor: Colors.black.withOpacity(0.3),
       ),
       PersistentBottomNavBarItem(
         icon: Image.asset("assets/icons/bell.png"),
         title: ("Notification"),
         activeColor: Colors.black,
-        inactiveColor: Colors.black.withOpacity(0.4),
+        inactiveColor: Colors.black.withOpacity(0.3),
       ),
       PersistentBottomNavBarItem(
         icon: Image.asset("assets/icons/user.png"),
         title: ("Profile"),
         activeColor: Colors.black,
-        inactiveColor: Colors.black.withOpacity(0.4),
+        inactiveColor: Colors.black.withOpacity(0.3),
       )
     ];
   }

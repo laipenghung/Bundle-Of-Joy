@@ -38,62 +38,68 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
   @override
   Widget build(BuildContext context) {
     singleCard(iconLoc, title, index) {
-      double height = MediaQuery.of(context).size.height * 0.15;
+      double height = MediaQuery.of(context).size.height * 0.1;
       double fontSize = MediaQuery.of(context).size.width * 0.045;
+      
       return Card(
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
-        elevation: 4,
+      
+        elevation: 5,
         color: Color(0xFFFCFFD5),
+
         child: InkWell(
           onTap: () {
             switch (index) {
               case 0:
-                {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AppointmentMother1()),
-                  );
-                }
-                break;
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AppointmentMother1()),
+                );
+              }
+              break;
               case 1:
-                {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => FoodIntake1()),
-                  );
-                }
-                break;
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FoodIntake1()),
+                );
+              }
+              break;
               case 2:
-                {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MotherHealthTracking()),
-                  );
-                }
-                break;
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MotherHealthTracking()),
+                );
+              }
+              break;
               case 3:
-                {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => EmergencyContactTab()),
-                  );
-                }
-                break;
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EmergencyContactTab()),
+                );
+              }
+              break;
             }
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 10.0),
+              Container(
+                margin: EdgeInsets.only(bottom: 10,),
                 child: Image.asset(
                   iconLoc,
                   height: height,
                 ),
               ),
+              
               FittedBox(
                 fit: BoxFit.cover,
                 child: Text(
@@ -117,7 +123,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
         body: GridView.count(
           crossAxisCount: 2,
           shrinkWrap: true,
-          padding: const EdgeInsets.only(top: 20.0),
+          padding: const EdgeInsets.only(top: 100.0, left: 15, right: 15),
           children: <Widget>[
             singleCard("assets/icons/appointment.png", "Appointment\nManagement", 0),
             singleCard("assets/icons/food-intake.png", "Food Intake\nTracking", 1),
