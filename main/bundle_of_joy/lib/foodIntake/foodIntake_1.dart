@@ -114,7 +114,8 @@ class _FoodIntake1State extends State<FoodIntake1> {
                             margin: EdgeInsets.only(bottom: 3, left: 15),
                             child: Image.asset(
                               "assets/icons/time.png",
-                              height: MediaQuery.of(context).size.height * 0.035,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.035,
                             ),
                           ),
                         ],
@@ -238,7 +239,6 @@ class _FoodIntake1State extends State<FoodIntake1> {
                       keyboardType: TextInputType.number,
                       decoration: new InputDecoration(
                         labelText: "Enter blood sugar reading..",
-                        
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: BorderSide(
@@ -246,7 +246,6 @@ class _FoodIntake1State extends State<FoodIntake1> {
                             width: 1,
                           ),
                         ),
-
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: BorderSide(
@@ -307,7 +306,6 @@ class _FoodIntake1State extends State<FoodIntake1> {
                       keyboardType: TextInputType.number,
                       decoration: new InputDecoration(
                         labelText: "Enter blood sugar reading..",
-                        
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: BorderSide(
@@ -315,7 +313,6 @@ class _FoodIntake1State extends State<FoodIntake1> {
                             width: 1,
                           ),
                         ),
-
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: BorderSide(
@@ -434,7 +431,6 @@ class _FoodIntake1State extends State<FoodIntake1> {
     TimeOfDay t = await showTimePicker(
       context: context,
       initialTime: time,
-
       builder: (BuildContext context, Widget child) {
         return Theme(
           data:

@@ -2,20 +2,16 @@ import 'package:flutter/material.dart';
 import 'appointmentMother_2.dart';
 
 class HospitalRow extends StatelessWidget {
-
   final String name;
   // String imagePath;
-      
+
   HospitalRow(this.name);
 
   @override
   Widget build(BuildContext context) {
-
-    
     return Column(
       children: [
         SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-        
         InkWell(
           child: Container(
             child: Row(
@@ -33,12 +29,11 @@ class HospitalRow extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(left: 20, top: 5),   
+                      margin: EdgeInsets.only(left: 20, top: 5),
                       //color: Colors.lightBlue,
                       height: MediaQuery.of(context).size.height * 0.1,
                       width: MediaQuery.of(context).size.width * 0.53,
@@ -56,7 +51,6 @@ class HospitalRow extends StatelessWidget {
                         softWrap: true,
                       ),
                     ),
-
                     Row(
                       children: [
                         Container(
@@ -77,7 +71,8 @@ class HospitalRow extends StatelessWidget {
                             style: TextStyle(
                               fontFamily: 'Comfortaa',
                               fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.height * 0.02,
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.02,
                               color: Colors.black,
                             ),
                           ),
@@ -89,17 +84,17 @@ class HospitalRow extends StatelessWidget {
               ],
             ),
           ),
-
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AppointmentMother2(name: name,)),
+              MaterialPageRoute(
+                  builder: (context) => AppointmentMother2(
+                        name: name,
+                      )),
             );
           },
         ),
-
         SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-
         Divider(
           indent: 20,
           endIndent: 20,
