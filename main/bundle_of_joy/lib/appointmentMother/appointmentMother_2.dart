@@ -112,8 +112,7 @@ class _AppointmentMother2State extends State<AppointmentMother2> {
                             style: TextStyle(
                               fontFamily: 'Comfortaa',
                               fontWeight: FontWeight.bold,
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.035,
+                              fontSize: MediaQuery.of(context).size.height * 0.035,
                               color: Colors.black,
                             ),
                           ),
@@ -135,8 +134,7 @@ class _AppointmentMother2State extends State<AppointmentMother2> {
                                 style: TextStyle(
                                   fontFamily: 'Comfortaa',
                                   fontWeight: FontWeight.bold,
-                                  fontSize: MediaQuery.of(context).size.height *
-                                      0.025,
+                                  fontSize: MediaQuery.of(context).size.height * 0.025,
                                   color: Colors.black,
                                 ),
                               ),
@@ -145,13 +143,11 @@ class _AppointmentMother2State extends State<AppointmentMother2> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => AppointmentMother1()),
+                              MaterialPageRoute(builder: (context) => AppointmentMother1()),
                             );
                           },
                         ),
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.05),
+                        SizedBox(width: MediaQuery.of(context).size.width * 0.05),
                         InkWell(
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.3,
@@ -164,8 +160,7 @@ class _AppointmentMother2State extends State<AppointmentMother2> {
                                 style: TextStyle(
                                   fontFamily: 'Comfortaa',
                                   fontWeight: FontWeight.bold,
-                                  fontSize: MediaQuery.of(context).size.height *
-                                      0.025,
+                                  fontSize: MediaQuery.of(context).size.height * 0.025,
                                   color: Colors.black,
                                 ),
                               ),
@@ -175,7 +170,10 @@ class _AppointmentMother2State extends State<AppointmentMother2> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AppointmentMother3(name: hospitalName, date: pickedDate,)),
+                                  builder: (context) => AppointmentMother3(
+                                        name: hospitalName,
+                                        date: pickedDate,
+                                      )),
                             );
                           },
                         ),
@@ -195,14 +193,11 @@ class _AppointmentMother2State extends State<AppointmentMother2> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                AppointmentMother1(name: hospitalName)),
+                        MaterialPageRoute(builder: (context) => AppointmentMother1(name: hospitalName)),
                       );
                     },
                     fillColor: Color(0xFFFCFFD5),
-                    shape: CircleBorder(
-                        side: BorderSide(width: 1, color: Colors.black)),
+                    shape: CircleBorder(side: BorderSide(width: 1, color: Colors.black)),
                   )),
               Container(
                   width: 15,
@@ -210,8 +205,7 @@ class _AppointmentMother2State extends State<AppointmentMother2> {
                   child: RawMaterialButton(
                     onPressed: () {},
                     fillColor: Colors.black,
-                    shape: CircleBorder(
-                        side: BorderSide(width: 1, color: Colors.black)),
+                    shape: CircleBorder(side: BorderSide(width: 1, color: Colors.black)),
                   )),
               Container(
                   width: 15,
@@ -220,14 +214,11 @@ class _AppointmentMother2State extends State<AppointmentMother2> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                AppointmentMother3(name: hospitalName)),
+                        MaterialPageRoute(builder: (context) => AppointmentMother3(name: hospitalName)),
                       );
                     },
                     fillColor: Color(0xFFFCFFD5),
-                    shape: CircleBorder(
-                        side: BorderSide(width: 1, color: Colors.black)),
+                    shape: CircleBorder(side: BorderSide(width: 1, color: Colors.black)),
                   )),
               Container(
                   width: 15,
@@ -235,8 +226,7 @@ class _AppointmentMother2State extends State<AppointmentMother2> {
                   child: RawMaterialButton(
                     onPressed: () {},
                     fillColor: Color(0xFFFCFFD5),
-                    shape: CircleBorder(
-                        side: BorderSide(width: 1, color: Colors.black)),
+                    shape: CircleBorder(side: BorderSide(width: 1, color: Colors.black)),
                   )),
             ],
           )
@@ -253,8 +243,7 @@ class _AppointmentMother2State extends State<AppointmentMother2> {
       initialDate: pickedDate,
       builder: (BuildContext context, Widget child) {
         return Theme(
-          data:
-              ThemeData(primarySwatch: Colors.pink, splashColor: Colors.green),
+          data: ThemeData(primarySwatch: Colors.pink, splashColor: Colors.green),
           child: child,
         );
       },

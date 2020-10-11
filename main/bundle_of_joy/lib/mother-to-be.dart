@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "appointmentMother/appointmentMother_0.dart";
-import "foodIntake/foodIntake_0.dart";
+import "foodIntake/foodIntake_main.dart";
 import "emergencyContact/emergencyContactTab.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -55,8 +55,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => AppointmentMother0()),
+                    MaterialPageRoute(builder: (context) => AppointmentMother0()),
                   );
                 }
                 break;
@@ -64,7 +63,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => FoodIntake0()),
+                    MaterialPageRoute(builder: (context) => FoodIntakeMain()),
                   );
                 }
                 break;
@@ -72,8 +71,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => MotherHealthTracking()),
+                    MaterialPageRoute(builder: (context) => MotherHealthTracking()),
                   );
                 }
                 break;
@@ -81,8 +79,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => EmergencyContactTab()),
+                    MaterialPageRoute(builder: (context) => EmergencyContactTab()),
                   );
                 }
                 break;
@@ -125,13 +122,10 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
         shrinkWrap: true,
         padding: const EdgeInsets.only(top: 100.0, left: 15, right: 15),
         children: <Widget>[
-          singleCard(
-              "assets/icons/appointment.png", "Appointment\nManagement", 0),
-          singleCard(
-              "assets/icons/food-intake.png", "Food Intake\nTracking", 1),
+          singleCard("assets/icons/appointment.png", "Appointment\nManagement", 0),
+          singleCard("assets/icons/food-intake.png", "Food Intake\nTracking", 1),
           singleCard("assets/icons/health-tracking.png", "Health\nTracking", 2),
-          singleCard(
-              "assets/icons/emergency-call.png", "Emergency\nContact", 3),
+          singleCard("assets/icons/emergency-call.png", "Emergency\nContact", 3),
         ],
       ),
     );

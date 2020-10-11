@@ -1,12 +1,14 @@
 import "package:flutter/material.dart";
-import "foodIntake_1.dart";
+import "foodIntake_add_1_dateTime.dart";
+import "foodIntake_record_done.dart";
+import "foodIntake_record_pending.dart";
 
-class FoodIntake0 extends StatefulWidget {
+class FoodIntakeMain extends StatefulWidget {
   @override
-  _FoodIntake0State createState() => _FoodIntake0State();
+  _FoodIntakeMainState createState() => _FoodIntakeMainState();
 }
 
-class _FoodIntake0State extends State<FoodIntake0> {
+class _FoodIntakeMainState extends State<FoodIntakeMain> {
   // BUILD THE WIDGET
   @override
   Widget build(BuildContext context) {
@@ -55,8 +57,7 @@ class _FoodIntake0State extends State<FoodIntake0> {
                           style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.025,
+                            fontSize: MediaQuery.of(context).size.height * 0.025,
                             color: Colors.black,
                           ),
                         ),
@@ -65,6 +66,12 @@ class _FoodIntake0State extends State<FoodIntake0> {
                   ),
                 ),
               ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FoodIntakeRecordDone()),
+                );
+              },
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             InkWell(
@@ -89,8 +96,7 @@ class _FoodIntake0State extends State<FoodIntake0> {
                           style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.025,
+                            fontSize: MediaQuery.of(context).size.height * 0.025,
                             color: Colors.black,
                           ),
                         ),
@@ -102,7 +108,7 @@ class _FoodIntake0State extends State<FoodIntake0> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FoodIntake1()),
+                  MaterialPageRoute(builder: (context) => FoodIntakeAdd1()),
                 );
               },
             ),
@@ -129,8 +135,7 @@ class _FoodIntake0State extends State<FoodIntake0> {
                           style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.025,
+                            fontSize: MediaQuery.of(context).size.height * 0.025,
                             color: Colors.black,
                           ),
                         ),
@@ -139,6 +144,12 @@ class _FoodIntake0State extends State<FoodIntake0> {
                   ),
                 ),
               ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FoodIntakeRecordPending()),
+                );
+              },
             ),
           ],
         ),
