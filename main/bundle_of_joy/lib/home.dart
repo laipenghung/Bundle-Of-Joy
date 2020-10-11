@@ -33,9 +33,9 @@ class _HomePageState extends State<HomePageState> {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values); // SHOW STATUS BAR
     //SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]); // HIDE STATUS BAR
 
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle( // STATUS BAR COLOR
-      statusBarColor: Colors.black
-    ));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        // STATUS BAR COLOR
+        statusBarColor: Colors.black));
 
     _title = "Mother-to-be";
     _persistentTabController = PersistentTabController(initialIndex: 0);
@@ -85,15 +85,27 @@ class _HomePageState extends State<HomePageState> {
 
   void _onItemTapped(int index) {
     setState(() {
-      switch(index){
-        case 0: { _title = "Mother-to-be";}
-        break;
-        case 1: { _title = "Mother-for-baby";}
-        break;
-        case 2: { _title = "Notification";}
-        break;
-        case 3: { _title = "Profile";}
-        break;
+      switch (index) {
+        case 0:
+          {
+            _title = "Mother-to-be";
+          }
+          break;
+        case 1:
+          {
+            _title = "Mother-for-baby";
+          }
+          break;
+        case 2:
+          {
+            _title = "Notification";
+          }
+          break;
+        case 3:
+          {
+            _title = "Profile";
+          }
+          break;
       }
     });
   }
@@ -101,7 +113,7 @@ class _HomePageState extends State<HomePageState> {
   @override
   Widget build(BuildContext context) {
     double fontSize = MediaQuery.of(context).size.width * 0.06;
-    
+
     return Scaffold(
       appBar: AppBar(
         shadowColor: Colors.transparent,
@@ -111,7 +123,6 @@ class _HomePageState extends State<HomePageState> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(right: 10),
@@ -124,7 +135,6 @@ class _HomePageState extends State<HomePageState> {
                 ),
               ),
             ),
-
             Text(
               _title,
               style: TextStyle(
@@ -141,7 +151,6 @@ class _HomePageState extends State<HomePageState> {
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
-
       body: PersistentTabView(
         navBarHeight: MediaQuery.of(context).size.height * 0.1,
         padding: NavBarPadding.all(4),
@@ -149,27 +158,23 @@ class _HomePageState extends State<HomePageState> {
         screens: _widgetOptions(),
         items: _navBarsItems(),
         confineInSafeArea: true,
-        backgroundColor:  Color(0xFFFCFFD5),
+        backgroundColor: Color(0xFFFCFFD5),
         handleAndroidBackButtonPress: true,
         stateManagement: true,
         resizeToAvoidBottomInset: true,
         hideNavigationBarWhenKeyboardShows: true,
         popAllScreensOnTapOfSelectedTab: true,
         popActionScreens: PopActionScreensType.all,
-
         itemAnimationProperties: ItemAnimationProperties(
           duration: Duration(milliseconds: 500),
           curve: Curves.ease,
         ),
-        
         screenTransitionAnimation: ScreenTransitionAnimation(
           animateTabTransition: true,
           curve: Curves.ease,
           duration: Duration(milliseconds: 500),
         ),
-        
         navBarStyle: NavBarStyle.style3,
-        
         onItemSelected: (index) => _onItemTapped(index),
       ),
     );
