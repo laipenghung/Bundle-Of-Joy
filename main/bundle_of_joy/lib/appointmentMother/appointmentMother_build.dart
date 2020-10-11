@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'appointmentMother_2.dart';
+import 'appointmentMother_add_2.dart';
 
 class HospitalRow extends StatelessWidget {
   final String name;
@@ -18,14 +18,13 @@ class HospitalRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.only(left: 30),
-                  width: 110,
-                  height: 110,
+                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.03),
+                  width: MediaQuery.of(context).size.height * 0.15,
+                  height: MediaQuery.of(context).size.height * 0.15,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(
-                          "https://kuchingborneo.info/wp-content/uploads/2017/03/KPJ-Kuching-Medical-Centre.jpg"),
+                      image: NetworkImage("https://kuchingborneo.info/wp-content/uploads/2017/03/KPJ-Kuching-Medical-Centre.jpg"),
                     ),
                   ),
                 ),
@@ -33,7 +32,7 @@ class HospitalRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(left: 20, top: 5),
+                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05, top: MediaQuery.of(context).size.height * 0.008),
                       //color: Colors.lightBlue,
                       height: MediaQuery.of(context).size.height * 0.1,
                       width: MediaQuery.of(context).size.width * 0.53,
@@ -55,24 +54,23 @@ class HospitalRow extends StatelessWidget {
                       children: [
                         Container(
                           margin: EdgeInsets.only(
-                            left: 20,
+                            left: MediaQuery.of(context).size.width * 0.05,
                           ),
                           child: Image.asset(
                             "assets/icons/hospitalNum.png",
-                            height: 25,
+                            height: MediaQuery.of(context).size.height * 0.035,
                           ),
                         ),
                         Container(
                           margin: EdgeInsets.only(
-                            left: 15,
+                            left: MediaQuery.of(context).size.width * 0.04,
                           ),
                           child: Text(
                             "082 - 507236",
                             style: TextStyle(
                               fontFamily: 'Comfortaa',
                               fontWeight: FontWeight.bold,
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.02,
+                              fontSize: MediaQuery.of(context).size.height * 0.02,
                               color: Colors.black,
                             ),
                           ),
@@ -88,7 +86,7 @@ class HospitalRow extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => AppointmentMother2(
+                  builder: (context) => AppointmentMotherAdd2(
                         name: name,
                       )),
             );
@@ -96,10 +94,10 @@ class HospitalRow extends StatelessWidget {
         ),
         SizedBox(height: MediaQuery.of(context).size.height * 0.02),
         Divider(
-          indent: 20,
-          endIndent: 20,
+          indent: MediaQuery.of(context).size.width * 0.05,
+          endIndent: MediaQuery.of(context).size.width * 0.05,
           color: Colors.black,
-          thickness: 1,
+          thickness: MediaQuery.of(context).size.height * 0.001,
         ),
       ],
     );

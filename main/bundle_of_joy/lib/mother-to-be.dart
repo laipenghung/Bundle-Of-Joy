@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "appointmentMother/appointmentMother_0.dart";
+import "appointmentMother/appointmentMother_main.dart";
 import "foodIntake/foodIntake_main.dart";
 import "emergencyContact/emergencyContactTab.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -55,7 +55,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AppointmentMother0()),
+                    MaterialPageRoute(builder: (context) => AppointmentMotherMain()),
                   );
                 }
                 break;
