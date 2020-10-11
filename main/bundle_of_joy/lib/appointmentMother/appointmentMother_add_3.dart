@@ -1,25 +1,24 @@
 import "package:flutter/material.dart";
-import "appointmentMother_build.dart";
-import "appointmentMother_1.dart";
-import "appointmentMother_2.dart";
+import "appointmentMother_add_2.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
 
-class AppointmentMother3 extends StatefulWidget {
+class AppointmentMotherAdd3 extends StatefulWidget {
   final String name;
   final DateTime date;
 
-  AppointmentMother3({this.name, this.date});
+  AppointmentMotherAdd3({this.name, this.date});
 
   @override
-  _AppointmentMother3State createState() =>
-      _AppointmentMother3State(name, date);
+  _AppointmentMotherAdd3State createState() => _AppointmentMotherAdd3State(name, date);
 }
 
-class _AppointmentMother3State extends State<AppointmentMother3> {
+class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
   // VARIABLES
   final String nameFrom2;
   DateTime dateFrom2;
+  int _amColor, _pmColor;
 
-  _AppointmentMother3State(this.nameFrom2, this.dateFrom2);
+  _AppointmentMotherAdd3State(this.nameFrom2, this.dateFrom2);
 
   // MAKE THE DEFAULT DATE TODAY
   @override
@@ -28,6 +27,9 @@ class _AppointmentMother3State extends State<AppointmentMother3> {
     if (dateFrom2 == null) {
       dateFrom2 = DateTime.now();
     }
+
+    _amColor = 2;
+    _pmColor = 2;
   }
 
   // BUILD THE WIDGET
@@ -55,10 +57,10 @@ class _AppointmentMother3State extends State<AppointmentMother3> {
       body: Column(
         children: <Widget>[
           Container(
-              height: MediaQuery.of(context).size.height * 0.63,
+              //color: Colors.lightBlue,
+              height: MediaQuery.of(context).size.height * 0.58,
               width: MediaQuery.of(context).size.width,
-              // decoration: new BoxDecoration(color: Colors.red), // FOR DEBUGGING
-
+              margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.03),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -83,7 +85,7 @@ class _AppointmentMother3State extends State<AppointmentMother3> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 15, bottom: 25),
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03, bottom: MediaQuery.of(context).size.height * 0.05),
                       child: Text(
                         "${dateFrom2.day} - ${dateFrom2.month} - ${dateFrom2.year}",
                         style: TextStyle(
@@ -101,7 +103,7 @@ class _AppointmentMother3State extends State<AppointmentMother3> {
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.3,
                             height: MediaQuery.of(context).size.height * 0.05,
-                            decoration: myBoxDecoration(),
+                            decoration: myBoxDecorationAM(),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -110,24 +112,26 @@ class _AppointmentMother3State extends State<AppointmentMother3> {
                                   style: TextStyle(
                                     fontFamily: 'Comfortaa',
                                     fontWeight: FontWeight.bold,
-                                    fontSize:
-                                        MediaQuery.of(context).size.height *
-                                            0.025,
+                                    fontSize: MediaQuery.of(context).size.height * 0.025,
                                     color: Colors.black,
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(left: 10),
+                                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
                                   child: Image.asset(
                                     "assets/icons/am.png",
-                                    height: MediaQuery.of(context).size.height *
-                                        0.03,
+                                    height: MediaQuery.of(context).size.height * 0.03,
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              _amColor = 1;
+                              _pmColor = 2;
+                            });
+                          },
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.08,
@@ -136,7 +140,7 @@ class _AppointmentMother3State extends State<AppointmentMother3> {
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.3,
                             height: MediaQuery.of(context).size.height * 0.05,
-                            decoration: myBoxDecoration(),
+                            decoration: myBoxDecorationPM(),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -145,29 +149,28 @@ class _AppointmentMother3State extends State<AppointmentMother3> {
                                   style: TextStyle(
                                     fontFamily: 'Comfortaa',
                                     fontWeight: FontWeight.bold,
-                                    fontSize:
-                                        MediaQuery.of(context).size.height *
-                                            0.025,
+                                    fontSize: MediaQuery.of(context).size.height * 0.025,
                                     color: Colors.black,
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(left: 10),
-                                  child: Image.asset(
-                                    "assets/icons/pm.png",
-                                    height: MediaQuery.of(context).size.height *
-                                        0.03,
-                                  ),
+                                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
+                                  child: Image.asset("assets/icons/pm.png", height: MediaQuery.of(context).size.height * 0.03),
                                 ),
                               ],
                             ),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              _amColor = 2;
+                              _pmColor = 1;
+                            });
+                          },
                         ),
                       ],
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 35, bottom: 10),
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
                       child: Text(
                         "Remaining Slot(s):",
                         style: TextStyle(
@@ -179,7 +182,7 @@ class _AppointmentMother3State extends State<AppointmentMother3> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 15, bottom: 25),
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
                       child: Text(
                         "5",
                         style: TextStyle(
@@ -190,123 +193,58 @@ class _AppointmentMother3State extends State<AppointmentMother3> {
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            height: MediaQuery.of(context).size.height * 0.06,
-                            decoration: myBoxDecoration2(),
-                            child: Center(
-                              child: Text(
-                                "Back",
-                                style: TextStyle(
-                                  fontFamily: 'Comfortaa',
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: MediaQuery.of(context).size.height *
-                                      0.025,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      AppointmentMother2(name: nameFrom2)),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.05),
-                        InkWell(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            height: MediaQuery.of(context).size.height * 0.06,
-                            decoration: myBoxDecoration2(),
-                            child: Center(
-                              child: Text(
-                                "Confirm",
-                                style: TextStyle(
-                                  fontFamily: 'Comfortaa',
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: MediaQuery.of(context).size.height *
-                                      0.025,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               )),
-
-          // PAGINATION DOTS
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // 1
-              Container(
-                  width: 15,
-                  child: RawMaterialButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AppointmentMother1()),
-                      );
-                    },
-                    fillColor: Color(0xFFFCFFD5),
-                    shape: CircleBorder(
-                        side: BorderSide(width: 1, color: Colors.black)),
-                  )),
-              // 2
-              Container(
-                  width: 15,
-                  margin: EdgeInsets.only(left: 20),
-                  child: RawMaterialButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AppointmentMother2(
-                                  name: nameFrom2,
-                                )),
-                      );
-                    },
-                    fillColor: Color(0xFFFCFFD5),
-                    shape: CircleBorder(
-                        side: BorderSide(width: 1, color: Colors.black)),
-                  )),
-              // 3
-              Container(
-                  width: 15,
-                  margin: EdgeInsets.only(left: 20),
-                  child: RawMaterialButton(
-                    onPressed: () {},
-                    fillColor: Colors.black,
-                    shape: CircleBorder(
-                        side: BorderSide(width: 1, color: Colors.black)),
-                  )),
-              // 4
-              Container(
-                  width: 15,
-                  margin: EdgeInsets.only(left: 20),
-                  child: RawMaterialButton(
-                    onPressed: () {},
-                    fillColor: Color(0xFFFCFFD5),
-                    shape: CircleBorder(
-                        side: BorderSide(width: 1, color: Colors.black)),
-                  )),
+              InkWell(
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  decoration: myBoxDecoration2(),
+                  child: Center(
+                    child: Text(
+                      "Back",
+                      style: TextStyle(
+                        fontFamily: 'Comfortaa',
+                        fontWeight: FontWeight.bold,
+                        fontSize: MediaQuery.of(context).size.height * 0.025,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AppointmentMotherAdd2(name: nameFrom2)),
+                  );
+                },
+              ),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+              InkWell(
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  decoration: myBoxDecoration2(),
+                  child: Center(
+                    child: Text(
+                      "Confirm",
+                      style: TextStyle(
+                        fontFamily: 'Comfortaa',
+                        fontWeight: FontWeight.bold,
+                        fontSize: MediaQuery.of(context).size.height * 0.025,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                onTap: () {},
+              ),
             ],
-          )
+          ),
         ],
       ),
     );
@@ -331,6 +269,28 @@ class _AppointmentMother3State extends State<AppointmentMother3> {
         width: 2.0,
       ),
       borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    );
+  }
+
+  BoxDecoration myBoxDecorationAM() {
+    return BoxDecoration(
+      color: _amColor == 1 ? Color(0xFFFCFFD5) : Colors.white,
+      border: Border.all(
+        color: Colors.black,
+        width: 2.0,
+      ),
+      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+    );
+  }
+
+  BoxDecoration myBoxDecorationPM() {
+    return BoxDecoration(
+      color: _pmColor == 1 ? Color(0xFFFCFFD5) : Colors.white,
+      border: Border.all(
+        color: Colors.black,
+        width: 2.0,
+      ),
+      borderRadius: BorderRadius.all(Radius.circular(30.0)),
     );
   }
 }

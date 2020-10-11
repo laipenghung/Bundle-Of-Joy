@@ -1,12 +1,12 @@
 import "package:flutter/material.dart";
-import "appointmentMother_1.dart";
+import "appointmentMother_add_1.dart";
 
-class AppointmentMother0 extends StatefulWidget {
+class AppointmentMotherMain extends StatefulWidget {
   @override
-  _AppointmentMother0State createState() => _AppointmentMother0State();
+  _AppointmentMotherMainState createState() => _AppointmentMotherMainState();
 }
 
-class _AppointmentMother0State extends State<AppointmentMother0> {
+class _AppointmentMotherMainState extends State<AppointmentMotherMain> {
   // BUILD THE WIDGET
   @override
   Widget build(BuildContext context) {
@@ -55,8 +55,7 @@ class _AppointmentMother0State extends State<AppointmentMother0> {
                           style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.025,
+                            fontSize: MediaQuery.of(context).size.height * 0.025,
                             color: Colors.black,
                           ),
                         ),
@@ -89,8 +88,7 @@ class _AppointmentMother0State extends State<AppointmentMother0> {
                           style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.025,
+                            fontSize: MediaQuery.of(context).size.height * 0.025,
                             color: Colors.black,
                           ),
                         ),
@@ -101,8 +99,7 @@ class _AppointmentMother0State extends State<AppointmentMother0> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => AppointmentMother1()),
+                    MaterialPageRoute(builder: (context) => AppointmentMotherAdd1()),
                   );
                 },
               ),
