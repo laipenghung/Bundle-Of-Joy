@@ -2,6 +2,11 @@ import "package:flutter/material.dart";
 import "foodIntake_add_3_bs.dart";
 
 class FoodIntakeSummaryDone extends StatefulWidget {
+  final String selectedDate, selectedTime, bPressureBefore, bPressureAfter;
+  final Map foodMap;
+  FoodIntakeSummaryDone({Key key, @required this.selectedDate, 
+    this.selectedTime, this.foodMap, this.bPressureBefore, this.bPressureAfter}) : super(key: key);
+
   @override
   _FoodIntakeSummaryDoneState createState() => _FoodIntakeSummaryDoneState();
 }
@@ -13,7 +18,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
       // APP BAR
       appBar: AppBar(
         title: Text(
-          "Food Intake Tracking",
+          "Food Intake Tracking D",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
@@ -52,7 +57,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                         width: MediaQuery.of(context).size.width * 0.4,
                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                         child: Text(
-                          "12-10-2020",
+                          widget.selectedDate,
                           style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,
@@ -77,7 +82,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                         width: MediaQuery.of(context).size.width * 0.4,
                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                         child: Text(
-                          "23 : 00",
+                          widget.selectedTime,
                           style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,
@@ -163,7 +168,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                                   ),
                                 ),
                                 Text(
-                                  "7.50",
+                                  widget.bPressureBefore,
                                   style: TextStyle(
                                     fontFamily: 'Comfortaa',
                                     fontWeight: FontWeight.bold,
@@ -190,7 +195,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                                   ),
                                 ),
                                 Text(
-                                  "7.50",
+                                  widget.bPressureAfter,
                                   style: TextStyle(
                                     fontFamily: 'Comfortaa',
                                     fontWeight: FontWeight.bold,

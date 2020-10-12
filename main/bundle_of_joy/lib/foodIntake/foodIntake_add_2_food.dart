@@ -3,11 +3,18 @@ import "foodIntake_add_1_dateTime.dart";
 import "foodIntake_add_3_bs.dart";
 
 class FoodIntakeAdd2 extends StatefulWidget {
+  final String selectedDate, selectedTime;
+  FoodIntakeAdd2({Key key, @required this.selectedDate, this.selectedTime}) : super(key: key);
+
   @override
   _FoodIntakeAdd2State createState() => _FoodIntakeAdd2State();
 }
 
 class _FoodIntakeAdd2State extends State<FoodIntakeAdd2> {
+  TextEditingController _controller = TextEditingController();
+  Map<String, String> foodMap = Map();
+  String foodName = "", foodQty = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +70,10 @@ class _FoodIntakeAdd2State extends State<FoodIntakeAdd2> {
                           width: MediaQuery.of(context).size.width * 0.65,
                           height: MediaQuery.of(context).size.height * 0.055,
                           child: TextFormField(
+                            controller: _controller,
+                            onChanged: (val) {
+                              setState(() => foodName = val);
+                            },
                             //textInputAction: TextInputAction.send,
                             decoration: new InputDecoration(
                               labelText: "Food name",
@@ -108,6 +119,7 @@ class _FoodIntakeAdd2State extends State<FoodIntakeAdd2> {
                           ),
                           onTap: () {
                             createAlertDialog(context);
+                            _controller.clear();
                           },
                         ),
                       ],
@@ -117,6 +129,11 @@ class _FoodIntakeAdd2State extends State<FoodIntakeAdd2> {
               ),
             ),
           ),
+          //Container(
+          //child: Center(
+          //child: testPrint(),
+          //),
+          //),
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -139,6 +156,7 @@ class _FoodIntakeAdd2State extends State<FoodIntakeAdd2> {
                     ),
                   ),
                   onTap: () {
+                    print(foodMap);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => FoodIntakeAdd1()),
@@ -164,9 +182,11 @@ class _FoodIntakeAdd2State extends State<FoodIntakeAdd2> {
                     ),
                   ),
                   onTap: () {
+                    //print(widget.selectedDate + "   " + widget.selectedTime);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => FoodIntakeAdd3()),
+                      MaterialPageRoute(
+                          builder: (context) => FoodIntakeAdd3(selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: foodMap)),
                     );
                   },
                 ),
@@ -211,6 +231,12 @@ class _FoodIntakeAdd2State extends State<FoodIntakeAdd2> {
             title: Text("Quantity of food"),
             content: Container(
               child: TextField(
+                onChanged: (val) {
+                  setState(() {
+                    foodQty = val;
+                    testPrint();
+                  });
+                },
                 //controller:
                 keyboardType: TextInputType.number,
               ),
@@ -219,11 +245,28 @@ class _FoodIntakeAdd2State extends State<FoodIntakeAdd2> {
               FlatButton(
                 child: Text("Done"),
                 onPressed: () {
+                  setMap();
                   Navigator.of(context).pop();
                 },
               )
             ],
           );
         });
+  }
+
+  setMap() {
+    foodMap[foodName] = foodQty;
+    print(foodMap);
+  }
+
+  testPrint() {
+    if (foodMap.isNotEmpty) {
+      int index;
+      String key = foodMap.keys.elementAt(index);
+      return ListTile(
+        title: Text(key),
+        subtitle: Text(foodMap[key]),
+      );
+    }
   }
 }
