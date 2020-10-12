@@ -57,7 +57,7 @@ class _AddEmerContactScreenState extends State<AddEmerContactScreen> {
                 _emerContactNo = contact.phoneNumber.number;
                 //_emerContactName = contact.fullName;      #Remove comment if have to add contact name into firebse
                 emerContact.addEmerContact(_emerContactNo);
-                Navigator.push(context,
+                Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => MotherToBeTab()));
                 Fluttertoast.showToast(
                   msg: "Contact Successfully Added",

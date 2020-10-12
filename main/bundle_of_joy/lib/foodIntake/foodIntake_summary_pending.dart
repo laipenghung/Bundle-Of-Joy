@@ -2,6 +2,10 @@ import "package:flutter/material.dart";
 import "foodIntake_add_3_bs.dart";
 
 class FoodIntakeSummaryPending extends StatefulWidget {
+  final String selectedDate, selectedTime, bPressureBefore;
+  final Map foodMap;
+  FoodIntakeSummaryPending({Key key, @required this.selectedDate, 
+    this.selectedTime, this.foodMap, this.bPressureBefore}) : super(key: key);
   @override
   _FoodIntakeSummaryPendingState createState() => _FoodIntakeSummaryPendingState();
 }
@@ -52,7 +56,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
                         width: MediaQuery.of(context).size.width * 0.4,
                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                         child: Text(
-                          "12-10-2020",
+                          widget.selectedDate,
                           style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,
@@ -77,7 +81,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
                         width: MediaQuery.of(context).size.width * 0.4,
                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                         child: Text(
-                          "23 : 00",
+                          widget.selectedTime,
                           style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,
@@ -163,7 +167,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
                                   ),
                                 ),
                                 Text(
-                                  "7.50",
+                                  widget.bPressureBefore,
                                   style: TextStyle(
                                     fontFamily: 'Comfortaa',
                                     fontWeight: FontWeight.bold,

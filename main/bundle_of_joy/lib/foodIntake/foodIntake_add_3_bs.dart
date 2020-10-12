@@ -4,11 +4,18 @@ import "foodIntake_summary_done.dart";
 import "foodIntake_summary_pending.dart";
 
 class FoodIntakeAdd3 extends StatefulWidget {
+  final String selectedDate, selectedTime;
+  final Map foodMap;
+  FoodIntakeAdd3({Key key, @required this.selectedDate, this.selectedTime, this.foodMap}) : super(key: key);
+
   @override
   _FoodIntakeAdd3State createState() => _FoodIntakeAdd3State();
 }
 
 class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
+  String bPressureBefore = "", bPressureAfter = "";
+  TextEditingController controllerBP = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,6 +85,9 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                           width: MediaQuery.of(context).size.width * 0.8,
                           height: MediaQuery.of(context).size.height * 0.055,
                           child: TextFormField(
+                            onChanged: (val) {
+                              setState(() => bPressureBefore = val);
+                            },
                             keyboardType: TextInputType.number,
                             decoration: new InputDecoration(
                               labelText: "Blood sugar reading",
@@ -127,6 +137,10 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                           width: MediaQuery.of(context).size.width * 0.8,
                           height: MediaQuery.of(context).size.height * 0.055,
                           child: TextFormField(
+                            controller: controllerBP,
+                            onChanged: (val) {
+                              setState(() => bPressureAfter = val);
+                            },
                             keyboardType: TextInputType.number,
                             decoration: new InputDecoration(
                               labelText: "Blood sugar reading",
@@ -205,11 +219,8 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
-                      MaterialPageRoute(builder: (context) => FoodIntakeSummaryPending()),
-                    );
+                    validateInput(controllerBP.text);
+                    //print(widget.foodMap);
                   },
                 ),
               ],
@@ -242,5 +253,22 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
       borderRadius: BorderRadius.all(Radius.circular(30.0) //<--- border radius here
           ),
     );
+  }
+
+  validateInput(String text) {
+    if (text.isEmpty) {
+      Navigator.push(
+        context,
+        // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
+        MaterialPageRoute(builder: (context) => FoodIntakeSummaryPending(selectedDate: widget.selectedDate,
+          selectedTime: widget.selectedTime, foodMap: widget.foodMap,bPressureBefore: bPressureBefore)));
+    } else {
+      Navigator.push(
+        context,
+        // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
+        MaterialPageRoute(builder: (context) => FoodIntakeSummaryDone(selectedDate: widget.selectedDate,
+          selectedTime: widget.selectedTime, foodMap: widget.foodMap, bPressureBefore: bPressureBefore, 
+          bPressureAfter: bPressureAfter)));
+    }
   }
 }

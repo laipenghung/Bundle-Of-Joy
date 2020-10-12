@@ -72,34 +72,36 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         InkWell(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.85,
-                            height: MediaQuery.of(context).size.height * 0.07,
-                            decoration: myBoxDecoration(),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}",
-                                  style: TextStyle(
-                                    fontFamily: 'Comfortaa',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: MediaQuery.of(context).size.height * 0.025,
-                                    color: Colors.black,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              height: MediaQuery.of(context).size.height * 0.07,
+                              decoration: myBoxDecoration(),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}",
+                                    style: TextStyle(
+                                      fontFamily: 'Comfortaa',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: MediaQuery.of(context).size.height * 0.025,
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.005, left: MediaQuery.of(context).size.width * 0.05),
-                                  child: Image.asset(
-                                    "assets/icons/calendar.png",
-                                    height: MediaQuery.of(context).size.height * 0.035,
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.005, left: MediaQuery.of(context).size.width * 0.05),
+                                    child: Image.asset(
+                                      "assets/icons/calendar.png",
+                                      height: MediaQuery.of(context).size.height * 0.035,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                          onTap: _pickDate,
-                        ),
+                            onTap: () {
+                              _pickDate();
+                              print("${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}");
+                            }),
                       ],
                     ),
                   ),
@@ -117,42 +119,44 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
                     ),
                   ),
                   InkWell(
-                    child: Container(
-                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.85,
-                            height: MediaQuery.of(context).size.height * 0.07,
-                            decoration: myBoxDecoration(),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "${time.hour} : ${time.minute}",
-                                  style: TextStyle(
-                                    fontFamily: 'Comfortaa',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: MediaQuery.of(context).size.height * 0.025,
-                                    color: Colors.black,
+                      child: Container(
+                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              height: MediaQuery.of(context).size.height * 0.07,
+                              decoration: myBoxDecoration(),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "${time.hour} : ${time.minute}",
+                                    style: TextStyle(
+                                      fontFamily: 'Comfortaa',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: MediaQuery.of(context).size.height * 0.025,
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05),
-                                  child: Image.asset(
-                                    "assets/icons/time.png",
-                                    height: MediaQuery.of(context).size.height * 0.035,
+                                  Container(
+                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05),
+                                    child: Image.asset(
+                                      "assets/icons/time.png",
+                                      height: MediaQuery.of(context).size.height * 0.035,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    onTap: _pickTime,
-                  ),
+                      onTap: () {
+                        _pickTime();
+                        print("${time.hour} : ${time.minute}");
+                      }),
                 ],
               ),
             ),
@@ -204,9 +208,12 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
                     ),
                   ),
                   onTap: () {
+                    var selectedDate = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+                    var selectedTime = "${time.hour}:${time.minute}";
+                    print(selectedDate +"   "+ selectedTime);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => FoodIntakeAdd2()),
+                      MaterialPageRoute(builder: (context) => FoodIntakeAdd2(selectedDate:selectedDate, selectedTime:selectedTime)),
                     );
                   },
                 ),
