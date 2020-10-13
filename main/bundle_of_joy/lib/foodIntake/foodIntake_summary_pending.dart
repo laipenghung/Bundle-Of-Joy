@@ -1,11 +1,14 @@
 import "package:flutter/material.dart";
 import "foodIntake_add_3_bs.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
+
+import 'foodIntake_main.dart';
 
 class FoodIntakeSummaryPending extends StatefulWidget {
-  final String selectedDate, selectedTime, bPressureBefore;
+  final String selectedDate, selectedTime, bSugarBefore;
   final Map foodMap;
-  FoodIntakeSummaryPending({Key key, @required this.selectedDate, 
-    this.selectedTime, this.foodMap, this.bPressureBefore}) : super(key: key);
+  FoodIntakeSummaryPending({Key key, @required this.selectedDate, this.selectedTime, this.foodMap, this.bSugarBefore}) : super(key: key);
   @override
   _FoodIntakeSummaryPendingState createState() => _FoodIntakeSummaryPendingState();
 }
@@ -17,7 +20,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
       // APP BAR
       appBar: AppBar(
         title: Text(
-          "Food Intake Tracking",
+          "Food Intake Tracking P",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
@@ -167,7 +170,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
                                   ),
                                 ),
                                 Text(
-                                  widget.bPressureBefore,
+                                  widget.bSugarBefore,
                                   style: TextStyle(
                                     fontFamily: 'Comfortaa',
                                     fontWeight: FontWeight.bold,
@@ -278,7 +281,9 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
                       ),
                     ),
                   ),
-                  onTap: () {}, //ADD TO DATABASE
+                  onTap: () {
+                    addFoodRecord();
+                  }, //ADD TO DATABASE
                 ),
               ],
             ),
@@ -310,5 +315,25 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
       borderRadius: BorderRadius.all(Radius.circular(30.0) //<--- border radius here
           ),
     );
+  }
+
+  Future<void> addFoodRecord() {
+    final User user = FirebaseAuth.instance.currentUser;
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+    CollectionReference foodIntakeRecord = _db.collection("foodIntake_Pending");
+    return foodIntakeRecord.add({
+      "motherID": user.uid,
+      "selectedDate": widget.selectedDate,
+      "selectedTime": widget.selectedTime,
+      "bsBefore": widget.bSugarBefore,
+      "bsAfter": null,
+      "foodMap": widget.foodMap,
+    }).then((value) {
+      foodIntakeRecord.doc(value.id).update({
+        "recordID": value.id,
+      });
+      print("Data uploaded");
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeMain()));
+    }).catchError((error) => print("wrong"));
   }
 }

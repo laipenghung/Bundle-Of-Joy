@@ -13,7 +13,7 @@ class FoodIntakeAdd3 extends StatefulWidget {
 }
 
 class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
-  String bPressureBefore = "", bPressureAfter = "";
+  String bSugarBefore = "", bSugarAfter = "";
   TextEditingController controllerBP = TextEditingController();
 
   @override
@@ -86,7 +86,7 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                           height: MediaQuery.of(context).size.height * 0.055,
                           child: TextFormField(
                             onChanged: (val) {
-                              setState(() => bPressureBefore = val);
+                              setState(() => bSugarBefore = val);
                             },
                             keyboardType: TextInputType.number,
                             decoration: new InputDecoration(
@@ -139,7 +139,7 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                           child: TextFormField(
                             controller: controllerBP,
                             onChanged: (val) {
-                              setState(() => bPressureAfter = val);
+                              setState(() => bSugarAfter = val);
                             },
                             keyboardType: TextInputType.number,
                             decoration: new InputDecoration(
@@ -261,14 +261,14 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
         context,
         // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
         MaterialPageRoute(builder: (context) => FoodIntakeSummaryPending(selectedDate: widget.selectedDate,
-          selectedTime: widget.selectedTime, foodMap: widget.foodMap,bPressureBefore: bPressureBefore)));
+          selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore)));
     } else {
       Navigator.push(
         context,
         // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
         MaterialPageRoute(builder: (context) => FoodIntakeSummaryDone(selectedDate: widget.selectedDate,
-          selectedTime: widget.selectedTime, foodMap: widget.foodMap, bPressureBefore: bPressureBefore, 
-          bPressureAfter: bPressureAfter)));
+          selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore, 
+          bSugarAfter: bSugarAfter)));
     }
   }
 }
