@@ -1,3 +1,5 @@
+import 'package:bundle_of_joy/foodIntake/foodIntake_recordList_done.dart';
+import 'package:bundle_of_joy/foodIntake/foodIntake_recordList_pending.dart';
 import "package:flutter/material.dart";
 import "foodIntake_add_1_dateTime.dart";
 import "foodIntake_record_done.dart";
@@ -69,7 +71,7 @@ class _FoodIntakeMainState extends State<FoodIntakeMain> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FoodIntakeRecordDone()),
+                  MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
                 );
               },
             ),
@@ -147,7 +149,7 @@ class _FoodIntakeMainState extends State<FoodIntakeMain> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FoodIntakeRecordPending()),
+                  MaterialPageRoute(builder: (context) => FoodIntakeListPending()),
                 );
               },
             ),

@@ -1,26 +1,19 @@
 import "package:flutter/material.dart";
 import "foodIntake_main.dart";
 import "foodIntake_add_2_food.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
 
 class FoodIntakeRecordDone extends StatefulWidget {
+  final String foodIntakeRecordID;
+  FoodIntakeRecordDone({Key key, @required this.foodIntakeRecordID}) : super(key: key);
+
   @override
   _FoodIntakeRecordDoneState createState() => _FoodIntakeRecordDoneState();
 }
 
 class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
-  // Variables
-  DateTime pickedDate;
-  TimeOfDay time;
-
-  // MAKE THE DEFAULT DATE TODAY
-  @override
-  void initState() {
-    super.initState();
-
-    pickedDate = DateTime.now();
-    time = TimeOfDay.now();
-  }
-
+  CollectionReference collectionReference = FirebaseFirestore.instance.collection("foodIntake_Done");
   // BUILD THE WIDGET
   @override
   Widget build(BuildContext context) {
@@ -43,34 +36,94 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
       ),
 
       // BODY
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.055),
-            //color: Colors.lightBlue,
-            height: MediaQuery.of(context).size.height * 0.52,
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.05),
-              child: Column(
+      body: FutureBuilder<DocumentSnapshot>(
+        future: collectionReference.doc(widget.foodIntakeRecordID).get(),
+        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    child: Text(
-                      "List View of DONE record here",
-                      style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontWeight: FontWeight.bold,
-                        fontSize: MediaQuery.of(context).size.height * 0.025,
-                        color: Colors.black,
+                    margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.055),
+                    //color: Colors.lightBlue,
+                    height: MediaQuery.of(context).size.height * 0.52,
+                    child: SingleChildScrollView(
+                      padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.05),
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            child: Text(
+                              snapshot.data.data()["selectedDate"],
+                              style: TextStyle(
+                                fontFamily: 'Comfortaa',
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+
+                          Container(
+                            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            child: Text(
+                              snapshot.data.data()["selectedTime"],
+                              style: TextStyle(
+                                fontFamily: 'Comfortaa',
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+
+                          //implement function to display foodMap data
+
+                          Container(
+                            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            child: Text(
+                              snapshot.data.data()["bsBefore"],
+                              style: TextStyle(
+                                fontFamily: 'Comfortaa',
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+
+                          Container(
+                            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            child: Text(
+                              snapshot.data.data()["bsAfter"],
+                              style: TextStyle(
+                                fontFamily: 'Comfortaa',
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-          ),
-        ],
+              );
+            }
+          } else if (snapshot.hasError) {
+            print("error");
+          }
+          return CircularProgressIndicator();
+        },
       ),
     );
   }
@@ -97,45 +150,5 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
       borderRadius: BorderRadius.all(Radius.circular(30.0) //<--- border radius here
           ),
     );
-  }
-
-  _pickDate() async {
-    DateTime date = await showDatePicker(
-      context: context,
-      firstDate: DateTime(DateTime.now().year - 5),
-      lastDate: DateTime(DateTime.now().year + 5),
-      initialDate: pickedDate,
-      builder: (BuildContext context, Widget child) {
-        return Theme(
-          data: ThemeData(primarySwatch: Colors.pink, splashColor: Colors.green),
-          child: child,
-        );
-      },
-    );
-
-    if (date != null) {
-      setState(() {
-        pickedDate = date;
-      });
-    }
-  }
-
-  _pickTime() async {
-    TimeOfDay t = await showTimePicker(
-      context: context,
-      initialTime: time,
-      builder: (BuildContext context, Widget child) {
-        return Theme(
-          data: ThemeData(primarySwatch: Colors.pink, splashColor: Colors.green),
-          child: child,
-        );
-      },
-    );
-
-    if (t != null) {
-      setState(() {
-        time = t;
-      });
-    }
   }
 }
