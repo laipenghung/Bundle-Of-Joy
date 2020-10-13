@@ -1,11 +1,13 @@
+import 'package:bundle_of_joy/foodIntake/foodIntake_main.dart';
 import "package:flutter/material.dart";
 import "foodIntake_add_3_bs.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
 
 class FoodIntakeSummaryDone extends StatefulWidget {
-  final String selectedDate, selectedTime, bPressureBefore, bPressureAfter;
+  final String selectedDate, selectedTime, bSugarBefore, bSugarAfter;
   final Map foodMap;
-  FoodIntakeSummaryDone({Key key, @required this.selectedDate, 
-    this.selectedTime, this.foodMap, this.bPressureBefore, this.bPressureAfter}) : super(key: key);
+  FoodIntakeSummaryDone({Key key, @required this.selectedDate, this.selectedTime, this.foodMap, this.bSugarBefore, this.bSugarAfter}) : super(key: key);
 
   @override
   _FoodIntakeSummaryDoneState createState() => _FoodIntakeSummaryDoneState();
@@ -168,7 +170,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                                   ),
                                 ),
                                 Text(
-                                  widget.bPressureBefore,
+                                  widget.bSugarBefore,
                                   style: TextStyle(
                                     fontFamily: 'Comfortaa',
                                     fontWeight: FontWeight.bold,
@@ -195,7 +197,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                                   ),
                                 ),
                                 Text(
-                                  widget.bPressureAfter,
+                                  widget.bSugarAfter,
                                   style: TextStyle(
                                     fontFamily: 'Comfortaa',
                                     fontWeight: FontWeight.bold,
@@ -260,7 +262,9 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                       ),
                     ),
                   ),
-                  onTap: () {}, //ADD TO DATABASE
+                  onTap: () {
+                    addFoodRecord();
+                  }, //ADD TO DATABASE
                 ),
               ],
             ),
@@ -292,5 +296,25 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
       borderRadius: BorderRadius.all(Radius.circular(30.0) //<--- border radius here
           ),
     );
+  }
+
+  Future<void> addFoodRecord() {
+    final User user = FirebaseAuth.instance.currentUser;
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+    CollectionReference foodIntakeRecord = _db.collection("foodIntake_Done");
+    return foodIntakeRecord.add({
+      "motherID": user.uid,
+      "selectedDate": widget.selectedDate,
+      "selectedTime": widget.selectedTime,
+      "bsBefore": widget.bSugarBefore,
+      "bsAfter": widget.bSugarAfter,
+      "foodMap": widget.foodMap,
+    }).then((value) {
+      foodIntakeRecord.doc(value.id).update({
+        "recordID" : value.id,
+      });
+      print("Data uploaded");
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeMain()));
+    }).catchError((error) => print("wrong"));
   }
 }
