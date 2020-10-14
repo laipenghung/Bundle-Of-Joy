@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import "motherProfile.dart";
-import "auth/auth.dart";
-import "sign_up.dart";
+import "setting.dart";
 
 class ProfileTab extends StatefulWidget {
 
@@ -14,11 +13,11 @@ class _ProfileState extends State<ProfileTab> {
     double height = MediaQuery.of(context).size.height * 0.15;
     double fontSize = MediaQuery.of(context).size.width * 0.045;
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
-      elevation: 4,
+      elevation: 5,
       color: Color(0xFFFCFFD5),
       child: InkWell(
         onTap: () {
@@ -34,20 +33,14 @@ class _ProfileState extends State<ProfileTab> {
               break;
             }
             case 2:{
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Setting()),
+              );
               break;
             }
             case 3:{
               break;
-            }
-            case 4:{
-              signOut();
-              Navigator.of(context, rootNavigator: true).push(
-                MaterialPageRoute(
-                    builder: (context){
-                      return SignUpScreen();
-                    }
-                ),
-              );
             }
           }
         },
@@ -84,30 +77,14 @@ class _ProfileState extends State<ProfileTab> {
       body: GridView.count(
         crossAxisCount: 2,
         shrinkWrap: true,
-        padding: EdgeInsets.only(top: 20.0),
+        padding: EdgeInsets.only(top: 20.0, left: 15, right: 15),
         children: <Widget>[
           singleCard("assets/icons/mother.png", "Mother's Profile", 0),
           singleCard("assets/icons/baby_color.png", "Baby's Profile", 1),
           singleCard("assets/icons/settings.png", "Setting", 2),
           singleCard("assets/icons/feedback.png", "Feedback", 3),
-          singleCard("assets/icons/feedback.png", "Logout", 4),
         ],
       ),
     );
   }
 }
-
-/*
-RaisedButton(
-onPressed: () {
-signOut();
-Navigator.of(context).pushReplacement(
-MaterialPageRoute(
-builder: (context){
-return SignUpScreen();
-}
-),
-);
-},
-child: const Text("Sign Out", style: TextStyle(fontSize: 20)),
-),*/
