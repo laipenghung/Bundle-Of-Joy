@@ -296,7 +296,7 @@ class _MotherHealthTracking extends State<MotherHealthTracking>{
   @override
   Widget build(BuildContext context) {
     final User user = FirebaseAuth.instance.currentUser;
-    CollectionReference health = FirebaseFirestore.instance.collection("mother_health").doc(user.uid).collection("health_report");
+    Query health = FirebaseFirestore.instance.collection("mother").doc(user.uid).collection("health_record").orderBy("mh_day_of_pregnancy", descending: true);
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
 
     return Scaffold(
