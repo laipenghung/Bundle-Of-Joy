@@ -38,9 +38,9 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02),
+            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.055),
             //color: Colors.lightBlue,
-            height: MediaQuery.of(context).size.height * 0.58,
+            height: MediaQuery.of(context).size.height * 0.52,
             width: MediaQuery.of(context).size.width,
             child: SingleChildScrollView(
               padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, bottom: MediaQuery.of(context).size.height * 0.05),
@@ -311,7 +311,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
       "foodMap": widget.foodMap,
     }).then((value) {
       foodIntakeRecord.doc(value.id).update({
-        "recordID" : value.id,
+        "recordID": value.id,
       });
       print("Data uploaded");
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeMain()));
