@@ -4,7 +4,7 @@ import "foodIntake_add_3_bs.dart";
 
 class FoodIntakeAdd2 extends StatefulWidget {
   final String selectedDate, selectedTime;
-  FoodIntakeAdd2({Key key, @required this.selectedDate, this.selectedTime}) : super(key: key);
+  FoodIntakeAdd2({Key key, this.selectedDate, this.selectedTime}) : super(key: key);
 
   @override
   _FoodIntakeAdd2State createState() => _FoodIntakeAdd2State();

@@ -6,7 +6,7 @@ import "foodIntake_summary_pending.dart";
 class FoodIntakeAdd3 extends StatefulWidget {
   final String selectedDate, selectedTime;
   final Map foodMap;
-  FoodIntakeAdd3({Key key, @required this.selectedDate, this.selectedTime, this.foodMap}) : super(key: key);
+  FoodIntakeAdd3({Key key, this.selectedDate, this.selectedTime, this.foodMap}) : super(key: key);
 
   @override
   _FoodIntakeAdd3State createState() => _FoodIntakeAdd3State();
@@ -258,17 +258,22 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
   validateInput(String text) {
     if (text.isEmpty) {
       Navigator.push(
-        context,
-        // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
-        MaterialPageRoute(builder: (context) => FoodIntakeSummaryPending(selectedDate: widget.selectedDate,
-          selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore)));
+          context,
+          // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
+          MaterialPageRoute(
+              builder: (context) => FoodIntakeSummaryPending(
+                  selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore)));
     } else {
       Navigator.push(
-        context,
-        // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
-        MaterialPageRoute(builder: (context) => FoodIntakeSummaryDone(selectedDate: widget.selectedDate,
-          selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore, 
-          bSugarAfter: bSugarAfter)));
+          context,
+          // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
+          MaterialPageRoute(
+              builder: (context) => FoodIntakeSummaryDone(
+                  selectedDate: widget.selectedDate,
+                  selectedTime: widget.selectedTime,
+                  foodMap: widget.foodMap,
+                  bSugarBefore: bSugarBefore,
+                  bSugarAfter: bSugarAfter)));
     }
   }
 }
