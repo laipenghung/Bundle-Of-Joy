@@ -45,12 +45,12 @@ class _MotherHealthTracking extends State<MotherHealthTracking>{
                 Container(
                   width: width,
                   decoration: myBoxDecoration(),
-                  margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  margin: EdgeInsets.fromLTRB(0, paddingTopPic, 0, 0),
                   child: DropdownButtonHideUnderline(
                     child: ButtonTheme(
                       alignedDropdown: true,
                       child: DropdownButton(
-                        hint: Text("Select a date"),
+                        isExpanded: true,
                         dropdownColor: Color(0xFFFCFFD5),
                         value: selected_index == null ? "null" : _listInfo[selected_index],
                         items: _listInfo.map((HealthReport report) {
@@ -58,15 +58,11 @@ class _MotherHealthTracking extends State<MotherHealthTracking>{
                           String date = report.date.toString();
                           return DropdownMenuItem<HealthReport>(
                             value: report,
-                            child: Row(
-                                children: [
-                                  Text(
-                                    "Day: $day ($date)",
-                                    style: TextStyle(
-                                      fontFamily: "Comfortaa",
-                                    ),
-                                  ),
-                                ]
+                            child: Text(
+                              "Day: $day ($date)",
+                              style: TextStyle(
+                                fontFamily: "Comfortaa",
+                              ),
                             ),
                           );
                         }).toList(),
@@ -287,8 +283,8 @@ class _MotherHealthTracking extends State<MotherHealthTracking>{
         color: Colors.black,
         width: 2.0,
       ),
-      borderRadius:
-      BorderRadius.all(Radius.circular(10.0) //<--- border radius here
+      borderRadius: BorderRadius.all(
+          Radius.circular(10.0) //<--- border radius here
       ),
     );
   }
