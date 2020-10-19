@@ -37,27 +37,23 @@ class _AppointmentMotherAdd1State extends State<AppointmentMotherAdd1> {
       ),
 
       // BODY
-      body: Column(
-        children: <Widget>[
-          Container(
-              //color: Colors.lightBlue,
-              height: MediaQuery.of(context).size.height * 0.7,
-              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    HospitalRow("KPJ Kuching Specialist Hospital"),
-                    HospitalRow("Long many words debugging long long material page example this is"),
-                    HospitalRow("Hospital 3"),
-                    HospitalRow("Hospital 4"),
-                    HospitalRow("Hospital 5"),
-                    HospitalRow("Hospital 6"),
-                    HospitalRow("Hospital 7"),
-                  ],
-                ),
-              )),
-        ],
-      ),
+      body: Container(
+          //color: Colors.lightBlue,
+          height: MediaQuery.of(context).size.height * 0.7,
+          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                HospitalRow("KPJ Kuching Specialist Hospital"),
+                HospitalRow("Long many words debugging long long material page example this is"),
+                HospitalRow("Hospital 3"),
+                HospitalRow("Hospital 4"),
+                HospitalRow("Hospital 5"),
+                HospitalRow("Hospital 6"),
+                HospitalRow("Hospital 7"),
+              ],
+            ),
+          )),
     );
   }
 }

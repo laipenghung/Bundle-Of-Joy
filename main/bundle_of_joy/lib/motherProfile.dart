@@ -11,12 +11,11 @@ class MotherProfile extends StatefulWidget {
 }
 
 class _MotherProfile extends State<MotherProfile>{
-  String input = "";
+  String input;
 
   ListView _listView(AsyncSnapshot<DocumentSnapshot> document) {
-    final _listItems = ["Picture", "Name", "Age", "Date Of Birth", "Blood Type", "No Of Child", "Personal Phone", "Emergency Contact"];
+    final _listItems = ["Name", "Age", "Date Of Birth", "Blood Type", "No Of Child", "Personal Phone", "Emergency Contact"];
     final _listInfo = [
-      "Picture_no",
       document.data.data()["m_name"].toString(),
       document.data.data()["m_age"].toString(),
       document.data.data()["m_dob"].toString(),
@@ -57,8 +56,8 @@ class _MotherProfile extends State<MotherProfile>{
 
   Future<bool> editBox(int index, AsyncSnapshot<DocumentSnapshot> document, BuildContext context) {
     Mother mother = new Mother();
-    final _listEditTitles = ["Edit Picture", "Edit Name", "Edit Age", "Edit Date Of Birth", "Edit Blood Type", "Edit No Of Child", "Edit Personal Phone", "Edit Emergency Contact"];
-    final _listField = ["photoURL", "m_name", "m_age", "m_dob", "m_bloodType", "m_no_of_child", "m_phone", "m_emergencyContact"];
+    final _listEditTitles = ["Edit Name", "Edit Age", "Edit Date Of Birth", "Edit Blood Type", "Edit No Of Child", "Edit Personal Phone", "Edit Emergency Contact"];
+    final _listField = ["m_name", "m_age", "m_dob", "m_bloodType", "m_no_of_child", "m_phone", "m_emergencyContact"];
     Future<bool> _selectDate() async{
       DateTime selectedDate = DateTime.now();
       String year, month, day, DOB;
@@ -93,10 +92,11 @@ class _MotherProfile extends State<MotherProfile>{
       }
     }
 
-    if(index == 3){
+    if(index == 2){
       return _selectDate();
     }
     else {
+      input = document.data.data()[_listField[index]].toString();
       return showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -109,7 +109,6 @@ class _MotherProfile extends State<MotherProfile>{
                   child: Text("Done"),
                   onPressed: () {
                     mother.editProfile(_listField[index], input);
-                    input = "";
                     Navigator.of(context).pop();
                   },
                 )
@@ -120,9 +119,9 @@ class _MotherProfile extends State<MotherProfile>{
     }
   }
 
-  Widget editField(int index, AsyncSnapshot<DocumentSnapshot> document, List _lisField){
+  Widget editField(int index, AsyncSnapshot<DocumentSnapshot> document, List _listField){
     double margin = 30;
-    if(index == 4){
+    if(index == 3){
       return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Container(
@@ -132,7 +131,7 @@ class _MotherProfile extends State<MotherProfile>{
                   isExpanded: true,
                   dropdownColor: Color(0xFFFCFFD5),
                   value: input,
-                  items: <String>["", "A", "B", "O", "AB"].map((String value) {
+                  items: <String>["A", "B", "O", "AB"].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: new Text(value),
@@ -149,12 +148,12 @@ class _MotherProfile extends State<MotherProfile>{
           }
       );
     }
-    else if(index == 2 || index == 5 || index == 6 || index == 7){
+    else if(index == 1 || index == 4 || index == 5 || index == 6){
       return Container(
         margin: EdgeInsets.only(left:margin+20, right:margin+20),
         child: TextField(
           textAlign: TextAlign.center,
-          controller: TextEditingController(text: document.data.data()[_lisField[index]].toString()),
+          controller: TextEditingController(text: document.data.data()[_listField[index]].toString()),
           keyboardType: TextInputType.number,
           onChanged: (value) {
             input = value;
@@ -167,7 +166,7 @@ class _MotherProfile extends State<MotherProfile>{
         margin: EdgeInsets.only(left:margin, right:margin),
         child: TextField(
           textAlign: TextAlign.center,
-          controller: TextEditingController(text: document.data.data()[_lisField[index]].toString()),
+          controller: TextEditingController(text: document.data.data()[_listField[index]].toString()),
           onChanged: (value) {
             input = value;
           },

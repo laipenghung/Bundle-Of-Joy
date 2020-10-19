@@ -257,7 +257,12 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
       initialDate: pickedDate,
       builder: (BuildContext context, Widget child) {
         return Theme(
-          data: ThemeData(primarySwatch: Colors.pink, splashColor: Colors.green),
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.dark(
+              surface:  Color(int.parse("0xFFFCFFD5")),
+              onSurface: Colors.black,
+            ),
+          ),
           child: child,
         );
       },
@@ -276,7 +281,12 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
       initialTime: time,
       builder: (BuildContext context, Widget child) {
         return Theme(
-          data: ThemeData(primarySwatch: Colors.pink, splashColor: Colors.green),
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.dark(
+              surface:  Color(int.parse("0xFFFCFFD5")),
+              onSurface: Colors.black,
+            ),
+          ),
           child: child,
         );
       },
