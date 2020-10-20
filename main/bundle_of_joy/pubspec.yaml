@@ -41,6 +41,8 @@ dependencies:
   flutter_phone_direct_caller: ^1.0.1
   page_view_indicators: ^1.4.0
   intl: ^0.16.1
+  flutter_local_notifications: ^2.0.2
+  flutter_native_timezone: ^1.0.4
 
 dev_dependencies:
   flutter_test:

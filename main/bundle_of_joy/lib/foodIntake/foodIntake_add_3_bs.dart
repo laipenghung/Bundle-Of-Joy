@@ -15,6 +15,7 @@ class FoodIntakeAdd3 extends StatefulWidget {
 class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
   String bSugarBefore = "", bSugarAfter = "";
   TextEditingController controllerBP = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -84,32 +85,37 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                         Container(
                           width: MediaQuery.of(context).size.width * 0.8,
                           height: MediaQuery.of(context).size.height * 0.055,
-                          child: TextFormField(
-                            onChanged: (val) {
-                              setState(() => bSugarBefore = val);
-                            },
-                            keyboardType: TextInputType.number,
-                            decoration: new InputDecoration(
-                              labelText: "Blood sugar reading",
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 1,
+                          child: Form(
+                            key: _formKey,
+                            child: TextFormField(
+                              onChanged: (val) {
+                                setState(() => bSugarBefore = val);
+                              },
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'This field cannot be left empty';
+                                }return null;
+                              },
+                              keyboardType: TextInputType.number,
+                              decoration: new InputDecoration(
+                                labelText: "Blood sugar reading",
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1,
+                                  ),
                                 ),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 1,
-                                ),
-                              ),
+                              onSaved: (String value) {},
                             ),
-                            onSaved: (String value) {},
-                            validator: (String value) {
-                              return null;
-                            },
                           ),
                         ),
                       ],
@@ -219,7 +225,9 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                     ),
                   ),
                   onTap: () {
-                    validateInput(controllerBP.text);
+                    if(_formKey.currentState.validate()){
+                      validateInput(controllerBP.text);
+                    }
                     //print(widget.foodMap);
                   },
                 ),
