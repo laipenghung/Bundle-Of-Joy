@@ -1,9 +1,19 @@
+import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import "foodIntake_add_3_bs.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 
+import 'dart:async';
+import 'package:flutter/services.dart';
+
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+
 import 'foodIntake_main.dart';
+import 'foodIntake_recordList_pending.dart';
 
 class FoodIntakeSummaryPending extends StatefulWidget {
   final String selectedDate, selectedTime, bSugarBefore;
@@ -14,6 +24,53 @@ class FoodIntakeSummaryPending extends StatefulWidget {
 }
 
 class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  AndroidInitializationSettings androidInitializationSettings;
+  //IOSInitializationSettings iosInitializationSettings;
+  InitializationSettings initializationSettings;
+
+  @override
+  void initState() {
+    super.initState();
+    initializing();
+  }
+
+  void initializing() async {
+    androidInitializationSettings = AndroidInitializationSettings('app_icon');
+    //iosInitializationSettings = IOSInitializationSettings(onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    initializationSettings = InitializationSettings(android: androidInitializationSettings);
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+  void _showNotification() async {
+    await notification();
+  }
+
+  Future<void> notification() async {
+    tz.initializeTimeZones();
+    final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(currentTimeZone));
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'Channel Id','Channel title','channel body',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+    );
+
+    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+    await flutterLocalNotificationsPlugin.zonedSchedule(0, 'title', 'after 5 sec', tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)), 
+      notificationDetails, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
+  }
+
+  Future onSelectedNotification(String payLoad) async {
+    if (payLoad != null) {
+      print(payLoad);
+    }
+    //await Navigator.pushReplacement(
+      //context, MaterialPageRoute(builder: (context) => FoodIntakeListPending())
+    //);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -282,6 +339,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
                     ),
                   ),
                   onTap: () {
+                    _showNotification();
                     addFoodRecord();
                   }, //ADD TO DATABASE
                 ),
@@ -320,7 +378,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
   Future<void> addFoodRecord() {
     final User user = FirebaseAuth.instance.currentUser;
     final FirebaseFirestore _db = FirebaseFirestore.instance;
-    CollectionReference foodIntakeRecord = _db.collection("foodIntake_Pending");
+    CollectionReference foodIntakeRecord = _db.collection("mother").doc(user.uid).collection("foodIntake_Pending");
     return foodIntakeRecord.add({
       "motherID": user.uid,
       "selectedDate": widget.selectedDate,

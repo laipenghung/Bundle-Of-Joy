@@ -301,7 +301,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
   Future<void> addFoodRecord() {
     final User user = FirebaseAuth.instance.currentUser;
     final FirebaseFirestore _db = FirebaseFirestore.instance;
-    CollectionReference foodIntakeRecord = _db.collection("foodIntake_Done");
+    CollectionReference foodIntakeRecord = _db.collection("mother").doc(user.uid).collection("foodIntake_Done");
     return foodIntakeRecord.add({
       "motherID": user.uid,
       "selectedDate": widget.selectedDate,
