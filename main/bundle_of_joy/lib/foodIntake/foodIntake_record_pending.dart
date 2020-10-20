@@ -14,8 +14,10 @@ class FoodIntakeRecordPending extends StatefulWidget {
 }
 
 class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
-  CollectionReference collectionReference = FirebaseFirestore.instance.collection("foodIntake_Pending");
+  CollectionReference collectionReference =
+      FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("foodIntake_Pending");
   String bSugarUpdate = "";
+  TextEditingController controllerBP = TextEditingController();
   var test;
 
   void initState() {
@@ -194,6 +196,7 @@ class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
                                         width: MediaQuery.of(context).size.width * 0.2,
                                         height: MediaQuery.of(context).size.height * 0.04,
                                         child: TextFormField(
+                                          controller: controllerBP,
                                           onChanged: (val) {
                                             setState(() => bSugarUpdate = val);
                                           },
@@ -279,8 +282,25 @@ class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
                           ),
                         ),
                         onTap: () {
-                          updateFoodRecord(snapshot.data.data()["motherID"], snapshot.data.data()["selectedDate"], snapshot.data.data()["selectedTime"],
-                              snapshot.data.data()["bsBefore"], bSugarUpdate, snapshot.data.data()["foodMap"], snapshot.data.data()["recordID"]);
+                          if (controllerBP.text.isEmpty) {
+                            return showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Opps!"),
+                                    content: Text("Please enter your Blood Sugar reading after 2 hours."),
+                                    actions: <Widget>[
+                                      RaisedButton(
+                                        child: Text("Ok"),
+                                        onPressed: () => Navigator.of(context).pop(),
+                                      ),
+                                    ],
+                                  );
+                                });
+                          } else {
+                            updateFoodRecord(snapshot.data.data()["motherID"], snapshot.data.data()["selectedDate"], snapshot.data.data()["selectedTime"],
+                                snapshot.data.data()["bsBefore"], bSugarUpdate, snapshot.data.data()["foodMap"], snapshot.data.data()["recordID"]);
+                          }
                         }, //ADD TO DATABASE
                       ),
                     ],
@@ -346,10 +366,16 @@ class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
     );
   }
 
+  validateInput(String text) {
+    if (text.isEmpty) {
+    } else {}
+  }
+
   Future<void> updateFoodRecord(motherID, selectedDate, selectedTime, bsBefore, bsAfter, foodMap, recordID) {
     //final User user = FirebaseAuth.instance.currentUser;
     final FirebaseFirestore _db = FirebaseFirestore.instance;
-    CollectionReference foodIntakeRecord = _db.collection("foodIntake_Done");
+    final User user = FirebaseAuth.instance.currentUser;
+    CollectionReference foodIntakeRecord = _db.collection("mother").doc(user.uid).collection("foodIntake_Done");
     return foodIntakeRecord.add({
       "motherID": motherID,
       "selectedDate": selectedDate,
@@ -362,7 +388,7 @@ class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
         "recordID": value.id,
       });
       print("Data uploaded");
-      _db.collection("foodIntake_Pending").doc(recordID).delete();
+      _db..collection("mother").doc(user.uid).collection("foodIntake_Pending").doc(recordID).delete();
       print("Data Deleted");
     }).then((value) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeMain()));

@@ -13,7 +13,7 @@ class _FoodIntakeListDoneState extends State<FoodIntakeListDone> {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future<List<DocumentSnapshot>> _getFoodRecord() async {
-    QuerySnapshot x = await _db.collection('foodIntake_Done').where("motherID", isEqualTo: user.uid).get();
+    QuerySnapshot x = await _db.collection('mother').doc(FirebaseAuth.instance.currentUser.uid).collection('foodIntake_Done').get();
     return x.docs;
   }
 
@@ -43,6 +43,10 @@ class _FoodIntakeListDoneState extends State<FoodIntakeListDone> {
               return Center(
                 child: CircularProgressIndicator(),
               );
+            } else if (snapshot.data.isEmpty){
+              //modify this part
+              print("empty");
+              return Text("no data");
             } else {
               return Container(
                 margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),

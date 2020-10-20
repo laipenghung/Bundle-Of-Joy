@@ -14,7 +14,8 @@ class FoodIntakeRecordDone extends StatefulWidget {
 }
 
 class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
-  CollectionReference collectionReference = FirebaseFirestore.instance.collection("foodIntake_Done");
+  //final User user = FirebaseAuth.instance.currentUser;
+  CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("foodIntake_Done");
   // BUILD THE WIDGET
   @override
   Widget build(BuildContext context) {
