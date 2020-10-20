@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "motherProfile.dart";
 import "setting.dart";
+import "baby/babyProfile.dart";
 
 class ProfileTab extends StatefulWidget {
 
@@ -30,6 +31,10 @@ class _ProfileState extends State<ProfileTab> {
               break;
             }
             case 1:{
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BabyProfile()),
+              );
               break;
             }
             case 2:{
