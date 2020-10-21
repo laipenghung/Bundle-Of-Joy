@@ -18,7 +18,6 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
   String nameFrom2;
   DateTime dateFrom2;
   int _amColor, _pmColor;
-  String session;
 
   _AppointmentMotherAdd3State(this.nameFrom2, this.dateFrom2);
 
@@ -188,20 +187,69 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
                               ),
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
-                            child: Text(
-                              (_amColor == 1 && _pmColor == 2)
-                                  ? snapshot.data.documents[0]['s_available_AM'].toString()
-                                  : snapshot.data.documents[0]['s_available_PM'].toString(),
-                              style: TextStyle(
-                                fontFamily: 'Comfortaa',
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.height * 0.15,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
+                          Builder(builder: (context) {
+                            if (_amColor == 1 && _pmColor == 2) {
+                              return Builder(builder: (context) {
+                                if (snapshot.data.documents[0]['s_available_AM'] < 6) {
+                                  return Container(
+                                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
+                                    child: Text(
+                                      snapshot.data.documents[0]['s_available_AM'].toString(),
+                                      style: TextStyle(
+                                        fontFamily: 'Comfortaa',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: MediaQuery.of(context).size.height * 0.15,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Container(
+                                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
+                                    child: Text(
+                                      snapshot.data.documents[0]['s_available_AM'].toString(),
+                                      style: TextStyle(
+                                        fontFamily: 'Comfortaa',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: MediaQuery.of(context).size.height * 0.15,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              });
+                            } else {
+                              return Builder(builder: (context) {
+                                if (snapshot.data.documents[0]['s_available_PM'] < 6) {
+                                  return Container(
+                                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
+                                    child: Text(
+                                      snapshot.data.documents[0]['s_available_PM'].toString(),
+                                      style: TextStyle(
+                                        fontFamily: 'Comfortaa',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: MediaQuery.of(context).size.height * 0.15,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Container(
+                                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
+                                    child: Text(
+                                      snapshot.data.documents[0]['s_available_PM'].toString(),
+                                      style: TextStyle(
+                                        fontFamily: 'Comfortaa',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: MediaQuery.of(context).size.height * 0.15,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              });
+                            }
+                          }),
                         ],
                       ),
                     )),
