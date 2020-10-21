@@ -57,61 +57,93 @@ class _AppointmentMotherAdd2State extends State<AppointmentMotherAdd2> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.06),
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.04,
-                      width: MediaQuery.of(context).size.width * 0.8,
+                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
+                      width: MediaQuery.of(context).size.width * 0.85,
                       child: Text(
-                        hospitalName,
+                        "Hospital Selected",
                         style: TextStyle(
                           fontFamily: 'Comfortaa',
                           fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.height * 0.03,
-                          color: Colors.black,
-                        ),
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        softWrap: true,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03, bottom: MediaQuery.of(context).size.height * 0.06),
-                      child: Text(
-                        "${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}",
-                        style: TextStyle(
-                          fontFamily: 'Comfortaa',
-                          fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.height * 0.028,
+                          fontSize: MediaQuery.of(context).size.height * 0.025,
                           color: Colors.black,
                         ),
                       ),
                     ),
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.30,
-                      width: MediaQuery.of(context).size.width * 0.75,
-                      decoration: myBoxDecoration(),
-                      child: Column(
-                        children: [
-                          InkWell(
-                            child: Container(
-                              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01, bottom: MediaQuery.of(context).size.height * 0.01),
-                              child: Image.asset(
-                                "assets/icons/calendar.png",
-                                height: MediaQuery.of(context).size.height * 0.2,
-                              ),
-                            ),
-                            onTap: _pickDate,
-                          ),
-                          Text(
-                            "Pick A Date",
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        height: MediaQuery.of(context).size.height * 0.07,
+                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                        decoration: myBoxDecoration(),
+                        child: Center(
+                          child: Text(
+                            hospitalName,
                             style: TextStyle(
                               fontFamily: 'Comfortaa',
                               fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.height * 0.035,
+                              fontSize: MediaQuery.of(context).size.height * 0.025,
                               color: Colors.black,
                             ),
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            softWrap: true,
                           ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.07, left: MediaQuery.of(context).size.width * 0.03),
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      child: Text(
+                        "Select a date",
+                        style: TextStyle(
+                          fontFamily: 'Comfortaa',
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.height * 0.025,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.85,
+                                height: MediaQuery.of(context).size.height * 0.07,
+                                decoration: myBoxDecoration(),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}",
+                                      style: TextStyle(
+                                        fontFamily: 'Comfortaa',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: MediaQuery.of(context).size.height * 0.025,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Container(
+                                      margin:
+                                          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.005, left: MediaQuery.of(context).size.width * 0.05),
+                                      child: Image.asset(
+                                        "assets/icons/calendar.png",
+                                        height: MediaQuery.of(context).size.height * 0.035,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              onTap: () {
+                                _pickDate();
+                              }),
                         ],
                       ),
                     ),
@@ -203,8 +235,10 @@ class _AppointmentMotherAdd2State extends State<AppointmentMotherAdd2> {
       color: Color(0xFFFCFFD5),
       border: Border.all(
         color: Colors.black,
-        width: 5.0,
+        width: 2.0,
       ),
+      borderRadius: BorderRadius.all(Radius.circular(10.0) //<--- border radius here
+          ),
     );
   }
 

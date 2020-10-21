@@ -75,34 +75,38 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
                         children: [
                           SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                           Container(
-                            //color: Colors.lightBlue,
-                            height: MediaQuery.of(context).size.height * 0.04,
-                            width: MediaQuery.of(context).size.width * 0.8,
-
-                            child: Text(
-                              nameFrom2,
-                              style: TextStyle(
-                                fontFamily: 'Comfortaa',
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.height * 0.03,
-                                color: Colors.black,
-                              ),
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              softWrap: true,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03, bottom: MediaQuery.of(context).size.height * 0.05),
-                            child: Text(
-                              "${dateFrom2.day} - ${dateFrom2.month} - ${dateFrom2.year}",
-                              style: TextStyle(
-                                fontFamily: 'Comfortaa',
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.height * 0.028,
-                                color: Colors.black,
-                              ),
+                            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.06),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.85,
+                                  height: MediaQuery.of(context).size.height * 0.07,
+                                  decoration: myBoxDecoration2(),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "${dateFrom2.day} - ${dateFrom2.month} - ${dateFrom2.year}",
+                                        style: TextStyle(
+                                          fontFamily: 'Comfortaa',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: MediaQuery.of(context).size.height * 0.025,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      Container(
+                                        margin:
+                                            EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.005, left: MediaQuery.of(context).size.width * 0.05),
+                                        child: Image.asset(
+                                          "assets/icons/calendar.png",
+                                          height: MediaQuery.of(context).size.height * 0.035,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           Row(
@@ -181,7 +185,7 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
                             ],
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
+                            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.07),
                             child: Text(
                               "Remaining Slot(s):",
                               style: TextStyle(

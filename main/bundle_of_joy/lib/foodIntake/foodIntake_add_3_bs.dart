@@ -257,7 +257,7 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
   }
 
   validateInput(String bsAfter, String bsBefore) {
-    if (bsBefore.isEmpty){
+    if (bsBefore.isEmpty) {
       return showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -273,24 +273,24 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
             );
           });
     } else {
-      if(bsAfter.isEmpty){
+      if (bsAfter.isEmpty) {
         Navigator.push(
-          context,
-          // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
-          MaterialPageRoute(
-              builder: (context) => FoodIntakeSummaryPending(
-                  selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore)));
+            context,
+            // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
+            MaterialPageRoute(
+                builder: (context) => FoodIntakeSummaryPending(
+                    selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore)));
       } else {
         Navigator.push(
-          context,
-          // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
-          MaterialPageRoute(
-              builder: (context) => FoodIntakeSummaryDone(
-                  selectedDate: widget.selectedDate,
-                  selectedTime: widget.selectedTime,
-                  foodMap: widget.foodMap,
-                  bSugarBefore: bSugarBefore,
-                  bSugarAfter: bSugarAfter)));
+            context,
+            // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
+            MaterialPageRoute(
+                builder: (context) => FoodIntakeSummaryDone(
+                    selectedDate: widget.selectedDate,
+                    selectedTime: widget.selectedTime,
+                    foodMap: widget.foodMap,
+                    bSugarBefore: bSugarBefore,
+                    bSugarAfter: bSugarAfter)));
       }
     }
   }
