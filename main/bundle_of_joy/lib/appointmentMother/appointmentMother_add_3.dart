@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "appointmentMother_add_2.dart";
+import "appointmentMother_main.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 
@@ -18,6 +19,7 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
   String nameFrom2;
   DateTime dateFrom2;
   int _amColor, _pmColor;
+  String selectedSession;
 
   _AppointmentMotherAdd3State(this.nameFrom2, this.dateFrom2);
 
@@ -30,6 +32,7 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
 
     _amColor = 1;
     _pmColor = 2;
+    selectedSession = "AM";
   }
 
   // BUILD THE WIDGET
@@ -136,6 +139,7 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
                                   setState(() {
                                     _amColor = 1;
                                     _pmColor = 2;
+                                    selectedSession = "AM";
                                   });
                                 },
                               ),
@@ -170,6 +174,7 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
                                   setState(() {
                                     _amColor = 2;
                                     _pmColor = 1;
+                                    selectedSession = "PM";
                                   });
                                 },
                               ),
@@ -298,7 +303,53 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
                           ),
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        if (selectedSession == "AM") {
+                          if (snapshot.data.documents[0]['s_available_AM'] == 0) {
+                            //print("AM No Slot");
+                            return showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Slot Empty"),
+                                    content: Text("Hi, there is currently no slot for this session at this day, please try another session or another date :D"),
+                                    actions: <Widget>[
+                                      RaisedButton(
+                                        child: Text("Ok"),
+                                        onPressed: () => Navigator.of(context).pop(),
+                                      ),
+                                    ],
+                                  );
+                                });
+                          } else {
+                            uploadAppointment(snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'],
+                                snapshot.data.documents[0]['s_id']);
+                          }
+                        } else if (selectedSession == "PM") {
+                          if (snapshot.data.documents[0]['s_available_PM'] == 0) {
+                            //print("PM No Slot");
+                            return showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Slot Empty"),
+                                    content: Text("Hi, there is currently no slot for this session at this day, please try another session or another date :D"),
+                                    actions: <Widget>[
+                                      RaisedButton(
+                                        child: Text("Ok"),
+                                        onPressed: () => Navigator.of(context).pop(),
+                                      ),
+                                    ],
+                                  );
+                                });
+                          } else {
+                            uploadAppointment(snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'],
+                                snapshot.data.documents[0]['s_id']);
+                          }
+                        } else {
+                          print("THIS IS BROKEN");
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -350,5 +401,33 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
       ),
       borderRadius: BorderRadius.all(Radius.circular(30.0)),
     );
+  }
+
+  Future<void> uploadAppointment(appointmentDate, appointmentSession, doctorID, slotID) {
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+    final User user = FirebaseAuth.instance.currentUser;
+
+    CollectionReference appointmentRecord = _db.collection("mother_appointment");
+    CollectionReference slotRecord = _db.collection("appointment_slot");
+
+    return appointmentRecord.add({
+      "a_date": appointmentDate,
+      "a_session": appointmentSession,
+      "d_id": doctorID,
+      "s_id": slotID,
+      "m_id": user.uid,
+    }).then((value) {
+      appointmentRecord.doc(value.id).update({
+        "a_id": value.id,
+      }).then((value) {
+        slotRecord.doc(slotID).update({
+          if (appointmentSession == "AM") "s_available_AM": FieldValue.increment(-1),
+          if (appointmentSession == "PM") "s_available_PM": FieldValue.increment(-1),
+        }).then((value) {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AppointmentMotherMain()));
+        });
+      });
+      print("Data uploaded");
+    }).catchError((error) => print("Something is wrong here"));
   }
 }

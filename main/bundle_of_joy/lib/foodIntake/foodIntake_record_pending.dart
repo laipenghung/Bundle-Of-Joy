@@ -388,7 +388,7 @@ class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
         "recordID": value.id,
       });
       print("Data uploaded");
-      _db..collection("mother").doc(user.uid).collection("foodIntake_Pending").doc(recordID).delete();
+      _db.collection("mother").doc(user.uid).collection("foodIntake_Pending").doc(recordID).delete();
       print("Data Deleted");
     }).then((value) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeMain()));
