@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/main.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -24,23 +25,24 @@ class FoodIntakeSummaryPending extends StatefulWidget {
 }
 
 class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  AndroidInitializationSettings androidInitializationSettings;
+  //FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  //AndroidInitializationSettings androidInitializationSettings;
   //IOSInitializationSettings iosInitializationSettings;
-  InitializationSettings initializationSettings;
+  //InitializationSettings initializationSettings;
+  MyApp main = MyApp();
 
-  @override
-  void initState() {
-    super.initState();
-    initializing();
-  }
+  //@override
+  //void initState() {
+  //super.initState();
+  //initializing();
+  //}
 
-  void initializing() async {
-    androidInitializationSettings = AndroidInitializationSettings('app_icon');
-    //iosInitializationSettings = IOSInitializationSettings(onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-    initializationSettings = InitializationSettings(android: androidInitializationSettings);
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-  }
+  //void initializing() async {
+  //androidInitializationSettings = AndroidInitializationSettings('app_icon');
+  //iosInitializationSettings = IOSInitializationSettings(onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+  //initializationSettings = InitializationSettings(android: androidInitializationSettings);
+  //await flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: notificationSelected);
+  //}
 
   void _showNotification() async {
     await notification();
@@ -51,23 +53,27 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
     final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
     AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-      'Channel Id','Channel title','channel body',
+      'Channel Id',
+      'Channel title',
+      'channel body',
       priority: Priority.high,
       importance: Importance.max,
       ticker: 'test',
     );
 
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await flutterLocalNotificationsPlugin.zonedSchedule(0, 'title', 'after 5 sec', tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)), 
-      notificationDetails, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
+    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(
+        0, 
+        'Food Intake Tracking',
+        'It\'s time to update your blood sugar level', 
+        tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)), notificationDetails,
+        androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
   }
 
-  Future onSelectedNotification(String payLoad) async {
-    if (payLoad != null) {
-      print(payLoad);
-    }
-    //await Navigator.pushReplacement(
-      //context, MaterialPageRoute(builder: (context) => FoodIntakeListPending())
+  Future notificationSelected(String payLoad) async {
+    //await Navigator.push(
+    //context,
+    //MaterialPageRoute<void>(builder: (context) => FoodIntakeListPending()),
     //);
   }
 
@@ -338,9 +344,9 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
                       ),
                     ),
                   ),
-                  onTap: () {
-                    _showNotification();
+                  onTap: () async {
                     addFoodRecord();
+                    _showNotification();
                   }, //ADD TO DATABASE
                 ),
               ],
@@ -392,6 +398,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
       });
       print("Data uploaded");
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeMain()));
+      //_showNotification();
     }).catchError((error) => print("wrong"));
   }
 }

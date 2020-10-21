@@ -15,7 +15,7 @@ class FoodIntakeAdd3 extends StatefulWidget {
 class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
   String bSugarBefore = "", bSugarAfter = "";
   TextEditingController controllerBP = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  TextEditingController bSugarBeforeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -86,15 +86,10 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                           width: MediaQuery.of(context).size.width * 0.8,
                           height: MediaQuery.of(context).size.height * 0.055,
                           child: Form(
-                            key: _formKey,
                             child: TextFormField(
+                              controller: bSugarBeforeController,
                               onChanged: (val) {
                                 setState(() => bSugarBefore = val);
-                              },
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return 'This field cannot be left empty';
-                                }return null;
                               },
                               keyboardType: TextInputType.number,
                               decoration: new InputDecoration(
@@ -149,7 +144,7 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                             },
                             keyboardType: TextInputType.number,
                             decoration: new InputDecoration(
-                              labelText: "Blood sugar reading",
+                              labelText: "Blood sugar reading (Optional)",
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
                                 borderSide: BorderSide(
@@ -225,9 +220,7 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                     ),
                   ),
                   onTap: () {
-                    if(_formKey.currentState.validate()){
-                      validateInput(controllerBP.text);
-                    }
+                    validateInput(controllerBP.text, bSugarBeforeController.text);
                     //print(widget.foodMap);
                   },
                 ),
@@ -263,16 +256,32 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
     );
   }
 
-  validateInput(String text) {
-    if (text.isEmpty) {
-      Navigator.push(
+  validateInput(String bsAfter, String bsBefore) {
+    if (bsBefore.isEmpty){
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Opps!"),
+              content: Text("Please enter your Blood Sugar reading before you eat."),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("Ok"),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            );
+          });
+    } else {
+      if(bsAfter.isEmpty){
+        Navigator.push(
           context,
           // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
           MaterialPageRoute(
               builder: (context) => FoodIntakeSummaryPending(
                   selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore)));
-    } else {
-      Navigator.push(
+      } else {
+        Navigator.push(
           context,
           // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
           MaterialPageRoute(
@@ -282,6 +291,7 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                   foodMap: widget.foodMap,
                   bSugarBefore: bSugarBefore,
                   bSugarAfter: bSugarAfter)));
+      }
     }
   }
 }
