@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/careForBaby/careForBabyTab.dart';
 import "package:flutter/material.dart";
 
 class MotherForBabyTab extends StatefulWidget {
@@ -39,7 +40,10 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
                 break;
               case 3:
                 {
-
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CareForBabyTab()),
+                  );
                 }
                 break;
             }
