@@ -61,25 +61,36 @@ class _FoodIntakeListDoneState extends State<FoodIntakeListDone> {
               return Text("no data");
             } else {
               return Container(
-                //margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),
+                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),
                 child: ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (_, index) {
-                    return Slidable(
-                      actionPane: SlidableDrawerActionPane(),
-                      actionExtentRatio: 0.25,
-                      child: InkWell(
-                        onTap: () {
-                          print(snapshot.data[index].data()['recordID']);
-                          //go to record_pending
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => FoodIntakeRecordDone(foodIntakeRecordID: snapshot.data[index].data()["recordID"])),
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Container(
+                    return InkWell(
+                      onTap: () {
+                        print(snapshot.data[index].data()['recordID']);
+                        //go to record_pending
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => FoodIntakeRecordDone(foodIntakeRecordID: snapshot.data[index].data()["recordID"])),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Slidable(
+                            actionPane: SlidableDrawerActionPane(),
+                            actionExtentRatio: 0.22,
+                            secondaryActions: <Widget>[
+                              IconSlideAction(
+                                caption: "Delete",
+                                color: Colors.red,
+                                icon: Icons.delete,
+                                onTap: () {
+                                  print(snapshot.data[index].data()['recordID']);
+                                  deleteSelected(snapshot.data[index].data()['recordID']);
+                                },
+                              )
+                            ],
+                            child: Container(
                               padding: EdgeInsets.only(
                                   top: MediaQuery.of(context).size.height * 0.015,
                                   bottom: MediaQuery.of(context).size.height * 0.015,
@@ -130,26 +141,15 @@ class _FoodIntakeListDoneState extends State<FoodIntakeListDone> {
                                 ],
                               ),
                             ),
-                            Divider(
-                              indent: MediaQuery.of(context).size.width * 0.03,
-                              endIndent: MediaQuery.of(context).size.width * 0.03,
-                              color: Colors.black,
-                              thickness: MediaQuery.of(context).size.height * 0.001,
-                            ),
-                          ],
-                        ),
+                          ),
+                          Divider(
+                            indent: MediaQuery.of(context).size.width * 0.03,
+                            endIndent: MediaQuery.of(context).size.width * 0.03,
+                            color: Colors.black,
+                            thickness: MediaQuery.of(context).size.height * 0.001,
+                          ),
+                        ],
                       ),
-                      secondaryActions: <Widget>[
-                        IconSlideAction(
-                          caption: "Delete",
-                          color: Colors.red,
-                          icon: Icons.delete,
-                          onTap: () {
-                            print(snapshot.data[index].data()['recordID']);
-                            deleteSelected(snapshot.data[index].data()['recordID']);
-                          },
-                        )
-                      ],
                     );
                   },
                 ),
