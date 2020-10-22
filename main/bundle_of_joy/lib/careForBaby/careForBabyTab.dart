@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'babyFoodIntake/babyFoodIntakeMain.dart';
+import 'babyTemp/babtTemptMain.dart';
+
 class CareForBabyTab extends StatelessWidget {
   final List<Tab> myTabs = <Tab>[
     Tab(text: 'TAB 1'),
@@ -12,14 +15,17 @@ class CareForBabyTab extends StatelessWidget {
       length: myTabs.length,
       child: Scaffold(
         appBar: AppBar(
+          title: Text(
+            "Care for Baby",
+          ),
           bottom: TabBar(
             tabs: myTabs,
           ),
         ),
         body: TabBarView(
             children: [
-              Icon(Icons.directions_car),
-              Icon(Icons.directions_transit),
+              BabyFoodIntakeMain(),
+              BabyTempMain(),
             ],
           ),
       ),
