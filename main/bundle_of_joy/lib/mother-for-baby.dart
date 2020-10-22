@@ -41,57 +41,60 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
                 doc.data()[_listField[13]].toInt())
         );
       });
-    }
 
-    return StatefulBuilder(
-        builder: (BuildContext context, StateSetter setState) {
-          return Container(
-            width: width,
-            decoration: myBoxDecoration(),
-            margin: EdgeInsets.only(top: paddingTop),
-            child:  DropdownButtonHideUnderline(
-              child: ButtonTheme(
-                alignedDropdown: true,
-                child: DropdownButton(
-                  value: selected_index == null ? "null" : _listBaby[selected_index],
-                  items: _listBaby.map((Baby baby) {
-                    String name = baby.b_name.toString();
-                    String gender = baby.b_gender.toString().toLowerCase();
-                    String icon;
-                    if(gender == "male"){
-                      icon = "assets/icons/boy.png";
-                    }else{
-                      icon = "assets/icons/femenine.png";
-                    }
-                    return DropdownMenuItem<Baby>(
-                      value: baby,
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            icon,
-                            height: height,
-                          ),
-                          Text(
-                            "\t $name",
-                            style: TextStyle(
-                              fontFamily: "Comfortaa",
+      selected_babyID = _listBaby.first.b_id.toString();
+
+      return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              width: width,
+              decoration: myBoxDecoration(),
+              margin: EdgeInsets.only(top: paddingTop),
+              child:  DropdownButtonHideUnderline(
+                child: ButtonTheme(
+                  alignedDropdown: true,
+                  child: DropdownButton(
+                    value: selected_index == null ? "null" : _listBaby[selected_index],
+                    items: _listBaby.map((Baby baby) {
+                      String name = baby.b_name.toString();
+                      String gender = baby.b_gender.toString().toLowerCase();
+                      String icon;
+                      if(gender == "male"){
+                        icon = "assets/icons/boy.png";
+                      }else{
+                        icon = "assets/icons/femenine.png";
+                      }
+                      return DropdownMenuItem<Baby>(
+                        value: baby,
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              icon,
+                              height: height,
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (index){
-                    setState(() {
-                      selected_index = _listBaby.indexOf(index);
-                    });
-                  },
+                            Text(
+                              "\t $name",
+                              style: TextStyle(
+                                fontFamily: "Comfortaa",
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (index){
+                      setState(() {
+                        selected_index = _listBaby.indexOf(index);
+                        selected_babyID = _listBaby[selected_index].b_id.toString();
+                      });
+                    },
+                  ),
                 ),
               ),
-            ),
-          );
-        }
-    );
+            );
+          }
+      );
+    }
   }
 
   BoxDecoration myBoxDecoration() {
