@@ -92,6 +92,39 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1, //APP BAR HEIGHT
+
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(right: 10),
+              width: MediaQuery.of(context).size.height * 0.09,
+              height: MediaQuery.of(context).size.height * 0.09,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: AssetImage("assets/icons/small.png"),
+                ),
+              ),
+            ),
+            Text(
+              "Mother-to-be",
+              style: TextStyle(
+                fontFamily: 'Comfortaa',
+                fontWeight: FontWeight.bold,
+                fontSize: MediaQuery.of(context).size.width * 0.06,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+
+        backgroundColor: Color(0xFFFCFFD5),
+        centerTitle: true,
+      ),
       body: GridView.count(
         crossAxisCount: 2,
         shrinkWrap: true,

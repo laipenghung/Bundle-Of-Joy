@@ -21,6 +21,7 @@ class _AppointmentMotherAdd1State extends State<AppointmentMotherAdd1> {
     return Scaffold(
       // APP BAR
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
           "Appointment Management",
           style: TextStyle(
@@ -39,7 +40,7 @@ class _AppointmentMotherAdd1State extends State<AppointmentMotherAdd1> {
       // BODY
       body: Container(
           //color: Colors.lightBlue,
-          height: MediaQuery.of(context).size.height * 0.7,
+          height: MediaQuery.of(context).size.height * 0.8,
           padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02),
           child: SingleChildScrollView(
             child: Column(

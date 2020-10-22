@@ -33,6 +33,7 @@ class _FoodIntakeListDoneState extends State<FoodIntakeListDone> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
           "Food Intake Tracking",
           style: TextStyle(
@@ -108,31 +109,65 @@ class _FoodIntakeListDoneState extends State<FoodIntakeListDone> {
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        snapshot.data[index].data()['selectedDate'],
-                                        style: TextStyle(
-                                          fontFamily: 'Comfortaa',
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                                          color: Colors.black,
-                                        ),
+                                      Row(
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Date:",
+                                                style: TextStyle(
+                                                  fontFamily: 'Comfortaa',
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: MediaQuery.of(context).size.width * 0.04,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                              Text(
+                                                "Time:",
+                                                style: TextStyle(
+                                                  fontFamily: 'Comfortaa',
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: MediaQuery.of(context).size.width * 0.04,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                snapshot.data[index].data()['selectedDate'],
+                                                style: TextStyle(
+                                                  fontFamily: 'Comfortaa',
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: MediaQuery.of(context).size.width * 0.04,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                              Text(
+                                                snapshot.data[index].data()['selectedTime'],
+                                                style: TextStyle(
+                                                  fontFamily: 'Comfortaa',
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: MediaQuery.of(context).size.width * 0.04,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                                      Text(
-                                        snapshot.data[index].data()['selectedTime'],
-                                        style: TextStyle(
-                                          fontFamily: 'Comfortaa',
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                      SizedBox(height: MediaQuery.of(context).size.width * 0.025),
                                       Text(
                                         'View Record >>>',
                                         style: TextStyle(
                                           fontFamily: 'Comfortaa',
-                                          fontSize: MediaQuery.of(context).size.width * 0.035,
+                                          fontSize: MediaQuery.of(context).size.width * 0.03,
                                           color: Colors.black,
                                         ),
                                       ),

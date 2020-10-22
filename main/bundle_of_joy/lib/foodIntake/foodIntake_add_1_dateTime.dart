@@ -27,6 +27,7 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
     return Scaffold(
       // APP BAR
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
           "Food Intake Tracking",
           style: TextStyle(
@@ -48,7 +49,7 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
           Container(
             margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.055),
             //color: Colors.lightBlue,
-            height: MediaQuery.of(context).size.height * 0.52,
+            height: MediaQuery.of(context).size.height * 0.6,
             child: SingleChildScrollView(
               padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.05),
               child: Column(
@@ -210,10 +211,10 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
                   onTap: () {
                     var selectedDate = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
                     var selectedTime = "${time.hour}:${time.minute}";
-                    print(selectedDate +"   "+ selectedTime);
+                    print(selectedDate + "   " + selectedTime);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => FoodIntakeAdd2(selectedDate:selectedDate, selectedTime:selectedTime)),
+                      MaterialPageRoute(builder: (context) => FoodIntakeAdd2(selectedDate: selectedDate, selectedTime: selectedTime)),
                     );
                   },
                 ),
@@ -259,7 +260,7 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.dark(
-              surface:  Color(int.parse("0xFFFCFFD5")),
+              surface: Color(int.parse("0xFFFCFFD5")),
               onSurface: Colors.black,
             ),
           ),
@@ -283,7 +284,7 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.dark(
-              surface:  Color(int.parse("0xFFFCFFD5")),
+              surface: Color(int.parse("0xFFFCFFD5")),
               onSurface: Colors.black,
             ),
           ),

@@ -9,24 +9,22 @@ class Setting extends StatefulWidget {
   State<StatefulWidget> createState() => _Setting();
 }
 
-class _Setting extends State<Setting>{
-  AlertDialog _signOut(){
+class _Setting extends State<Setting> {
+  AlertDialog _signOut() {
     Widget cancelButton = FlatButton(
       child: Text("Cancel"),
-      onPressed:  () {
+      onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
     Widget continueButton = FlatButton(
       child: Text("Log Out"),
-      onPressed:  () {
+      onPressed: () {
         signOut();
         Navigator.of(context, rootNavigator: true).push(
-          MaterialPageRoute(
-              builder: (context){
-                return SignUpScreen();
-              }
-          ),
+          MaterialPageRoute(builder: (context) {
+            return SignUpScreen();
+          }),
         );
       },
     );
@@ -54,30 +52,29 @@ class _Setting extends State<Setting>{
     return alert;
   }
 
-  Widget _listView(BuildContext context){
+  Widget _listView(BuildContext context) {
     final settingList = ["Logout"];
 
     return ListView.separated(
-        itemCount: settingList.length,
-        itemBuilder: (context, index){
-          return ListTile(
-              title: Text(
-                settingList[index],
-              ),
-              trailing: Icon(FontAwesomeIcons.signOutAlt),
-              onTap: (){
-                if(index == 0){
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext alertContext) {
-                      return _signOut();
-                    },
-                  );
-                }
+      itemCount: settingList.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+            title: Text(
+              settingList[index],
+            ),
+            trailing: Icon(FontAwesomeIcons.signOutAlt),
+            onTap: () {
+              if (index == 0) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext alertContext) {
+                    return _signOut();
+                  },
+                );
               }
-          );
-        },
-        separatorBuilder: (context, index) => Divider(),
+            });
+      },
+      separatorBuilder: (context, index) => Divider(),
     );
   }
 
@@ -87,6 +84,7 @@ class _Setting extends State<Setting>{
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
@@ -109,4 +107,3 @@ class _Setting extends State<Setting>{
     );
   }
 }
-

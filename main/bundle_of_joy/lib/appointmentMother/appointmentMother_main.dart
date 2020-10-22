@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "appointmentMother_add_1.dart";
+import "appointmentMother_recordList.dart";
 
 class AppointmentMotherMain extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class _AppointmentMotherMainState extends State<AppointmentMotherMain> {
     return Scaffold(
       // APP BAR
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
           "Appointment Management",
           style: TextStyle(
@@ -64,6 +66,12 @@ class _AppointmentMotherMainState extends State<AppointmentMotherMain> {
                   ),
                 ),
               ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AppointmentMotherRecordList()),
+                );
+              },
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             Container(

@@ -10,7 +10,7 @@ class MotherProfile extends StatefulWidget {
   State<StatefulWidget> createState() => _MotherProfile();
 }
 
-class _MotherProfile extends State<MotherProfile>{
+class _MotherProfile extends State<MotherProfile> {
   String input;
 
   ListView _listView(AsyncSnapshot<DocumentSnapshot> document) {
@@ -27,7 +27,7 @@ class _MotherProfile extends State<MotherProfile>{
     double fontSize = MediaQuery.of(context).size.width * 0.04;
     return ListView.separated(
       itemCount: _listItems.length,
-      itemBuilder: (context, index){
+      itemBuilder: (context, index) {
         return ListTile(
           title: Text(
             _listItems[index],
@@ -39,13 +39,13 @@ class _MotherProfile extends State<MotherProfile>{
             ),
           ),
           trailing: Text(
-              _listInfo[index],
-              style: TextStyle(
-                fontFamily: "Comfortaa",
-                fontSize: fontSize,
-              ),
+            _listInfo[index],
+            style: TextStyle(
+              fontFamily: "Comfortaa",
+              fontSize: fontSize,
+            ),
           ),
-          onTap: (){
+          onTap: () {
             editBox(index, document, context);
           },
         );
@@ -56,29 +56,36 @@ class _MotherProfile extends State<MotherProfile>{
 
   Future<bool> editBox(int index, AsyncSnapshot<DocumentSnapshot> document, BuildContext context) {
     Mother mother = new Mother();
-    final _listEditTitles = ["Edit Name", "Edit Age", "Edit Date Of Birth", "Edit Blood Type", "Edit No Of Child", "Edit Personal Phone", "Edit Emergency Contact"];
+    final _listEditTitles = [
+      "Edit Name",
+      "Edit Age",
+      "Edit Date Of Birth",
+      "Edit Blood Type",
+      "Edit No Of Child",
+      "Edit Personal Phone",
+      "Edit Emergency Contact"
+    ];
     final _listField = ["m_name", "m_age", "m_dob", "m_bloodType", "m_no_of_child", "m_phone", "m_emergencyContact"];
-    Future<bool> _selectDate() async{
+    Future<bool> _selectDate() async {
       DateTime selectedDate = DateTime.now();
       String year, month, day, DOB;
       final DateTime picked = await showDatePicker(
           context: context,
           initialDate: selectedDate,
-          firstDate: DateTime(selectedDate.year-150),
-          lastDate: DateTime(selectedDate.year+10),
-          builder: (BuildContext context, Widget child){
+          firstDate: DateTime(selectedDate.year - 150),
+          lastDate: DateTime(selectedDate.year + 10),
+          builder: (BuildContext context, Widget child) {
             return Theme(
               data: ThemeData.light().copyWith(
                 colorScheme: ColorScheme.dark(
-                  surface:  Color(int.parse("0xFFFCFFD5")),
+                  surface: Color(int.parse("0xFFFCFFD5")),
                   onSurface: Colors.black,
                 ),
               ),
               child: child,
             );
-          }
-      );
-      if(picked != null){
+          });
+      if (picked != null) {
         setState(() {
           year = picked.year.toString();
           month = picked.month.toString();
@@ -87,15 +94,14 @@ class _MotherProfile extends State<MotherProfile>{
           mother.editProfile(_listField[index], DOB);
         });
         return true;
-      }else{
+      } else {
         return false;
       }
     }
 
-    if(index == 2){
+    if (index == 2) {
       return _selectDate();
-    }
-    else {
+    } else {
       input = document.data.data()[_listField[index]].toString();
       return showDialog(
           context: context,
@@ -114,43 +120,39 @@ class _MotherProfile extends State<MotherProfile>{
                 )
               ],
             );
-          }
-      );
+          });
     }
   }
 
-  Widget editField(int index, AsyncSnapshot<DocumentSnapshot> document, List _listField){
+  Widget editField(int index, AsyncSnapshot<DocumentSnapshot> document, List _listField) {
     double margin = 30;
-    if(index == 3){
-      return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return Container(
-              margin: EdgeInsets.only(left:margin, right:margin),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  isExpanded: true,
-                  dropdownColor: Color(0xFFFCFFD5),
-                  value: input,
-                  items: <String>["A", "B", "O", "AB"].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: new Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState((){
-                      input = value;
-                    });
-                  },
-                ),
-              ),
-            );
-          }
-      );
-    }
-    else if(index == 1 || index == 4 || index == 5 || index == 6){
+    if (index == 3) {
+      return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+        return Container(
+          margin: EdgeInsets.only(left: margin, right: margin),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              isExpanded: true,
+              dropdownColor: Color(0xFFFCFFD5),
+              value: input,
+              items: <String>["A", "B", "O", "AB"].map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: new Text(value),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  input = value;
+                });
+              },
+            ),
+          ),
+        );
+      });
+    } else if (index == 1 || index == 4 || index == 5 || index == 6) {
       return Container(
-        margin: EdgeInsets.only(left:margin+20, right:margin+20),
+        margin: EdgeInsets.only(left: margin + 20, right: margin + 20),
         child: TextField(
           textAlign: TextAlign.center,
           controller: TextEditingController(text: document.data.data()[_listField[index]].toString()),
@@ -160,10 +162,9 @@ class _MotherProfile extends State<MotherProfile>{
           },
         ),
       );
-    }
-    else{
+    } else {
       return Container(
-        margin: EdgeInsets.only(left:margin, right:margin),
+        margin: EdgeInsets.only(left: margin, right: margin),
         child: TextField(
           textAlign: TextAlign.center,
           controller: TextEditingController(text: document.data.data()[_listField[index]].toString()),
@@ -183,6 +184,7 @@ class _MotherProfile extends State<MotherProfile>{
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
@@ -202,12 +204,10 @@ class _MotherProfile extends State<MotherProfile>{
         color: Colors.white,
         child: StreamBuilder(
             stream: users.snapshots(),
-            builder: (context, document){
+            builder: (context, document) {
               return _listView(document);
-            }
-        ),
+            }),
       ),
     );
   }
 }
-

@@ -115,42 +115,6 @@ class _HomePageState extends State<HomePageState> {
     double fontSize = MediaQuery.of(context).size.width * 0.06;
 
     return Scaffold(
-      appBar: AppBar(
-        shadowColor: Colors.transparent,
-
-        toolbarHeight: MediaQuery.of(context).size.height * 0.09, //APP BAR HEIGHT
-
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(right: 10),
-              width: MediaQuery.of(context).size.height * 0.09,
-              height: MediaQuery.of(context).size.height * 0.09,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.fitWidth,
-                  image: AssetImage("assets/icons/small.png"),
-                ),
-              ),
-            ),
-            Text(
-              _title,
-              style: TextStyle(
-                fontFamily: 'Comfortaa',
-                fontWeight: FontWeight.bold,
-                fontSize: fontSize,
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
-
-        //automaticallyImplyLeading: false, // CENTER THE TEXT
-        backgroundColor: Color(0xFFFCFFD5),
-        centerTitle: true,
-      ),
       body: PersistentTabView(
         navBarHeight: MediaQuery.of(context).size.height * 0.1,
         padding: NavBarPadding.all(4),

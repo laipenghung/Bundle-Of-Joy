@@ -4,7 +4,6 @@ import "setting.dart";
 import "baby/babyProfile.dart";
 
 class ProfileTab extends StatefulWidget {
-
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -23,30 +22,34 @@ class _ProfileState extends State<ProfileTab> {
       child: InkWell(
         onTap: () {
           switch (index) {
-            case 0:{
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MotherProfile()),
-              );
-              break;
-            }
-            case 1:{
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => BabyProfile()),
-              );
-              break;
-            }
-            case 2:{
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Setting()),
-              );
-              break;
-            }
-            case 3:{
-              break;
-            }
+            case 0:
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MotherProfile()),
+                );
+                break;
+              }
+            case 1:
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BabyProfile()),
+                );
+                break;
+              }
+            case 2:
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Setting()),
+                );
+                break;
+              }
+            case 3:
+              {
+                break;
+              }
           }
         },
         child: Column(
@@ -76,9 +79,43 @@ class _ProfileState extends State<ProfileTab> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1, //APP BAR HEIGHT
+
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(right: 10),
+              width: MediaQuery.of(context).size.height * 0.09,
+              height: MediaQuery.of(context).size.height * 0.09,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: AssetImage("assets/icons/small.png"),
+                ),
+              ),
+            ),
+            Text(
+              "Profile",
+              style: TextStyle(
+                fontFamily: 'Comfortaa',
+                fontWeight: FontWeight.bold,
+                fontSize: MediaQuery.of(context).size.width * 0.06,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+
+        backgroundColor: Color(0xFFFCFFD5),
+        centerTitle: true,
+      ),
       body: GridView.count(
         crossAxisCount: 2,
         shrinkWrap: true,

@@ -9,32 +9,22 @@ class MotherHealthTracking extends StatefulWidget {
   State<StatefulWidget> createState() => _MotherHealthTracking();
 }
 
-class _MotherHealthTracking extends State<MotherHealthTracking>{
-
+class _MotherHealthTracking extends State<MotherHealthTracking> {
   Widget _listView(AsyncSnapshot<QuerySnapshot> collection) {
     double picture_scale = 8.0;
     double paddingLeft = MediaQuery.of(context).size.width * 0.13;
     double paddingTopPic = MediaQuery.of(context).size.height * 0.05;
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
-    double divider =  MediaQuery.of(context).size.height * 0.01;
+    double divider = MediaQuery.of(context).size.height * 0.01;
     double width = MediaQuery.of(context).size.width * 0.6;
     int selected_index = 0;
     final _listField = ["mh_id", "mh_date", "mh_time", "mh_bloodPressure", "mh_bloodSugar", "mh_height", "mh_weight", "mh_day_of_pregnancy"];
     List<HealthReport> _listInfo = List<HealthReport>();
-    if(collection.hasData) {
+    if (collection.hasData) {
       collection.data.docs.forEach((doc) {
-        _listInfo.add(
-            HealthReport(
-                doc.data()[_listField[0]],
-                doc.data()[_listField[1]],
-                doc.data()[_listField[2]],
-                doc.data()[_listField[3]].toDouble(),
-                doc.data()[_listField[4]].toDouble(),
-                doc.data()[_listField[5]].toDouble(),
-                doc.data()[_listField[6]].toDouble(),
-                doc.data()[_listField[7]])
-        );
+        _listInfo.add(HealthReport(doc.data()[_listField[0]], doc.data()[_listField[1]], doc.data()[_listField[2]], doc.data()[_listField[3]].toDouble(),
+            doc.data()[_listField[4]].toDouble(), doc.data()[_listField[5]].toDouble(), doc.data()[_listField[6]].toDouble(), doc.data()[_listField[7]]));
       });
 
       return SingleChildScrollView(
@@ -66,7 +56,7 @@ class _MotherHealthTracking extends State<MotherHealthTracking>{
                             ),
                           );
                         }).toList(),
-                        onChanged: (index){
+                        onChanged: (index) {
                           setState(() {
                             selected_index = _listInfo.indexOf(index);
                           });
@@ -94,25 +84,21 @@ class _MotherHealthTracking extends State<MotherHealthTracking>{
                           children: [
                             Text(
                               "Blood Sugar",
-                              style: (
-                                  TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: fontSizeTitle,
-                                    fontFamily: "Comfortaa",
-                                  )
-                              ),
+                              style: (TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: fontSizeTitle,
+                                fontFamily: "Comfortaa",
+                              )),
                             ),
                             Divider(
                               height: divider,
                             ),
                             Text(
                               _listInfo[selected_index].bloodSugar.toString(),
-                              style: (
-                                  TextStyle(
-                                    fontSize: fontSizeText,
-                                    fontFamily: "Comfortaa",
-                                  )
-                              ),
+                              style: (TextStyle(
+                                fontSize: fontSizeText,
+                                fontFamily: "Comfortaa",
+                              )),
                             ),
                           ],
                         ),
@@ -139,25 +125,21 @@ class _MotherHealthTracking extends State<MotherHealthTracking>{
                           children: [
                             Text(
                               "Blood Pressure",
-                              style: (
-                                  TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: fontSizeTitle,
-                                    fontFamily: "Comfortaa",
-                                  )
-                              ),
+                              style: (TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: fontSizeTitle,
+                                fontFamily: "Comfortaa",
+                              )),
                             ),
                             Divider(
                               height: divider,
                             ),
                             Text(
                               _listInfo[selected_index].bloodPressure.toString(),
-                              style: (
-                                  TextStyle(
-                                    fontSize: fontSizeText,
-                                    fontFamily: "Comfortaa",
-                                  )
-                              ),
+                              style: (TextStyle(
+                                fontSize: fontSizeText,
+                                fontFamily: "Comfortaa",
+                              )),
                             ),
                           ],
                         ),
@@ -184,25 +166,21 @@ class _MotherHealthTracking extends State<MotherHealthTracking>{
                           children: [
                             Text(
                               "Weight (kg)",
-                              style: (
-                                  TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: fontSizeTitle,
-                                    fontFamily: "Comfortaa",
-                                  )
-                              ),
+                              style: (TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: fontSizeTitle,
+                                fontFamily: "Comfortaa",
+                              )),
                             ),
                             Divider(
                               height: divider,
                             ),
                             Text(
                               _listInfo[selected_index].weight.toString(),
-                              style: (
-                                  TextStyle(
-                                    fontSize: fontSizeText,
-                                    fontFamily: "Comfortaa",
-                                  )
-                              ),
+                              style: (TextStyle(
+                                fontSize: fontSizeText,
+                                fontFamily: "Comfortaa",
+                              )),
                             ),
                           ],
                         ),
@@ -229,25 +207,21 @@ class _MotherHealthTracking extends State<MotherHealthTracking>{
                           children: [
                             Text(
                               "Height (cm)",
-                              style: (
-                                  TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: fontSizeTitle,
-                                    fontFamily: "Comfortaa",
-                                  )
-                              ),
+                              style: (TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: fontSizeTitle,
+                                fontFamily: "Comfortaa",
+                              )),
                             ),
                             Divider(
                               height: divider,
                             ),
                             Text(
                               _listInfo[selected_index].height.toString(),
-                              style: (
-                                  TextStyle(
-                                    fontSize: fontSizeText,
-                                    fontFamily: "Comfortaa",
-                                  )
-                              ),
+                              style: (TextStyle(
+                                fontSize: fontSizeText,
+                                fontFamily: "Comfortaa",
+                              )),
                             ),
                           ],
                         ),
@@ -263,14 +237,14 @@ class _MotherHealthTracking extends State<MotherHealthTracking>{
     } else {
       return Container(
         child: Center(
-            child: Text(
-              "No Record Found",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: fontSizeTitle,
-                fontFamily: "Comfortaa",
-              ),
+          child: Text(
+            "No Record Found",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: fontSizeTitle,
+              fontFamily: "Comfortaa",
             ),
+          ),
         ),
       );
     }
@@ -283,9 +257,8 @@ class _MotherHealthTracking extends State<MotherHealthTracking>{
         color: Colors.black,
         width: 2.0,
       ),
-      borderRadius: BorderRadius.all(
-          Radius.circular(10.0) //<--- border radius here
-      ),
+      borderRadius: BorderRadius.all(Radius.circular(10.0) //<--- border radius here
+          ),
     );
   }
 
@@ -297,6 +270,7 @@ class _MotherHealthTracking extends State<MotherHealthTracking>{
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
@@ -315,11 +289,9 @@ class _MotherHealthTracking extends State<MotherHealthTracking>{
       ),
       body: StreamBuilder(
           stream: health.snapshots(),
-          builder: (context, collection){
+          builder: (context, collection) {
             return _listView(collection);
-          }
-      ),
+          }),
     );
   }
 }
-
