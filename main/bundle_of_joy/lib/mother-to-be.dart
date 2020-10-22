@@ -3,6 +3,7 @@ import "appointmentMother/appointmentMother_main.dart";
 import "foodIntake/foodIntake_main.dart";
 import "emergencyContact/emergencyContactTab.dart";
 import "MotherHealthTracking/healthTrackingTab.dart";
+import "healthTrackingMother/healthTrackingMother.dart";
 
 class MotherToBeTab extends StatefulWidget {
   @override
@@ -46,7 +47,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MotherHealthTracking()),
+                    MaterialPageRoute(builder: (context) => HealthTrackingMother()),
                   );
                 }
                 break;
