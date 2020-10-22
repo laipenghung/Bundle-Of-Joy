@@ -17,7 +17,7 @@ class _BabyProfile extends State<BabyProfile>{
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     final _listField = ["b_id", "m_id", "b_registered_id", "b_name", "b_dob", "b_place_of_birth", "b_gender", "b_age", "b_bloodType", "b_mode_of_delivery", "b_weight_at_birth", "b_length_at_birth", "b_head_circumference", "b_order"];
     List<Baby> _listBaby = List<Baby>();
-    if(collection.data.size != 0){
+    if(collection.hasData){
       collection.data.docs.forEach((doc) {
         _listBaby.add(
           Baby(
@@ -37,7 +37,7 @@ class _BabyProfile extends State<BabyProfile>{
               doc.data()[_listField[13]].toInt())
         );
       });
-
+      
       return ListView.separated(
         itemCount: _listBaby.length,
         itemBuilder: (context, index){
