@@ -62,10 +62,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
     );
 
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(
-        0, 
-        'Food Intake Tracking',
-        'It\'s time to update your blood sugar level', 
+    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(0, 'Food Intake Tracking', 'It\'s time to update your blood sugar level',
         tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)), notificationDetails,
         androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
   }
@@ -82,6 +79,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
     return Scaffold(
       // APP BAR
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
           "Food Intake Tracking P",
           style: TextStyle(
@@ -103,7 +101,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
           Container(
             margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.055),
             //color: Colors.lightBlue,
-            height: MediaQuery.of(context).size.height * 0.52,
+            height: MediaQuery.of(context).size.height * 0.6,
             width: MediaQuery.of(context).size.width,
             child: SingleChildScrollView(
               padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, bottom: MediaQuery.of(context).size.height * 0.05),

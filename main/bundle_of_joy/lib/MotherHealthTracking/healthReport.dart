@@ -1,10 +1,10 @@
 class HealthReport {
-  String mh_id, date, time;
+  String mhID, date, time;
   double bloodPressure, bloodSugar, height, weight;
   int dayOfPregnancy;
 
-  HealthReport(String mh_id, String date, String time, double bloodPressure, double bloodSugar, double height, double weight, int dayOfPregnancy){
-    this.mh_id = mh_id;
+  HealthReport(String mhID, String date, String time, double bloodPressure, double bloodSugar, double height, double weight, int dayOfPregnancy) {
+    this.mhID = mhID;
     this.date = date;
     this.time = time;
     this.bloodPressure = bloodPressure;

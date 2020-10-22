@@ -19,6 +19,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
     return Scaffold(
       // APP BAR
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
           "Food Intake Tracking D",
           style: TextStyle(
@@ -40,7 +41,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
           Container(
             margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.055),
             //color: Colors.lightBlue,
-            height: MediaQuery.of(context).size.height * 0.52,
+            height: MediaQuery.of(context).size.height * 0.6,
             width: MediaQuery.of(context).size.width,
             child: SingleChildScrollView(
               padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, bottom: MediaQuery.of(context).size.height * 0.05),

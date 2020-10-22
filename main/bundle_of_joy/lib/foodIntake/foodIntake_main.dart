@@ -17,6 +17,7 @@ class _FoodIntakeMainState extends State<FoodIntakeMain> {
     return Scaffold(
       // APP BAR
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
           "Food Intake Tracking",
           style: TextStyle(

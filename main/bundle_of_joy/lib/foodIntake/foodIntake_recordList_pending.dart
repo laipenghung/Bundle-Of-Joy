@@ -34,6 +34,7 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
     return Scaffold(
       // APP BAR
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
           "Food Intake Tracking",
           style: TextStyle(
@@ -70,77 +71,77 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
                     return Slidable(
                       actionPane: SlidableDrawerActionPane(),
                       actionExtentRatio: 0.25,
-                        child: InkWell(
-                          onTap: () {
-                            print(snapshot.data[index].data()['recordID']);
-                            //go to record_pending
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => FoodIntakeRecordPending(foodIntakeRecordID: snapshot.data[index].data()["recordID"])),
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height * 0.015,
-                                    bottom: MediaQuery.of(context).size.height * 0.015,
-                                    left: MediaQuery.of(context).size.width * 0.07),
-                                //color: Colors.lightBlue,
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.1),
-                                      child: Image.asset(
-                                        "assets/icons/meal.png",
-                                        height: MediaQuery.of(context).size.height * 0.06,
+                      child: InkWell(
+                        onTap: () {
+                          print(snapshot.data[index].data()['recordID']);
+                          //go to record_pending
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => FoodIntakeRecordPending(foodIntakeRecordID: snapshot.data[index].data()["recordID"])),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height * 0.015,
+                                  bottom: MediaQuery.of(context).size.height * 0.015,
+                                  left: MediaQuery.of(context).size.width * 0.07),
+                              //color: Colors.lightBlue,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.1),
+                                    child: Image.asset(
+                                      "assets/icons/meal.png",
+                                      height: MediaQuery.of(context).size.height * 0.06,
+                                    ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        snapshot.data[index].data()['selectedDate'],
+                                        style: TextStyle(
+                                          fontFamily: 'Comfortaa',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          snapshot.data[index].data()['selectedDate'],
-                                          style: TextStyle(
-                                            fontFamily: 'Comfortaa',
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: MediaQuery.of(context).size.width * 0.04,
-                                            color: Colors.black,
-                                          ),
+                                      SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                      Text(
+                                        snapshot.data[index].data()['selectedTime'],
+                                        style: TextStyle(
+                                          fontFamily: 'Comfortaa',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                                          color: Colors.black,
                                         ),
-                                        SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                                        Text(
-                                          snapshot.data[index].data()['selectedTime'],
-                                          style: TextStyle(
-                                            fontFamily: 'Comfortaa',
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: MediaQuery.of(context).size.width * 0.04,
-                                            color: Colors.black,
-                                          ),
+                                      ),
+                                      SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                      Text(
+                                        'View Record >>>',
+                                        style: TextStyle(
+                                          fontFamily: 'Comfortaa',
+                                          fontSize: MediaQuery.of(context).size.width * 0.035,
+                                          color: Colors.black,
                                         ),
-                                        SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                                        Text(
-                                          'View Record >>>',
-                                          style: TextStyle(
-                                            fontFamily: 'Comfortaa',
-                                            fontSize: MediaQuery.of(context).size.width * 0.035,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              Divider(
-                                indent: MediaQuery.of(context).size.width * 0.03,
-                                endIndent: MediaQuery.of(context).size.width * 0.03,
-                                color: Colors.black,
-                                thickness: MediaQuery.of(context).size.height * 0.001,
-                              ),
-                            ],
-                          ),
+                            ),
+                            Divider(
+                              indent: MediaQuery.of(context).size.width * 0.03,
+                              endIndent: MediaQuery.of(context).size.width * 0.03,
+                              color: Colors.black,
+                              thickness: MediaQuery.of(context).size.height * 0.001,
+                            ),
+                          ],
                         ),
+                      ),
                       secondaryActions: <Widget>[
                         IconSlideAction(
                           caption: "Delete",
@@ -150,7 +151,8 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
                             print(snapshot.data[index].data()['recordID']);
                             deleteSelected(snapshot.data[index].data()['recordID']);
                           },
-                        )],
+                        )
+                      ],
                     );
                   },
                 ),

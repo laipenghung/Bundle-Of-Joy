@@ -15,7 +15,7 @@ class EmergencyContactTab extends StatelessWidget {
     //print(x.data()['m_emergencyContact']);
     if (x.data()['m_emergencyContact'] == null) {
       return false;
-    }else{
+    } else {
       return true;
     }
   }
@@ -24,6 +24,7 @@ class EmergencyContactTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         iconTheme: IconThemeData(
           color: Colors.black,
         ),

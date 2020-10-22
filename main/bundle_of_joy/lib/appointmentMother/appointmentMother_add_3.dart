@@ -41,6 +41,7 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
     return Scaffold(
         // APP BAR
         appBar: AppBar(
+          toolbarHeight: MediaQuery.of(context).size.height * 0.1,
           title: Text(
             "Appointment Management",
             style: TextStyle(
@@ -63,301 +64,359 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
               .where("date_string", isEqualTo: "${dateFrom2.year.toString()}-${dateFrom2.month.toString()}-${dateFrom2.day.toString()}")
               .snapshots(),
           builder: (context, snapshot) {
-            return Column(
-              children: <Widget>[
-                Container(
-                    //color: Colors.lightBlue,
-                    height: MediaQuery.of(context).size.height * 0.58,
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.03),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                          Container(
-                            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.06),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width * 0.85,
-                                  height: MediaQuery.of(context).size.height * 0.07,
-                                  decoration: myBoxDecoration2(),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "${dateFrom2.day} - ${dateFrom2.month} - ${dateFrom2.year}",
-                                        style: TextStyle(
-                                          fontFamily: 'Comfortaa',
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: MediaQuery.of(context).size.height * 0.025,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin:
-                                            EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.005, left: MediaQuery.of(context).size.width * 0.05),
-                                        child: Image.asset(
-                                          "assets/icons/calendar.png",
-                                          height: MediaQuery.of(context).size.height * 0.035,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+            if (snapshot.hasData) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.15,
+                    width: MediaQuery.of(context).size.width * 0.15,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 5,
+                      backgroundColor: Colors.black,
+                      valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                    ),
+                  ),
+                );
+              } else if (snapshot.data.documents.isEmpty) {
+                return Center(
+                  child: Text(
+                    'There is currently no slot on this date',
+                    style: TextStyle(
+                      fontFamily: 'Comfortaa',
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      color: Colors.black,
+                    ),
+                  ),
+                );
+              } else {
+                return Column(
+                  children: <Widget>[
+                    Container(
+                        //color: Colors.lightBlue,
+                        height: MediaQuery.of(context).size.height * 0.63,
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.03),
+                        child: SingleChildScrollView(
+                          child: Column(
                             children: [
-                              InkWell(
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width * 0.3,
-                                  height: MediaQuery.of(context).size.height * 0.05,
-                                  decoration: myBoxDecorationAM(),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "A.M.",
-                                        style: TextStyle(
-                                          fontFamily: 'Comfortaa',
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: MediaQuery.of(context).size.height * 0.025,
-                                          color: Colors.black,
-                                        ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                              Container(
+                                margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.06),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width * 0.85,
+                                      height: MediaQuery.of(context).size.height * 0.07,
+                                      decoration: myBoxDecoration2(),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "${dateFrom2.day} - ${dateFrom2.month} - ${dateFrom2.year}",
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: MediaQuery.of(context).size.height * 0.025,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                bottom: MediaQuery.of(context).size.height * 0.005, left: MediaQuery.of(context).size.width * 0.05),
+                                            child: Image.asset(
+                                              "assets/icons/calendar.png",
+                                              height: MediaQuery.of(context).size.height * 0.035,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Container(
-                                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
-                                        child: Image.asset(
-                                          "assets/icons/am.png",
-                                          height: MediaQuery.of(context).size.height * 0.03,
-                                        ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width * 0.3,
+                                      height: MediaQuery.of(context).size.height * 0.05,
+                                      decoration: myBoxDecorationAM(),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "A.M.",
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: MediaQuery.of(context).size.height * 0.025,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
+                                            child: Image.asset(
+                                              "assets/icons/am.png",
+                                              height: MediaQuery.of(context).size.height * 0.03,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        _amColor = 1;
+                                        _pmColor = 2;
+                                        selectedSession = "AM";
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width * 0.08,
+                                  ),
+                                  InkWell(
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width * 0.3,
+                                      height: MediaQuery.of(context).size.height * 0.05,
+                                      decoration: myBoxDecorationPM(),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "P.M.",
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: MediaQuery.of(context).size.height * 0.025,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
+                                            child: Image.asset("assets/icons/pm.png", height: MediaQuery.of(context).size.height * 0.03),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        _amColor = 2;
+                                        _pmColor = 1;
+                                        selectedSession = "PM";
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.08),
+                                child: Text(
+                                  "Remaining Slot(s):",
+                                  style: TextStyle(
+                                    fontFamily: 'Comfortaa',
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: MediaQuery.of(context).size.height * 0.028,
+                                    color: Colors.black,
                                   ),
                                 ),
-                                onTap: () {
-                                  setState(() {
-                                    _amColor = 1;
-                                    _pmColor = 2;
-                                    selectedSession = "AM";
-                                  });
-                                },
                               ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.08,
-                              ),
-                              InkWell(
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width * 0.3,
-                                  height: MediaQuery.of(context).size.height * 0.05,
-                                  decoration: myBoxDecorationPM(),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "P.M.",
-                                        style: TextStyle(
-                                          fontFamily: 'Comfortaa',
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: MediaQuery.of(context).size.height * 0.025,
-                                          color: Colors.black,
+                              Builder(builder: (context) {
+                                if (_amColor == 1 && _pmColor == 2) {
+                                  return Builder(builder: (context) {
+                                    if (snapshot.data.documents[0]['s_available_AM'] < 6) {
+                                      return Container(
+                                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
+                                        child: Text(
+                                          snapshot.data.documents[0]['s_available_AM'].toString(),
+                                          style: TextStyle(
+                                            fontFamily: 'Comfortaa',
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: MediaQuery.of(context).size.height * 0.15,
+                                            color: Colors.red,
+                                          ),
                                         ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
-                                        child: Image.asset("assets/icons/pm.png", height: MediaQuery.of(context).size.height * 0.03),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    _amColor = 2;
-                                    _pmColor = 1;
-                                    selectedSession = "PM";
+                                      );
+                                    } else {
+                                      return Container(
+                                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
+                                        child: Text(
+                                          snapshot.data.documents[0]['s_available_AM'].toString(),
+                                          style: TextStyle(
+                                            fontFamily: 'Comfortaa',
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: MediaQuery.of(context).size.height * 0.15,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      );
+                                    }
                                   });
-                                },
-                              ),
+                                } else {
+                                  return Builder(builder: (context) {
+                                    if (snapshot.data.documents[0]['s_available_PM'] < 6) {
+                                      return Container(
+                                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
+                                        child: Text(
+                                          snapshot.data.documents[0]['s_available_PM'].toString(),
+                                          style: TextStyle(
+                                            fontFamily: 'Comfortaa',
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: MediaQuery.of(context).size.height * 0.15,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return Container(
+                                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
+                                        child: Text(
+                                          snapshot.data.documents[0]['s_available_PM'].toString(),
+                                          style: TextStyle(
+                                            fontFamily: 'Comfortaa',
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: MediaQuery.of(context).size.height * 0.15,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  });
+                                }
+                              }),
                             ],
                           ),
-                          Container(
-                            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.07),
-                            child: Text(
-                              "Remaining Slot(s):",
-                              style: TextStyle(
-                                fontFamily: 'Comfortaa',
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.height * 0.028,
-                                color: Colors.black,
+                        )),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            decoration: myBoxDecoration2(),
+                            child: Center(
+                              child: Text(
+                                "Back",
+                                style: TextStyle(
+                                  fontFamily: 'Comfortaa',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: MediaQuery.of(context).size.height * 0.025,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ),
-                          Builder(builder: (context) {
-                            if (_amColor == 1 && _pmColor == 2) {
-                              return Builder(builder: (context) {
-                                if (snapshot.data.documents[0]['s_available_AM'] < 6) {
-                                  return Container(
-                                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
-                                    child: Text(
-                                      snapshot.data.documents[0]['s_available_AM'].toString(),
-                                      style: TextStyle(
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: MediaQuery.of(context).size.height * 0.15,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  return Container(
-                                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
-                                    child: Text(
-                                      snapshot.data.documents[0]['s_available_AM'].toString(),
-                                      style: TextStyle(
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: MediaQuery.of(context).size.height * 0.15,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  );
-                                }
-                              });
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => AppointmentMotherAdd2(name: nameFrom2)),
+                            );
+                          },
+                        ),
+                        SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+                        InkWell(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            decoration: myBoxDecoration2(),
+                            child: Center(
+                              child: Text(
+                                "Confirm",
+                                style: TextStyle(
+                                  fontFamily: 'Comfortaa',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: MediaQuery.of(context).size.height * 0.025,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                          onTap: () {
+                            if (selectedSession == "AM") {
+                              if (snapshot.data.documents[0]['s_available_AM'] == 0) {
+                                //print("AM No Slot");
+                                return showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Slot Empty"),
+                                        content:
+                                            Text("Hi, there is currently no slot for this session at this day, please try another session or another date :D"),
+                                        actions: <Widget>[
+                                          RaisedButton(
+                                            child: Text("Ok"),
+                                            onPressed: () => Navigator.of(context).pop(),
+                                          ),
+                                        ],
+                                      );
+                                    });
+                              } else {
+                                uploadAppointment(snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'],
+                                    snapshot.data.documents[0]['s_id']);
+                              }
+                            } else if (selectedSession == "PM") {
+                              if (snapshot.data.documents[0]['s_available_PM'] == 0) {
+                                //print("PM No Slot");
+                                return showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Slot Empty"),
+                                        content:
+                                            Text("Hi, there is currently no slot for this session at this day, please try another session or another date :D"),
+                                        actions: <Widget>[
+                                          RaisedButton(
+                                            child: Text("Ok"),
+                                            onPressed: () => Navigator.of(context).pop(),
+                                          ),
+                                        ],
+                                      );
+                                    });
+                              } else {
+                                uploadAppointment(snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'],
+                                    snapshot.data.documents[0]['s_id']);
+                              }
                             } else {
-                              return Builder(builder: (context) {
-                                if (snapshot.data.documents[0]['s_available_PM'] < 6) {
-                                  return Container(
-                                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
-                                    child: Text(
-                                      snapshot.data.documents[0]['s_available_PM'].toString(),
-                                      style: TextStyle(
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: MediaQuery.of(context).size.height * 0.15,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  return Container(
-                                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
-                                    child: Text(
-                                      snapshot.data.documents[0]['s_available_PM'].toString(),
-                                      style: TextStyle(
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: MediaQuery.of(context).size.height * 0.15,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  );
-                                }
-                              });
+                              print("THIS IS BROKEN");
                             }
-                          }),
-                        ],
-                      ),
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.06,
-                        decoration: myBoxDecoration2(),
-                        child: Center(
-                          child: Text(
-                            "Back",
-                            style: TextStyle(
-                              fontFamily: 'Comfortaa',
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.height * 0.025,
-                              color: Colors.black,
-                            ),
-                          ),
+                          },
                         ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => AppointmentMotherAdd2(name: nameFrom2)),
-                        );
-                      },
-                    ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.05),
-                    InkWell(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.06,
-                        decoration: myBoxDecoration2(),
-                        child: Center(
-                          child: Text(
-                            "Confirm",
-                            style: TextStyle(
-                              fontFamily: 'Comfortaa',
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.height * 0.025,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        if (selectedSession == "AM") {
-                          if (snapshot.data.documents[0]['s_available_AM'] == 0) {
-                            //print("AM No Slot");
-                            return showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text("Slot Empty"),
-                                    content: Text("Hi, there is currently no slot for this session at this day, please try another session or another date :D"),
-                                    actions: <Widget>[
-                                      RaisedButton(
-                                        child: Text("Ok"),
-                                        onPressed: () => Navigator.of(context).pop(),
-                                      ),
-                                    ],
-                                  );
-                                });
-                          } else {
-                            uploadAppointment(snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'],
-                                snapshot.data.documents[0]['s_id']);
-                          }
-                        } else if (selectedSession == "PM") {
-                          if (snapshot.data.documents[0]['s_available_PM'] == 0) {
-                            //print("PM No Slot");
-                            return showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text("Slot Empty"),
-                                    content: Text("Hi, there is currently no slot for this session at this day, please try another session or another date :D"),
-                                    actions: <Widget>[
-                                      RaisedButton(
-                                        child: Text("Ok"),
-                                        onPressed: () => Navigator.of(context).pop(),
-                                      ),
-                                    ],
-                                  );
-                                });
-                          } else {
-                            uploadAppointment(snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'],
-                                snapshot.data.documents[0]['s_id']);
-                          }
-                        } else {
-                          print("THIS IS BROKEN");
-                        }
-                      },
+                      ],
                     ),
                   ],
-                ),
-              ],
+                );
+              }
+            } else if (snapshot.hasError) {
+              print("Snapshot has error");
+            }
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.15,
+                    width: MediaQuery.of(context).size.width * 0.15,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 5,
+                      backgroundColor: Colors.black,
+                      valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                  ),
+                  Text(
+                    'Loading...',
+                    style: TextStyle(
+                      fontFamily: 'Comfortaa',
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
             );
           },
         ));
