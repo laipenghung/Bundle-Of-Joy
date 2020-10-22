@@ -22,7 +22,7 @@ class _MotherHealthTracking extends State<MotherHealthTracking>{
     int selected_index = 0;
     final _listField = ["mh_id", "mh_date", "mh_time", "mh_bloodPressure", "mh_bloodSugar", "mh_height", "mh_weight", "mh_day_of_pregnancy"];
     List<HealthReport> _listInfo = List<HealthReport>();
-    if(collection.data.size != 0) {
+    if(collection.hasData) {
       collection.data.docs.forEach((doc) {
         _listInfo.add(
             HealthReport(
