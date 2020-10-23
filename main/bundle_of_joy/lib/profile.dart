@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "motherProfile.dart";
-import "setting.dart";
+import "auth/auth.dart";
+import "sign_up.dart";
 import "baby/babyProfile.dart";
 
 class ProfileTab extends StatefulWidget {
@@ -9,6 +10,48 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileState extends State<ProfileTab> {
+  AlertDialog _signOut() {
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Log Out"),
+      onPressed: () {
+        signOut();
+        Navigator.of(context, rootNavigator: true).push(
+          MaterialPageRoute(builder: (context) {
+            return SignUpScreen();
+          }),
+        );
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text(
+        "Log Out",
+        style: TextStyle(
+          fontFamily: "Comfortaa",
+        ),
+      ),
+      content: Text(
+        "Would you like to log out?",
+        style: TextStyle(
+          fontFamily: "Comfortaa",
+        ),
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+      backgroundColor: Color(0xFFFCFFD5),
+    );
+
+    return alert;
+  }
+
   singleCard(iconLoc, title, index) {
     double height = MediaQuery.of(context).size.height * 0.15;
     double fontSize = MediaQuery.of(context).size.width * 0.045;
@@ -40,14 +83,12 @@ class _ProfileState extends State<ProfileTab> {
               }
             case 2:
               {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Setting()),
+                showDialog(
+                  context: context,
+                  builder: (BuildContext alertContext) {
+                    return _signOut();
+                  },
                 );
-                break;
-              }
-            case 3:
-              {
                 break;
               }
           }
@@ -123,8 +164,7 @@ class _ProfileState extends State<ProfileTab> {
         children: <Widget>[
           singleCard("assets/icons/mother.png", "Mother's Profile", 0),
           singleCard("assets/icons/baby_color.png", "Baby's Profile", 1),
-          singleCard("assets/icons/settings.png", "Setting", 2),
-          singleCard("assets/icons/feedback.png", "Feedback", 3),
+          singleCard("assets/icons/settings.png", "Log Out", 2),
         ],
       ),
     );
