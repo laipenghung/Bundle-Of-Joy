@@ -11,6 +11,8 @@ class MotherForBabyTab extends StatefulWidget {
 }
 
 class _MotherForBabyTabState extends State<MotherForBabyTab> {
+  String selectedBabyID = "";
+
   Widget _listView(AsyncSnapshot<QuerySnapshot> collection) {
     double width = MediaQuery.of(context).size.width * 0.8;
     double height = MediaQuery.of(context).size.height * 0.04;
@@ -56,6 +58,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
       });
 
       selected_babyID = _listBaby.first.b_id.toString();
+      selectedBabyID = _listBaby.first.b_id.toString();
 
       return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
         return Container(
@@ -98,6 +101,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
                   setState(() {
                     selected_index = _listBaby.indexOf(index);
                     selected_babyID = _listBaby[selected_index].b_id.toString();
+                    selectedBabyID = _listBaby[selected_index].b_id.toString();
                   });
                 },
               ),
@@ -146,7 +150,10 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
               {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CareForBabyTab()),
+                  MaterialPageRoute(
+                      builder: (context) => CareForBabyTab(
+                            selectedBabyID: selectedBabyID,
+                          )),
                 );
               }
               break;
