@@ -44,6 +44,14 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
         future: collectionReference.doc(widget.foodIntakeRecordID).get(),
         builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasData) {
+            Map food = snapshot.data.data()["foodMap"];
+            List<dynamic> foodName = List<dynamic>();
+            List<dynamic> foodQty = List<dynamic>();
+            foodName = food.keys.toList();
+            foodQty = food.values.toList();
+            print(foodName);
+            print(foodQty);
+
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(),
