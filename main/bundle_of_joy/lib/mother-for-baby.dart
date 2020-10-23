@@ -1,4 +1,5 @@
-import 'package:bundle_of_joy/careForBaby/careForBabyTab.dart';
+import "package:bundle_of_joy/baby/addBaby.dart";
+import "package:bundle_of_joy/careForBaby/careForBabyTab.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -182,9 +183,92 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
     );
   }
 
+  Widget hasData(AsyncSnapshot<QuerySnapshot> collection) {
+    double paddingTop = MediaQuery.of(context).size.height * 0.05;
+    double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
+    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
+
+    if (collection.data.docs.isNotEmpty) {
+      return Column(
+        children: [
+          _listView(collection),
+          GridView.count(
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            padding: EdgeInsets.only(top: paddingTop, left: 15, right: 15),
+            children: <Widget>[
+              singleCard("assets/icons/appointment.png", "Appointment\nManagement", 0),
+              singleCard("assets/icons/vaccination.png", "Vaccination\nSchedule", 1),
+              singleCard("assets/icons/bar-chart.png", "Vaccination &\nGrowth\nTracking", 2),
+              singleCard("assets/icons/baby_color.png", "Care\nfor Baby", 3),
+            ],
+          ),
+        ],
+      );
+    }
+    else{
+      return Center(
+        child: Column(
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+            Container(
+              width: 110,
+              height: 110,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/icons/baby_color.png"),
+                  )),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+            Padding(
+              padding: const EdgeInsets.only(left: 50, right: 50),
+              child: Text(
+                "Seems like you don't have any baby save in your profile.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: "Comfortaa",
+                  fontWeight: FontWeight.bold,
+                  fontSize: fontSizeText,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+            RaisedButton(
+              color: Color(0xFFFCFFD5),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  side: BorderSide(width: 1.5, color: Colors.black)
+              ),
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddBaby()),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 20, right: 20, top: 12, bottom: 12),
+                child: Text(
+                  "Add Baby",
+                  style: TextStyle(
+                    fontFamily: "Comfortaa",
+                    fontWeight: FontWeight.bold,
+                    fontSize: fontSizeTitle,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    double paddingTop = MediaQuery.of(context).size.height * 0.05;
     final User user = FirebaseAuth.instance.currentUser;
     Query baby = FirebaseFirestore.instance.collection("mother").doc(user.uid).collection("baby").orderBy("b_name");
 
@@ -210,7 +294,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
             Text(
               "Mother-for-baby",
               style: TextStyle(
-                fontFamily: 'Comfortaa',
+                fontFamily: "Comfortaa",
                 fontWeight: FontWeight.bold,
                 fontSize: MediaQuery.of(context).size.width * 0.06,
                 color: Colors.black,
@@ -225,22 +309,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
       body: StreamBuilder(
           stream: baby.snapshots(),
           builder: (context, collection) {
-            return Column(
-              children: [
-                _listView(collection),
-                GridView.count(
-                  crossAxisCount: 2,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.only(top: paddingTop, left: 15, right: 15),
-                  children: <Widget>[
-                    singleCard("assets/icons/appointment.png", "Appointment\nManagement", 0),
-                    singleCard("assets/icons/vaccination.png", "Vaccination\nSchedule", 1),
-                    singleCard("assets/icons/bar-chart.png", "Vaccination &\nGrowth\nTracking", 2),
-                    singleCard("assets/icons/baby_color.png", "Care\nfor Baby", 3),
-                  ],
-                ),
-              ],
-            );
+            return hasData(collection);
           }),
     );
   }

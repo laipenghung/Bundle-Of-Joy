@@ -1,16 +1,20 @@
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-import "package:firebase_auth/firebase_auth.dart";
-import "package:cloud_firestore/cloud_firestore.dart";
 import "healthReport.dart";
 
 class MotherHealthTracking extends StatefulWidget {
+  final HealthReport healthReport;
+  MotherHealthTracking({Key key, this.healthReport}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => _MotherHealthTracking();
+  State<StatefulWidget> createState() => _MotherHealthTracking(healthReport);
 }
 
 class _MotherHealthTracking extends State<MotherHealthTracking> {
-  Widget _listView(AsyncSnapshot<QuerySnapshot> collection) {
+  final HealthReport healthReport;
+  _MotherHealthTracking(this.healthReport);
+
+  Widget _listView() {
     double picture_scale = 8.0;
     double paddingLeft = MediaQuery.of(context).size.width * 0.13;
     double paddingTopPic = MediaQuery.of(context).size.height * 0.05;
@@ -18,255 +22,187 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     double divider = MediaQuery.of(context).size.height * 0.01;
     double width = MediaQuery.of(context).size.width * 0.6;
-    int selected_index = 0;
-    final _listField = ["mh_id", "mh_date", "mh_time", "mh_bloodPressure", "mh_bloodSugar", "mh_height", "mh_weight", "mh_day_of_pregnancy"];
-    List<HealthReport> _listInfo = List<HealthReport>();
-    if (collection.hasData) {
-      collection.data.docs.forEach((doc) {
-        _listInfo.add(HealthReport(doc.data()[_listField[0]], doc.data()[_listField[1]], doc.data()[_listField[2]], doc.data()[_listField[3]].toDouble(),
-            doc.data()[_listField[4]].toDouble(), doc.data()[_listField[5]].toDouble(), doc.data()[_listField[6]].toDouble(), doc.data()[_listField[7]]));
-      });
 
-      return SingleChildScrollView(
-        child: StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return Column(
-              children: [
-                Container(
-                  width: width,
-                  decoration: myBoxDecoration(),
-                  margin: EdgeInsets.fromLTRB(0, paddingTopPic, 0, 0),
-                  child: DropdownButtonHideUnderline(
-                    child: ButtonTheme(
-                      alignedDropdown: true,
-                      child: DropdownButton(
-                        isExpanded: true,
-                        dropdownColor: Color(0xFFFCFFD5),
-                        value: selected_index == null ? "null" : _listInfo[selected_index],
-                        items: _listInfo.map((HealthReport report) {
-                          String day = report.dayOfPregnancy.toString();
-                          String date = report.date.toString();
-                          return DropdownMenuItem<HealthReport>(
-                            value: report,
-                            child: Text(
-                              "Day: $day ($date)",
-                              style: TextStyle(
-                                fontFamily: "Comfortaa",
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (index) {
-                          setState(() {
-                            selected_index = _listInfo.indexOf(index);
-                          });
-                        },
+    return SingleChildScrollView(
+      child: StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, 0),
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        Image.asset(
+                          "assets/icons/blood-sugar-level.png",
+                          scale: picture_scale,
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(paddingLeft, 0, paddingLeft, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Blood Sugar",
+                            style: (TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: fontSizeTitle,
+                              fontFamily: "Comfortaa",
+                            )),
+                          ),
+                          Divider(
+                            height: divider,
+                          ),
+                          Text(
+                            healthReport.bloodSugar.toString(),
+                            style: (TextStyle(
+                              fontSize: fontSizeText,
+                              fontFamily: "Comfortaa",
+                            )),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
+                  ],
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, 0),
-                  child: Row(
-                    children: [
-                      Column(
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, 0),
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        Image.asset(
+                          "assets/icons/blood-pressure-level.png",
+                          scale: picture_scale,
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(paddingLeft, 0, paddingLeft, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Image.asset(
-                            "assets/icons/blood-sugar-level.png",
-                            scale: picture_scale,
+                          Text(
+                            "Blood Pressure",
+                            style: (TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: fontSizeTitle,
+                              fontFamily: "Comfortaa",
+                            )),
+                          ),
+                          Divider(
+                            height: divider,
+                          ),
+                          Text(
+                            healthReport.bloodPressure.toString(),
+                            style: (TextStyle(
+                              fontSize: fontSizeText,
+                              fontFamily: "Comfortaa",
+                            )),
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(paddingLeft, 0, paddingLeft, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Blood Sugar",
-                              style: (TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: fontSizeTitle,
-                                fontFamily: "Comfortaa",
-                              )),
-                            ),
-                            Divider(
-                              height: divider,
-                            ),
-                            Text(
-                              _listInfo[selected_index].bloodSugar.toString(),
-                              style: (TextStyle(
-                                fontSize: fontSizeText,
-                                fontFamily: "Comfortaa",
-                              )),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, 0),
-                  child: Row(
-                    children: [
-                      Column(
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, 0),
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        Image.asset(
+                          "assets/icons/weight.png",
+                          scale: picture_scale,
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(paddingLeft, 0, paddingLeft, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Image.asset(
-                            "assets/icons/blood-pressure-level.png",
-                            scale: picture_scale,
+                          Text(
+                            "Weight (kg)",
+                            style: (TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: fontSizeTitle,
+                              fontFamily: "Comfortaa",
+                            )),
+                          ),
+                          Divider(
+                            height: divider,
+                          ),
+                          Text(
+                            healthReport.weight.toString(),
+                            style: (TextStyle(
+                              fontSize: fontSizeText,
+                              fontFamily: "Comfortaa",
+                            )),
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(paddingLeft, 0, paddingLeft, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Blood Pressure",
-                              style: (TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: fontSizeTitle,
-                                fontFamily: "Comfortaa",
-                              )),
-                            ),
-                            Divider(
-                              height: divider,
-                            ),
-                            Text(
-                              _listInfo[selected_index].bloodPressure.toString(),
-                              style: (TextStyle(
-                                fontSize: fontSizeText,
-                                fontFamily: "Comfortaa",
-                              )),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, 0),
-                  child: Row(
-                    children: [
-                      Column(
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, paddingTopPic),
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        Image.asset(
+                          "assets/icons/height.png",
+                          scale: picture_scale,
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(paddingLeft, 0, paddingLeft, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Image.asset(
-                            "assets/icons/weight.png",
-                            scale: picture_scale,
+                          Text(
+                            "Height (cm)",
+                            style: (TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: fontSizeTitle,
+                              fontFamily: "Comfortaa",
+                            )),
+                          ),
+                          Divider(
+                            height: divider,
+                          ),
+                          Text(
+                            healthReport.height.toString(),
+                            style: (TextStyle(
+                              fontSize: fontSizeText,
+                              fontFamily: "Comfortaa",
+                            )),
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(paddingLeft, 0, paddingLeft, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Weight (kg)",
-                              style: (TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: fontSizeTitle,
-                                fontFamily: "Comfortaa",
-                              )),
-                            ),
-                            Divider(
-                              height: divider,
-                            ),
-                            Text(
-                              _listInfo[selected_index].weight.toString(),
-                              style: (TextStyle(
-                                fontSize: fontSizeText,
-                                fontFamily: "Comfortaa",
-                              )),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, paddingTopPic),
-                  child: Row(
-                    children: [
-                      Column(
-                        children: [
-                          Image.asset(
-                            "assets/icons/height.png",
-                            scale: picture_scale,
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(paddingLeft, 0, paddingLeft, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Height (cm)",
-                              style: (TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: fontSizeTitle,
-                                fontFamily: "Comfortaa",
-                              )),
-                            ),
-                            Divider(
-                              height: divider,
-                            ),
-                            Text(
-                              _listInfo[selected_index].height.toString(),
-                              style: (TextStyle(
-                                fontSize: fontSizeText,
-                                fontFamily: "Comfortaa",
-                              )),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
-      );
-    } else {
-      return Container(
-        child: Center(
-          child: Text(
-            "No Record Found",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: fontSizeTitle,
-              fontFamily: "Comfortaa",
-            ),
-          ),
-        ),
-      );
-    }
-  }
-
-  BoxDecoration myBoxDecoration() {
-    return BoxDecoration(
-      color: Color(0xFFFCFFD5),
-      border: Border.all(
-        color: Colors.black,
-        width: 2.0,
+              ),
+            ],
+          );
+        },
       ),
-      borderRadius: BorderRadius.all(Radius.circular(10.0) //<--- border radius here
-          ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final User user = FirebaseAuth.instance.currentUser;
-    Query health = FirebaseFirestore.instance.collection("mother").doc(user.uid).collection("health_record").orderBy("mh_day_of_pregnancy", descending: true);
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
+    String day = healthReport.dayOfPregnancy.toString();
 
     return Scaffold(
       appBar: AppBar(
@@ -275,7 +211,7 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
           color: Colors.black,
         ),
         title: Text(
-          "Health Tracking",
+          "Day $day",
           style: TextStyle(
             fontFamily: "Comfortaa",
             fontWeight: FontWeight.bold,
@@ -287,11 +223,7 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
-      body: StreamBuilder(
-          stream: health.snapshots(),
-          builder: (context, collection) {
-            return _listView(collection);
-          }),
+      body: _listView(),
     );
   }
 }
