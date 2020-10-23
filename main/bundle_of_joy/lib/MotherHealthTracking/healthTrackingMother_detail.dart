@@ -2,7 +2,6 @@ import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import 'healthReport.dart';
 import "healthTrackingMother.dart";
-import 'healthTrackingMother.dart';
 
 class MotherHealthTracking extends StatefulWidget {
   final HealthReport healthReport;
@@ -24,10 +23,36 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     double divider = MediaQuery.of(context).size.height * 0.01;
     double sizedBoxHeight = MediaQuery.of(context).size.height * 0.03;
+    String bloodSugar = "No record";
+    String bloodPressure = "No record";
+    Color colorBS = Colors.black;
+    Color colorBP = Colors.black;
 
     return SingleChildScrollView(
       child: StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
+          if(healthReport.bloodSugar.toDouble() > 6){
+            bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L) (Too high)";
+            colorBS = Colors.red;
+          } else if (healthReport.bloodSugar.toDouble() < 4){
+            bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L) (Too low)";
+            colorBS = Colors.orange;
+          } else{
+            bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L)";
+          }
+
+          if(healthReport.bloodPressure > 120){
+            if(healthReport.bloodPressure > 130){
+              bloodPressure = healthReport.bloodPressure.toString() + " (mm/Hg) (High blood pressure)";
+              colorBP = Colors.red;
+            } else {
+              bloodPressure = healthReport.bloodPressure.toString() + " (mm/Hg) (Elevated)";
+              colorBP = Colors.orange;
+            }
+          } else{
+            bloodPressure = healthReport.bloodPressure.toString() + " (mm/Hg)";
+          }
+
           return Column(
             children: [
               Container(
@@ -50,27 +75,32 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
                             ],
                           ),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(paddingLeft, 0, paddingLeft, 0),
+                            padding: EdgeInsets.fromLTRB(paddingLeft, 0, 0, 0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   "Blood Sugar",
-                                  style: (TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: fontSizeTitle,
-                                    fontFamily: "Comfortaa",
-                                  )),
+                                  style: (
+                                      TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: fontSizeTitle,
+                                        fontFamily: "Comfortaa",
+                                      )
+                                  ),
                                 ),
                                 Divider(
                                   height: divider,
                                 ),
                                 Text(
-                                  healthReport.bloodSugar.toString(),
-                                  style: (TextStyle(
-                                    fontSize: fontSizeText,
-                                    fontFamily: "Comfortaa",
-                                  )),
+                                  bloodSugar,
+                                  style: (
+                                      TextStyle(
+                                        fontSize: fontSizeText,
+                                        fontFamily: "Comfortaa",
+                                        color: colorBS,
+                                      )
+                                  ),
                                 ),
                               ],
                             ),
@@ -92,7 +122,7 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
                             ],
                           ),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(paddingLeft, 0, paddingLeft, 0),
+                            padding: EdgeInsets.fromLTRB(paddingLeft, 0, 0, 0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -108,11 +138,14 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
                                   height: divider,
                                 ),
                                 Text(
-                                  healthReport.bloodPressure.toString(),
-                                  style: (TextStyle(
-                                    fontSize: fontSizeText,
-                                    fontFamily: "Comfortaa",
-                                  )),
+                                  bloodPressure,
+                                  style: (
+                                      TextStyle(
+                                        fontSize: fontSizeText,
+                                        fontFamily: "Comfortaa",
+                                        color: colorBP,
+                                      )
+                                  ),
                                 ),
                               ],
                             ),
@@ -139,7 +172,7 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Weight (kg)",
+                                  "Weight",
                                   style: (TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: fontSizeTitle,
@@ -150,7 +183,7 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
                                   height: divider,
                                 ),
                                 Text(
-                                  healthReport.weight.toString(),
+                                  healthReport.weight.toString() + " (kg)",
                                   style: (TextStyle(
                                     fontSize: fontSizeText,
                                     fontFamily: "Comfortaa",
@@ -181,7 +214,7 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Height (cm)",
+                                  "Height",
                                   style: (TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: fontSizeTitle,
@@ -192,7 +225,7 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
                                   height: divider,
                                 ),
                                 Text(
-                                  healthReport.height.toString(),
+                                  healthReport.height.toString() + " (cm)",
                                   style: (TextStyle(
                                     fontSize: fontSizeText,
                                     fontFamily: "Comfortaa",
