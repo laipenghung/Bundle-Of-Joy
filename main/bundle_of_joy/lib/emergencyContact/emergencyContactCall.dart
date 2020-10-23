@@ -14,18 +14,63 @@ class _EmerContactCallState extends State<EmerContactCall> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: RaisedButton(
-          child: Text("Call Now"),
-          onPressed: () async {
-            var data;
-            var result = await _db.collection('mother').doc(user.uid).get();
-            setState(() {
-              data = result.data()['m_emergencyContact'];
-              print(data);
-              FlutterPhoneDirectCaller.callNumber(data);
-            });
-          }),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width * 0.3,
+            height: MediaQuery.of(context).size.width * 0.3,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage("assets/icons/alarm.png"),
+            )),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+          Text(
+            "Have an emergency? \n Click the button to call now!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Comfortaa',
+              fontWeight: FontWeight.bold,
+              fontSize: MediaQuery.of(context).size.width * 0.04,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+          Container(
+            child: RaisedButton(
+                color: Color(0xFFFCFFD5),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15), side: BorderSide(width: 1.5, color: Colors.black)),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.05,
+                      right: MediaQuery.of(context).size.width * 0.05,
+                      top: MediaQuery.of(context).size.height * 0.02,
+                      bottom: MediaQuery.of(context).size.height * 0.02),
+                  child: Text(
+                    "Call Now",
+                    style: (TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      fontFamily: "Comfortaa",
+                    )),
+                  ),
+                ),
+                onPressed: () async {
+                  var data;
+                  var result = await _db.collection('mother').doc(user.uid).get();
+                  setState(() {
+                    data = result.data()['m_emergencyContact'];
+                    print(data);
+                    FlutterPhoneDirectCaller.callNumber(data);
+                  });
+                }),
+          ),
+        ],
+      ),
     );
   }
 }

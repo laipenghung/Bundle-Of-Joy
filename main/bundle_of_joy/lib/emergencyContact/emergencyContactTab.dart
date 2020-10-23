@@ -13,7 +13,7 @@ class EmergencyContactTab extends StatelessWidget {
   Future _getContact() async {
     var x = await _db.collection('mother').doc(user.uid).get();
     //print(x.data()['m_emergencyContact']);
-    if (x.data()['m_emergencyContact'] == null) {
+    if (x.data()['m_emergencyContact'] == null || x.data()['m_emergencyContact'] == "") {
       return false;
     } else {
       return true;

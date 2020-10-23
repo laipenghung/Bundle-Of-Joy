@@ -21,11 +21,12 @@ class _AddEmerContactScreenState extends State<AddEmerContactScreen> {
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height * 0.15),
           Container(
-            width: 110,
-            height: 110,
+            width: MediaQuery.of(context).size.width * 0.3,
+            height: MediaQuery.of(context).size.width * 0.3,
             decoration: BoxDecoration(
                 image: DecorationImage(
               fit: BoxFit.cover,
@@ -49,9 +50,7 @@ class _AddEmerContactScreenState extends State<AddEmerContactScreen> {
           SizedBox(height: MediaQuery.of(context).size.height * 0.04),
           RaisedButton(
             color: Color(0xFFFCFFD5),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
-                side: BorderSide(width: 1.5, color: Colors.black)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15), side: BorderSide(width: 1.5, color: Colors.black)),
             onPressed: () async {
               //Contact contact = await _contactPicker.selectContact();
               var contact = await FlutterContactPicker.pickPhoneContact();
@@ -59,8 +58,7 @@ class _AddEmerContactScreenState extends State<AddEmerContactScreen> {
                 _emerContactNo = contact.phoneNumber.number;
                 //_emerContactName = contact.fullName;      #Remove comment if have to add contact name into firebse
                 emerContact.addEmerContact(_emerContactNo);
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => MotherToBeTab()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherToBeTab()));
                 Fluttertoast.showToast(
                   msg: "Contact Successfully Added",
                   toastLength: Toast.LENGTH_LONG,
@@ -68,8 +66,7 @@ class _AddEmerContactScreenState extends State<AddEmerContactScreen> {
               });
             },
             child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 12, bottom: 12),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 12, bottom: 12),
               child: Text(
                 "Add Contact",
                 style: TextStyle(
