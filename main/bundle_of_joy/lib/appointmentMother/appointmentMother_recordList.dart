@@ -17,6 +17,17 @@ class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordLis
     return _db.collection("mother_appointment").doc(appointmentID).delete();
   }
 
+  Future<void> updateSlotCount(slotID, sessionForThisRecord, dateForThisRecord) {
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+    CollectionReference slotRecord = _db.collection("appointment_slot");
+
+    return slotRecord.doc(slotID).update({
+      if (sessionForThisRecord == "AM") "s_available_AM": FieldValue.increment(1),
+      if (sessionForThisRecord == "PM") "s_available_PM": FieldValue.increment(1),
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,6 +92,8 @@ class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordLis
                               icon: Icons.delete,
                               onTap: () {
                                 deleteSelected(snapshot.data.documents[index]["a_id"]);
+                                updateSlotCount(snapshot.data.documents[index]["s_id"], snapshot.data.documents[index]["a_session"],
+                                    snapshot.data.documents[index]["a_date"]);
                               },
                             )
                           ],
