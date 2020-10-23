@@ -4,10 +4,14 @@ import 'babyFoodIntake/babyFoodIntakeMain.dart';
 import 'babyTemp/babtTemptMain.dart';
 
 class CareForBabyTab extends StatelessWidget {
+  final String selectedBabyID;
+
   final List<Tab> myTabs = <Tab>[
     Tab(text: 'TAB 1'),
     Tab(text: 'TAB 2'),
   ];
+
+  CareForBabyTab({Key key, this.selectedBabyID}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +27,12 @@ class CareForBabyTab extends StatelessWidget {
           ),
         ),
         body: TabBarView(
-            children: [
-              BabyFoodIntakeMain(),
-              BabyTempMain(),
-            ],
-          ),
+          children: [
+            BabyFoodIntakeMain(),
+            BabyTempMain(selectedBabyID: selectedBabyID,),
+          ],
+        ),
       ),
-      
     );
   }
 }

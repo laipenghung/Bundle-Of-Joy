@@ -5,6 +5,8 @@ import "foodIntake_main.dart";
 import "foodIntake_add_2_food.dart";
 import 'package:bundle_of_joy/foodIntake/foodIntake_recordList_pending.dart';
 
+import 'package:quiver/iterables.dart';
+
 class FoodIntakeRecordPending extends StatefulWidget {
   final String foodIntakeRecordID;
   FoodIntakeRecordPending({Key key, @required this.foodIntakeRecordID}) : super(key: key);
@@ -26,6 +28,14 @@ class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
       stream: collectionReference.doc(widget.foodIntakeRecordID).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasData) {
+          Map food = snapshot.data.data()["foodMap"];
+          List<dynamic> foodName = List<dynamic>();
+          List<dynamic> foodQty = List<dynamic>();
+          foodName = food.keys.toList();
+          foodQty = food.values.toList();
+          //print(foodName);
+          //print(foodQty);
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(),
@@ -103,36 +113,58 @@ class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
                             ),
                             Column(
                               children: [
-                                Container(
+                                //Container(
+                                  //width: MediaQuery.of(context).size.width * 0.4,
+                                  //margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                                  //child: Text(
+                                    //"Char Siew Pau asdsadasdasdasdasds", // FOOD NAME
+                                    //style: TextStyle(
+                                      //fontFamily: 'Comfortaa',
+                                      //fontWeight: FontWeight.bold,
+                                      //fontSize: MediaQuery.of(context).size.height * 0.025,
+                                      //color: Colors.black,
+                                    //),
+                                    //overflow: TextOverflow.ellipsis,
+                                    //maxLines: 1,
+                                    //softWrap: true,
+                                  //),
+                                //),
+                                //Container(
+                                  //width: MediaQuery.of(context).size.width * 0.4,
+                                  //margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                                  //child: Text(
+                                    //"x 1", // QUANTITY
+                                    //style: TextStyle(
+                                      //fontFamily: 'Comfortaa',
+                                      //fontWeight: FontWeight.bold,
+                                      //fontSize: MediaQuery.of(context).size.height * 0.025,
+                                      //color: Colors.black,
+                                    //),
+                                    //overflow: TextOverflow.ellipsis,
+                                    //maxLines: 1,
+                                    //softWrap: true,
+                                  //),
+                                //),
+
+                              Container(
                                   width: MediaQuery.of(context).size.width * 0.4,
                                   margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                                  child: Text(
-                                    "Char Siew Pau asdsadasdasdasdasds", // FOOD NAME
-                                    style: TextStyle(
-                                      fontFamily: 'Comfortaa',
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: MediaQuery.of(context).size.height * 0.025,
-                                      color: Colors.black,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    softWrap: true,
-                                  ),
-                                ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width * 0.4,
-                                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                                  child: Text(
-                                    "x 1", // QUANTITY
-                                    style: TextStyle(
-                                      fontFamily: 'Comfortaa',
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: MediaQuery.of(context).size.height * 0.025,
-                                      color: Colors.black,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    softWrap: true,
+                                  child: Table(
+                                      //border: TableBorder.all(width: 1.0, color: Colors.black),
+                                      children: [
+                                        for(var x in zip([foodName, foodQty])) TableRow(
+                                          children: [
+                                            TableCell(
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: <Widget>[
+                                                  new Text(x[0].toString()+"\nx"+x[1].toString()),
+                                                ],
+                                              ) 
+                                            )
+                                          ]
+                                        )
+                                      ],
                                   ),
                                 ),
                               ],

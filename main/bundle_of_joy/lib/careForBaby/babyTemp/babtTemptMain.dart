@@ -1,6 +1,9 @@
 import "package:flutter/material.dart";
 
 class BabyTempMain extends StatefulWidget {
+  final String selectedBabyID;
+  BabyTempMain({Key key, this.selectedBabyID}) : super(key: key);
+
   @override
   _BabyTempMainState createState() => _BabyTempMainState();
 }
@@ -47,9 +50,10 @@ class _BabyTempMainState extends State<BabyTempMain> {
               ),
               onTap: () {
                 //Navigator.push(
-                  //context,
-                  //MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
+                //context,
+                //MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
                 //);
+                print(widget.selectedBabyID);
               },
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -86,8 +90,8 @@ class _BabyTempMainState extends State<BabyTempMain> {
               ),
               onTap: () {
                 //Navigator.push(
-                  //context,
-                  //MaterialPageRoute(builder: (context) => FoodIntakeAdd1()),
+                //context,
+                //MaterialPageRoute(builder: (context) => FoodIntakeAdd1()),
                 //);
               },
             ),
@@ -125,8 +129,8 @@ class _BabyTempMainState extends State<BabyTempMain> {
               ),
               onTap: () {
                 //Navigator.push(
-                  //context,
-                  //MaterialPageRoute(builder: (context) => FoodIntakeListPending()),
+                //context,
+                //MaterialPageRoute(builder: (context) => FoodIntakeListPending()),
                 //);
               },
             ),
