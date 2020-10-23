@@ -54,12 +54,27 @@ class _FoodIntakeListDoneState extends State<FoodIntakeListDone> {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
-                child: CircularProgressIndicator(),
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.width * 0.15,
+                  width: MediaQuery.of(context).size.width * 0.15,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 5,
+                    backgroundColor: Colors.black,
+                    valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                  ),
+                ),
               );
             } else if (snapshot.data.isEmpty) {
-              //modify this part
-              print("empty");
-              return Text("no data");
+              return Center(
+                child: Text(
+                  'There is currently no records',
+                  style: TextStyle(
+                    fontFamily: 'Comfortaa',
+                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                    color: Colors.black,
+                  ),
+                ),
+              );
             } else {
               return Container(
                 margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),
@@ -193,7 +208,33 @@ class _FoodIntakeListDoneState extends State<FoodIntakeListDone> {
           } else if (snapshot.hasError) {
             print("error");
           }
-          return CircularProgressIndicator();
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.width * 0.15,
+                  width: MediaQuery.of(context).size.width * 0.15,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 5,
+                    backgroundColor: Colors.black,
+                    valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.05,
+                ),
+                Text(
+                  'Loading...',
+                  style: TextStyle(
+                    fontFamily: 'Comfortaa',
+                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          );
         },
       ),
     );

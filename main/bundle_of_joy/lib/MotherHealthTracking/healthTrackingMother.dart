@@ -3,7 +3,7 @@ import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 
-import 'healthTrackingTab.dart';
+import 'healthTrackingMother_detail.dart';
 
 class HealthTrackingMother extends StatefulWidget {
   @override
@@ -11,8 +11,7 @@ class HealthTrackingMother extends StatefulWidget {
 }
 
 class _HealthTrackingMotherState extends State<HealthTrackingMother> {
-
-  Widget _listView(AsyncSnapshot<QuerySnapshot> collection){
+  Widget _listView(AsyncSnapshot<QuerySnapshot> collection) {
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     final _listField = ["mh_id", "mh_date", "mh_time", "mh_bloodPressure", "mh_bloodSugar", "mh_height", "mh_weight", "mh_day_of_pregnancy"];
@@ -55,7 +54,7 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
 
         return Container(
           margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),
-          child: ListView.separated(
+          child: ListView.builder(
             itemCount: _listInfo.length,
             itemBuilder: (context, index) {
               return InkWell(
@@ -65,87 +64,88 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
                     MaterialPageRoute(builder: (context) => MotherHealthTracking(healthReport: _listInfo[index])),
                   );
                 },
-                child: Container(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.015,
-                      bottom: MediaQuery.of(context).size.height * 0.015,
-                      left: MediaQuery.of(context).size.width * 0.07),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.1),
-                        child: Image.asset(
-                          "assets/icons/health-tracking.png",
-                          height: MediaQuery.of(context).size.height * 0.06,
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.015,
+                          bottom: MediaQuery.of(context).size.height * 0.015,
+                          left: MediaQuery.of(context).size.width * 0.07),
+                      child: Row(
                         children: [
-                          Text(
-                            "Day:",
-                            style: TextStyle(
-                              fontFamily: "Comfortaa",
-                              fontWeight: FontWeight.bold,
-                              fontSize: fontSizeText,
-                              color: Colors.black,
+                          Container(
+                            margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.1),
+                            child: Image.asset(
+                              "assets/icons/health-tracking.png",
+                              height: MediaQuery.of(context).size.height * 0.06,
                             ),
                           ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                          Text(
-                            "Date:",
-                            style: TextStyle(
-                              fontFamily: "Comfortaa",
-                              fontWeight: FontWeight.bold,
-                              fontSize: fontSizeText,
-                              color: Colors.black,
-                            ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Day:",
+                                style: TextStyle(
+                                  fontFamily: "Comfortaa",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: fontSizeText,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                              Text(
+                                "Date:",
+                                style: TextStyle(
+                                  fontFamily: "Comfortaa",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: fontSizeText,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _listInfo[index].dayOfPregnancy.toString(),
+                                style: TextStyle(
+                                  fontFamily: "Comfortaa",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: fontSizeText,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                              Text(
+                                _listInfo[index].date.toString(),
+                                style: TextStyle(
+                                  fontFamily: "Comfortaa",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: fontSizeText,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.05),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _listInfo[index].dayOfPregnancy.toString(),
-                            style: TextStyle(
-                              fontFamily: "Comfortaa",
-                              fontWeight: FontWeight.bold,
-                              fontSize: fontSizeText,
-                              color: Colors.black,
-                            ),
-                          ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                          Text(
-                            _listInfo[index].date.toString(),
-                            style: TextStyle(
-                              fontFamily: "Comfortaa",
-                              fontWeight: FontWeight.bold,
-                              fontSize: fontSizeText,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                    ),
+                    Divider(
+                      indent: MediaQuery.of(context).size.width * 0.03,
+                      endIndent: MediaQuery.of(context).size.width * 0.03,
+                      color: Colors.black,
+                      thickness: MediaQuery.of(context).size.height * 0.001,
+                    ),
+                  ],
                 ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                indent: MediaQuery.of(context).size.width * 0.03,
-                endIndent: MediaQuery.of(context).size.width * 0.03,
-                color: Colors.black,
-                thickness: MediaQuery.of(context).size.height * 0.001,
               );
             },
           ),
         );
       }
-    }
-    else{
+    } else {
       return Center(
         child: Text(
           "There is currently no records",
@@ -186,7 +186,8 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
         stream: health.snapshots(),
         builder: (context, collection) {
           return _listView(collection);
-        },),
+        },
+      ),
     );
   }
 }
