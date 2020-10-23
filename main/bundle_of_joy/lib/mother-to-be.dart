@@ -2,8 +2,7 @@ import "package:flutter/material.dart";
 import "appointmentMother/appointmentMother_main.dart";
 import "foodIntake/foodIntake_main.dart";
 import "emergencyContact/emergencyContactTab.dart";
-import "MotherHealthTracking/healthTrackingTab.dart";
-import "healthTrackingMother/healthTrackingMother.dart";
+import 'MotherHealthTracking/healthTrackingMother.dart';
 
 class MotherToBeTab extends StatefulWidget {
   @override

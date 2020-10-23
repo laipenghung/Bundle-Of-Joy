@@ -17,6 +17,8 @@ class _AddEmerContactScreenState extends State<AddEmerContactScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
+    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     return Center(
       child: Column(
         children: [
@@ -39,7 +41,7 @@ class _AddEmerContactScreenState extends State<AddEmerContactScreen> {
               style: TextStyle(
                 fontFamily: 'Comfortaa',
                 fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.of(context).size.height * 0.02,
+                fontSize: fontSizeText,
                 color: Colors.black,
               ),
             ),
@@ -73,7 +75,7 @@ class _AddEmerContactScreenState extends State<AddEmerContactScreen> {
                 style: TextStyle(
                   fontFamily: 'Comfortaa',
                   fontWeight: FontWeight.bold,
-                  fontSize: MediaQuery.of(context).size.height * 0.023,
+                  fontSize: fontSizeTitle,
                   color: Colors.black,
                 ),
               ),
