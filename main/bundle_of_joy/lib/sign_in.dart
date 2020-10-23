@@ -4,10 +4,10 @@ import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import "home.dart";
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_auth/firebase_auth.dart";
-import "package:bundle_of_joy/firestore/mother.dart";
+import 'package:bundle_of_joy/mother.dart';
 
 class SignInScreen extends StatefulWidget {
-  const SignInScreen({ this.user});
+  const SignInScreen({this.user});
   final String user;
 
   @override
@@ -19,46 +19,45 @@ class SignInScreenStat extends State<SignInScreen> {
   String oldUser = "Welcome Back! Please Sign in.";
   String phoneNumber, smsCode, verificationID;
 
-  Future<void> verifyPhone() async{
+  Future<void> verifyPhone() async {
     await Firebase.initializeApp();
-    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verID){
+    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verID) {
       this.verificationID = verID;
     };
 
-    final PhoneCodeSent smsCodeSent = (String verID, int resendToken){
+    final PhoneCodeSent smsCodeSent = (String verID, int resendToken) {
       this.verificationID = verID;
-      smsCodeDialog(context).then((value){
+      smsCodeDialog(context).then((value) {
         print("Signed in");
       });
     };
 
-    final PhoneVerificationCompleted verifiedSuccess = (PhoneAuthCredential credential){
+    final PhoneVerificationCompleted verifiedSuccess = (PhoneAuthCredential credential) {
       print("Verified");
     };
 
-    final PhoneVerificationFailed verifiedFailed = (FirebaseAuthException e){
+    final PhoneVerificationFailed verifiedFailed = (FirebaseAuthException e) {
       print("${e.message}");
       errorDialog(context);
     };
 
-    if(this.phoneNumber != null) {
+    if (this.phoneNumber != null) {
       await FirebaseAuth.instance.verifyPhoneNumber(
           phoneNumber: this.phoneNumber,
           verificationCompleted: verifiedSuccess,
           verificationFailed: verifiedFailed,
           codeSent: smsCodeSent,
-          codeAutoRetrievalTimeout: autoRetrieve
-      );
-    }else{
+          codeAutoRetrievalTimeout: autoRetrieve);
+    } else {
       errorDialog(context);
     }
   }
 
-  Future<bool> errorDialog(BuildContext context){
+  Future<bool> errorDialog(BuildContext context) {
     double fontSize = MediaQuery.of(context).size.width * 0.045;
     return showDialog(
         context: context,
-        builder: (BuildContext context){
+        builder: (BuildContext context) {
           return AlertDialog(
             backgroundColor: Color(0xFFFCFFD5),
             title: Text(
@@ -68,18 +67,17 @@ class SignInScreenStat extends State<SignInScreen> {
                 fontSize: fontSize,
               ),
             ),
-            content: Text(
-              "Phone number is not valid or not found!"
-            ),
+            content: Text("Phone number is not valid or not found!"),
             actions: <Widget>[
               FlatButton(
-                  onPressed: (){Navigator.of(context).pop();},
-                  child: Text("Close"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("Close"),
               ),
             ],
           );
-        }
-    );
+        });
   }
 
   Future<bool> smsCodeDialog(BuildContext context) {
@@ -112,11 +110,9 @@ class SignInScreenStat extends State<SignInScreen> {
                   if (user != null) {
                     Navigator.of(context).pop();
                     Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                          builder: (context){
-                            return HomeScreen();
-                          }
-                      ),
+                      MaterialPageRoute(builder: (context) {
+                        return HomeScreen();
+                      }),
                     );
                   } else {
                     Navigator.of(context).pop();
@@ -136,11 +132,9 @@ class SignInScreenStat extends State<SignInScreen> {
       Mother newMother = new Mother();
       newMother.addUser(user.user);
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-            builder: (context){
-              return HomeScreen();
-            }
-        ),
+        MaterialPageRoute(builder: (context) {
+          return HomeScreen();
+        }),
       );
     }).catchError((e) {
       print(e);
@@ -152,9 +146,9 @@ class SignInScreenStat extends State<SignInScreen> {
     double width = MediaQuery.of(context).size.width * 0.8;
     double fontSize = MediaQuery.of(context).size.width * 0.045;
     String title = "";
-    if(widget.user == "new"){
+    if (widget.user == "new") {
       title = newUser;
-    }else{
+    } else {
       title = oldUser;
     }
 
@@ -177,12 +171,12 @@ class SignInScreenStat extends State<SignInScreen> {
               child: Row(
                 children: <Widget>[
                   Text(
-                      title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: fontSize,
-                        letterSpacing: 1.0,
-                      ),
+                    title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: fontSize,
+                      letterSpacing: 1.0,
+                    ),
                   ),
                 ],
               ),
@@ -195,7 +189,7 @@ class SignInScreenStat extends State<SignInScreen> {
                   prefixIcon: Icon(FontAwesomeIcons.phoneAlt),
                   hintText: "Phone number (+6014 567 8912)",
                 ),
-                onChanged: (value){
+                onChanged: (value) {
                   this.phoneNumber = value;
                 },
               ),
@@ -221,7 +215,6 @@ class SignInScreenStat extends State<SignInScreen> {
               ),
             ),
           ],
-        )
-    );
+        ));
   }
 }

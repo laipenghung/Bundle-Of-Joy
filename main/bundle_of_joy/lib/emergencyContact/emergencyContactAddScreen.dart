@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 //import 'emergencyContactAdd.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
-import '../firestore/emerContact.dart';
+import 'emerContact.dart';
 import 'package:bundle_of_joy/mother-to-be.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
