@@ -17,7 +17,7 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
     final _listField = ["mh_id", "mh_date", "mh_time", "mh_bloodPressure", "mh_bloodSugar", "mh_height", "mh_weight", "mh_day_of_pregnancy"];
     List<HealthReport> _listInfo = List<HealthReport>();
 
-    if (collection.hasData) {
+    if (collection.data.docs.isNotEmpty) {
       if (collection.connectionState == ConnectionState.waiting) {
         return Center(
           child: Column(
