@@ -33,6 +33,7 @@ class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordLis
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
+
         title: Text(
           "Appointment Management",
           style: TextStyle(
@@ -42,8 +43,11 @@ class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordLis
             color: Colors.black,
           ),
         ),
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
 
-        automaticallyImplyLeading: false, // CENTER THE TEXT
+        //automaticallyImplyLeading: false, // CENTER THE TEXT
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),

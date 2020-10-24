@@ -20,6 +20,7 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
   DateTime dateFrom2;
   int _amColor, _pmColor;
   String selectedSession;
+  bool hasRecord = false;
 
   _AppointmentMotherAdd3State(this.nameFrom2, this.dateFrom2);
 
@@ -122,8 +123,7 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
                                             ),
                                           ),
                                           Container(
-                                            margin: EdgeInsets.only(
-                                                bottom: MediaQuery.of(context).size.height * 0.005, left: MediaQuery.of(context).size.width * 0.05),
+                                            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.005, left: MediaQuery.of(context).size.width * 0.05),
                                             child: Image.asset(
                                               "assets/icons/calendar.png",
                                               height: MediaQuery.of(context).size.height * 0.035,
@@ -342,8 +342,7 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         title: Text("Slot Empty"),
-                                        content:
-                                            Text("Hi, there is currently no slot for this session at this day, please try another session or another date :D"),
+                                        content: Text("Hi, there is currently no slot for this session at this day, please try another session or another date :D"),
                                         actions: <Widget>[
                                           RaisedButton(
                                             child: Text("Ok"),
@@ -353,8 +352,8 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
                                       );
                                     });
                               } else {
-                                uploadAppointment(snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'],
-                                    snapshot.data.documents[0]['s_id']);
+                                uploadAppointment(
+                                    snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'], snapshot.data.documents[0]['s_id']);
                               }
                             } else if (selectedSession == "PM") {
                               if (snapshot.data.documents[0]['s_available_PM'] == 0) {
@@ -364,8 +363,7 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         title: Text("Slot Empty"),
-                                        content:
-                                            Text("Hi, there is currently no slot for this session at this day, please try another session or another date :D"),
+                                        content: Text("Hi, there is currently no slot for this session at this day, please try another session or another date :D"),
                                         actions: <Widget>[
                                           RaisedButton(
                                             child: Text("Ok"),
@@ -375,8 +373,8 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
                                       );
                                     });
                               } else {
-                                uploadAppointment(snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'],
-                                    snapshot.data.documents[0]['s_id']);
+                                uploadAppointment(
+                                    snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'], snapshot.data.documents[0]['s_id']);
                               }
                             } else {
                               print("THIS IS BROKEN");
