@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 import "foodIntake_add_1_dateTime.dart";
 import "foodIntake_add_3_bs.dart";
 
+import 'package:quiver/iterables.dart';
+
 class FoodIntakeAdd2 extends StatefulWidget {
   final String selectedDate, selectedTime;
   FoodIntakeAdd2({Key key, this.selectedDate, this.selectedTime}) : super(key: key);
@@ -12,8 +14,11 @@ class FoodIntakeAdd2 extends StatefulWidget {
 
 class _FoodIntakeAdd2State extends State<FoodIntakeAdd2> {
   TextEditingController _controller = TextEditingController();
-  Map<String, String> foodMap = Map();
+  Map<dynamic, dynamic> foodMap = Map();
   String foodName = "", foodQty = "";
+
+  List<dynamic> foodNameList = List<dynamic>();
+  List<dynamic> foodQtyList = List<dynamic>();
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +131,28 @@ class _FoodIntakeAdd2State extends State<FoodIntakeAdd2> {
                       ],
                     ),
                   ),
+
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                    child: Table(
+                      //border: TableBorder.all(width: 1.0, color: Colors.black),
+                      children: [
+                        for(var x in zip([foodNameList, foodQtyList])) TableRow(
+                          children: [
+                            TableCell(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  new Text(x[0].toString()+"\nx"+x[1].toString()),
+                                ],
+                              ) 
+                            )
+                          ]
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -235,7 +262,7 @@ class _FoodIntakeAdd2State extends State<FoodIntakeAdd2> {
                 onChanged: (val) {
                   setState(() {
                     foodQty = val;
-                    testPrint();
+                    //testPrint();
                   });
                 },
                 //controller:
@@ -247,6 +274,8 @@ class _FoodIntakeAdd2State extends State<FoodIntakeAdd2> {
                 child: Text("Done"),
                 onPressed: () {
                   setMap();
+                  foodNameList = foodMap.keys.toList();
+                  foodQtyList = foodMap.values.toList();
                   Navigator.of(context).pop();
                 },
               )
