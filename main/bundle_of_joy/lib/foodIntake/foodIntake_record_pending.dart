@@ -16,8 +16,7 @@ class FoodIntakeRecordPending extends StatefulWidget {
 }
 
 class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
-  CollectionReference collectionReference =
-      FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("foodIntake_Pending");
+  CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("foodIntake_Pending");
   String bSugarUpdate = "";
   TextEditingController controllerBP = TextEditingController();
   var test;
@@ -114,57 +113,67 @@ class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
                             Column(
                               children: [
                                 //Container(
-                                  //width: MediaQuery.of(context).size.width * 0.4,
-                                  //margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                                  //child: Text(
-                                    //"Char Siew Pau asdsadasdasdasdasds", // FOOD NAME
-                                    //style: TextStyle(
-                                      //fontFamily: 'Comfortaa',
-                                      //fontWeight: FontWeight.bold,
-                                      //fontSize: MediaQuery.of(context).size.height * 0.025,
-                                      //color: Colors.black,
-                                    //),
-                                    //overflow: TextOverflow.ellipsis,
-                                    //maxLines: 1,
-                                    //softWrap: true,
-                                  //),
+                                //width: MediaQuery.of(context).size.width * 0.4,
+                                //margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                                //child: Text(
+                                //"Char Siew Pau asdsadasdasdasdasds", // FOOD NAME
+                                //style: TextStyle(
+                                //fontFamily: 'Comfortaa',
+                                //fontWeight: FontWeight.bold,
+                                //fontSize: MediaQuery.of(context).size.height * 0.025,
+                                //color: Colors.black,
+                                //),
+                                //overflow: TextOverflow.ellipsis,
+                                //maxLines: 1,
+                                //softWrap: true,
+                                //),
                                 //),
                                 //Container(
-                                  //width: MediaQuery.of(context).size.width * 0.4,
-                                  //margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                                  //child: Text(
-                                    //"x 1", // QUANTITY
-                                    //style: TextStyle(
-                                      //fontFamily: 'Comfortaa',
-                                      //fontWeight: FontWeight.bold,
-                                      //fontSize: MediaQuery.of(context).size.height * 0.025,
-                                      //color: Colors.black,
-                                    //),
-                                    //overflow: TextOverflow.ellipsis,
-                                    //maxLines: 1,
-                                    //softWrap: true,
-                                  //),
+                                //width: MediaQuery.of(context).size.width * 0.4,
+                                //margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                                //child: Text(
+                                //"x 1", // QUANTITY
+                                //style: TextStyle(
+                                //fontFamily: 'Comfortaa',
+                                //fontWeight: FontWeight.bold,
+                                //fontSize: MediaQuery.of(context).size.height * 0.025,
+                                //color: Colors.black,
+                                //),
+                                //overflow: TextOverflow.ellipsis,
+                                //maxLines: 1,
+                                //softWrap: true,
+                                //),
                                 //),
 
-                              Container(
+                                Container(
                                   width: MediaQuery.of(context).size.width * 0.4,
                                   margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                   child: Table(
-                                      //border: TableBorder.all(width: 1.0, color: Colors.black),
-                                      children: [
-                                        for(var x in zip([foodName, foodQty])) TableRow(
-                                          children: [
-                                            TableCell(
+                                    //border: TableBorder.all(width: 1.0, color: Colors.black),
+                                    children: [
+                                      for (var x in zip([foodName, foodQty]))
+                                        TableRow(children: [
+                                          TableCell(
                                               child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: <Widget>[
-                                                  new Text(x[0].toString()+"\nx"+x[1].toString()),
-                                                ],
-                                              ) 
-                                            )
-                                          ]
-                                        )
-                                      ],
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              Container(
+                                                //color: Colors.blue,
+                                                width: MediaQuery.of(context).size.width * 0.4,
+                                                child: new Text(
+                                                  x[0].toString() + "\n x" + x[1].toString(),
+                                                  style: TextStyle(
+                                                    fontFamily: 'Comfortaa',
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: MediaQuery.of(context).size.height * 0.023,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ))
+                                        ])
+                                    ],
                                   ),
                                 ),
                               ],
