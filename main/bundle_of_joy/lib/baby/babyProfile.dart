@@ -31,7 +31,7 @@ class _BabyProfile extends State<BabyProfile> {
       "b_order"
     ];
     List<Baby> _listBaby = List<Baby>();
-    if (collection.hasData) {
+    if (collection.data.docs.isNotEmpty) {
       collection.data.docs.forEach((doc) {
         _listBaby.add(Baby(
             doc.data()[_listField[0]],
