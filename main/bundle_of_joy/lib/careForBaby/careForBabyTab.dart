@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'babyFoodIntake/babyFoodIntakeMain.dart';
-import 'babyTemp/babtTemptMain.dart';
+import 'babyTemp/babyTemptMain.dart';
 
 class CareForBabyTab extends StatelessWidget {
   final String selectedBabyID;

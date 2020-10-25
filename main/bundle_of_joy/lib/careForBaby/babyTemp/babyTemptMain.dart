@@ -1,5 +1,9 @@
 import "package:flutter/material.dart";
 
+import 'babyTemp_add_dateTime.dart';
+import 'babyTemp_recordList_done.dart';
+import 'babyTemp_recordList_pending.dart';
+
 class BabyTempMain extends StatefulWidget {
   final String selectedBabyID;
   BabyTempMain({Key key, this.selectedBabyID}) : super(key: key);
@@ -49,10 +53,10 @@ class _BabyTempMainState extends State<BabyTempMain> {
                 ),
               ),
               onTap: () {
-                //Navigator.push(
-                //context,
-                //MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
-                //);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BabyTempListDone(selectedBabyID: widget.selectedBabyID,)),
+                );
                 print(widget.selectedBabyID);
               },
             ),
@@ -89,10 +93,10 @@ class _BabyTempMainState extends State<BabyTempMain> {
                 ),
               ),
               onTap: () {
-                //Navigator.push(
-                //context,
-                //MaterialPageRoute(builder: (context) => FoodIntakeAdd1()),
-                //);
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BabyTempAdd1(selectedBabyID: widget.selectedBabyID)),
+                );
               },
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -128,10 +132,10 @@ class _BabyTempMainState extends State<BabyTempMain> {
                 ),
               ),
               onTap: () {
-                //Navigator.push(
-                //context,
-                //MaterialPageRoute(builder: (context) => FoodIntakeListPending()),
-                //);
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BabyTempListPending(selectedBabyID: widget.selectedBabyID,)),
+              );
               },
             ),
           ],
