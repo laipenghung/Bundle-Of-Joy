@@ -1,6 +1,13 @@
 import "package:flutter/material.dart";
 
+import 'babyFoodIntake_add_dateTime.dart';
+import 'babyFoodIntake_recordList_done.dart';
+import 'babyFoodIntake_recordList_pending.dart';
+
 class BabyFoodIntakeMain extends StatefulWidget {
+  final String selectedBabyID;
+  BabyFoodIntakeMain({Key key, this.selectedBabyID}) : super(key: key);
+
   @override
   _BabyFoodIntakeMainState createState() => _BabyFoodIntakeMainState();
 }
@@ -46,10 +53,10 @@ class _BabyFoodIntakeMainState extends State<BabyFoodIntakeMain> {
                 ),
               ),
               onTap: () {
-                //Navigator.push(
-                  //context,
-                  //MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
-                //);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BabyFoodIntakeListDone(selectedBabyID: widget.selectedBabyID)),
+                );
               },
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -85,10 +92,11 @@ class _BabyFoodIntakeMainState extends State<BabyFoodIntakeMain> {
                 ),
               ),
               onTap: () {
-                //Navigator.push(
-                  //context,
-                  //MaterialPageRoute(builder: (context) => FoodIntakeAdd1()),
-                //);
+                print(widget.selectedBabyID);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BabyFoodIntakeAdd1(selectedBabyID: widget.selectedBabyID)),
+                );
               },
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -124,10 +132,10 @@ class _BabyFoodIntakeMainState extends State<BabyFoodIntakeMain> {
                 ),
               ),
               onTap: () {
-                //Navigator.push(
-                  //context,
-                  //MaterialPageRoute(builder: (context) => FoodIntakeListPending()),
-                //);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BabyFoodIntakeListPending(selectedBabyID: widget.selectedBabyID)),
+                );
               },
             ),
           ],

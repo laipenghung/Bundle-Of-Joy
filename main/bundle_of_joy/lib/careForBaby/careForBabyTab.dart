@@ -28,8 +28,8 @@ class CareForBabyTab extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            BabyFoodIntakeMain(),
-            BabyTempMain(selectedBabyID: selectedBabyID,),
+            BabyFoodIntakeMain(selectedBabyID: selectedBabyID),
+            BabyTempMain(selectedBabyID: selectedBabyID),
           ],
         ),
       ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 
-import '../careForBabyTab.dart';
+import '../../mother-for-baby.dart';
 
 class BabyTempSummaryPending extends StatefulWidget {
   final String selectedDate, selectedTime, bTempBefore, selectedBabyID;
@@ -52,7 +52,7 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
         "recordID": value.id,
       });
       print("Data uploaded");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyTab()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherForBabyTab()));
     }).catchError((error) => print("wrong"));
   }
   
