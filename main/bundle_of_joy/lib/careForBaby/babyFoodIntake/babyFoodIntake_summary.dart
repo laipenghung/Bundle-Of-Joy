@@ -1,18 +1,31 @@
+import 'package:bundle_of_joy/mother-for-baby.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
+import 'package:quiver/iterables.dart';
 
-import '../../mother-for-baby.dart';
-
-class BabyTempSummaryDone extends StatefulWidget {
-  final String selectedDate, selectedTime, bTempBefore, bTempAfter, selectedBabyID;
-  BabyTempSummaryDone({Key key, @required this.selectedDate, this.selectedTime, this.bTempBefore, this.bTempAfter, this.selectedBabyID}) : super(key: key);
+class BabyFoodIntakeSummary extends StatefulWidget {
+  final String selectedBabyID, selectedDate, selectedTime;
+  final Map foodMap;
+  BabyFoodIntakeSummary({Key key, this.selectedBabyID, this.selectedDate, this.selectedTime, this.foodMap}) : super(key: key);
 
   @override
-  BabyTempSummaryDoneState createState() => BabyTempSummaryDoneState();
+  _BabyFoodIntakeSummaryState createState() => _BabyFoodIntakeSummaryState();
 }
 
-class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
+class _BabyFoodIntakeSummaryState extends State<BabyFoodIntakeSummary> {
+  Map food;
+  List<dynamic> foodName = List<dynamic>();
+  List<dynamic> foodQty = List<dynamic>();
+
+  void initState() {
+    super.initState();
+    Map food = widget.foodMap;
+    foodName = food.keys.toList();
+    foodQty = food.values.toList();
+    print(widget.selectedBabyID);
+  }
+
   BoxDecoration myBoxDecoration() {
     return BoxDecoration(
       color: Color(0xFFFCFFD5),
@@ -37,19 +50,18 @@ class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
     );
   }
 
-  Future<void> addTempRecord() {
+  Future<void> addBabyFoodRecord() {
     final User user = FirebaseAuth.instance.currentUser;
     final FirebaseFirestore _db = FirebaseFirestore.instance;
-    CollectionReference babyTempRecord = _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done");
-    return babyTempRecord.add({
+    CollectionReference foodIntakeRecord =
+        _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Pending");
+    return foodIntakeRecord.add({
       "motherID": user.uid,
-      "babyID": widget.selectedBabyID,
       "selectedDate": widget.selectedDate,
       "selectedTime": widget.selectedTime,
-      "bTempBefore": widget.bTempBefore,
-      "bTempAfter": widget.bTempAfter,
+      "foodMap": widget.foodMap,
     }).then((value) {
-      babyTempRecord.doc(value.id).update({
+      foodIntakeRecord.doc(value.id).update({
         "recordID": value.id,
       });
       print("Data uploaded");
@@ -64,7 +76,7 @@ class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "temp record D",
+          "Food Intake Tracking D",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
@@ -145,7 +157,7 @@ class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
                     children: [
                       Container(
                         child: Image.asset(
-                          "assets/icons/blood-sugar-level.png", //change picture
+                          "assets/icons/food-intake.png",
                           height: MediaQuery.of(context).size.height * 0.05,
                         ),
                       ),
@@ -154,53 +166,31 @@ class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
                           Container(
                             width: MediaQuery.of(context).size.width * 0.4,
                             margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                            child: Row(
+                            child: Table(
+                              //border: TableBorder.all(width: 1.0, color: Colors.black),
                               children: [
-                                Text(
-                                  "Before: ",
-                                  style: TextStyle(
-                                    fontFamily: 'Comfortaa',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: MediaQuery.of(context).size.height * 0.025,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  widget.bTempBefore,
-                                  style: TextStyle(
-                                    fontFamily: 'Comfortaa',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: MediaQuery.of(context).size.height * 0.025,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "After: ",
-                                  style: TextStyle(
-                                    fontFamily: 'Comfortaa',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: MediaQuery.of(context).size.height * 0.025,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  widget.bTempAfter,
-                                  style: TextStyle(
-                                    fontFamily: 'Comfortaa',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: MediaQuery.of(context).size.height * 0.025,
-                                    color: Colors.black,
-                                  ),
-                                ),
+                                for (var x in zip([foodName, foodQty]))
+                                  TableRow(children: [
+                                    TableCell(
+                                        child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          //color: Colors.blue,
+                                          width: MediaQuery.of(context).size.width * 0.4,
+                                          child: new Text(
+                                            x[0].toString() + "\n x" + x[1].toString(),
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: MediaQuery.of(context).size.height * 0.023,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ))
+                                  ])
                               ],
                             ),
                           ),
@@ -256,7 +246,7 @@ class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
                     ),
                   ),
                   onTap: () {
-                    addTempRecord();
+                    addBabyFoodRecord();
                   }, //ADD TO DATABASE
                 ),
               ],

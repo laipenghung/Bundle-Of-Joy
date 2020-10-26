@@ -3,17 +3,18 @@ import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import 'babyTemp_record_pending.dart';
+import 'babyFoodIntake_record_done.dart';
 
-class BabyTempListPending extends StatefulWidget {
+
+class BabyFoodIntakeListDone extends StatefulWidget {
   final String selectedBabyID;
-  BabyTempListPending({Key key, this.selectedBabyID}) : super(key: key);
+  BabyFoodIntakeListDone({Key key, this.selectedBabyID}) : super(key: key);
 
   @override
-  _BabyTempListPendingState createState() => _BabyTempListPendingState();
+  _BabyFoodIntakeListDoneState createState() => _BabyFoodIntakeListDoneState();
 }
 
-class _BabyTempListPendingState extends State<BabyTempListPending> {
+class _BabyFoodIntakeListDoneState extends State<BabyFoodIntakeListDone> {
   final User user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
@@ -23,7 +24,7 @@ class _BabyTempListPendingState extends State<BabyTempListPending> {
     final User user = FirebaseAuth.instance.currentUser;
 
     return _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID)
-      .collection("tempRecord_Pending").doc(recordID).delete().then((value) {
+      .collection("babyFoodIntake_Done").doc(recordID).delete().then((value) {
       print("Deleted");
       //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BabyTempListPending()));
     }).catchError((error) => print("wrong"));
@@ -50,7 +51,7 @@ class _BabyTempListPendingState extends State<BabyTempListPending> {
       ),
       body: StreamBuilder(
         stream: _db.collection('mother').doc(user.uid).collection("baby")
-          .doc(widget.selectedBabyID).collection("tempRecord_Pending").snapshots(),
+          .doc(widget.selectedBabyID).collection("babyFoodIntake_Done").snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -88,7 +89,7 @@ class _BabyTempListPendingState extends State<BabyTempListPending> {
                         //go to record_pending
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => BabyTempRecordPending(babyTempRecordID: snapshot.data.documents[index]["recordID"],
+                          MaterialPageRoute(builder: (context) => BabyFoodIntakeRecordDone(recordID: snapshot.data.documents[index]["recordID"],
                             selectedBabyID: widget.selectedBabyID)),
                         );
                       },
