@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "baby/baby.dart";
+import "appointmentBaby/appointmentBaby_main.dart";
 
 class MotherForBabyTab extends StatefulWidget {
   @override
@@ -138,7 +139,15 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
         onTap: () {
           switch (index) {
             case 0:
-              {}
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AppointmentBabyMain(
+                            babyID: selectedBabyID,
+                          )),
+                );
+              }
               break;
             case 1:
               {}
@@ -212,8 +221,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
           ),
         ],
       );
-    }
-    else{
+    } else {
       return Center(
         child: Column(
           children: [
@@ -223,9 +231,9 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
               height: 110,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage("assets/icons/baby_color.png"),
-                  )),
+                fit: BoxFit.cover,
+                image: AssetImage("assets/icons/baby_color.png"),
+              )),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.04),
             Padding(
@@ -244,10 +252,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
             SizedBox(height: MediaQuery.of(context).size.height * 0.04),
             RaisedButton(
               color: Color(0xFFFCFFD5),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18),
-                  side: BorderSide(width: 1.5, color: Colors.black)
-              ),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18), side: BorderSide(width: 1.5, color: Colors.black)),
               onPressed: () async {
                 Navigator.push(
                   context,
@@ -255,8 +260,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
                 );
               },
               child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 20, right: 20, top: 12, bottom: 12),
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 12, bottom: 12),
                 child: Text(
                   "Add Baby",
                   style: TextStyle(
