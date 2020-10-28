@@ -471,7 +471,7 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     final User user = FirebaseAuth.instance.currentUser;
 
-    CollectionReference appointmentRecord = _db.collection("mother").doc(user.uid).collection("baby").doc(babyID).collection("baby_appointment");
+    CollectionReference appointmentRecord = _db.collection("baby_appointment");
     CollectionReference slotRecord = _db.collection("appointment_slot");
 
     return appointmentRecord.add({

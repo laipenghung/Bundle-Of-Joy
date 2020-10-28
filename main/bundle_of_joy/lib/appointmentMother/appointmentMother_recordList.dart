@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:quiver/testing/time.dart';
 
 class AppointmentMotherRecordList extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class AppointmentMotherRecordList extends StatefulWidget {
 
 class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordList> {
   final User user = FirebaseAuth.instance.currentUser;
+  DateTime today = DateTime.now();
 
   Future<void> deleteSelected(appointmentID) {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -52,7 +54,13 @@ class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordLis
         centerTitle: true,
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('mother_appointment').where("m_id", isEqualTo: user.uid).snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('mother_appointment')
+            .where("m_id", isEqualTo: user.uid)
+            .where("a_date", isGreaterThanOrEqualTo: "${today.year}-${today.month}-${today.day}")
+            .orderBy("a_date", descending: true)
+            .orderBy("a_session", descending: true)
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -96,8 +104,7 @@ class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordLis
                               icon: Icons.delete,
                               onTap: () {
                                 deleteSelected(snapshot.data.documents[index]["a_id"]);
-                                updateSlotCount(snapshot.data.documents[index]["s_id"], snapshot.data.documents[index]["a_session"],
-                                    snapshot.data.documents[index]["a_date"]);
+                                updateSlotCount(snapshot.data.documents[index]["s_id"], snapshot.data.documents[index]["a_session"], snapshot.data.documents[index]["a_date"]);
                               },
                             )
                           ],

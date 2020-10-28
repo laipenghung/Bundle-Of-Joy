@@ -14,6 +14,7 @@ class AppointmentBabyRecordList extends StatefulWidget {
 
 class _AppointmentBabyRecordListState extends State<AppointmentBabyRecordList> {
   String babyID;
+  DateTime today = DateTime.now();
   final User user = FirebaseAuth.instance.currentUser;
 
   _AppointmentBabyRecordListState(this.babyID);
@@ -21,7 +22,7 @@ class _AppointmentBabyRecordListState extends State<AppointmentBabyRecordList> {
   Future<void> deleteSelected(appointmentID) {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-    return _db.collection("mother").doc(user.uid).collection("baby").doc(babyID).collection("baby_appointment").doc(appointmentID).delete();
+    return _db.collection("baby_appointment").doc(babyID).delete();
   }
 
   Future<void> updateSlotCount(slotID, sessionForThisRecord, dateForThisRecord) {
@@ -60,12 +61,11 @@ class _AppointmentBabyRecordListState extends State<AppointmentBabyRecordList> {
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection("mother")
-            .doc(user.uid)
-            .collection("baby")
-            .doc(babyID)
-            .collection("baby_appointment")
+            .collection('baby_appointment')
+            .where("b_id", isEqualTo: babyID)
+            .where("a_date", isGreaterThanOrEqualTo: "${today.year}-${today.month}-${today.day}")
             .orderBy("a_date", descending: true)
+            .orderBy("a_session", descending: true)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -194,7 +194,7 @@ class _AppointmentBabyRecordListState extends State<AppointmentBabyRecordList> {
               );
             }
           } else if (snapshot.hasError) {
-            print("error");
+            print("Snapshot has some error");
           }
           return Center(
             child: Column(
