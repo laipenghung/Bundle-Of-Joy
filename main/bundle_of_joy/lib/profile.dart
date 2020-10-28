@@ -164,7 +164,7 @@ class _ProfileState extends State<ProfileTab> {
         children: <Widget>[
           singleCard("assets/icons/mother.png", "Mother's Profile", 0),
           singleCard("assets/icons/baby_color.png", "Baby's Profile", 1),
-          singleCard("assets/icons/settings.png", "Log Out", 2),
+          singleCard("assets/icons/logout.png", "Log Out", 2),
         ],
       ),
     );
