@@ -15,7 +15,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
   String selectedBabyID = "";
 
   Widget _listView(AsyncSnapshot<QuerySnapshot> collection) {
-    double width = MediaQuery.of(context).size.width * 0.8;
+    double width = MediaQuery.of(context).size.width * 0.7;
     double height = MediaQuery.of(context).size.height * 0.04;
     double paddingTop = MediaQuery.of(context).size.height * 0.05;
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
@@ -62,52 +62,70 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
       selectedBabyID = _listBaby.first.b_id.toString();
 
       return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-        return Container(
-          width: width,
-          decoration: myBoxDecoration(),
-          margin: EdgeInsets.only(top: paddingTop),
-          child: DropdownButtonHideUnderline(
-            child: ButtonTheme(
-              alignedDropdown: true,
-              child: DropdownButton(
-                value: selected_index == null ? "null" : _listBaby[selected_index],
-                items: _listBaby.map((Baby baby) {
-                  String name = baby.b_name.toString();
-                  String gender = baby.b_gender.toString().toLowerCase();
-                  String icon;
-                  if (gender == "male") {
-                    icon = "assets/icons/boy.png";
-                  } else {
-                    icon = "assets/icons/femenine.png";
-                  }
-                  return DropdownMenuItem<Baby>(
-                    value: baby,
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          icon,
-                          height: height,
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: width,
+              decoration: myBoxDecoration(),
+              margin: EdgeInsets.only(top: paddingTop),
+              child: DropdownButtonHideUnderline(
+                child: ButtonTheme(
+                  alignedDropdown: true,
+                  child: DropdownButton(
+                    value: selected_index == null ? "null" : _listBaby[selected_index],
+                    items: _listBaby.map((Baby baby) {
+                      String name = baby.b_name.toString();
+                      String gender = baby.b_gender.toString().toLowerCase();
+                      String icon;
+                      if (gender == "male") {
+                        icon = "assets/icons/boy.png";
+                      } else {
+                        icon = "assets/icons/femenine.png";
+                      }
+                      return DropdownMenuItem<Baby>(
+                        value: baby,
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              icon,
+                              height: height,
+                            ),
+                            Text(
+                              "\t $name",
+                              style: TextStyle(
+                                fontFamily: "Comfortaa",
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          "\t $name",
-                          style: TextStyle(
-                            fontFamily: "Comfortaa",
-                          ),
-                        ),
-                      ],
-                    ),
+                      );
+                    }).toList(),
+                    onChanged: (index) {
+                      setState(() {
+                        selected_index = _listBaby.indexOf(index);
+                        selected_babyID = _listBaby[selected_index].b_id.toString();
+                        selectedBabyID = _listBaby[selected_index].b_id.toString();
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: paddingTop),
+              child: IconButton(
+                icon: Icon(Icons.add_circle, color: Colors.black,),
+                iconSize: MediaQuery.of(context).size.height * 0.07,
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddBaby()),
                   );
-                }).toList(),
-                onChanged: (index) {
-                  setState(() {
-                    selected_index = _listBaby.indexOf(index);
-                    selected_babyID = _listBaby[selected_index].b_id.toString();
-                    selectedBabyID = _listBaby[selected_index].b_id.toString();
-                  });
                 },
               ),
             ),
-          ),
+          ],
         );
       });
     }
