@@ -112,18 +112,20 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: paddingTop),
-              child: IconButton(
-                icon: Icon(Icons.add_circle, color: Colors.black,),
-                iconSize: MediaQuery.of(context).size.height * 0.07,
-                onPressed: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AddBaby()),
-                  );
-                },
+            InkWell(
+              child: Container(
+                margin: EdgeInsets.only(top: paddingTop, left: MediaQuery.of(context).size.width * 0.03),
+                child: Image.asset(
+                  "assets/icons/addbaby.png",
+                  height: MediaQuery.of(context).size.height * 0.055,
+                ),
               ),
+              onTap: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddBaby()),
+                );
+              },
             ),
           ],
         );

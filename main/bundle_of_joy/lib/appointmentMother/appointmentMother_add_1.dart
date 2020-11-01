@@ -46,12 +46,6 @@ class _AppointmentMotherAdd1State extends State<AppointmentMotherAdd1> {
             child: Column(
               children: [
                 HospitalRow("KPJ Kuching Specialist Hospital"),
-                HospitalRow("Long many words debugging long long material page example this is"),
-                HospitalRow("Hospital 3"),
-                HospitalRow("Hospital 4"),
-                HospitalRow("Hospital 5"),
-                HospitalRow("Hospital 6"),
-                HospitalRow("Hospital 7"),
               ],
             ),
           )),

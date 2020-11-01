@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:quiver/testing/time.dart';
+import 'package:bundle_of_joy/main.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'dart:async';
 
 class AppointmentMotherRecordList extends StatefulWidget {
   @override
@@ -10,8 +14,29 @@ class AppointmentMotherRecordList extends StatefulWidget {
 }
 
 class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordList> {
+  MyApp main = MyApp();
   final User user = FirebaseAuth.instance.currentUser;
   DateTime today = DateTime.now();
+  String d, m, y, completeDate;
+
+  @override
+  void initState() {
+    super.initState();
+    today = DateTime.now();
+    if (today.day < 10)
+      d = "0${today.day}";
+    else
+      d = "${today.day}";
+
+    if (today.month < 10)
+      m = "0${today.month}";
+    else
+      m = "${today.month}";
+
+    y = "${today.year}";
+
+    completeDate = y + "-" + m + "-" + d;
+  }
 
   Future<void> deleteSelected(appointmentID) {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -25,8 +50,9 @@ class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordLis
     CollectionReference slotRecord = _db.collection("appointment_slot");
 
     return slotRecord.doc(slotID).update({
-      if (sessionForThisRecord == "AM") "s_available_AM": FieldValue.increment(1),
-      if (sessionForThisRecord == "PM") "s_available_PM": FieldValue.increment(1),
+      if (sessionForThisRecord == "Morning") "s_available_Morning": FieldValue.increment(1),
+      if (sessionForThisRecord == "Afternoon") "s_available_Afternoon": FieldValue.increment(1),
+      if (sessionForThisRecord == "Evening") "s_available_Evening": FieldValue.increment(1),
     });
   }
 
@@ -57,7 +83,7 @@ class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordLis
         stream: FirebaseFirestore.instance
             .collection('mother_appointment')
             .where("m_id", isEqualTo: user.uid)
-            .where("a_date", isGreaterThanOrEqualTo: "${today.year}-${today.month}-${today.day}")
+            .where("a_date", isGreaterThanOrEqualTo: completeDate)
             .orderBy("a_date", descending: true)
             .orderBy("a_session", descending: true)
             .snapshots(),
@@ -105,6 +131,7 @@ class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordLis
                               onTap: () {
                                 deleteSelected(snapshot.data.documents[index]["a_id"]);
                                 updateSlotCount(snapshot.data.documents[index]["s_id"], snapshot.data.documents[index]["a_session"], snapshot.data.documents[index]["a_date"]);
+                                _showNotification(snapshot.data.documents[index]["a_date"]);
                               },
                             )
                           ],
@@ -220,5 +247,29 @@ class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordLis
         },
       ),
     );
+  }
+
+  void _showNotification(date) async {
+    await notification(date);
+  }
+
+  Future<void> notification(date) async {
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'Channel Id',
+      'Channel title',
+      'channel body',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+    );
+
+    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+
+    await main.createState().flutterLocalNotificationsPlugin.show(
+          0,
+          'Appointment Management',
+          'A booking at ' + date + ' was deleted.',
+          notificationDetails,
+        );
   }
 }
