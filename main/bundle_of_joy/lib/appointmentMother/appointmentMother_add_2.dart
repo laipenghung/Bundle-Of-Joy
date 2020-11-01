@@ -15,12 +15,26 @@ class _AppointmentMotherAdd2State extends State<AppointmentMotherAdd2> {
   // VARIABLES
   final String hospitalName;
   DateTime pickedDate;
+  String d, m, y, dateToPass;
 
   // MAKE THE DEFAULT DATE TODAY
   @override
   void initState() {
     super.initState();
     pickedDate = DateTime.now();
+    if (pickedDate.day < 10)
+      d = "0${pickedDate.day}";
+    else
+      d = "${pickedDate.day}";
+
+    if (pickedDate.month < 10)
+      m = "0${pickedDate.month}";
+    else
+      m = "${pickedDate.month}";
+
+    y = "${pickedDate.year}";
+
+    dateToPass = y + "-" + m + "-" + d;
   }
 
   _AppointmentMotherAdd2State(this.hospitalName);
@@ -123,7 +137,7 @@ class _AppointmentMotherAdd2State extends State<AppointmentMotherAdd2> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}",
+                                      dateToPass,
                                       style: TextStyle(
                                         fontFamily: 'Comfortaa',
                                         fontWeight: FontWeight.bold,
@@ -132,8 +146,7 @@ class _AppointmentMotherAdd2State extends State<AppointmentMotherAdd2> {
                                       ),
                                     ),
                                     Container(
-                                      margin:
-                                          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.005, left: MediaQuery.of(context).size.width * 0.05),
+                                      margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.005, left: MediaQuery.of(context).size.width * 0.05),
                                       child: Image.asset(
                                         "assets/icons/calendar.png",
                                         height: MediaQuery.of(context).size.height * 0.035,
@@ -199,7 +212,7 @@ class _AppointmentMotherAdd2State extends State<AppointmentMotherAdd2> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AppointmentMotherAdd3(name: hospitalName, date: pickedDate)),
+                    MaterialPageRoute(builder: (context) => AppointmentMotherAdd3(name: hospitalName, date: dateToPass)),
                   );
                 },
               ),
@@ -227,6 +240,20 @@ class _AppointmentMotherAdd2State extends State<AppointmentMotherAdd2> {
     if (date != null) {
       setState(() {
         pickedDate = date;
+
+        if (pickedDate.day < 10)
+          d = "0${pickedDate.day}";
+        else
+          d = "${pickedDate.day}";
+
+        if (pickedDate.month < 10)
+          m = "0${pickedDate.month}";
+        else
+          m = "${pickedDate.month}";
+
+        y = "${pickedDate.year}";
+
+        dateToPass = y + "-" + m + "-" + d;
       });
     }
   }
