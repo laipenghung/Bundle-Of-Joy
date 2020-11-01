@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:quiver/iterables.dart';
 
 import 'babyFoodIntake_summary.dart';
 
 class BabyFoodIntakeAdd2 extends StatefulWidget {
   final String selectedBabyID, selectedDate, selectedTime;
-  BabyFoodIntakeAdd2({Key key, this.selectedBabyID, this.selectedDate, this.selectedTime}) : super(key: key);
+  BabyFoodIntakeAdd2(
+      {Key key, this.selectedBabyID, this.selectedDate, this.selectedTime})
+      : super(key: key);
 
   @override
   _BabyFoodIntakeAdd2State createState() => _BabyFoodIntakeAdd2State();
@@ -32,8 +34,9 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
         color: Colors.black,
         width: 2.0,
       ),
-      borderRadius: BorderRadius.all(Radius.circular(10.0) //<--- border radius here
-          ),
+      borderRadius:
+          BorderRadius.all(Radius.circular(10.0) //<--- border radius here
+              ),
     );
   }
 
@@ -44,8 +47,9 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
         color: Colors.black,
         width: 2.0,
       ),
-      borderRadius: BorderRadius.all(Radius.circular(30.0) //<--- border radius here
-          ),
+      borderRadius:
+          BorderRadius.all(Radius.circular(30.0) //<--- border radius here
+              ),
     );
   }
 
@@ -108,16 +112,20 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.055),
+            margin: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.height * 0.055),
             //color: Colors.lightBlue,
             height: MediaQuery.of(context).size.height * 0.6,
             width: MediaQuery.of(context).size.width,
             child: SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.05),
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.05),
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
+                    margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.05,
+                        left: MediaQuery.of(context).size.width * 0.03),
                     width: MediaQuery.of(context).size.width * 0.85,
                     child: Text(
                       "Enter the food you eat",
@@ -130,7 +138,8 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015),
+                    margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.015),
                     width: MediaQuery.of(context).size.width * 0.85,
                     height: MediaQuery.of(context).size.height * 0.055,
                     child: Row(
@@ -180,7 +189,8 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
                                 style: TextStyle(
                                   fontFamily: 'Comfortaa',
                                   fontWeight: FontWeight.bold,
-                                  fontSize: MediaQuery.of(context).size.height * 0.02,
+                                  fontSize:
+                                      MediaQuery.of(context).size.height * 0.02,
                                   color: Colors.black,
                                 ),
                               ),
@@ -195,23 +205,43 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                    child: Table(
-                      //border: TableBorder.all(width: 1.0, color: Colors.black),
-                      children: [
-                        for (var x in zip([foodNameList, foodQtyList]))
-                          TableRow(children: [
-                            TableCell(
-                                child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                new Text(x[0].toString() + "\nx" + x[1].toString()),
-                              ],
-                            ))
-                          ])
-                      ],
-                    ),
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 150.0,
+                    margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.1),
+                    child: ListView.builder(
+                        itemCount: foodNameList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                            children: [
+                              Slidable(
+                                actionPane: SlidableDrawerActionPane(),
+                                actionExtentRatio: 0.22,
+                                secondaryActions: <Widget>[
+                                  IconSlideAction(
+                                    caption: "Delete",
+                                    color: Colors.red,
+                                    icon: Icons.delete,
+                                    onTap: () {
+                                      setState(() {
+                                        foodMap.remove(foodNameList[index]);
+                                        foodNameList.removeAt(index);
+                                        foodQtyList.removeAt(index);
+                                        print(foodNameList);
+                                        print(foodQtyList);
+                                        print(foodMap);
+                                      });
+                                    },
+                                  )
+                                ],
+                                child: Container(
+                                  child: Text(
+                                      "${foodNameList[index]}\nx${foodQtyList[index]}"),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
                   ),
                 ],
               ),
@@ -292,8 +322,11 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => BabyFoodIntakeSummary(selectedBabyID: widget.selectedBabyID, selectedDate: widget.selectedDate,
-                              selectedTime: widget.selectedTime, foodMap: foodMap)),
+                            builder: (context) => BabyFoodIntakeSummary(
+                                selectedBabyID: widget.selectedBabyID,
+                                selectedDate: widget.selectedDate,
+                                selectedTime: widget.selectedTime,
+                                foodMap: foodMap)),
                       );
                     }
                   },
