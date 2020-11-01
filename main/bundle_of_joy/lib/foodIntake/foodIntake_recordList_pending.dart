@@ -13,11 +13,6 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
   final User user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<List<DocumentSnapshot>> _getFoodRecord() async {
-    QuerySnapshot x = await _db.collection('mother').doc(FirebaseAuth.instance.currentUser.uid).collection('foodIntake_Pending').get();
-    return x.docs;
-  }
-
   Future<void> deleteSelected(recordID) {
     //final User user = FirebaseAuth.instance.currentUser;
     final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -25,7 +20,7 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
 
     return _db.collection("mother").doc(user.uid).collection("foodIntake_Pending").doc(recordID).delete().then((value) {
       print("Deleted");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeListPending()));
+      //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeListPending()));
     }).catchError((error) => print("wrong"));
   }
 
@@ -50,9 +45,10 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
         centerTitle: true,
       ),
 
-      body: FutureBuilder(
-        future: _getFoodRecord(),
-        builder: (_, AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
+      body: StreamBuilder(
+        stream: _db.collection('mother').doc(FirebaseAuth.instance.currentUser.uid)
+          .collection('foodIntake_Pending').snapshots(),
+        builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -66,7 +62,7 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
                   ),
                 ),
               );
-            } else if (snapshot.data.isEmpty) {
+            } else if (snapshot.data.documents.isEmpty) {
               return Center(
                 child: Text(
                   'There is currently no records',
@@ -81,18 +77,18 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
               return Container(
                 margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),
                 child: ListView.builder(
-                  itemCount: snapshot.data.length,
+                  itemCount: snapshot.data.documents.length,
                   itemBuilder: (_, index) {
                     return Slidable(
                       actionPane: SlidableDrawerActionPane(),
                       actionExtentRatio: 0.25,
                       child: InkWell(
                         onTap: () {
-                          print(snapshot.data[index].data()['recordID']);
+                          print(snapshot.data.documents[index]['recordID']);
                           //go to record_pending
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => FoodIntakeRecordPending(foodIntakeRecordID: snapshot.data[index].data()["recordID"])),
+                            MaterialPageRoute(builder: (context) => FoodIntakeRecordPending(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
                           );
                         },
                         child: Column(
@@ -116,7 +112,7 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        snapshot.data[index].data()['selectedDate'],
+                                        snapshot.data.documents[index]['selectedDate'],
                                         style: TextStyle(
                                           fontFamily: 'Comfortaa',
                                           fontWeight: FontWeight.bold,
@@ -126,7 +122,7 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
                                       ),
                                       SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                                       Text(
-                                        snapshot.data[index].data()['selectedTime'],
+                                        snapshot.data.documents[index]['selectedTime'],
                                         style: TextStyle(
                                           fontFamily: 'Comfortaa',
                                           fontWeight: FontWeight.bold,
@@ -163,8 +159,8 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
                           color: Colors.red,
                           icon: Icons.delete,
                           onTap: () {
-                            print(snapshot.data[index].data()['recordID']);
-                            deleteSelected(snapshot.data[index].data()['recordID']);
+                            print(snapshot.data.documents[index]['recordID']);
+                            deleteSelected(snapshot.data.documents[index]['recordID']);
                           },
                         )
                       ],

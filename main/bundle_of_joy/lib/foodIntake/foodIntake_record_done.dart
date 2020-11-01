@@ -225,7 +225,7 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
                                           ),
                                         ),
                                         Text(
-                                          snapshot.data.data()["bsBefore"],
+                                          '${snapshot.data.data()["bsBefore"]} (mmol/L)',
                                           style: TextStyle(
                                             fontFamily: 'Comfortaa',
                                             fontWeight: FontWeight.bold,
@@ -233,6 +233,8 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
                                             color: Colors.black,
                                           ),
                                         ),
+
+                                        
                                       ],
                                     ),
                                   ),

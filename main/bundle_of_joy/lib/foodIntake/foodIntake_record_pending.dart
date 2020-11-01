@@ -23,8 +23,12 @@ class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
 
   void initState() {
     super.initState();
-    test = StreamBuilder<DocumentSnapshot>(
-      stream: collectionReference.doc(widget.foodIntakeRecordID).snapshots(),
+    test = FutureBuilder<DocumentSnapshot>(
+      future: FirebaseFirestore.instance.collection("mother")
+              .doc(FirebaseAuth.instance.currentUser.uid)
+              .collection("foodIntake_Pending")
+              .doc(widget.foodIntakeRecordID)
+              .get(),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasData) {
           Map food = snapshot.data.data()["foodMap"];
