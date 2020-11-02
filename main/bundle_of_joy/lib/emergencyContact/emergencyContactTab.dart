@@ -38,7 +38,7 @@ class EmergencyContactTab extends StatelessWidget {
           ),
         ),
 
-        automaticallyImplyLeading: false, // CENTER THE TEXT
+        //automaticallyImplyLeading: false, // CENTER THE TEXT
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),

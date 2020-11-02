@@ -6,9 +6,7 @@ import 'babyFoodIntake_summary.dart';
 
 class BabyFoodIntakeAdd2 extends StatefulWidget {
   final String selectedBabyID, selectedDate, selectedTime;
-  BabyFoodIntakeAdd2(
-      {Key key, this.selectedBabyID, this.selectedDate, this.selectedTime})
-      : super(key: key);
+  BabyFoodIntakeAdd2({Key key, this.selectedBabyID, this.selectedDate, this.selectedTime}) : super(key: key);
 
   @override
   _BabyFoodIntakeAdd2State createState() => _BabyFoodIntakeAdd2State();
@@ -34,9 +32,8 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
         color: Colors.black,
         width: 2.0,
       ),
-      borderRadius:
-          BorderRadius.all(Radius.circular(10.0) //<--- border radius here
-              ),
+      borderRadius: BorderRadius.all(Radius.circular(10.0) //<--- border radius here
+          ),
     );
   }
 
@@ -47,9 +44,8 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
         color: Colors.black,
         width: 2.0,
       ),
-      borderRadius:
-          BorderRadius.all(Radius.circular(30.0) //<--- border radius here
-              ),
+      borderRadius: BorderRadius.all(Radius.circular(30.0) //<--- border radius here
+          ),
     );
   }
 
@@ -112,23 +108,19 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.055),
+            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.055),
             //color: Colors.lightBlue,
             height: MediaQuery.of(context).size.height * 0.6,
             width: MediaQuery.of(context).size.width,
             child: SingleChildScrollView(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.05),
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.05),
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.05,
-                        left: MediaQuery.of(context).size.width * 0.03),
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
                     width: MediaQuery.of(context).size.width * 0.85,
                     child: Text(
-                      "Enter the food you eat",
+                      "Enter the food the baby eat",
                       style: TextStyle(
                         fontFamily: 'Comfortaa',
                         fontWeight: FontWeight.bold,
@@ -138,8 +130,7 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.015),
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015),
                     width: MediaQuery.of(context).size.width * 0.85,
                     height: MediaQuery.of(context).size.height * 0.055,
                     child: Row(
@@ -189,8 +180,7 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
                                 style: TextStyle(
                                   fontFamily: 'Comfortaa',
                                   fontWeight: FontWeight.bold,
-                                  fontSize:
-                                      MediaQuery.of(context).size.height * 0.02,
+                                  fontSize: MediaQuery.of(context).size.height * 0.02,
                                   color: Colors.black,
                                 ),
                               ),
@@ -205,53 +195,90 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: 150.0,
-                    margin: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.1),
-                    child: ListView.builder(
-                        itemCount: foodNameList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                            children: [
-                              Slidable(
-                                actionPane: SlidableDrawerActionPane(),
-                                actionExtentRatio: 0.22,
-                                secondaryActions: <Widget>[
-                                  IconSlideAction(
-                                    caption: "Delete",
-                                    color: Colors.red,
-                                    icon: Icons.delete,
-                                    onTap: () {
-                                      setState(() {
-                                        foodMap.remove(foodNameList[index]);
-                                        foodNameList.removeAt(index);
-                                        foodQtyList.removeAt(index);
-                                        print(foodNameList);
-                                        print(foodQtyList);
-                                        print(foodMap);
-                                      });
-                                    },
-                                  )
+                    //color: Colors.blue,
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                      child: ListView.builder(
+                          itemCount: foodNameList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Slidable(
+                              actionPane: SlidableDrawerActionPane(),
+                              actionExtentRatio: 0.18,
+                              secondaryActions: <Widget>[
+                                IconSlideAction(
+                                  caption: "Delete",
+                                  color: Colors.red,
+                                  icon: Icons.delete,
+                                  onTap: () {
+                                    setState(() {
+                                      foodMap.remove(foodNameList[index]);
+                                      foodNameList.removeAt(index);
+                                      foodQtyList.removeAt(index);
+                                      print(foodNameList);
+                                      print(foodQtyList);
+                                      print(foodMap);
+                                    });
+                                  },
+                                )
+                              ],
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.8,
+                                    height: MediaQuery.of(context).size.width * 0.1,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: MediaQuery.of(context).size.width * 0.5,
+                                          child: Text(
+                                            "${foodNameList[index]}",
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: MediaQuery.of(context).size.height * 0.025,
+                                              color: Colors.black,
+                                            ),
+                                            textAlign: TextAlign.left,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            softWrap: true,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context).size.width * 0.3,
+                                          child: Text(
+                                            "   x${foodQtyList[index]}",
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: MediaQuery.of(context).size.height * 0.025,
+                                              color: Colors.black,
+                                            ),
+                                            textAlign: TextAlign.left,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            softWrap: true,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                                 ],
-                                child: Container(
-                                  child: Text(
-                                      "${foodNameList[index]}\nx${foodQtyList[index]}"),
-                                ),
                               ),
-                            ],
-                          );
-                        }),
+                            );
+                          }),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-          //Container(
-          //child: Center(
-          //child: testPrint(),
-          //),
-          //),
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -297,19 +324,13 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
                     ),
                   ),
                   onTap: () {
-                    //print(widget.selectedDate + "   " + widget.selectedTime);
-                    //Navigator.push(
-                    //context,
-                    //MaterialPageRoute(
-                    //builder: (context) => FoodIntakeAdd3(selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: foodMap)),
-                    //);
                     if (foodNameList.isEmpty || foodQtyList.isEmpty) {
                       return showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text("Opps!"),
-                              content: Text("Empty list."),
+                              content: Text("Please enter at least one food with quantity specified."),
                               actions: <Widget>[
                                 FlatButton(
                                   child: Text("Ok"),
@@ -323,10 +344,7 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => BabyFoodIntakeSummary(
-                                selectedBabyID: widget.selectedBabyID,
-                                selectedDate: widget.selectedDate,
-                                selectedTime: widget.selectedTime,
-                                foodMap: foodMap)),
+                                selectedBabyID: widget.selectedBabyID, selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: foodMap)),
                       );
                     }
                   },

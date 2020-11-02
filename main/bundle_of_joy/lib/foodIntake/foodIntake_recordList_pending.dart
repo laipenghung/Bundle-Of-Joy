@@ -39,15 +39,16 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
             color: Colors.black,
           ),
         ),
-
-        automaticallyImplyLeading: false, // CENTER THE TEXT
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        //automaticallyImplyLeading: false, // CENTER THE TEXT
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
 
       body: StreamBuilder(
-        stream: _db.collection('mother').doc(FirebaseAuth.instance.currentUser.uid)
-          .collection('foodIntake_Pending').snapshots(),
+        stream: _db.collection('mother').doc(FirebaseAuth.instance.currentUser.uid).collection('foodIntake_Pending').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {

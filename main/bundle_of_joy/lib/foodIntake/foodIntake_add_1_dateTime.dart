@@ -11,6 +11,7 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
   // Variables
   DateTime pickedDate;
   TimeOfDay time;
+  String d, m, y, hour, min, dateToPass, timeToPass;
 
   // MAKE THE DEFAULT DATE TODAY
   @override
@@ -19,6 +20,31 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
 
     pickedDate = DateTime.now();
     time = TimeOfDay.now();
+
+    if (pickedDate.day < 10)
+      d = "0${pickedDate.day}";
+    else
+      d = "${pickedDate.day}";
+
+    if (pickedDate.month < 10)
+      m = "0${pickedDate.month}";
+    else
+      m = "${pickedDate.month}";
+
+    y = "${pickedDate.year}";
+
+    if (time.hour < 10)
+      hour = "0${time.hour}";
+    else
+      hour = "${time.hour}";
+
+    if (time.minute < 10)
+      min = "0${time.minute}";
+    else
+      min = "${time.minute}";
+
+    dateToPass = y + "-" + m + "-" + d;
+    timeToPass = hour + ":" + min;
   }
 
   // BUILD THE WIDGET
@@ -81,7 +107,7 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}",
+                                    dateToPass,
                                     style: TextStyle(
                                       fontFamily: 'Comfortaa',
                                       fontWeight: FontWeight.bold,
@@ -101,7 +127,7 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
                             ),
                             onTap: () {
                               _pickDate();
-                              print("${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}");
+                              print(dateToPass);
                             }),
                       ],
                     ),
@@ -133,7 +159,7 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "${time.hour} : ${time.minute}",
+                                    timeToPass,
                                     style: TextStyle(
                                       fontFamily: 'Comfortaa',
                                       fontWeight: FontWeight.bold,
@@ -156,7 +182,7 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
                       ),
                       onTap: () {
                         _pickTime();
-                        print("${time.hour} : ${time.minute}");
+                        print(timeToPass);
                       }),
                 ],
               ),
@@ -209,12 +235,9 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
                     ),
                   ),
                   onTap: () {
-                    var selectedDate = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
-                    var selectedTime = "${time.hour}:${time.minute}";
-                    print(selectedDate + "   " + selectedTime);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => FoodIntakeAdd2(selectedDate: selectedDate, selectedTime: selectedTime)),
+                      MaterialPageRoute(builder: (context) => FoodIntakeAdd2(selectedDate: dateToPass, selectedTime: timeToPass)),
                     );
                   },
                 ),
@@ -272,6 +295,20 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
     if (date != null) {
       setState(() {
         pickedDate = date;
+
+        if (pickedDate.day < 10)
+          d = "0${pickedDate.day}";
+        else
+          d = "${pickedDate.day}";
+
+        if (pickedDate.month < 10)
+          m = "0${pickedDate.month}";
+        else
+          m = "${pickedDate.month}";
+
+        y = "${pickedDate.year}";
+
+        dateToPass = y + "-" + m + "-" + d;
       });
     }
   }
@@ -296,6 +333,18 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
     if (t != null) {
       setState(() {
         time = t;
+
+        if (time.hour < 10)
+          hour = "0${time.hour}";
+        else
+          hour = "${time.hour}";
+
+        if (time.minute < 10)
+          min = "0${time.minute}";
+        else
+          min = "${time.minute}";
+
+        timeToPass = hour + ":" + min;
       });
     }
   }

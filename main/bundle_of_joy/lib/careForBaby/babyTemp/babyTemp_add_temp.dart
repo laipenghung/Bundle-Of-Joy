@@ -48,7 +48,7 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text("Opps!"),
-              content: Text("Please enter your Blood Sugar reading before you eat."),
+              content: Text("Please enter the temperature before taking medicine."),
               actions: <Widget>[
                 FlatButton(
                   child: Text("Ok"),
@@ -62,8 +62,9 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
         Navigator.push(
             context,
             // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
-            MaterialPageRoute(builder: (context) => BabyTempSummaryPending(selectedDate: widget.selectedDate, selectedTime: widget.selectedTime,
-              bTempBefore: bTempBefore, selectedBabyID: widget.selectedBabyID, meds: widget.meds,)));
+            MaterialPageRoute(
+                builder: (context) => BabyTempSummaryPending(
+                  selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, bTempBefore: bTempBefore, selectedBabyID: widget.selectedBabyID, meds: widget.meds,)));
       } else {
         Navigator.push(
             context,
@@ -117,7 +118,7 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
                     margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
                     width: MediaQuery.of(context).size.width * 0.85,
                     child: Text(
-                      "Enter the temp before",
+                      "Enter the temperature",
                       style: TextStyle(
                         fontFamily: 'Comfortaa',
                         fontWeight: FontWeight.bold,
@@ -130,7 +131,7 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
                     margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, left: MediaQuery.of(context).size.width * 0.03),
                     width: MediaQuery.of(context).size.width * 0.85,
                     child: Text(
-                      "Before taking Meds",
+                      "Before taking the medicine",
                       style: TextStyle(
                         fontFamily: 'Comfortaa',
                         fontSize: MediaQuery.of(context).size.height * 0.022,
@@ -157,7 +158,7 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
                               },
                               keyboardType: TextInputType.number,
                               decoration: new InputDecoration(
-                                labelText: "temperature",
+                                labelText: "Body Temperature",
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                   borderSide: BorderSide(
@@ -184,7 +185,7 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
                     margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
                     width: MediaQuery.of(context).size.width * 0.85,
                     child: Text(
-                      "After taking meds",
+                      "After taking the medicine",
                       style: TextStyle(
                         fontFamily: 'Comfortaa',
                         fontSize: MediaQuery.of(context).size.height * 0.022,
@@ -208,7 +209,7 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
                             },
                             keyboardType: TextInputType.number,
                             decoration: new InputDecoration(
-                              labelText: "Body temperature (Optional)",
+                              labelText: "Body Temperature (Optional)",
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
                                 borderSide: BorderSide(

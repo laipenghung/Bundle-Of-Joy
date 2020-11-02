@@ -7,7 +7,6 @@ class BabyTempAdd1 extends StatefulWidget {
   final String selectedBabyID;
   BabyTempAdd1({Key key, this.selectedBabyID}) : super(key: key);
 
-
   @override
   _BabyTempAdd1State createState() => _BabyTempAdd1State();
 }
@@ -16,6 +15,7 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
   // Variables
   DateTime pickedDate;
   TimeOfDay time;
+  String d, m, y, hour, min, dateToPass, timeToPass;
   String inputMeds = "";
   TextEditingController medsController = TextEditingController();
 
@@ -26,6 +26,31 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
 
     pickedDate = DateTime.now();
     time = TimeOfDay.now();
+
+    if (pickedDate.day < 10)
+      d = "0${pickedDate.day}";
+    else
+      d = "${pickedDate.day}";
+
+    if (pickedDate.month < 10)
+      m = "0${pickedDate.month}";
+    else
+      m = "${pickedDate.month}";
+
+    y = "${pickedDate.year}";
+
+    if (time.hour < 10)
+      hour = "0${time.hour}";
+    else
+      hour = "${time.hour}";
+
+    if (time.minute < 10)
+      min = "0${time.minute}";
+    else
+      min = "${time.minute}";
+
+    dateToPass = y + "-" + m + "-" + d;
+    timeToPass = hour + ":" + min;
   }
 
   BoxDecoration myBoxDecoration() {
@@ -74,6 +99,20 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
     if (date != null) {
       setState(() {
         pickedDate = date;
+
+        if (pickedDate.day < 10)
+          d = "0${pickedDate.day}";
+        else
+          d = "${pickedDate.day}";
+
+        if (pickedDate.month < 10)
+          m = "0${pickedDate.month}";
+        else
+          m = "${pickedDate.month}";
+
+        y = "${pickedDate.year}";
+
+        dateToPass = y + "-" + m + "-" + d;
       });
     }
   }
@@ -98,6 +137,18 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
     if (t != null) {
       setState(() {
         time = t;
+
+        if (time.hour < 10)
+          hour = "0${time.hour}";
+        else
+          hour = "${time.hour}";
+
+        if (time.minute < 10)
+          min = "0${time.minute}";
+        else
+          min = "${time.minute}";
+
+        timeToPass = hour + ":" + min;
       });
     }
   }
@@ -162,7 +213,7 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}",
+                                    dateToPass,
                                     style: TextStyle(
                                       fontFamily: 'Comfortaa',
                                       fontWeight: FontWeight.bold,
@@ -182,7 +233,6 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                             ),
                             onTap: () {
                               _pickDate();
-                              print("${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}");
                             }),
                       ],
                     ),
@@ -214,7 +264,7 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "${time.hour} : ${time.minute}",
+                                    timeToPass,
                                     style: TextStyle(
                                       fontFamily: 'Comfortaa',
                                       fontWeight: FontWeight.bold,
@@ -237,7 +287,6 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                       ),
                       onTap: () {
                         _pickTime();
-                        print("${time.hour} : ${time.minute}");
                       }),
 
                   Container(
@@ -367,8 +416,8 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                       print(selectedDate + "   " + selectedTime);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BabyTempAdd2(selectedDate: selectedDate, 
-                          selectedTime: selectedTime, selectedBabyID: widget.selectedBabyID, meds: inputMeds)),
+                        MaterialPageRoute(builder: (context) => BabyTempAdd2(selectedDate: dateToPass, 
+                          selectedTime: timeToPass, selectedBabyID: widget.selectedBabyID, meds: inputMeds)),
                       );
                     }
                   },

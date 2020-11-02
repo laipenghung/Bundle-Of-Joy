@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeMain.dart';
 import 'package:bundle_of_joy/mother-for-baby.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
@@ -63,7 +64,8 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
                               ),
                             ),
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.4,
+                              //color: Colors.red,
+                              width: MediaQuery.of(context).size.width * 0.6,
                               margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                               child: Text(
                                 snapshot.data.data()["selectedDate"],
@@ -73,6 +75,7 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
                                   fontSize: MediaQuery.of(context).size.height * 0.025,
                                   color: Colors.black,
                                 ),
+                                textAlign: TextAlign.left,
                               ),
                             ),
                           ],
@@ -88,7 +91,8 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
                               ),
                             ),
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.4,
+                              //color: Colors.red,
+                              width: MediaQuery.of(context).size.width * 0.6,
                               margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                               child: Text(
                                 snapshot.data.data()["selectedTime"],
@@ -98,6 +102,7 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
                                   fontSize: MediaQuery.of(context).size.height * 0.025,
                                   color: Colors.black,
                                 ),
+                                textAlign: TextAlign.left,
                               ),
                             ),
                           ],
@@ -105,6 +110,7 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
                         SizedBox(height: MediaQuery.of(context).size.height * 0.06),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               child: Image.asset(
@@ -115,28 +121,55 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
                             Column(
                               children: [
                                 Container(
-                                  width: MediaQuery.of(context).size.width * 0.4,
+                                  //color: Colors.red,
+                                  width: MediaQuery.of(context).size.width * 0.6,
                                   margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                   child: Table(
-                                    //border: TableBorder.all(width: 1.0, color: Colors.black),
                                     children: [
                                       for (var x in zip([foodName, foodQty]))
                                         TableRow(children: [
                                           TableCell(
                                               child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: <Widget>[
                                               Container(
-                                                //color: Colors.blue,
-                                                width: MediaQuery.of(context).size.width * 0.4,
+                                                //color: Colors.green,
+                                                width: MediaQuery.of(context).size.width * 0.45,
+                                                child: Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015, bottom: MediaQuery.of(context).size.height * 0.015),
+                                                  child: new Text(
+                                                    x[0].toString(),
+                                                    style: TextStyle(
+                                                      fontFamily: 'Comfortaa',
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                      color: Colors.black,
+                                                    ),
+                                                    textAlign: TextAlign.left,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    softWrap: true,
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context).size.width * 0.05,
+                                              ),
+                                              Container(
+                                                //color: Colors.white,
+                                                width: MediaQuery.of(context).size.width * 0.1,
                                                 child: new Text(
-                                                  x[0].toString() + "\n x" + x[1].toString(),
+                                                  "x" + x[1].toString(),
                                                   style: TextStyle(
                                                     fontFamily: 'Comfortaa',
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize: MediaQuery.of(context).size.height * 0.023,
+                                                    fontSize: MediaQuery.of(context).size.height * 0.025,
                                                     color: Colors.black,
                                                   ),
+                                                  textAlign: TextAlign.left,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  softWrap: true,
                                                 ),
                                               ),
                                             ],
@@ -149,11 +182,20 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
                             ),
                           ],
                         ),
+                        Padding(
+                          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
+                          child: Divider(
+                            indent: MediaQuery.of(context).size.width * 0.05,
+                            endIndent: MediaQuery.of(context).size.width * 0.05,
+                            color: Colors.black,
+                            thickness: MediaQuery.of(context).size.height * 0.001,
+                          ),
+                        ),
                         Container(
-                          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
+                          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03, left: MediaQuery.of(context).size.width * 0.03),
                           width: MediaQuery.of(context).size.width * 0.85,
                           child: Text(
-                            "Enter allergy and symptoms",
+                            "Enter the allergy or symptoms",
                             style: TextStyle(
                               fontFamily: 'Comfortaa',
                               fontWeight: FontWeight.bold,
@@ -165,45 +207,36 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
                         Container(
                           margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015),
                           width: MediaQuery.of(context).size.width * 0.85,
-                          //height: MediaQuery.of(context).size.height * 0.055,
-                          child: Row(
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.65,
-                                //height: MediaQuery.of(context).size.height * 0.055,
-                                child: TextFormField(
-                                  maxLines: 8,
-                                  controller: _controller,
-                                  onChanged: (val) {
-                                    setState(() => userInput = val);
-                                  },
-                                  //textInputAction: TextInputAction.send,
-                                  decoration: new InputDecoration(
-                                    labelText: "Enter allergy and symptoms. If none, leave this textarea empty",
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0),
-                                      borderSide: BorderSide(
-                                        color: Colors.black,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      borderSide: BorderSide(
-                                        color: Colors.black,
-                                        width: 1,
-                                      ),
-                                    ),
-                                  ),
-
-                                  onSaved: (String value) {},
-
-                                  validator: (String value) {
-                                    return null;
-                                  },
+                          child: TextFormField(
+                            maxLines: 8,
+                            controller: _controller,
+                            onChanged: (val) {
+                              setState(() => userInput = val);
+                            },
+                            //textInputAction: TextInputAction.send,
+                            decoration: new InputDecoration(
+                              labelText: "Enter some description. \nIf none, leave this textarea empty",
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                  width: 1,
                                 ),
                               ),
-                            ],
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+
+                            onSaved: (String value) {},
+
+                            validator: (String value) {
+                              return null;
+                            },
                           ),
                         ),
                       ],
@@ -256,11 +289,11 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
                         onTap: () {
                           print(userInput);
                           if (_controller.text.isEmpty) {
-                            updateBabyFoodIntakeRecord(snapshot.data.data()["selectedDate"], snapshot.data.data()["selectedTime"],
-                              snapshot.data.data()["foodMap"], noInput, widget.selectedBabyID, snapshot.data.data()["recordID"]);
+                            updateBabyFoodIntakeRecord(snapshot.data.data()["selectedDate"], snapshot.data.data()["selectedTime"], snapshot.data.data()["foodMap"], noInput,
+                                widget.selectedBabyID, snapshot.data.data()["recordID"]);
                           } else {
-                            updateBabyFoodIntakeRecord(snapshot.data.data()["selectedDate"], snapshot.data.data()["selectedTime"],
-                              snapshot.data.data()["foodMap"], userInput, widget.selectedBabyID, snapshot.data.data()["recordID"]);
+                            updateBabyFoodIntakeRecord(snapshot.data.data()["selectedDate"], snapshot.data.data()["selectedTime"], snapshot.data.data()["foodMap"], userInput,
+                                widget.selectedBabyID, snapshot.data.data()["recordID"]);
                           }
                         }, //ADD TO DATABASE
                       ),
@@ -306,8 +339,7 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
     //final User user = FirebaseAuth.instance.currentUser;
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     final User user = FirebaseAuth.instance.currentUser;
-    CollectionReference babyFoodIntakeRecord =
-        _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Done");
+    CollectionReference babyFoodIntakeRecord = _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Done");
     return babyFoodIntakeRecord.add({
       "motherID": user.uid,
       "selectedDate": selectedDate,
@@ -323,7 +355,7 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
       _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Pending").doc(recordID).delete();
       print("Data Deleted");
     }).then((value) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherForBabyTab()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BabyFoodIntakeMain(selectedBabyID: babyID)));
     }).catchError((error) => print("wrong"));
   }
 
