@@ -5,8 +5,9 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import '../../mother-for-baby.dart';
 
 class BabyTempSummaryDone extends StatefulWidget {
-  final String selectedDate, selectedTime, bTempBefore, bTempAfter, selectedBabyID;
-  BabyTempSummaryDone({Key key, @required this.selectedDate, this.selectedTime, this.bTempBefore, this.bTempAfter, this.selectedBabyID}) : super(key: key);
+  final String selectedDate, selectedTime, bTempBefore, bTempAfter, selectedBabyID, meds;
+  BabyTempSummaryDone({Key key, @required this.selectedDate, this.selectedTime, this.bTempBefore, this.bTempAfter, 
+    this.selectedBabyID, this.meds}) : super(key: key);
 
   @override
   BabyTempSummaryDoneState createState() => BabyTempSummaryDoneState();
@@ -48,6 +49,7 @@ class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
       "selectedTime": widget.selectedTime,
       "bTempBefore": widget.bTempBefore,
       "bTempAfter": widget.bTempAfter,
+      "medsTaken": widget.meds,
     }).then((value) {
       babyTempRecord.doc(value.id).update({
         "recordID": value.id,
@@ -129,6 +131,31 @@ class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                         child: Text(
                           widget.selectedTime,
+                          style: TextStyle(
+                            fontFamily: 'Comfortaa',
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.height * 0.025,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Image.asset(
+                          "assets/icons/calendar.png",
+                          height: MediaQuery.of(context).size.height * 0.05,
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                        child: Text(
+                          widget.meds,
                           style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,

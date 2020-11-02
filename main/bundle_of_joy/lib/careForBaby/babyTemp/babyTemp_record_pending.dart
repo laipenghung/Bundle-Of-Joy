@@ -1,4 +1,5 @@
 import 'package:bundle_of_joy/careForBaby/careForBabyTab.dart';
+import 'package:bundle_of_joy/mother-for-baby.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -84,6 +85,31 @@ class _BabyTempRecordPendingState extends State<BabyTempRecordPending> {
                               margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                               child: Text(
                                 snapshot.data.data()["selectedTime"],
+                                style: TextStyle(
+                                  fontFamily: 'Comfortaa',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: MediaQuery.of(context).size.height * 0.025,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              child: Image.asset(
+                                "assets/icons/time.png",
+                                height: MediaQuery.of(context).size.height * 0.05,
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                              child: Text(
+                                snapshot.data.data()["medsTaken"],
                                 style: TextStyle(
                                   fontFamily: 'Comfortaa',
                                   fontWeight: FontWeight.bold,
@@ -251,7 +277,7 @@ class _BabyTempRecordPendingState extends State<BabyTempRecordPending> {
                                 });
                           } else {
                             updateBabyTemoRecord(snapshot.data.data()["motherID"], snapshot.data.data()["selectedDate"], snapshot.data.data()["selectedTime"],
-                                snapshot.data.data()["bTempBefore"], bTempUpdate, widget.babyTempRecordID, widget.selectedBabyID);
+                                snapshot.data.data()["bTempBefore"], bTempUpdate, widget.babyTempRecordID, widget.selectedBabyID, snapshot.data.data()["medsTaken"]);
                           }
                         }, //ADD TO DATABASE
                       ),
@@ -294,7 +320,7 @@ class _BabyTempRecordPendingState extends State<BabyTempRecordPending> {
   }
 
   Future<void> updateBabyTemoRecord(motherID, selectedDate, selectedTime, 
-    bTempBefore, bTempAfter, recordID, babyID) {
+    bTempBefore, bTempAfter, recordID, babyID, meds) {
       //final User user = FirebaseAuth.instance.currentUser;
       final FirebaseFirestore _db = FirebaseFirestore.instance;
       final User user = FirebaseAuth.instance.currentUser;
@@ -307,6 +333,7 @@ class _BabyTempRecordPendingState extends State<BabyTempRecordPending> {
         "bTempBefore": bTempBefore,
         "bTempAfter": bTempAfter,
         "babyID": babyID,
+        "medsTaken": meds,
       }).then((value) {
         babyTempRecord.doc(value.id).update({
           "recordID": value.id,
@@ -316,7 +343,7 @@ class _BabyTempRecordPendingState extends State<BabyTempRecordPending> {
           .collection("tempRecord_Pending").doc(recordID).delete();
         print("Data Deleted");
       }).then((value) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyTab()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherForBabyTab()));
       }).catchError((error) => print("wrong"));
   }
 

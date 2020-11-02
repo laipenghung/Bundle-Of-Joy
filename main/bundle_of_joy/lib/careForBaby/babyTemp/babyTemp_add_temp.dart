@@ -5,8 +5,8 @@ import 'babyTemp_summary_done.dart';
 import 'babyTemp_summary_pending.dart';
 
 class BabyTempAdd2 extends StatefulWidget {
-  final String selectedDate, selectedTime, selectedBabyID;
-  BabyTempAdd2({Key key, this.selectedDate, this.selectedTime, this.selectedBabyID}) : super(key: key);
+  final String selectedDate, selectedTime, selectedBabyID, meds;
+  BabyTempAdd2({Key key, this.selectedDate, this.selectedTime, this.selectedBabyID, this.meds}) : super(key: key);
 
   @override
   _BabyTempAdd2State createState() => _BabyTempAdd2State();
@@ -64,7 +64,7 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
             // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
             MaterialPageRoute(
                 builder: (context) => BabyTempSummaryPending(
-                    selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, bTempBefore: bTempBefore, selectedBabyID: widget.selectedBabyID)));
+                  selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, bTempBefore: bTempBefore, selectedBabyID: widget.selectedBabyID, meds: widget.meds,)));
       } else {
         Navigator.push(
             context,
@@ -75,7 +75,8 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
                     selectedTime: widget.selectedTime,
                     bTempBefore: bTempBefore,
                     bTempAfter: bTempAfter,
-                    selectedBabyID: widget.selectedBabyID)));
+                    selectedBabyID: widget.selectedBabyID,
+                    meds: widget.meds,)));
       }
     }
   }

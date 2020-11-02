@@ -1,5 +1,6 @@
 import "package:bundle_of_joy/baby/addBaby.dart";
 import "package:bundle_of_joy/careForBaby/careForBabyTab.dart";
+import 'package:bundle_of_joy/growthTacking/vacAndGrowthTab.dart';
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -173,7 +174,15 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
               {}
               break;
             case 2:
-              {}
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => VacAndGrowthTab(
+                        selectedBabyID: selectedBabyID,
+                      )),
+                );
+              }
               break;
             case 3:
               {
