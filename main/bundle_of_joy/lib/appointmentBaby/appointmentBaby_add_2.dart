@@ -17,12 +17,26 @@ class _AppointmentBabyAdd2State extends State<AppointmentBabyAdd2> {
   final String hospitalName;
   final String babyID;
   DateTime pickedDate;
+  String d, m, y, dateToPass;
 
   // MAKE THE DEFAULT DATE TODAY
   @override
   void initState() {
     super.initState();
     pickedDate = DateTime.now();
+    if (pickedDate.day < 10)
+      d = "0${pickedDate.day}";
+    else
+      d = "${pickedDate.day}";
+
+    if (pickedDate.month < 10)
+      m = "0${pickedDate.month}";
+    else
+      m = "${pickedDate.month}";
+
+    y = "${pickedDate.year}";
+
+    dateToPass = y + "-" + m + "-" + d;
   }
 
   _AppointmentBabyAdd2State(this.hospitalName, this.babyID);
@@ -125,7 +139,7 @@ class _AppointmentBabyAdd2State extends State<AppointmentBabyAdd2> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}",
+                                      dateToPass,
                                       style: TextStyle(
                                         fontFamily: 'Comfortaa',
                                         fontWeight: FontWeight.bold,
@@ -203,7 +217,7 @@ class _AppointmentBabyAdd2State extends State<AppointmentBabyAdd2> {
                     MaterialPageRoute(
                         builder: (context) => AppointmentBabyAdd3(
                               name: hospitalName,
-                              date: pickedDate,
+                              date: dateToPass,
                               babyID: babyID,
                             )),
                   );
@@ -233,6 +247,20 @@ class _AppointmentBabyAdd2State extends State<AppointmentBabyAdd2> {
     if (date != null) {
       setState(() {
         pickedDate = date;
+
+        if (pickedDate.day < 10)
+          d = "0${pickedDate.day}";
+        else
+          d = "${pickedDate.day}";
+
+        if (pickedDate.month < 10)
+          m = "0${pickedDate.month}";
+        else
+          m = "${pickedDate.month}";
+
+        y = "${pickedDate.year}";
+
+        dateToPass = y + "-" + m + "-" + d;
       });
     }
   }

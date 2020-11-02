@@ -51,8 +51,11 @@ class _BabyFoodIntakeRecordDoneState extends State<BabyFoodIntakeRecordDone> {
             color: Colors.black,
           ),
         ),
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
 
-        automaticallyImplyLeading: false, // CENTER THE TEXT
+        //automaticallyImplyLeading: false, // CENTER THE TEXT
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
@@ -103,7 +106,8 @@ class _BabyFoodIntakeRecordDoneState extends State<BabyFoodIntakeRecordDone> {
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
+                                //color: Colors.red,
+                                width: MediaQuery.of(context).size.width * 0.6,
                                 margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                 child: Text(
                                   snapshot.data.data()["selectedDate"],
@@ -113,6 +117,7 @@ class _BabyFoodIntakeRecordDoneState extends State<BabyFoodIntakeRecordDone> {
                                     fontSize: MediaQuery.of(context).size.height * 0.025,
                                     color: Colors.black,
                                   ),
+                                  textAlign: TextAlign.left,
                                 ),
                               ),
                             ],
@@ -128,7 +133,8 @@ class _BabyFoodIntakeRecordDoneState extends State<BabyFoodIntakeRecordDone> {
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
+                                //color: Colors.red,
+                                width: MediaQuery.of(context).size.width * 0.6,
                                 margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                 child: Text(
                                   snapshot.data.data()["selectedTime"],
@@ -138,6 +144,7 @@ class _BabyFoodIntakeRecordDoneState extends State<BabyFoodIntakeRecordDone> {
                                     fontSize: MediaQuery.of(context).size.height * 0.025,
                                     color: Colors.black,
                                   ),
+                                  textAlign: TextAlign.left,
                                 ),
                               ),
                             ],
@@ -145,6 +152,7 @@ class _BabyFoodIntakeRecordDoneState extends State<BabyFoodIntakeRecordDone> {
                           SizedBox(height: MediaQuery.of(context).size.height * 0.06),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
                                 child: Image.asset(
@@ -155,28 +163,55 @@ class _BabyFoodIntakeRecordDoneState extends State<BabyFoodIntakeRecordDone> {
                               Column(
                                 children: [
                                   Container(
-                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    //color: Colors.red,
+                                    width: MediaQuery.of(context).size.width * 0.6,
                                     margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                     child: Table(
-                                      //border: TableBorder.all(width: 1.0, color: Colors.black),
                                       children: [
                                         for (var x in zip([foodName, foodQty]))
                                           TableRow(children: [
                                             TableCell(
                                                 child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: <Widget>[
                                                 Container(
-                                                  //color: Colors.blue,
-                                                  width: MediaQuery.of(context).size.width * 0.4,
+                                                  //color: Colors.green,
+                                                  width: MediaQuery.of(context).size.width * 0.45,
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015, bottom: MediaQuery.of(context).size.height * 0.015),
+                                                    child: new Text(
+                                                      x[0].toString(),
+                                                      style: TextStyle(
+                                                        fontFamily: 'Comfortaa',
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                        color: Colors.black,
+                                                      ),
+                                                      textAlign: TextAlign.left,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                      softWrap: true,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context).size.width * 0.05,
+                                                ),
+                                                Container(
+                                                  //color: Colors.white,
+                                                  width: MediaQuery.of(context).size.width * 0.1,
                                                   child: new Text(
-                                                    x[0].toString() + "\n x" + x[1].toString(),
+                                                    "x" + x[1].toString(),
                                                     style: TextStyle(
                                                       fontFamily: 'Comfortaa',
                                                       fontWeight: FontWeight.bold,
-                                                      fontSize: MediaQuery.of(context).size.height * 0.023,
+                                                      fontSize: MediaQuery.of(context).size.height * 0.025,
                                                       color: Colors.black,
                                                     ),
+                                                    textAlign: TextAlign.left,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    softWrap: true,
                                                   ),
                                                 ),
                                               ],
@@ -189,11 +224,20 @@ class _BabyFoodIntakeRecordDoneState extends State<BabyFoodIntakeRecordDone> {
                               ),
                             ],
                           ),
+                          Padding(
+                            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
+                            child: Divider(
+                              indent: MediaQuery.of(context).size.width * 0.05,
+                              endIndent: MediaQuery.of(context).size.width * 0.05,
+                              color: Colors.black,
+                              thickness: MediaQuery.of(context).size.height * 0.001,
+                            ),
+                          ),
                           Container(
-                            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
+                            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03, left: MediaQuery.of(context).size.width * 0.03),
                             width: MediaQuery.of(context).size.width * 0.85,
                             child: Text(
-                              "Allergy and symptoms",
+                              "Enter the allergy or symptoms",
                               style: TextStyle(
                                 fontFamily: 'Comfortaa',
                                 fontWeight: FontWeight.bold,
@@ -203,14 +247,13 @@ class _BabyFoodIntakeRecordDoneState extends State<BabyFoodIntakeRecordDone> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
+                            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03, left: MediaQuery.of(context).size.width * 0.03),
                             width: MediaQuery.of(context).size.width * 0.85,
                             child: Text(
                               snapshot.data.data()["babysymptoms"],
                               style: TextStyle(
                                 fontFamily: 'Comfortaa',
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                fontSize: MediaQuery.of(context).size.height * 0.022,
                                 color: Colors.black,
                               ),
                             ),

@@ -4,9 +4,14 @@ import 'appointmentBaby_main.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 
+import 'package:bundle_of_joy/main.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'dart:async';
+
 class AppointmentBabyAdd3 extends StatefulWidget {
   final String name;
-  final DateTime date;
+  final String date;
   final String babyID;
 
   AppointmentBabyAdd3({this.name, this.date, this.babyID});
@@ -17,10 +22,12 @@ class AppointmentBabyAdd3 extends StatefulWidget {
 
 class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
   // VARIABLES
+  MyApp main = MyApp();
+
   String nameFrom2;
-  DateTime dateFrom2;
+  String dateFrom2;
   String babyID;
-  int _amColor, _pmColor;
+  String _amColor, _pmColor, _eveColor, session;
   String selectedSession;
   bool hasRecord = false;
 
@@ -33,10 +40,11 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
     //dateFrom2 = DateTime.now();
     //}
 
-    print(babyID);
-    _amColor = 1;
-    _pmColor = 2;
-    selectedSession = "AM";
+    _amColor = "on";
+    _pmColor = "off";
+    _eveColor = "off";
+    session = "Morning Session";
+    selectedSession = "Morning";
   }
 
   // BUILD THE WIDGET
@@ -63,10 +71,7 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
 
         // BODY
         body: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('appointment_slot')
-              .where("date_string", isEqualTo: "${dateFrom2.year.toString()}-${dateFrom2.month.toString()}-${dateFrom2.day.toString()}")
-              .snapshots(),
+          stream: FirebaseFirestore.instance.collection('appointment_slot').where("date_string", isEqualTo: dateFrom2).snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -105,7 +110,7 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
                             children: [
                               SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                               Container(
-                                margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.06),
+                                margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -117,7 +122,7 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            "${dateFrom2.day} - ${dateFrom2.month} - ${dateFrom2.year}",
+                                            dateFrom2,
                                             style: TextStyle(
                                               fontFamily: 'Comfortaa',
                                               fontWeight: FontWeight.bold,
@@ -138,31 +143,48 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
                                   ],
                                 ),
                               ),
+                              Container(
+                                margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.05),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width * 0.85,
+                                      height: MediaQuery.of(context).size.height * 0.07,
+                                      decoration: myBoxDecoration2(),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            session,
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: MediaQuery.of(context).size.height * 0.025,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   InkWell(
                                     child: Container(
-                                      width: MediaQuery.of(context).size.width * 0.3,
-                                      height: MediaQuery.of(context).size.height * 0.05,
+                                      width: MediaQuery.of(context).size.width * 0.2,
+                                      height: MediaQuery.of(context).size.height * 0.06,
                                       decoration: myBoxDecorationAM(),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            "A.M.",
-                                            style: TextStyle(
-                                              fontFamily: 'Comfortaa',
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: MediaQuery.of(context).size.height * 0.025,
-                                              color: Colors.black,
-                                            ),
-                                          ),
                                           Container(
-                                            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
                                             child: Image.asset(
                                               "assets/icons/am.png",
-                                              height: MediaQuery.of(context).size.height * 0.03,
+                                              height: MediaQuery.of(context).size.height * 0.04,
                                             ),
                                           ),
                                         ],
@@ -170,51 +192,78 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
                                     ),
                                     onTap: () {
                                       setState(() {
-                                        _amColor = 1;
-                                        _pmColor = 2;
-                                        selectedSession = "AM";
+                                        _amColor = "on";
+                                        _pmColor = "off";
+                                        _eveColor = "off";
+                                        session = "Morning Session";
+                                        selectedSession = "Morning";
                                       });
                                     },
                                   ),
                                   SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.08,
+                                    width: MediaQuery.of(context).size.width * 0.07,
                                   ),
                                   InkWell(
                                     child: Container(
-                                      width: MediaQuery.of(context).size.width * 0.3,
-                                      height: MediaQuery.of(context).size.height * 0.05,
+                                      width: MediaQuery.of(context).size.width * 0.2,
+                                      height: MediaQuery.of(context).size.height * 0.06,
                                       decoration: myBoxDecorationPM(),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            "P.M.",
-                                            style: TextStyle(
-                                              fontFamily: 'Comfortaa',
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: MediaQuery.of(context).size.height * 0.025,
-                                              color: Colors.black,
-                                            ),
-                                          ),
                                           Container(
-                                            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
-                                            child: Image.asset("assets/icons/pm.png", height: MediaQuery.of(context).size.height * 0.03),
+                                            child: Image.asset(
+                                              "assets/icons/pm.png",
+                                              height: MediaQuery.of(context).size.height * 0.04,
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
                                     onTap: () {
                                       setState(() {
-                                        _amColor = 2;
-                                        _pmColor = 1;
-                                        selectedSession = "PM";
+                                        _amColor = "off";
+                                        _pmColor = "on";
+                                        _eveColor = "off";
+                                        session = "Afternoon Session";
+                                        selectedSession = "Afternoon";
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  InkWell(
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width * 0.2,
+                                      height: MediaQuery.of(context).size.height * 0.06,
+                                      decoration: myBoxDecorationEVE(),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            child: Image.asset(
+                                              "assets/icons/night.png",
+                                              height: MediaQuery.of(context).size.height * 0.04,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        _amColor = "off";
+                                        _pmColor = "off";
+                                        _eveColor = "on";
+                                        session = "Evening Session";
+                                        selectedSession = "Evening";
                                       });
                                     },
                                   ),
                                 ],
                               ),
                               Container(
-                                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.08),
+                                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
                                 child: Text(
                                   "Remaining Slot(s):",
                                   style: TextStyle(
@@ -226,13 +275,13 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
                                 ),
                               ),
                               Builder(builder: (context) {
-                                if (_amColor == 1 && _pmColor == 2) {
+                                if (selectedSession == "Morning") {
                                   return Builder(builder: (context) {
-                                    if (snapshot.data.documents[0]['s_available_AM'] < 6) {
+                                    if (snapshot.data.documents[0]['s_available_Morning'] < 6) {
                                       return Container(
                                         margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
                                         child: Text(
-                                          snapshot.data.documents[0]['s_available_AM'].toString(),
+                                          snapshot.data.documents[0]['s_available_Morning'].toString(),
                                           style: TextStyle(
                                             fontFamily: 'Comfortaa',
                                             fontWeight: FontWeight.bold,
@@ -245,7 +294,37 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
                                       return Container(
                                         margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
                                         child: Text(
-                                          snapshot.data.documents[0]['s_available_AM'].toString(),
+                                          snapshot.data.documents[0]['s_available_Morning'].toString(),
+                                          style: TextStyle(
+                                            fontFamily: 'Comfortaa',
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: MediaQuery.of(context).size.height * 0.15,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  });
+                                } else if (selectedSession == "Afternoon") {
+                                  return Builder(builder: (context) {
+                                    if (snapshot.data.documents[0]['s_available_Afternoon'] < 6) {
+                                      return Container(
+                                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
+                                        child: Text(
+                                          snapshot.data.documents[0]['s_available_Afternoon'].toString(),
+                                          style: TextStyle(
+                                            fontFamily: 'Comfortaa',
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: MediaQuery.of(context).size.height * 0.15,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return Container(
+                                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
+                                        child: Text(
+                                          snapshot.data.documents[0]['s_available_Afternoon'].toString(),
                                           style: TextStyle(
                                             fontFamily: 'Comfortaa',
                                             fontWeight: FontWeight.bold,
@@ -258,11 +337,11 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
                                   });
                                 } else {
                                   return Builder(builder: (context) {
-                                    if (snapshot.data.documents[0]['s_available_PM'] < 6) {
+                                    if (snapshot.data.documents[0]['s_available_Evening'] < 6) {
                                       return Container(
                                         margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
                                         child: Text(
-                                          snapshot.data.documents[0]['s_available_PM'].toString(),
+                                          snapshot.data.documents[0]['s_available_Evening'].toString(),
                                           style: TextStyle(
                                             fontFamily: 'Comfortaa',
                                             fontWeight: FontWeight.bold,
@@ -275,7 +354,7 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
                                       return Container(
                                         margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
                                         child: Text(
-                                          snapshot.data.documents[0]['s_available_PM'].toString(),
+                                          snapshot.data.documents[0]['s_available_Evening'].toString(),
                                           style: TextStyle(
                                             fontFamily: 'Comfortaa',
                                             fontWeight: FontWeight.bold,
@@ -312,10 +391,7 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
                             ),
                           ),
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => AppointmentBabyAdd2(name: nameFrom2, babyID: babyID)),
-                            );
+                            //Navigator.push(context,MaterialPageRoute(builder: (context) => AppointmentMotherAdd2(name: nameFrom2)),);
                           },
                         ),
                         SizedBox(width: MediaQuery.of(context).size.width * 0.05),
@@ -337,15 +413,14 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
                             ),
                           ),
                           onTap: () {
-                            if (selectedSession == "AM") {
-                              if (snapshot.data.documents[0]['s_available_AM'] == 0) {
-                                //print("AM No Slot");
+                            if (selectedSession == "Morning") {
+                              if (snapshot.data.documents[0]['s_available_Morning'] == 0) {
                                 return showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         title: Text("Slot Empty"),
-                                        content: Text("Hi, there is currently no slot for this session at this day, please try another session or another date :D"),
+                                        content: Text("Hi, there is currently no more slot for this session at this day, please try another session or another date :D"),
                                         actions: <Widget>[
                                           RaisedButton(
                                             child: Text("Ok"),
@@ -357,10 +432,10 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
                               } else {
                                 uploadAppointment(snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'],
                                     snapshot.data.documents[0]['s_id'], babyID);
+                                _showNotification();
                               }
-                            } else if (selectedSession == "PM") {
-                              if (snapshot.data.documents[0]['s_available_PM'] == 0) {
-                                //print("PM No Slot");
+                            } else if (selectedSession == "Afternoon") {
+                              if (snapshot.data.documents[0]['s_available_Afternoon'] == 0) {
                                 return showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
@@ -378,6 +453,28 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
                               } else {
                                 uploadAppointment(snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'],
                                     snapshot.data.documents[0]['s_id'], babyID);
+                                _showNotification();
+                              }
+                            } else if (selectedSession == "Evening") {
+                              if (snapshot.data.documents[0]['s_available_Evening'] == 0) {
+                                return showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Slot Empty"),
+                                        content: Text("Hi, there is currently no slot for this session at this day, please try another session or another date :D"),
+                                        actions: <Widget>[
+                                          RaisedButton(
+                                            child: Text("Ok"),
+                                            onPressed: () => Navigator.of(context).pop(),
+                                          ),
+                                        ],
+                                      );
+                                    });
+                              } else {
+                                uploadAppointment(snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'],
+                                    snapshot.data.documents[0]['s_id'], babyID);
+                                _showNotification();
                               }
                             } else {
                               print("THIS IS BROKEN");
@@ -447,7 +544,7 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
 
   BoxDecoration myBoxDecorationAM() {
     return BoxDecoration(
-      color: _amColor == 1 ? Color(0xFFFCFFD5) : Colors.white,
+      color: _amColor == "on" ? Color(0xFFFCFFD5) : Colors.white,
       border: Border.all(
         color: Colors.black,
         width: 2.0,
@@ -458,7 +555,18 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
 
   BoxDecoration myBoxDecorationPM() {
     return BoxDecoration(
-      color: _pmColor == 1 ? Color(0xFFFCFFD5) : Colors.white,
+      color: _pmColor == "on" ? Color(0xFFFCFFD5) : Colors.white,
+      border: Border.all(
+        color: Colors.black,
+        width: 2.0,
+      ),
+      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+    );
+  }
+
+  BoxDecoration myBoxDecorationEVE() {
+    return BoxDecoration(
+      color: _eveColor == "on" ? Color(0xFFFCFFD5) : Colors.white,
       border: Border.all(
         color: Colors.black,
         width: 2.0,
@@ -486,13 +594,38 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
         "a_id": value.id,
       }).then((value) {
         slotRecord.doc(slotID).update({
-          if (appointmentSession == "AM") "s_available_AM": FieldValue.increment(-1),
-          if (appointmentSession == "PM") "s_available_PM": FieldValue.increment(-1),
+          if (appointmentSession == "Morning") "s_available_Morning": FieldValue.increment(-1),
+          if (appointmentSession == "Afternoon") "s_available_Afternoon": FieldValue.increment(-1),
+          if (appointmentSession == "Evening") "s_available_Evening": FieldValue.increment(-1),
         }).then((value) {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AppointmentBabyMain(babyID: babyID)));
         });
       });
       print("Data uploaded");
     }).catchError((error) => print("Something is wrong here"));
+  }
+
+  void _showNotification() async {
+    await notification();
+  }
+
+  Future<void> notification() async {
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'Channel Id',
+      'Channel title',
+      'channel body',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+    );
+
+    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+
+    await main.createState().flutterLocalNotificationsPlugin.show(
+          0,
+          'Appointment Management',
+          'You have succesfully booked a slot for ' + dateFrom2,
+          notificationDetails,
+        );
   }
 }

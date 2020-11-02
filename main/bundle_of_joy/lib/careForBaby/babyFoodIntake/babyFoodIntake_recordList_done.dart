@@ -5,7 +5,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'babyFoodIntake_record_done.dart';
 
-
 class BabyFoodIntakeListDone extends StatefulWidget {
   final String selectedBabyID;
   BabyFoodIntakeListDone({Key key, this.selectedBabyID}) : super(key: key);
@@ -23,8 +22,7 @@ class _BabyFoodIntakeListDoneState extends State<BabyFoodIntakeListDone> {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     final User user = FirebaseAuth.instance.currentUser;
 
-    return _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID)
-      .collection("babyFoodIntake_Done").doc(recordID).delete().then((value) {
+    return _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Done").doc(recordID).delete().then((value) {
       print("Deleted");
       //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BabyTempListPending()));
     }).catchError((error) => print("wrong"));
@@ -44,14 +42,15 @@ class _BabyFoodIntakeListDoneState extends State<BabyFoodIntakeListDone> {
             color: Colors.black,
           ),
         ),
-
-        automaticallyImplyLeading: false, // CENTER THE TEXT
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        //automaticallyImplyLeading: false, // CENTER THE TEXT
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
       body: StreamBuilder(
-        stream: _db.collection('mother').doc(user.uid).collection("baby")
-          .doc(widget.selectedBabyID).collection("babyFoodIntake_Done").snapshots(),
+        stream: _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Done").snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -89,8 +88,8 @@ class _BabyFoodIntakeListDoneState extends State<BabyFoodIntakeListDone> {
                         //go to record_pending
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => BabyFoodIntakeRecordDone(recordID: snapshot.data.documents[index]["recordID"],
-                            selectedBabyID: widget.selectedBabyID)),
+                          MaterialPageRoute(
+                              builder: (context) => BabyFoodIntakeRecordDone(recordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
                         );
                       },
                       child: Column(

@@ -9,7 +9,6 @@ class BabyFoodIntakeListPending extends StatefulWidget {
   final String selectedBabyID;
   BabyFoodIntakeListPending({Key key, this.selectedBabyID}) : super(key: key);
 
-
   @override
   _BabyFoodIntakeListPendingState createState() => _BabyFoodIntakeListPendingState();
 }
@@ -23,8 +22,7 @@ class _BabyFoodIntakeListPendingState extends State<BabyFoodIntakeListPending> {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     final User user = FirebaseAuth.instance.currentUser;
 
-    return _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID)
-      .collection("babyFoodIntake_Pending").doc(recordID).delete().then((value) {
+    return _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Pending").doc(recordID).delete().then((value) {
       print("Deleted");
       //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BabyTempListPending()));
     }).catchError((error) => print("wrong"));
@@ -44,14 +42,15 @@ class _BabyFoodIntakeListPendingState extends State<BabyFoodIntakeListPending> {
             color: Colors.black,
           ),
         ),
-
-        automaticallyImplyLeading: false, // CENTER THE TEXT
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        //automaticallyImplyLeading: false, // CENTER THE TEXT
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
       body: StreamBuilder(
-        stream: _db.collection('mother').doc(user.uid).collection("baby")
-          .doc(widget.selectedBabyID).collection("babyFoodIntake_Pending").snapshots(),
+        stream: _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Pending").snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -89,8 +88,8 @@ class _BabyFoodIntakeListPendingState extends State<BabyFoodIntakeListPending> {
                         //go to record_pending
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => BabyFoodIntakeRecordPending(recordID: snapshot.data.documents[index]["recordID"],
-                            selectedBabyID: widget.selectedBabyID)),
+                          MaterialPageRoute(
+                              builder: (context) => BabyFoodIntakeRecordPending(recordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
                         );
                       },
                       child: Column(

@@ -68,9 +68,7 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
                   children: [
                     Container(
                       padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.015,
-                          bottom: MediaQuery.of(context).size.height * 0.015,
-                          left: MediaQuery.of(context).size.width * 0.07),
+                          top: MediaQuery.of(context).size.height * 0.015, bottom: MediaQuery.of(context).size.height * 0.015, left: MediaQuery.of(context).size.width * 0.07),
                       child: Row(
                         children: [
                           Container(
@@ -177,8 +175,10 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
             color: Colors.black,
           ),
         ),
-
-        automaticallyImplyLeading: false, // CENTER THE TEXT
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        //automaticallyImplyLeading: false, // CENTER THE TEXT
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),

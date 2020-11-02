@@ -117,7 +117,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
                 margin: EdgeInsets.only(top: paddingTop, left: MediaQuery.of(context).size.width * 0.03),
                 child: Image.asset(
                   "assets/icons/addbaby.png",
-                  height: MediaQuery.of(context).size.height * 0.055,
+                  height: MediaQuery.of(context).size.height * 0.06,
                 ),
               ),
               onTap: () async {
@@ -137,7 +137,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
     return BoxDecoration(
       border: Border.all(
         color: Colors.black,
-        width: 0.5,
+        width: 1,
       ),
       borderRadius: BorderRadius.all(Radius.circular(50.0) //<--- border radius here
           ),

@@ -33,7 +33,7 @@ class _BabyTempMainState extends State<BabyTempMain> {
                       Container(
                         margin: EdgeInsets.only(bottom: 20),
                         child: Image.asset(
-                          "assets/icons/menu.png",
+                          "assets/icons/thermometer.png",
                           height: 70,
                         ),
                       ),
@@ -55,7 +55,10 @@ class _BabyTempMainState extends State<BabyTempMain> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => BabyTempListDone(selectedBabyID: widget.selectedBabyID,)),
+                  MaterialPageRoute(
+                      builder: (context) => BabyTempListDone(
+                            selectedBabyID: widget.selectedBabyID,
+                          )),
                 );
                 print(widget.selectedBabyID);
               },
@@ -94,8 +97,8 @@ class _BabyTempMainState extends State<BabyTempMain> {
               ),
               onTap: () {
                 Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => BabyTempAdd1(selectedBabyID: widget.selectedBabyID)),
+                  context,
+                  MaterialPageRoute(builder: (context) => BabyTempAdd1(selectedBabyID: widget.selectedBabyID)),
                 );
               },
             ),
@@ -133,9 +136,12 @@ class _BabyTempMainState extends State<BabyTempMain> {
               ),
               onTap: () {
                 Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => BabyTempListPending(selectedBabyID: widget.selectedBabyID,)),
-              );
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BabyTempListPending(
+                            selectedBabyID: widget.selectedBabyID,
+                          )),
+                );
               },
             ),
           ],
