@@ -16,6 +16,8 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
   // Variables
   DateTime pickedDate;
   TimeOfDay time;
+  String inputMeds = "";
+  TextEditingController medsController = TextEditingController();
 
   // MAKE THE DEFAULT DATE TODAY
   @override
@@ -237,10 +239,66 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                         _pickTime();
                         print("${time.hour} : ${time.minute}");
                       }),
+
+                  Container(
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, left: MediaQuery.of(context).size.width * 0.03),
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    child: Text(
+                      "Medicine",
+                      style: TextStyle(
+                        fontFamily: 'Comfortaa',
+                        fontSize: MediaQuery.of(context).size.height * 0.022,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10,
+                    ),
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    height: MediaQuery.of(context).size.height * 0.055,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          height: MediaQuery.of(context).size.height * 0.055,
+                          child: Form(
+                            child: TextFormField(
+                              controller: medsController,
+                              onChanged: (val) {
+                                setState(() => inputMeds = val);
+                              },
+                              keyboardType: TextInputType.number,
+                              decoration: new InputDecoration(
+                                labelText: "Blood sugar reading",
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1,
+                                  ),
+                                ),
+                              ),
+                              onSaved: (String value) {},
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
+          
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -288,14 +346,31 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                     ),
                   ),
                   onTap: () {
-                    var selectedDate = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
-                    var selectedTime = "${time.hour}:${time.minute}";
-                    print(selectedDate + "   " + selectedTime);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BabyTempAdd2(selectedDate: selectedDate, 
-                        selectedTime: selectedTime, selectedBabyID: widget.selectedBabyID)),
-                    );
+                    if(medsController.text.isEmpty){
+                      return showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Opps!"),
+                            content: Text("Please enter your Blood Sugar reading before you eat."),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text("Ok"),
+                                onPressed: () => Navigator.of(context).pop(),
+                              ),
+                            ],
+                          );
+                        });
+                    }else{
+                      var selectedDate = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+                      var selectedTime = "${time.hour}:${time.minute}";
+                      print(selectedDate + "   " + selectedTime);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BabyTempAdd2(selectedDate: selectedDate, 
+                          selectedTime: selectedTime, selectedBabyID: widget.selectedBabyID, meds: inputMeds)),
+                      );
+                    }
                   },
                 ),
               ],
