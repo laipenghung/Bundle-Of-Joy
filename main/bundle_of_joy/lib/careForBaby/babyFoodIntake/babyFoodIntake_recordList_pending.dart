@@ -50,7 +50,8 @@ class _BabyFoodIntakeListPendingState extends State<BabyFoodIntakeListPending> {
         centerTitle: true,
       ),
       body: StreamBuilder(
-        stream: _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Pending").snapshots(),
+        stream: _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Pending")
+          .orderBy('selectedDate', descending: true).orderBy('selectedTime', descending: true).snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {

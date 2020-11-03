@@ -13,7 +13,8 @@ class BabyFoodIntakeAdd2 extends StatefulWidget {
 }
 
 class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
-  TextEditingController _controller = TextEditingController();
+  TextEditingController _controllerFoodName = TextEditingController();
+  TextEditingController _controllerFoodQty = TextEditingController();
   Map<dynamic, dynamic> foodMap = Map();
   String foodName = "", foodQty = "";
 
@@ -58,6 +59,7 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
             title: Text("Quantity of food"),
             content: Container(
               child: TextField(
+                controller: _controllerFoodQty,
                 onChanged: (val) {
                   setState(() {
                     foodQty = val;
@@ -72,10 +74,29 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
               FlatButton(
                 child: Text("Done"),
                 onPressed: () {
-                  setMap();
-                  foodNameList = foodMap.keys.toList();
-                  foodQtyList = foodMap.values.toList();
-                  Navigator.of(context).pop();
+                  if(_controllerFoodQty.text.isEmpty){
+                    return showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Opps!"),
+                          content: Text("You must enter the food quantity before add it to the list."),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("Ok"),
+                              onPressed: () => Navigator.of(context).pop(),
+                            ),
+                          ],
+                        );
+                      });
+                  }else{
+                    setMap();
+                    foodNameList = foodMap.keys.toList();
+                    foodQtyList = foodMap.values.toList();
+                    _controllerFoodName.clear();
+                    _controllerFoodQty.clear();
+                    Navigator.of(context).pop();
+                  }
                 },
               )
             ],
@@ -139,7 +160,7 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
                           width: MediaQuery.of(context).size.width * 0.65,
                           height: MediaQuery.of(context).size.height * 0.055,
                           child: TextFormField(
-                            controller: _controller,
+                            controller: _controllerFoodName,
                             onChanged: (val) {
                               setState(() => foodName = val);
                             },
@@ -187,8 +208,25 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
                             ),
                           ),
                           onTap: () {
-                            createAlertDialog(context);
-                            _controller.clear();
+                            if(_controllerFoodName.text.isEmpty){
+                              return showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Opps!"),
+                                    content: Text("You must enter the food your baby consumed before add it to the list."),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: Text("Ok"),
+                                        onPressed: () => Navigator.of(context).pop(),
+                                      ),
+                                    ],
+                                  );
+                                });
+                            }else{
+                              createAlertDialog(context);
+                              //_controllerFoodName.clear();
+                            }
                           },
                         ),
                       ],
