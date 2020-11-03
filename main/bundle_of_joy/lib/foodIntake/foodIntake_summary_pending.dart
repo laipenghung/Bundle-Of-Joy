@@ -165,39 +165,6 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
                       ),
                       Column(
                         children: [
-                          //Container(
-                          //width: MediaQuery.of(context).size.width * 0.4,
-                          //margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                          //child: Text(
-                          //"Char Siew Pau asdsadasdasdasdasds", // FOOD NAME
-                          //style: TextStyle(
-                          //fontFamily: 'Comfortaa',
-                          //fontWeight: FontWeight.bold,
-                          //fontSize: MediaQuery.of(context).size.height * 0.025,
-                          //color: Colors.black,
-                          //),
-                          //overflow: TextOverflow.ellipsis,
-                          //maxLines: 1,
-                          //softWrap: true,
-                          //),
-                          //),
-                          //Container(
-                          //width: MediaQuery.of(context).size.width * 0.4,
-                          //margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                          //child: Text(
-                          //"x 1", // QUANTITY
-                          //style: TextStyle(
-                          //fontFamily: 'Comfortaa',
-                          //fontWeight: FontWeight.bold,
-                          //fontSize: MediaQuery.of(context).size.height * 0.025,
-                          //color: Colors.black,
-                          //),
-                          //overflow: TextOverflow.ellipsis,
-                          //maxLines: 1,
-                          //softWrap: true,
-                          //),
-                          //),
-
                           Container(
                             width: MediaQuery.of(context).size.width * 0.4,
                             margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
@@ -347,10 +314,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FoodIntakeAdd3()),
-                    );
+                    Navigator.pop(context);
                   },
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width * 0.05),

@@ -48,7 +48,8 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
       ),
 
       body: StreamBuilder(
-        stream: _db.collection('mother').doc(FirebaseAuth.instance.currentUser.uid).collection('foodIntake_Pending').snapshots(),
+        stream: _db.collection('mother').doc(FirebaseAuth.instance.currentUser.uid).collection('foodIntake_Pending')
+          .orderBy('selectedDate', descending: true).orderBy('selectedTime', descending: true).snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {

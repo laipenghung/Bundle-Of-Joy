@@ -36,6 +36,7 @@ class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
           List<dynamic> foodQty = List<dynamic>();
           foodName = food.keys.toList();
           foodQty = food.values.toList();
+          var bSugarBefore = double.parse(snapshot.data.data()["bsBefore"]);
           //print(foodName);
           //print(foodQty);
 
@@ -116,39 +117,6 @@ class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
                             ),
                             Column(
                               children: [
-                                //Container(
-                                //width: MediaQuery.of(context).size.width * 0.4,
-                                //margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                                //child: Text(
-                                //"Char Siew Pau asdsadasdasdasdasds", // FOOD NAME
-                                //style: TextStyle(
-                                //fontFamily: 'Comfortaa',
-                                //fontWeight: FontWeight.bold,
-                                //fontSize: MediaQuery.of(context).size.height * 0.025,
-                                //color: Colors.black,
-                                //),
-                                //overflow: TextOverflow.ellipsis,
-                                //maxLines: 1,
-                                //softWrap: true,
-                                //),
-                                //),
-                                //Container(
-                                //width: MediaQuery.of(context).size.width * 0.4,
-                                //margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                                //child: Text(
-                                //"x 1", // QUANTITY
-                                //style: TextStyle(
-                                //fontFamily: 'Comfortaa',
-                                //fontWeight: FontWeight.bold,
-                                //fontSize: MediaQuery.of(context).size.height * 0.025,
-                                //color: Colors.black,
-                                //),
-                                //overflow: TextOverflow.ellipsis,
-                                //maxLines: 1,
-                                //softWrap: true,
-                                //),
-                                //),
-
                                 Container(
                                   width: MediaQuery.of(context).size.width * 0.4,
                                   margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
@@ -222,6 +190,68 @@ class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
                                     ],
                                   ),
                                 ),
+                                Container(
+                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                                    child: Row(
+                                      children: [
+                                        StatefulBuilder(
+                                          builder: (BuildContext context, StateSetter setState){
+                                            if(bSugarBefore < 5.1){
+                                              return Text(
+                                                "Too Low",
+                                                style: TextStyle(
+                                                  fontFamily: 'Comfortaa',
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                  color: Colors.red,
+                                                ),
+                                              );
+                                            }else if(bSugarBefore < 6.1){
+                                              return Text(
+                                                "Excellent",
+                                                style: TextStyle(
+                                                  fontFamily: 'Comfortaa',
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                  color: Colors.green,
+                                                ),
+                                              );
+                                            }else if(bSugarBefore < 8.1){
+                                              return Text(
+                                                "Good",
+                                                style: TextStyle(
+                                                  fontFamily: 'Comfortaa',
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                  color: Colors.lime,
+                                                ),
+                                              );
+                                            }else if(bSugarBefore < 10.1){
+                                              return Text(
+                                                "Acceptable",
+                                                style: TextStyle(
+                                                  fontFamily: 'Comfortaa',
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                  color: Colors.orange,
+                                                ),
+                                              );
+                                            }else{
+                                              return Text(
+                                                "Poor",
+                                                style: TextStyle(
+                                                  fontFamily: 'Comfortaa',
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                  color: Colors.red,
+                                                ),
+                                              );
+                                            }
+                                          }) 
+                                      ],
+                                    ),
+                                  ),
                                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                                 Container(
                                   width: MediaQuery.of(context).size.width * 0.4,
@@ -302,10 +332,7 @@ class _FoodIntakeRecordPendingState extends State<FoodIntakeRecordPending> {
                           ),
                         ),
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => FoodIntakeListPending()),
-                          );
+                          Navigator.pop(context);
                         },
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.05),

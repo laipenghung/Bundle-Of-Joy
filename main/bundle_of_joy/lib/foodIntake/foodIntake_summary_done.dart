@@ -1,9 +1,10 @@
 import 'package:bundle_of_joy/foodIntake/foodIntake_main.dart';
 import "package:flutter/material.dart";
+import '../main.dart';
 import "foodIntake_add_3_bs.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
-
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:quiver/iterables.dart';
 
 class FoodIntakeSummaryDone extends StatefulWidget {
@@ -16,6 +17,7 @@ class FoodIntakeSummaryDone extends StatefulWidget {
 }
 
 class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
+  MyApp main = MyApp();
   Map food;
   List<dynamic> foodName = List<dynamic>();
   List<dynamic> foodQty = List<dynamic>();
@@ -27,6 +29,25 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
     foodQty = food.values.toList();
     print(foodName);
     print(foodQty);
+  }
+
+  void _showNotification() async {
+    await notification();
+  }
+
+  Future<void> notification() async {
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'Channel Id',
+      'Channel title',
+      'channel body',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+    );
+
+    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+    await main.createState().flutterLocalNotificationsPlugin.show(
+        0, 'Food Intake Tracking', 'Food record successfully created.', notificationDetails);
   }
 
   @override
@@ -123,39 +144,6 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                       ),
                       Column(
                         children: [
-                          //Container(
-                          //width: MediaQuery.of(context).size.width * 0.4,
-                          //margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                          //child: Text(
-                          //"Char Siew Pau asdsadasdasdasdasds", // FOOD NAME
-                          //style: TextStyle(
-                          //fontFamily: 'Comfortaa',
-                          //fontWeight: FontWeight.bold,
-                          //fontSize: MediaQuery.of(context).size.height * 0.025,
-                          //color: Colors.black,
-                          //),
-                          //overflow: TextOverflow.ellipsis,
-                          //maxLines: 1,
-                          //softWrap: true,
-                          //),
-                          //),
-                          //Container(
-                          //width: MediaQuery.of(context).size.width * 0.4,
-                          //margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                          //child: Text(
-                          //"x 1", // QUANTITY
-                          //style: TextStyle(
-                          //fontFamily: 'Comfortaa',
-                          //fontWeight: FontWeight.bold,
-                          //fontSize: MediaQuery.of(context).size.height * 0.025,
-                          //color: Colors.black,
-                          //),
-                          //overflow: TextOverflow.ellipsis,
-                          //maxLines: 1,
-                          //softWrap: true,
-                          //),
-                          //),
-
                           Container(
                             width: MediaQuery.of(context).size.width * 0.4,
                             margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
@@ -286,10 +274,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FoodIntakeAdd3()),
-                    );
+                    Navigator.pop(context);
                   },
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width * 0.05),
@@ -312,6 +297,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                   ),
                   onTap: () {
                     addFoodRecord();
+                    _showNotification();
                   }, //ADD TO DATABASE
                 ),
               ],
