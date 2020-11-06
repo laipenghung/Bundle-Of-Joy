@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "motherProfile.dart";
+import 'motherProfile/motherProfile.dart';
 import "auth/auth.dart";
 import "sign_up.dart";
 import "baby/babyProfile.dart";
