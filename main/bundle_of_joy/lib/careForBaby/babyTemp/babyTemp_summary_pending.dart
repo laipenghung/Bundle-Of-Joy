@@ -65,7 +65,7 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "temp record P",
+          "Baby Temperature Record",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,

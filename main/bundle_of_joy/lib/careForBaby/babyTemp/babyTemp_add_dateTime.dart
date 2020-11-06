@@ -161,7 +161,7 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "Food Intake Tracking",
+          "Baby Temperature Tracking",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
@@ -293,7 +293,7 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                     margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, left: MediaQuery.of(context).size.width * 0.03),
                     width: MediaQuery.of(context).size.width * 0.85,
                     child: Text(
-                      "Medicine",
+                      "Medicine took by baby",
                       style: TextStyle(
                         fontFamily: 'Comfortaa',
                         fontSize: MediaQuery.of(context).size.height * 0.022,
@@ -318,9 +318,8 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                               onChanged: (val) {
                                 setState(() => inputMeds = val);
                               },
-                              keyboardType: TextInputType.number,
                               decoration: new InputDecoration(
-                                labelText: "Blood sugar reading",
+                                labelText: "Medicine",
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                   borderSide: BorderSide(
@@ -401,7 +400,7 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: Text("Opps!"),
-                            content: Text("Please enter your Blood Sugar reading before you eat."),
+                            content: Text("Please enter your the medicine your baby took."),
                             actions: <Widget>[
                               FlatButton(
                                 child: Text("Ok"),

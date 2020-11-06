@@ -6,6 +6,7 @@ import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "baby/baby.dart";
 import "appointmentBaby/appointmentBaby_main.dart";
+import 'vaccinationSchedule/vaccinationSchedule.dart';
 
 class MotherForBabyTab extends StatefulWidget {
   @override
@@ -171,7 +172,15 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
               }
               break;
             case 1:
-              {}
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => VaccinationSchedule(
+                            selectedBabyID: selectedBabyID,
+                          )),
+                );
+              }
               break;
             case 2:
               {

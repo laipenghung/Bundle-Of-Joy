@@ -66,7 +66,7 @@ class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "temp record D",
+          "Baby Temperature Record",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
