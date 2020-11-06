@@ -4,7 +4,7 @@ import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import "home.dart";
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_auth/firebase_auth.dart";
-import 'package:bundle_of_joy/mother.dart';
+import 'file:///C:/Users/User/Desktop/Code/Bundle-Of-Joy/main/bundle_of_joy/lib/motherProfile/mother.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({this.user});
@@ -162,7 +162,7 @@ class SignInScreenStat extends State<SignInScreen> {
               margin: EdgeInsets.all(70),
               alignment: Alignment.center,
               child: new Image.asset(
-                "assets/icons/small.pngassets/images/logo.png",
+                "assets/icons/small.png",
                 height: 150,
               ),
             ),

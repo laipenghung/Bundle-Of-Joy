@@ -23,13 +23,8 @@ class Mother {
       }else{
         users.doc(user.uid).set({
           "m_id": user.uid,
-          "m_name": mName,
-          "m_age": null,
-          "m_dob": null,
-          "m_bloodType": null,
-          "m_no_of_child": null,
-          "m_phone": null,
-          "m_emergencyContact": null
+          "pin_code": null,
+          "is_verify": false
         }).then((value) => print("$mName Added"))
             .catchError((e) => print("Failed to add user: $e"));
       }

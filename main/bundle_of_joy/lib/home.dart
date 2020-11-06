@@ -112,10 +112,8 @@ class _HomePageState extends State<HomePageState> {
 
   @override
   Widget build(BuildContext context) {
-    double fontSize = MediaQuery.of(context).size.width * 0.06;
-
-    return Scaffold(
-      body: PersistentTabView(
+    return
+      PersistentTabView(
         navBarHeight: MediaQuery.of(context).size.height * 0.1,
         padding: NavBarPadding.all(4),
         controller: _persistentTabController,
@@ -140,7 +138,6 @@ class _HomePageState extends State<HomePageState> {
         ),
         navBarStyle: NavBarStyle.style3,
         onItemSelected: (index) => _onItemTapped(index),
-      ),
-    );
+      );
   }
 }
