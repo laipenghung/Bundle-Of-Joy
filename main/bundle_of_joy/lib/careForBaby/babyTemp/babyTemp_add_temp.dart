@@ -88,7 +88,7 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "Food Intake Tracking",
+          "Baby Temperature Tracking",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
