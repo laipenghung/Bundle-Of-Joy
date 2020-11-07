@@ -161,7 +161,26 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
     return StreamBuilder(
       stream: vaccination.snapshots(),
       builder: (context, collection) {
-        return hasData(collection);
+        return Scaffold(
+          appBar: AppBar(
+            toolbarHeight: MediaQuery.of(context).size.height * 0.1,
+            title: Text(
+            "Vaccination Appointment",
+            style: TextStyle(
+            fontFamily: 'Comfortaa',
+            fontWeight: FontWeight.bold,
+            fontSize: MediaQuery.of(context).size.width * 0.05,
+            color: Colors.black,
+            ),
+            ),
+
+            automaticallyImplyLeading: false, // CENTER THE TEXT
+            backgroundColor: Color(0xFFFCFFD5),
+            centerTitle: true,
+          ),
+          body: hasData(collection),
+        )
+        ;
       }
     );
   }

@@ -42,7 +42,7 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "Food Intake Tracking",
+          "Baby Temperature Record",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
