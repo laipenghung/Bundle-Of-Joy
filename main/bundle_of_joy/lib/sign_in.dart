@@ -4,7 +4,7 @@ import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import "home.dart";
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_auth/firebase_auth.dart";
-import 'file:///C:/Users/User/Desktop/Code/Bundle-Of-Joy/main/bundle_of_joy/lib/motherProfile/mother.dart';
+import 'motherProfile/mother.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({this.user});

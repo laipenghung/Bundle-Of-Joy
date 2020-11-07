@@ -354,7 +354,7 @@ class _BabyTempRecordPendingState extends State<BabyTempRecordPending> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "Food Intake Tracking",
+          "Baby Temperature Record",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
