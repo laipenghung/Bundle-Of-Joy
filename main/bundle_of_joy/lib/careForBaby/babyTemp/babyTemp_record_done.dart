@@ -62,6 +62,9 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
           .collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done").doc(widget.babyTempRecordID).get(),
         builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasData) {
+            Map meds = snapshot.data.data()["medsMap"];
+            List<dynamic> medsName = List<dynamic>();
+            medsName = meds.values.toList();
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(),
@@ -133,22 +136,44 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
                             children: [
                               Container(
                                 child: Image.asset(
-                                  "assets/icons/time.png",
+                                  "assets/icons/food-intake.png",
                                   height: MediaQuery.of(context).size.height * 0.05,
                                 ),
                               ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                                child: Text(
-                                  snapshot.data.data()["medsTaken"],
-                                  style: TextStyle(
-                                    fontFamily: 'Comfortaa',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: MediaQuery.of(context).size.height * 0.025,
-                                    color: Colors.black,
+                              Column(
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                                    child: Table(
+                                      //border: TableBorder.all(width: 1.0, color: Colors.black),
+                                      children: [
+                                        for (var x in medsName)
+                                          TableRow(children: [
+                                            TableCell(
+                                                child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: <Widget>[
+                                                Container(
+                                                  //color: Colors.blue,
+                                                  width: MediaQuery.of(context).size.width * 0.4,
+                                                  child: new Text(
+                                                    x.toString(),
+                                                    style: TextStyle(
+                                                      fontFamily: 'Comfortaa',
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: MediaQuery.of(context).size.height * 0.023,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ))
+                                          ])
+                                      ],
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
                             ],
                           ),

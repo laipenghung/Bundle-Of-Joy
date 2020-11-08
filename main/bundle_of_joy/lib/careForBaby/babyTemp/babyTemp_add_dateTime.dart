@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
+import 'babyTemp_add_meds.dart';
 import 'babyTemptMain.dart';
 import 'babyTemp_add_temp.dart';
 
@@ -16,9 +18,7 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
   DateTime pickedDate;
   TimeOfDay time;
   String d, m, y, hour, min, dateToPass, timeToPass;
-  String inputMeds = "";
-  TextEditingController medsController = TextEditingController();
-
+  
   // MAKE THE DEFAULT DATE TODAY
   @override
   void initState() {
@@ -302,44 +302,9 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                       ),
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.85,
-                          height: MediaQuery.of(context).size.height * 0.07,
-                          child: Form(
-                            child: TextFormField(
-                              controller: medsController,
-                              onChanged: (val) {
-                                setState(() => inputMeds = val);
-                              },
-                              decoration: new InputDecoration(
-                                labelText: "Medicine Name",
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 1,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 1,
-                                  ),
-                                ),
-                              ),
-                              onSaved: (String value) {},
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  
+
+                                   
                 ],
               ),
             ),
@@ -367,10 +332,7 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BabyTempMain()),
-                    );
+                    Navigator.pop(context);
                   },
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width * 0.05),
@@ -392,31 +354,16 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                     ),
                   ),
                   onTap: () {
-                    if(medsController.text.isEmpty){
-                      return showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text("Opps!"),
-                            content: Text("Please enter your the medicine your baby took."),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text("Ok"),
-                                onPressed: () => Navigator.of(context).pop(),
-                              ),
-                            ],
-                          );
-                        });
-                    }else{
+                    
                       var selectedDate = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
                       var selectedTime = "${time.hour}:${time.minute}";
                       print(selectedDate + "   " + selectedTime);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BabyTempAdd2(selectedDate: dateToPass, 
-                          selectedTime: timeToPass, selectedBabyID: widget.selectedBabyID, meds: inputMeds)),
+                        MaterialPageRoute(builder: (context) => BabyTempAddMeds(selectedDate: dateToPass, 
+                          selectedTime: timeToPass, selectedBabyID: widget.selectedBabyID)),
                       );
-                    }
+                    
                   },
                 ),
               ],
@@ -425,5 +372,7 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
         ],
       ),
     );
+
+    
   }
 }

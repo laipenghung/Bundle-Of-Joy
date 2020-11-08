@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
+import 'package:quiver/iterables.dart';
 
 import '../../mother-for-baby.dart';
 
 class BabyTempSummaryDone extends StatefulWidget {
-  final String selectedDate, selectedTime, bTempBefore, bTempAfter, selectedBabyID, meds;
+  final String selectedDate, selectedTime, bTempBefore, bTempAfter, selectedBabyID;
+  final Map medsMap;
   BabyTempSummaryDone({Key key, @required this.selectedDate, this.selectedTime, this.bTempBefore, this.bTempAfter, 
-    this.selectedBabyID, this.meds}) : super(key: key);
+    this.selectedBabyID, this.medsMap}) : super(key: key);
 
   @override
   BabyTempSummaryDoneState createState() => BabyTempSummaryDoneState();
 }
 
 class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
+  Map meds = Map();
+  List<dynamic> medsName = List<dynamic>();
+
+  void initState() {
+    super.initState();
+    meds = widget.medsMap;
+    medsName = meds.values.toList();
+  }
+
   BoxDecoration myBoxDecoration() {
     return BoxDecoration(
       color: Color(0xFFFCFFD5),
@@ -49,14 +60,14 @@ class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
       "selectedTime": widget.selectedTime,
       "bTempBefore": widget.bTempBefore,
       "bTempAfter": widget.bTempAfter,
-      "medsTaken": widget.meds,
+      "medsMap": widget.medsMap,
     }).then((value) {
       babyTempRecord.doc(value.id).update({
         "recordID": value.id,
       });
       print("Data uploaded");
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherForBabyTab()));
-    }).catchError((error) => print("wrong"));
+    }).catchError((error) => print(error));
   }
 
   @override
@@ -147,22 +158,44 @@ class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
                     children: [
                       Container(
                         child: Image.asset(
-                          "assets/icons/calendar.png",
+                          "assets/icons/food-intake.png",
                           height: MediaQuery.of(context).size.height * 0.05,
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                        child: Text(
-                          widget.meds,
-                          style: TextStyle(
-                            fontFamily: 'Comfortaa',
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.height * 0.025,
-                            color: Colors.black,
+                      Column(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                            child: Table(
+                              //border: TableBorder.all(width: 1.0, color: Colors.black),
+                              children: [
+                                for (var x in medsName)
+                                  TableRow(children: [
+                                    TableCell(
+                                        child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          //color: Colors.blue,
+                                          width: MediaQuery.of(context).size.width * 0.4,
+                                          child: new Text(
+                                            x.toString(),
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: MediaQuery.of(context).size.height * 0.023,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ))
+                                  ])
+                              ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),

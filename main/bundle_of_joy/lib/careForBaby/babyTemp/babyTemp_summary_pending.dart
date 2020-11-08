@@ -5,14 +5,24 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import '../../mother-for-baby.dart';
 
 class BabyTempSummaryPending extends StatefulWidget {
-  final String selectedDate, selectedTime, bTempBefore, selectedBabyID, meds;
-  BabyTempSummaryPending({Key key, @required this.selectedDate, this.selectedTime, this.bTempBefore, this.selectedBabyID, this.meds}) : super(key: key);
+  final String selectedDate, selectedTime, bTempBefore, selectedBabyID;
+  final Map medsMap;
+  BabyTempSummaryPending({Key key, @required this.selectedDate, this.selectedTime, this.bTempBefore, this.selectedBabyID, this.medsMap}) : super(key: key);
 
   @override
   _BabyTempSummaryPendingState createState() => _BabyTempSummaryPendingState();
 }
 
 class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
+  Map meds = Map();
+  List<dynamic> medsName = List<dynamic>();
+
+  void initState() {
+    super.initState();
+    meds = widget.medsMap;
+    medsName = meds.values.toList();
+  }
+
   BoxDecoration myBoxDecoration() {
     return BoxDecoration(
       color: Color(0xFFFCFFD5),
@@ -47,7 +57,7 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
       "selectedDate": widget.selectedDate,
       "selectedTime": widget.selectedTime,
       "bTempBefore": widget.bTempBefore,
-      "medsTaken": widget.meds,
+      "medsMap": widget.medsMap,
     }).then((value) {
       babyTempRecord.doc(value.id).update({
         "recordID": value.id,
@@ -148,26 +158,45 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
                         child: Image.asset(
-                          "assets/icons/medicine.png",
+                          "assets/icons/food-intake.png",
                           height: MediaQuery.of(context).size.height * 0.05,
                         ),
                       ),
-                      Container(
-                        //color: Colors.red,
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                        child: Text(
-                          widget.meds,
-                          style: TextStyle(
-                            fontFamily: 'Comfortaa',
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.height * 0.025,
-                            color: Colors.black,
+                      Column(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                            child: Table(
+                              //border: TableBorder.all(width: 1.0, color: Colors.black),
+                              children: [
+                                for (var x in medsName)
+                                  TableRow(children: [
+                                    TableCell(
+                                        child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          //color: Colors.blue,
+                                          width: MediaQuery.of(context).size.width * 0.4,
+                                          child: new Text(
+                                            x.toString(),
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: MediaQuery.of(context).size.height * 0.023,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ))
+                                  ])
+                              ],
+                            ),
                           ),
-                          textAlign: TextAlign.left,
-                        ),
+                        ],
                       ),
                     ],
                   ),
