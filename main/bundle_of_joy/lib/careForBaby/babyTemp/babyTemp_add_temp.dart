@@ -5,8 +5,9 @@ import 'babyTemp_summary_done.dart';
 import 'babyTemp_summary_pending.dart';
 
 class BabyTempAdd2 extends StatefulWidget {
-  final String selectedDate, selectedTime, selectedBabyID, meds;
-  BabyTempAdd2({Key key, this.selectedDate, this.selectedTime, this.selectedBabyID, this.meds}) : super(key: key);
+  final String selectedDate, selectedTime, selectedBabyID;
+  final Map medsMap;
+  BabyTempAdd2({Key key, this.selectedDate, this.selectedTime, this.selectedBabyID, this.medsMap}) : super(key: key);
 
   @override
   _BabyTempAdd2State createState() => _BabyTempAdd2State();
@@ -68,7 +69,7 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
                       selectedTime: widget.selectedTime,
                       bTempBefore: bTempBefore,
                       selectedBabyID: widget.selectedBabyID,
-                      meds: widget.meds,
+                      medsMap: widget.medsMap,
                     )));
       } else {
         Navigator.push(
@@ -81,7 +82,7 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
                       bTempBefore: bTempBefore,
                       bTempAfter: bTempAfter,
                       selectedBabyID: widget.selectedBabyID,
-                      meds: widget.meds,
+                      medsMap: widget.medsMap,
                     )));
       }
     }

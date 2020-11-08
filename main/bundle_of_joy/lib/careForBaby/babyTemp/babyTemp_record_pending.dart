@@ -30,6 +30,9 @@ class _BabyTempRecordPendingState extends State<BabyTempRecordPending> {
           .get(),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasData) {
+          Map meds = snapshot.data.data()["medsMap"];
+          List<dynamic> medsName = List<dynamic>();
+          medsName = meds.values.toList();
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(),
@@ -96,30 +99,52 @@ class _BabyTempRecordPendingState extends State<BabyTempRecordPending> {
                           ],
                         ),
                         SizedBox(height: MediaQuery.of(context).size.height * 0.06),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              child: Image.asset(
-                                "assets/icons/time.png",
-                                height: MediaQuery.of(context).size.height * 0.05,
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                              child: Text(
-                                snapshot.data.data()["medsTaken"],
-                                style: TextStyle(
-                                  fontFamily: 'Comfortaa',
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: MediaQuery.of(context).size.height * 0.025,
-                                  color: Colors.black,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                child: Image.asset(
+                                  "assets/icons/food-intake.png",
+                                  height: MediaQuery.of(context).size.height * 0.05,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
+                              Column(
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                                    child: Table(
+                                      //border: TableBorder.all(width: 1.0, color: Colors.black),
+                                      children: [
+                                        for (var x in medsName)
+                                          TableRow(children: [
+                                            TableCell(
+                                                child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: <Widget>[
+                                                Container(
+                                                  //color: Colors.blue,
+                                                  width: MediaQuery.of(context).size.width * 0.4,
+                                                  child: new Text(
+                                                    x.toString(),
+                                                    style: TextStyle(
+                                                      fontFamily: 'Comfortaa',
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: MediaQuery.of(context).size.height * 0.023,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ))
+                                          ])
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         SizedBox(height: MediaQuery.of(context).size.height * 0.06),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -277,7 +302,7 @@ class _BabyTempRecordPendingState extends State<BabyTempRecordPending> {
                                 });
                           } else {
                             updateBabyTemoRecord(snapshot.data.data()["motherID"], snapshot.data.data()["selectedDate"], snapshot.data.data()["selectedTime"],
-                                snapshot.data.data()["bTempBefore"], bTempUpdate, widget.babyTempRecordID, widget.selectedBabyID, snapshot.data.data()["medsTaken"]);
+                                snapshot.data.data()["bTempBefore"], bTempUpdate, widget.babyTempRecordID, widget.selectedBabyID, snapshot.data.data()["medsMap"]);
                           }
                         }, //ADD TO DATABASE
                       ),
@@ -333,7 +358,7 @@ class _BabyTempRecordPendingState extends State<BabyTempRecordPending> {
         "bTempBefore": bTempBefore,
         "bTempAfter": bTempAfter,
         "babyID": babyID,
-        "medsTaken": meds,
+        "medsMap": meds,
       }).then((value) {
         babyTempRecord.doc(value.id).update({
           "recordID": value.id,
