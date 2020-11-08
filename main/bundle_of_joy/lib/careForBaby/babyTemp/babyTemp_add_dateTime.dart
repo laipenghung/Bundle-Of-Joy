@@ -238,7 +238,7 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.07, left: MediaQuery.of(context).size.width * 0.03),
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
                     width: MediaQuery.of(context).size.width * 0.85,
                     child: Text(
                       "Select a time",
@@ -290,28 +290,26 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                       }),
 
                   Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, left: MediaQuery.of(context).size.width * 0.03),
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
                     width: MediaQuery.of(context).size.width * 0.85,
                     child: Text(
-                      "Medicine took by baby",
+                      "Medicine Taken",
                       style: TextStyle(
                         fontFamily: 'Comfortaa',
-                        fontSize: MediaQuery.of(context).size.height * 0.022,
+                        fontWeight: FontWeight.bold,
+                        fontSize: MediaQuery.of(context).size.height * 0.025,
                         color: Colors.black,
                       ),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(
-                      top: 10,
-                    ),
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
                     width: MediaQuery.of(context).size.width * 0.85,
-                    height: MediaQuery.of(context).size.height * 0.055,
                     child: Row(
                       children: [
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          height: MediaQuery.of(context).size.height * 0.055,
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          height: MediaQuery.of(context).size.height * 0.07,
                           child: Form(
                             child: TextFormField(
                               controller: medsController,
@@ -319,7 +317,7 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                                 setState(() => inputMeds = val);
                               },
                               decoration: new InputDecoration(
-                                labelText: "Medicine",
+                                labelText: "Medicine Name",
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                   borderSide: BorderSide(

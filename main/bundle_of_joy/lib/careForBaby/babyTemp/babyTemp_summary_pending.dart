@@ -6,8 +6,7 @@ import '../../mother-for-baby.dart';
 
 class BabyTempSummaryPending extends StatefulWidget {
   final String selectedDate, selectedTime, bTempBefore, selectedBabyID, meds;
-  BabyTempSummaryPending({Key key, @required this.selectedDate, this.selectedTime, this.bTempBefore, 
-    this.selectedBabyID, this.meds}) : super(key: key);
+  BabyTempSummaryPending({Key key, @required this.selectedDate, this.selectedTime, this.bTempBefore, this.selectedBabyID, this.meds}) : super(key: key);
 
   @override
   _BabyTempSummaryPendingState createState() => _BabyTempSummaryPendingState();
@@ -57,7 +56,7 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherForBabyTab()));
     }).catchError((error) => print("wrong"));
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,6 +100,7 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
                         ),
                       ),
                       Container(
+                        //color: Colors.red,
                         width: MediaQuery.of(context).size.width * 0.4,
                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                         child: Text(
@@ -111,6 +111,7 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
                             fontSize: MediaQuery.of(context).size.height * 0.025,
                             color: Colors.black,
                           ),
+                          textAlign: TextAlign.left,
                         ),
                       ),
                     ],
@@ -126,6 +127,7 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
                         ),
                       ),
                       Container(
+                        //color: Colors.red,
                         width: MediaQuery.of(context).size.width * 0.4,
                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                         child: Text(
@@ -136,6 +138,7 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
                             fontSize: MediaQuery.of(context).size.height * 0.025,
                             color: Colors.black,
                           ),
+                          textAlign: TextAlign.left,
                         ),
                       ),
                     ],
@@ -145,12 +148,14 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
+                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
                         child: Image.asset(
-                          "assets/icons/time.png",
+                          "assets/icons/medicine.png",
                           height: MediaQuery.of(context).size.height * 0.05,
                         ),
                       ),
                       Container(
+                        //color: Colors.red,
                         width: MediaQuery.of(context).size.width * 0.4,
                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                         child: Text(
@@ -161,6 +166,7 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
                             fontSize: MediaQuery.of(context).size.height * 0.025,
                             color: Colors.black,
                           ),
+                          textAlign: TextAlign.left,
                         ),
                       ),
                     ],
@@ -171,7 +177,7 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
                     children: [
                       Container(
                         child: Image.asset(
-                          "assets/icons/blood-sugar-level.png", //change picture
+                          "assets/icons/temp.png",
                           height: MediaQuery.of(context).size.height * 0.05,
                         ),
                       ),
@@ -192,7 +198,7 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
                                   ),
                                 ),
                                 Text(
-                                  widget.bTempBefore,
+                                  widget.bTempBefore + " °C",
                                   style: TextStyle(
                                     fontFamily: 'Comfortaa',
                                     fontWeight: FontWeight.bold,
