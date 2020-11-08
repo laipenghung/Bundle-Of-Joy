@@ -2,6 +2,9 @@ import "package:flutter/material.dart";
 import 'appointmentBaby_add_1.dart';
 import 'appointmentBaby_add_3.dart';
 
+import "package:firebase_auth/firebase_auth.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
+
 class AppointmentBabyAdd2 extends StatefulWidget {
   final String name;
   final String babyID;
@@ -212,15 +215,7 @@ class _AppointmentBabyAdd2State extends State<AppointmentBabyAdd2> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AppointmentBabyAdd3(
-                              name: hospitalName,
-                              date: dateToPass,
-                              babyID: babyID,
-                            )),
-                  );
+                  _checkAppointment();
                 },
               ),
             ],
@@ -228,6 +223,36 @@ class _AppointmentBabyAdd2State extends State<AppointmentBabyAdd2> {
         ],
       ),
     );
+  }
+
+  _checkAppointment() async{
+    final User user = FirebaseAuth.instance.currentUser;
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+    var x = await _db.collection('baby_appointment').where("m_id", isEqualTo: user.uid)
+      .where("b_id", isEqualTo: widget.babyID).where("a_date", isEqualTo: dateToPass).get();
+
+    if(x.docs.isEmpty){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AppointmentBabyAdd3(name: hospitalName, 
+          date: dateToPass, babyID: babyID,)),);
+    }else{
+      return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Opps!"),
+          content: Text("You already have an appointment on $dateToPass. Please select another day to book an appointment or delete the current appointment."),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Ok"),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        );
+      });
+    }
   }
 
   _pickDate() async {

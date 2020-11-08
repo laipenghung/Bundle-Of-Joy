@@ -17,7 +17,7 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
   List<TableRow> _tableList(AsyncSnapshot<QuerySnapshot> collection) {
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     double heightSpacing = MediaQuery.of(context).size.height * 0.075;
-    final _listField = ["bv_vaccinationName", "bv_dateGiven"];
+    final _listField = ["bv_age", "bv_vaccinationName"];
     List<TableRow> _row = [];
 
     collection.data.docs.forEach((doc) {
@@ -73,8 +73,8 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
               padding: EdgeInsets.fromLTRB(paddingLeftRight, paddingTopBottom, paddingLeftRight, 0),
               child: Table(
                 columnWidths: {
-                  0: FlexColumnWidth(6),
-                  1: FlexColumnWidth(4),
+                  0: FlexColumnWidth(4),
+                  1: FlexColumnWidth(6),
                 },
                 border: TableBorder.all(
                     width: 1.0,
@@ -88,7 +88,7 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
                           height: heightSpacing,
                           child: Center(
                             child: Text(
-                              "Vaccine Name",
+                              "Time",
                               style: TextStyle(
                                 fontFamily: "Comfortaa",
                                 fontWeight: FontWeight.bold,
@@ -103,7 +103,7 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
                           height: heightSpacing,
                           child: Center(
                             child: Text(
-                              "Date Taken",
+                              "Vaccine Name",
                               style: TextStyle(
                                 fontFamily: "Comfortaa",
                                 fontWeight: FontWeight.bold,
@@ -122,8 +122,8 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
               padding: EdgeInsets.fromLTRB(paddingLeftRight, paddingTopBottomSmall, paddingLeftRight, paddingTopBottomSmall),
               child: Table(
                 columnWidths: {
-                  0: FlexColumnWidth(6),
-                  1: FlexColumnWidth(4),
+                  0: FlexColumnWidth(4),
+                  1: FlexColumnWidth(6),
                 },
                 border: TableBorder.all(
                     width: 1.0,
