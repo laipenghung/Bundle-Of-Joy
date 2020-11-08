@@ -64,19 +64,25 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
             // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
             MaterialPageRoute(
                 builder: (context) => BabyTempSummaryPending(
-                  selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, bTempBefore: bTempBefore, selectedBabyID: widget.selectedBabyID, meds: widget.meds,)));
+                      selectedDate: widget.selectedDate,
+                      selectedTime: widget.selectedTime,
+                      bTempBefore: bTempBefore,
+                      selectedBabyID: widget.selectedBabyID,
+                      meds: widget.meds,
+                    )));
       } else {
         Navigator.push(
             context,
             // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
             MaterialPageRoute(
                 builder: (context) => BabyTempSummaryDone(
-                    selectedDate: widget.selectedDate,
-                    selectedTime: widget.selectedTime,
-                    bTempBefore: bTempBefore,
-                    bTempAfter: bTempAfter,
-                    selectedBabyID: widget.selectedBabyID,
-                    meds: widget.meds,)));
+                      selectedDate: widget.selectedDate,
+                      selectedTime: widget.selectedTime,
+                      bTempBefore: bTempBefore,
+                      bTempAfter: bTempAfter,
+                      selectedBabyID: widget.selectedBabyID,
+                      meds: widget.meds,
+                    )));
       }
     }
   }
@@ -118,7 +124,7 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
                     margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
                     width: MediaQuery.of(context).size.width * 0.85,
                     child: Text(
-                      "Enter the temperature",
+                      "Enter the temperature (°C)",
                       style: TextStyle(
                         fontFamily: 'Comfortaa',
                         fontWeight: FontWeight.bold,

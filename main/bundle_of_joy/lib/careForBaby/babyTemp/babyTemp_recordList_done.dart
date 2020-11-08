@@ -35,7 +35,7 @@ class _BabyTempListDoneState extends State<BabyTempListDone> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "Baby Temperature Record",
+          "Temperature Record",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
@@ -43,8 +43,10 @@ class _BabyTempListDoneState extends State<BabyTempListDone> {
             color: Colors.black,
           ),
         ),
-
-        automaticallyImplyLeading: false, // CENTER THE TEXT
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        //automaticallyImplyLeading: false, // CENTER THE TEXT
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
