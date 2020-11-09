@@ -155,6 +155,7 @@ class _BabyFoodIntakeRecordDoneState extends State<BabyFoodIntakeRecordDone> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
+                                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.005),
                                 child: Image.asset(
                                   "assets/icons/food-intake.png",
                                   height: MediaQuery.of(context).size.height * 0.05,
@@ -188,9 +189,6 @@ class _BabyFoodIntakeRecordDoneState extends State<BabyFoodIntakeRecordDone> {
                                                         color: Colors.black,
                                                       ),
                                                       textAlign: TextAlign.left,
-                                                      overflow: TextOverflow.ellipsis,
-                                                      maxLines: 1,
-                                                      softWrap: true,
                                                     ),
                                                   ),
                                                 ),
@@ -237,7 +235,7 @@ class _BabyFoodIntakeRecordDoneState extends State<BabyFoodIntakeRecordDone> {
                             margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03, left: MediaQuery.of(context).size.width * 0.03),
                             width: MediaQuery.of(context).size.width * 0.85,
                             child: Text(
-                              "Enter the allergy or symptoms",
+                              "Allergy or symptoms",
                               style: TextStyle(
                                 fontFamily: 'Comfortaa',
                                 fontWeight: FontWeight.bold,

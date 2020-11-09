@@ -49,7 +49,7 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text("Opps!"),
-              content: Text("Please enter the temperature before taking medicine."),
+              content: Text("Body Temperature not entered."),
               actions: <Widget>[
                 FlatButton(
                   child: Text("Ok"),
@@ -95,7 +95,7 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "Baby Temperature Tracking",
+          "Medicine Intake Tracking",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,

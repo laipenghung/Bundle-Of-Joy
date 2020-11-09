@@ -33,18 +33,17 @@ class _Growth extends State<Growth> {
         bottomTitles: SideTitles(
             showTitles: true,
             getTextStyles: (value) => TextStyle(
-              fontFamily: "Comfortaa",
-              fontSize: fontSizeText,
-              color: Colors.black,
-            )
-        ),
+                  fontFamily: "Comfortaa",
+                  fontSize: fontSizeText,
+                  color: Colors.black,
+                )),
         leftTitles: SideTitles(
-            showTitles: true,
-            getTextStyles: (value) => TextStyle(
-              fontFamily: "Comfortaa",
-              fontSize: fontSizeText,
-              color: Colors.black,
-            ),
+          showTitles: true,
+          getTextStyles: (value) => TextStyle(
+            fontFamily: "Comfortaa",
+            fontSize: fontSizeText,
+            color: Colors.black,
+          ),
         ),
       ),
       borderData: FlBorderData(
@@ -77,27 +76,23 @@ class _Growth extends State<Growth> {
   List<LineChartBarData> weightData(AsyncSnapshot<QuerySnapshot> collection) {
     List<FlSpot> data = List<FlSpot>();
     collection.data.docs.forEach((doc) {
-      data.add(
-        FlSpot(double.parse(doc.data()["bg_month"].toString()), double.parse(doc.data()["bg_weight"].toString()))
-      );
+      data.add(FlSpot(double.parse(doc.data()["bg_month"].toString()), double.parse(doc.data()["bg_weight"].toString())));
     });
 
     final LineChartBarData chartData = LineChartBarData(
       spots: data,
-      isCurved: true,
+      isCurved: false,
       colors: [
-        Color(0xff4af699),
+        Colors.black,
       ],
-      barWidth: 4,
+      barWidth: 2,
       isStrokeCapRound: true,
       dotData: FlDotData(
         show: true,
       ),
       belowBarData: BarAreaData(
         show: true,
-        colors: [
-          Color(0xFFFCFFD5)
-        ],
+        colors: [Color(0xFFFCFFD5)],
       ),
     );
 
@@ -105,12 +100,10 @@ class _Growth extends State<Growth> {
   }
 
   Widget hasData(AsyncSnapshot collection) {
-    double paddingLeftRight = MediaQuery.of(context).size.width * 0.07;
-    double paddingTopBottom = MediaQuery.of(context).size.height * 0.07;
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
 
-    if(collection.data.docs.isNotEmpty){
+    if (collection.data.docs.isNotEmpty) {
       return AspectRatio(
         aspectRatio: 1,
         child: Container(
@@ -120,9 +113,9 @@ class _Growth extends State<Growth> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: paddingTopBottom),
+                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.06, bottom: MediaQuery.of(context).size.height * 0.08),
                     child: Text(
-                      "Baby Growth (Weight/kg)",
+                      "Baby Growth - Weight",
                       style: TextStyle(
                         fontFamily: "Comfortaa",
                         fontWeight: FontWeight.bold,
@@ -132,13 +125,37 @@ class _Growth extends State<Growth> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(paddingLeftRight, paddingTopBottom, paddingLeftRight, paddingTopBottom),
-                        child: LineChart(
-                          weightChart(collection),
-                        ),
-                      )
+                  Padding(
+                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02, left: MediaQuery.of(context).size.width * 0.03),
+                    child: Text(
+                      "Weight (Kg)",
+                      style: TextStyle(
+                        fontFamily: "Comfortaa",
+                        fontSize: MediaQuery.of(context).size.width * 0.04,
+                        color: Colors.black,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    //color: Colors.lightBlue,
+                    child: Expanded(
+                        child: Padding(
+                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.1),
+                      child: LineChart(
+                        weightChart(collection),
+                      ),
+                    )),
+                  ),
+                  Text(
+                    "Age (months)",
+                    style: TextStyle(
+                      fontFamily: "Comfortaa",
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
@@ -164,15 +181,12 @@ class _Growth extends State<Growth> {
   @override
   Widget build(BuildContext context) {
     final User user = FirebaseAuth.instance.currentUser;
-    Query growth = FirebaseFirestore.instance.collection("mother").doc(user.uid)
-        .collection("baby").doc(selectedBabyID)
-        .collection("baby_growth")
-        .orderBy("bg_month", descending: false);
+    Query growth =
+        FirebaseFirestore.instance.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("baby_growth").orderBy("bg_month", descending: false);
     return StreamBuilder(
-      stream: growth.snapshots(),
-      builder: (context, collection) {
-        return hasData(collection);
-      }
-    );
+        stream: growth.snapshots(),
+        builder: (context, collection) {
+          return hasData(collection);
+        });
   }
 }

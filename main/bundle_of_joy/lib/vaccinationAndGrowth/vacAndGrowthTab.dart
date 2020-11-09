@@ -1,5 +1,5 @@
-import "package:bundle_of_joy/growthTacking/growth/growth.dart";
-import "package:bundle_of_joy/growthTacking/vaccination/vaccination.dart";
+import "package:bundle_of_joy/vaccinationAndGrowth/growth/growth.dart";
+import "package:bundle_of_joy/vaccinationAndGrowth/vaccination/vaccination.dart";
 import "package:flutter/material.dart";
 
 class VacAndGrowthTab extends StatelessWidget {
@@ -21,6 +21,7 @@ class VacAndGrowthTab extends StatelessWidget {
       length: myTabs.length,
       child: Scaffold(
         appBar: AppBar(
+          toolbarHeight: MediaQuery.of(context).size.height * 0.15,
           iconTheme: IconThemeData(
             color: Colors.black,
           ),

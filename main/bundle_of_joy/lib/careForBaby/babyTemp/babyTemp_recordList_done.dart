@@ -22,8 +22,7 @@ class _BabyTempListDoneState extends State<BabyTempListDone> {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     final User user = FirebaseAuth.instance.currentUser;
 
-    return _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID)
-      .collection("tempRecord_Done").doc(recordID).delete().then((value) {
+    return _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done").doc(recordID).delete().then((value) {
       print("Deleted");
       //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeListDone()));
     }).catchError((error) => print("wrong"));
@@ -35,7 +34,7 @@ class _BabyTempListDoneState extends State<BabyTempListDone> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "Temperature Record",
+          "Medicine Intake Tracking",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
@@ -51,8 +50,15 @@ class _BabyTempListDoneState extends State<BabyTempListDone> {
         centerTitle: true,
       ),
       body: StreamBuilder(
-        stream: _db.collection('mother').doc(user.uid).collection("baby")
-          .doc(widget.selectedBabyID).collection("tempRecord_Done").snapshots(),
+        stream: _db
+            .collection('mother')
+            .doc(user.uid)
+            .collection("baby")
+            .doc(widget.selectedBabyID)
+            .collection("tempRecord_Done")
+            .orderBy('selectedDate', descending: true)
+            .orderBy('selectedTime', descending: true)
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -90,8 +96,8 @@ class _BabyTempListDoneState extends State<BabyTempListDone> {
                         //go to record_pending
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => BabyTempRecordDone(babyTempRecordID: snapshot.data.documents[index]["recordID"],
-                            selectedBabyID: widget.selectedBabyID)),
+                          MaterialPageRoute(
+                              builder: (context) => BabyTempRecordDone(babyTempRecordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
                         );
                       },
                       child: Column(
@@ -119,9 +125,9 @@ class _BabyTempListDoneState extends State<BabyTempListDone> {
                               child: Row(
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.1),
+                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02, right: MediaQuery.of(context).size.width * 0.1),
                                     child: Image.asset(
-                                      "assets/icons/meal.png",
+                                      "assets/icons/medicine.png",
                                       height: MediaQuery.of(context).size.height * 0.06,
                                     ),
                                   ),

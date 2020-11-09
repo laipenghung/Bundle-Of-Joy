@@ -1,4 +1,5 @@
 import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeMain.dart';
+import 'package:bundle_of_joy/careForBaby/careForBabyTab.dart';
 import 'package:bundle_of_joy/mother-for-baby.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
@@ -113,6 +114,7 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
+                              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.005),
                               child: Image.asset(
                                 "assets/icons/food-intake.png",
                                 height: MediaQuery.of(context).size.height * 0.05,
@@ -146,9 +148,6 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
                                                       color: Colors.black,
                                                     ),
                                                     textAlign: TextAlign.left,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    maxLines: 1,
-                                                    softWrap: true,
                                                   ),
                                                 ),
                                               ),
@@ -215,7 +214,7 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
                             },
                             //textInputAction: TextInputAction.send,
                             decoration: new InputDecoration(
-                              labelText: "Enter some description. \nIf none, leave this textarea empty",
+                              hintText: "Enter some description of the \nallergy or symptoms. \n\nIf none, leave this textarea empty",
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
                                 borderSide: BorderSide(
@@ -355,7 +354,7 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
       _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Pending").doc(recordID).delete();
       print("Data Deleted");
     }).then((value) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BabyFoodIntakeMain(selectedBabyID: babyID)));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyTab(selectedBabyID: babyID)));
     }).catchError((error) => print("wrong"));
   }
 

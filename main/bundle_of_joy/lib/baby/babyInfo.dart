@@ -12,12 +12,12 @@ class BabyInfo extends StatefulWidget {
   State<StatefulWidget> createState() => _BabyInfo(baby);
 }
 
-class _BabyInfo extends State<BabyInfo>{
+class _BabyInfo extends State<BabyInfo> {
   final Baby baby;
   _BabyInfo(this.baby);
   String input;
 
-  ListView _listView(AsyncSnapshot<DocumentSnapshot> document){
+  ListView _listView(AsyncSnapshot<DocumentSnapshot> document) {
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
 
@@ -34,13 +34,14 @@ class _BabyInfo extends State<BabyInfo>{
       "Weight At Birth",
       "Length At Birth",
       "Head Circumference",
-      "Order"];
+      "Order"
+    ];
 
     final _listInfo = [
       baby.b_registered_id,
       baby.b_name,
-      baby.b_dob.toDate().toString().substring(0,10),
-      baby.b_dob.toDate().toString().substring(11,16),
+      baby.b_dob.toDate().toString().substring(0, 10),
+      baby.b_dob.toDate().toString().substring(11, 16),
       baby.b_place_of_birth,
       baby.b_gender,
       baby.b_age,
@@ -86,6 +87,8 @@ class _BabyInfo extends State<BabyInfo>{
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1, //APP BAR HEIGHT
+
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
@@ -105,12 +108,10 @@ class _BabyInfo extends State<BabyInfo>{
         color: Colors.white,
         child: StreamBuilder(
             stream: babyDoc.snapshots(),
-            builder: (context, document){
+            builder: (context, document) {
               return _listView(document);
-            }
-        ),
+            }),
       ),
     );
   }
 }
-

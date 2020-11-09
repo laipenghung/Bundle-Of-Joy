@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/careForBaby/careForBabyTab.dart';
 import 'package:bundle_of_joy/mother-for-baby.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
@@ -64,7 +65,7 @@ class _BabyFoodIntakeSummaryState extends State<BabyFoodIntakeSummary> {
         "recordID": value.id,
       });
       print("Data uploaded");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherForBabyTab()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyTab(selectedBabyID: widget.selectedBabyID)));
     }).catchError((error) => print("wrong"));
   }
 
@@ -99,7 +100,7 @@ class _BabyFoodIntakeSummaryState extends State<BabyFoodIntakeSummary> {
             width: MediaQuery.of(context).size.width,
             child: Scrollbar(
               child: SingleChildScrollView(
-                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, bottom: MediaQuery.of(context).size.height * 0.05),
+                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, bottom: MediaQuery.of(context).size.height * 0.02),
                 child: Column(
                   children: [
                     Row(
@@ -161,6 +162,7 @@ class _BabyFoodIntakeSummaryState extends State<BabyFoodIntakeSummary> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
+                          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.005),
                           child: Image.asset(
                             "assets/icons/food-intake.png",
                             height: MediaQuery.of(context).size.height * 0.05,
@@ -181,7 +183,7 @@ class _BabyFoodIntakeSummaryState extends State<BabyFoodIntakeSummary> {
                                         children: <Widget>[
                                           Container(
                                             //color: Colors.green,
-                                            width: MediaQuery.of(context).size.width * 0.45,
+                                            width: MediaQuery.of(context).size.width * 0.4,
                                             child: Padding(
                                               padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015, bottom: MediaQuery.of(context).size.height * 0.015),
                                               child: new Text(
@@ -193,9 +195,6 @@ class _BabyFoodIntakeSummaryState extends State<BabyFoodIntakeSummary> {
                                                   color: Colors.black,
                                                 ),
                                                 textAlign: TextAlign.left,
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                                softWrap: true,
                                               ),
                                             ),
                                           ),
