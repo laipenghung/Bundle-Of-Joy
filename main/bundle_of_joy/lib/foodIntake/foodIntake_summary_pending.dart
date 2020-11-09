@@ -60,7 +60,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
 
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
     await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(
-        0, 'Food Intake Tracking', 'It\'s time to update your blood sugar level', tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)), notificationDetails,
+        0, 'Food Intake Tracking', 'It\'s time to update your blood sugar level.', tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)), notificationDetails,
         androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
   }
 

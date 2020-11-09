@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:quiver/iterables.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+
+import '../../main.dart';
 
 class BabyFoodIntakeSummary extends StatefulWidget {
   final String selectedBabyID, selectedDate, selectedTime;
@@ -15,6 +21,7 @@ class BabyFoodIntakeSummary extends StatefulWidget {
 }
 
 class _BabyFoodIntakeSummaryState extends State<BabyFoodIntakeSummary> {
+  MyApp main = MyApp();
   Map food;
   List<dynamic> foodName = List<dynamic>();
   List<dynamic> foodQty = List<dynamic>();
@@ -67,6 +74,29 @@ class _BabyFoodIntakeSummaryState extends State<BabyFoodIntakeSummary> {
       print("Data uploaded");
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyTab(selectedBabyID: widget.selectedBabyID)));
     }).catchError((error) => print("wrong"));
+  }
+
+  void _showNotification() async {
+    await notification();
+  }
+
+  Future<void> notification() async {
+    tz.initializeTimeZones();
+    final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(currentTimeZone));
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'Channel Id',
+      'Channel title',
+      'channel body',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+    );
+
+    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(
+        0, 'Food Intake Tracking', 'It\'s time to update your baby\'s food intake record.', tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)), notificationDetails,
+        androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
   }
 
   @override
@@ -278,6 +308,7 @@ class _BabyFoodIntakeSummaryState extends State<BabyFoodIntakeSummary> {
                   ),
                   onTap: () {
                     addBabyFoodRecord();
+                    _showNotification();
                   }, //ADD TO DATABASE
                 ),
               ],
