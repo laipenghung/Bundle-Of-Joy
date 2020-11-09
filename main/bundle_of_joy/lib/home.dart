@@ -45,10 +45,7 @@ class _HomePageState extends State<HomePageState> {
     return <Widget>[
       MotherToBeTab(),
       MotherForBabyTab(),
-      Text(
-        "Notification",
-        style: optionStyle,
-      ),
+      //Text("Notification", style: optionStyle),
       ProfileTab(),
     ];
   }
@@ -68,12 +65,7 @@ class _HomePageState extends State<HomePageState> {
         activeColor: Colors.black,
         inactiveColor: Colors.black.withOpacity(0.3),
       ),
-      PersistentBottomNavBarItem(
-        icon: Image.asset("assets/icons/bell.png"),
-        title: ("Notification"),
-        activeColor: Colors.black,
-        inactiveColor: Colors.black.withOpacity(0.3),
-      ),
+      //PersistentBottomNavBarItem(icon: Image.asset("assets/icons/bell.png"), title: ("Notification"), activeColor: Colors.black, inactiveColor: Colors.black.withOpacity(0.3)),
       PersistentBottomNavBarItem(
         icon: Image.asset("assets/icons/user.png"),
         title: ("Profile"),
@@ -96,12 +88,12 @@ class _HomePageState extends State<HomePageState> {
             _title = "Mother-for-baby";
           }
           break;
-        case 2:
-          {
-            _title = "Notification";
-          }
-          break;
-        case 3:
+        //case 2:
+        //{
+        //  _title = "Notification";
+        //}
+        // break;
+        case 2: //Was 3
           {
             _title = "Profile";
           }
@@ -112,32 +104,31 @@ class _HomePageState extends State<HomePageState> {
 
   @override
   Widget build(BuildContext context) {
-    return
-      PersistentTabView(
-        navBarHeight: MediaQuery.of(context).size.height * 0.1,
-        padding: NavBarPadding.all(4),
-        controller: _persistentTabController,
-        screens: _widgetOptions(),
-        items: _navBarsItems(),
-        confineInSafeArea: true,
-        backgroundColor: Color(0xFFFCFFD5),
-        handleAndroidBackButtonPress: true,
-        stateManagement: true,
-        resizeToAvoidBottomInset: true,
-        hideNavigationBarWhenKeyboardShows: true,
-        popAllScreensOnTapOfSelectedTab: true,
-        popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: ItemAnimationProperties(
-          duration: Duration(milliseconds: 500),
-          curve: Curves.ease,
-        ),
-        screenTransitionAnimation: ScreenTransitionAnimation(
-          animateTabTransition: true,
-          curve: Curves.ease,
-          duration: Duration(milliseconds: 500),
-        ),
-        navBarStyle: NavBarStyle.style3,
-        onItemSelected: (index) => _onItemTapped(index),
-      );
+    return PersistentTabView(
+      navBarHeight: MediaQuery.of(context).size.height * 0.1,
+      padding: NavBarPadding.all(4),
+      controller: _persistentTabController,
+      screens: _widgetOptions(),
+      items: _navBarsItems(),
+      confineInSafeArea: true,
+      backgroundColor: Color(0xFFFCFFD5),
+      handleAndroidBackButtonPress: true,
+      stateManagement: true,
+      resizeToAvoidBottomInset: true,
+      hideNavigationBarWhenKeyboardShows: true,
+      popAllScreensOnTapOfSelectedTab: true,
+      popActionScreens: PopActionScreensType.all,
+      itemAnimationProperties: ItemAnimationProperties(
+        duration: Duration(milliseconds: 500),
+        curve: Curves.ease,
+      ),
+      screenTransitionAnimation: ScreenTransitionAnimation(
+        animateTabTransition: true,
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 500),
+      ),
+      navBarStyle: NavBarStyle.style3,
+      onItemSelected: (index) => _onItemTapped(index),
+    );
   }
 }

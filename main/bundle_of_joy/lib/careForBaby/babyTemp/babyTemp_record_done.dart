@@ -42,7 +42,7 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "Baby Temperature Record",
+          "Medicine Intake Tracking",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
@@ -58,8 +58,14 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
 
       // BODY
       body: FutureBuilder<DocumentSnapshot>(
-        future: FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid)
-          .collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done").doc(widget.babyTempRecordID).get(),
+        future: FirebaseFirestore.instance
+            .collection("mother")
+            .doc(FirebaseAuth.instance.currentUser.uid)
+            .collection("baby")
+            .doc(widget.selectedBabyID)
+            .collection("tempRecord_Done")
+            .doc(widget.babyTempRecordID)
+            .get(),
         builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasData) {
             Map meds = snapshot.data.data()["medsMap"];
@@ -91,6 +97,7 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
                                 ),
                               ),
                               Container(
+                                //color: Colors.red,
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                 child: Text(
@@ -101,6 +108,7 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
                                     fontSize: MediaQuery.of(context).size.height * 0.025,
                                     color: Colors.black,
                                   ),
+                                  textAlign: TextAlign.left,
                                 ),
                               ),
                             ],
@@ -116,6 +124,7 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
                                 ),
                               ),
                               Container(
+                                //color: Colors.red,
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                 child: Text(
@@ -126,6 +135,7 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
                                     fontSize: MediaQuery.of(context).size.height * 0.025,
                                     color: Colors.black,
                                   ),
+                                  textAlign: TextAlign.left,
                                 ),
                               ),
                             ],
@@ -133,10 +143,16 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
                           SizedBox(height: MediaQuery.of(context).size.height * 0.06),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
+                                margin: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height * 0.01,
+                                  bottom: MediaQuery.of(context).size.height * 0.01,
+                                  left: MediaQuery.of(context).size.width * 0.02,
+                                ),
                                 child: Image.asset(
-                                  "assets/icons/food-intake.png",
+                                  "assets/icons/medicine.png",
                                   height: MediaQuery.of(context).size.height * 0.05,
                                 ),
                               ),
@@ -144,7 +160,7 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
                                 children: [
                                   Container(
                                     width: MediaQuery.of(context).size.width * 0.4,
-                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.09),
                                     child: Table(
                                       //border: TableBorder.all(width: 1.0, color: Colors.black),
                                       children: [
@@ -152,11 +168,25 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
                                           TableRow(children: [
                                             TableCell(
                                                 child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: <Widget>[
                                                 Container(
+                                                  margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02),
                                                   //color: Colors.blue,
-                                                  width: MediaQuery.of(context).size.width * 0.4,
+                                                  child: new Text(
+                                                    "- ",
+                                                    style: TextStyle(
+                                                      fontFamily: 'Comfortaa',
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: MediaQuery.of(context).size.height * 0.023,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02),
+                                                  //color: Colors.blue,
+                                                  width: MediaQuery.of(context).size.width * 0.35,
                                                   child: new Text(
                                                     x.toString(),
                                                     style: TextStyle(
@@ -183,7 +213,7 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
                             children: [
                               Container(
                                 child: Image.asset(
-                                  "assets/icons/blood-sugar-level.png",
+                                  "assets/icons/temp.png",
                                   height: MediaQuery.of(context).size.height * 0.05,
                                 ),
                               ),
@@ -194,17 +224,20 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
                                     margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                     child: Row(
                                       children: [
-                                        Text(
-                                          "Before: ",
-                                          style: TextStyle(
-                                            fontFamily: 'Comfortaa',
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: MediaQuery.of(context).size.height * 0.025,
-                                            color: Colors.black,
+                                        Container(
+                                          width: MediaQuery.of(context).size.width * 0.2,
+                                          child: Text(
+                                            "Before: ",
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: MediaQuery.of(context).size.height * 0.025,
+                                              color: Colors.black,
+                                            ),
                                           ),
                                         ),
                                         Text(
-                                          snapshot.data.data()["bTempBefore"],
+                                          snapshot.data.data()["bTempBefore"] + " °C",
                                           style: TextStyle(
                                             fontFamily: 'Comfortaa',
                                             fontWeight: FontWeight.bold,
@@ -215,23 +248,25 @@ class _BabyTempRecordDoneState extends State<BabyTempRecordDone> {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                                   Container(
                                     width: MediaQuery.of(context).size.width * 0.4,
-                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1, top: MediaQuery.of(context).size.height * 0.02),
                                     child: Row(
                                       children: [
-                                        Text(
-                                          "After: ",
-                                          style: TextStyle(
-                                            fontFamily: 'Comfortaa',
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: MediaQuery.of(context).size.height * 0.025,
-                                            color: Colors.black,
+                                        Container(
+                                          width: MediaQuery.of(context).size.width * 0.2,
+                                          child: Text(
+                                            "After: ",
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: MediaQuery.of(context).size.height * 0.025,
+                                              color: Colors.black,
+                                            ),
                                           ),
                                         ),
                                         Text(
-                                          snapshot.data.data()["bTempAfter"],
+                                          snapshot.data.data()["bTempAfter"] + " °C",
                                           style: TextStyle(
                                             fontFamily: 'Comfortaa',
                                             fontWeight: FontWeight.bold,

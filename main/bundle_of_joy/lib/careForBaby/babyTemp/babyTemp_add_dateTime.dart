@@ -18,7 +18,7 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
   DateTime pickedDate;
   TimeOfDay time;
   String d, m, y, hour, min, dateToPass, timeToPass;
-  
+
   // MAKE THE DEFAULT DATE TODAY
   @override
   void initState() {
@@ -161,7 +161,7 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "Baby Temperature Tracking",
+          "Medicine Intake Tracking",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
@@ -288,28 +288,10 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                       onTap: () {
                         _pickTime();
                       }),
-
-                  Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    child: Text(
-                      "Medicine Taken",
-                      style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontWeight: FontWeight.bold,
-                        fontSize: MediaQuery.of(context).size.height * 0.025,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  
-
-                                   
                 ],
               ),
             ),
           ),
-          
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -354,16 +336,13 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
                     ),
                   ),
                   onTap: () {
-                    
-                      var selectedDate = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
-                      var selectedTime = "${time.hour}:${time.minute}";
-                      print(selectedDate + "   " + selectedTime);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => BabyTempAddMeds(selectedDate: dateToPass, 
-                          selectedTime: timeToPass, selectedBabyID: widget.selectedBabyID)),
-                      );
-                    
+                    var selectedDate = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+                    var selectedTime = "${time.hour}:${time.minute}";
+                    print(selectedDate + "   " + selectedTime);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BabyTempAddMeds(selectedDate: dateToPass, selectedTime: timeToPass, selectedBabyID: widget.selectedBabyID)),
+                    );
                   },
                 ),
               ],
@@ -372,7 +351,5 @@ class _BabyTempAdd1State extends State<BabyTempAdd1> {
         ],
       ),
     );
-
-    
   }
 }

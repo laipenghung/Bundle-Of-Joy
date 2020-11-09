@@ -1,12 +1,12 @@
 import "package:bundle_of_joy/baby/addBaby.dart";
 import "package:bundle_of_joy/careForBaby/careForBabyTab.dart";
-import 'package:bundle_of_joy/growthTacking/vacAndGrowthTab.dart';
+import 'package:bundle_of_joy/vaccinationAndGrowth/vacAndGrowthTab.dart';
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "baby/baby.dart";
 import "appointmentBaby/appointmentBaby_main.dart";
-import 'vaccinationSchedule/vaccinationSchedule.dart';
+import 'vaccinationAppointment/vaccinationAppointment.dart';
 
 class MotherForBabyTab extends StatefulWidget {
   @override
@@ -69,6 +69,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
           children: [
             Container(
               width: width,
+              height: MediaQuery.of(context).size.height * 0.065,
               decoration: myBoxDecoration(),
               margin: EdgeInsets.only(top: paddingTop),
               child: DropdownButtonHideUnderline(
@@ -118,7 +119,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
               child: Container(
                 margin: EdgeInsets.only(top: paddingTop, left: MediaQuery.of(context).size.width * 0.03),
                 child: Image.asset(
-                  "assets/icons/addbaby.png",
+                  "assets/icons/plus.png",
                   height: MediaQuery.of(context).size.height * 0.06,
                 ),
               ),
@@ -139,7 +140,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
     return BoxDecoration(
       border: Border.all(
         color: Colors.black,
-        width: 1,
+        width: 2,
       ),
       borderRadius: BorderRadius.all(Radius.circular(50.0) //<--- border radius here
           ),
@@ -188,8 +189,8 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => VacAndGrowthTab(
-                        selectedBabyID: selectedBabyID,
-                      )),
+                            selectedBabyID: selectedBabyID,
+                          )),
                 );
               }
               break;

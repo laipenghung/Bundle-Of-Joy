@@ -11,18 +11,19 @@ class AddBaby extends StatefulWidget {
   State<StatefulWidget> createState() => _AddBaby();
 }
 
-class _AddBaby extends State<AddBaby>{
+class _AddBaby extends State<AddBaby> {
   final GlobalKey<FormBuilderState> _key = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
     double longWidth = MediaQuery.of(context).size.width * 0.85;
     double shortWidth = MediaQuery.of(context).size.width * 0.4;
-    double shortHeight = MediaQuery.of(context).size.height * 0.01;
+    double shortHeight = MediaQuery.of(context).size.height * 0.015;
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
@@ -56,8 +57,7 @@ class _AddBaby extends State<AddBaby>{
                             labelText: "Name*",
                             labelStyle: TextStyle(
                               fontFamily: "Comfortaa",
-                            )
-                        ),
+                            )),
                         validators: [
                           FormBuilderValidators.required(),
                         ],
@@ -77,8 +77,7 @@ class _AddBaby extends State<AddBaby>{
                             labelText: "Baby registered ID*",
                             labelStyle: TextStyle(
                               fontFamily: "Comfortaa",
-                            )
-                        ),
+                            )),
                         validators: [
                           FormBuilderValidators.required(),
                         ],
@@ -98,8 +97,7 @@ class _AddBaby extends State<AddBaby>{
                             labelText: "Age* (Eg: 1 month)",
                             labelStyle: TextStyle(
                               fontFamily: "Comfortaa",
-                            )
-                        ),
+                            )),
                         validators: [
                           FormBuilderValidators.required(),
                         ],
@@ -122,10 +120,7 @@ class _AddBaby extends State<AddBaby>{
                               fontFamily: "Comfortaa",
                             )),
                         validators: [FormBuilderValidators.required()],
-                        items: ["Male", "Female"].map((gender) => DropdownMenuItem(
-                            value: gender,
-                            child: Text("$gender")
-                        )).toList(),
+                        items: ["Male", "Female"].map((gender) => DropdownMenuItem(value: gender, child: Text("$gender"))).toList(),
                       ),
                     ),
                     Container(
@@ -138,13 +133,9 @@ class _AddBaby extends State<AddBaby>{
                             labelText: "Blood Type*",
                             labelStyle: TextStyle(
                               fontFamily: "Comfortaa",
-                            )
-                        ),
+                            )),
                         validators: [FormBuilderValidators.required()],
-                        items: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map((bloodType) => DropdownMenuItem(
-                            value: bloodType,
-                            child: Text("$bloodType")
-                        )).toList(),
+                        items: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map((bloodType) => DropdownMenuItem(value: bloodType, child: Text("$bloodType"))).toList(),
                       ),
                     ),
                   ],
@@ -163,8 +154,7 @@ class _AddBaby extends State<AddBaby>{
                             labelText: "Date of Birth*",
                             labelStyle: TextStyle(
                               fontFamily: "Comfortaa",
-                            )
-                        ),
+                            )),
                         validators: [
                           FormBuilderValidators.required(),
                         ],
@@ -186,31 +176,56 @@ class _AddBaby extends State<AddBaby>{
                             labelText: "Time of Birth",
                             labelStyle: TextStyle(
                               fontFamily: "Comfortaa",
-                            )
-                        ),
+                            )),
                       ),
                     ),
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: shortHeight),
+                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, bottom: MediaQuery.of(context).size.height * 0.05),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      RaisedButton(
-                        color: Color(0xFFFCFFD5),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            side: BorderSide(width: 1, color: Colors.black)
+                      InkWell(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          decoration: myBoxDecoration(),
+                          child: Center(
+                            child: Text(
+                              "Reset",
+                              style: TextStyle(
+                                fontFamily: 'Comfortaa',
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
                         ),
-                        child: Text(
-                            "Submit",
-                            style: TextStyle(
-                              fontFamily: "Comfortaa",
-                            )
+                        onTap: () {
+                          _key.currentState.reset();
+                        },
+                      ),
+                      InkWell(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          decoration: myBoxDecoration(),
+                          child: Center(
+                            child: Text(
+                              "Confirm",
+                              style: TextStyle(
+                                fontFamily: 'Comfortaa',
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
                         ),
-                        onPressed: (){
-                          if(_key.currentState.saveAndValidate()){
+                        onTap: () {
+                          if (_key.currentState.saveAndValidate()) {
                             print(_key.currentState.value);
                             Baby baby = new Baby.empty();
                             baby.addBaby(
@@ -221,26 +236,9 @@ class _AddBaby extends State<AddBaby>{
                                 _key.currentState.value["dob"],
                                 _key.currentState.value["tob"],
                                 _key.currentState.value["bloodType"],
-                                context
-                            );
+                                context);
                           }
                         },
-                      ),
-                      RaisedButton(
-                          color: Color(0xFFFCFFD5),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18),
-                              side: BorderSide(width: 1, color: Colors.black)
-                          ),
-                        child: Text(
-                            "Reset",
-                            style: TextStyle(
-                              fontFamily: "Comfortaa",
-                            )
-                        ),
-                        onPressed: (){
-                          _key.currentState.reset();
-                        }
                       ),
                     ],
                   ),
@@ -252,5 +250,16 @@ class _AddBaby extends State<AddBaby>{
       ),
     );
   }
-}
 
+  BoxDecoration myBoxDecoration() {
+    return BoxDecoration(
+      color: Color(0xFFFCFFD5),
+      border: Border.all(
+        color: Colors.black,
+        width: 2.0,
+      ),
+      borderRadius: BorderRadius.all(Radius.circular(10.0) //<--- border radius here
+          ),
+    );
+  }
+}

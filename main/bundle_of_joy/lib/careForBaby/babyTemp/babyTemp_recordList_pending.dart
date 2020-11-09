@@ -22,8 +22,7 @@ class _BabyTempListPendingState extends State<BabyTempListPending> {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     final User user = FirebaseAuth.instance.currentUser;
 
-    return _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID)
-      .collection("tempRecord_Pending").doc(recordID).delete().then((value) {
+    return _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Pending").doc(recordID).delete().then((value) {
       print("Deleted");
       //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BabyTempListPending()));
     }).catchError((error) => print("wrong"));
@@ -35,7 +34,7 @@ class _BabyTempListPendingState extends State<BabyTempListPending> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "Baby Temperature Record",
+          "Medicine Intake Tracking",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
@@ -44,13 +43,24 @@ class _BabyTempListPendingState extends State<BabyTempListPending> {
           ),
         ),
 
-        automaticallyImplyLeading: false, // CENTER THE TEXT
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+
+        //automaticallyImplyLeading: false, // CENTER THE TEXT
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
       body: StreamBuilder(
-        stream: _db.collection('mother').doc(user.uid).collection("baby")
-          .doc(widget.selectedBabyID).collection("tempRecord_Pending").snapshots(),
+        stream: _db
+            .collection('mother')
+            .doc(user.uid)
+            .collection("baby")
+            .doc(widget.selectedBabyID)
+            .collection("tempRecord_Pending")
+            .orderBy('selectedDate', descending: true)
+            .orderBy('selectedTime', descending: true)
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -88,8 +98,9 @@ class _BabyTempListPendingState extends State<BabyTempListPending> {
                         //go to record_pending
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => BabyTempRecordPending(babyTempRecordID: snapshot.data.documents[index]["recordID"],
-                            selectedBabyID: widget.selectedBabyID)),
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  BabyTempRecordPending(babyTempRecordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
                         );
                       },
                       child: Column(
@@ -117,9 +128,9 @@ class _BabyTempListPendingState extends State<BabyTempListPending> {
                               child: Row(
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.1),
+                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02, right: MediaQuery.of(context).size.width * 0.1),
                                     child: Image.asset(
-                                      "assets/icons/meal.png",
+                                      "assets/icons/medicine.png",
                                       height: MediaQuery.of(context).size.height * 0.06,
                                     ),
                                   ),

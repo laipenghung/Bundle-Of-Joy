@@ -74,22 +74,22 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
               FlatButton(
                 child: Text("Done"),
                 onPressed: () {
-                  if(_controllerFoodQty.text.isEmpty){
+                  if (_controllerFoodQty.text.isEmpty) {
                     return showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Opps!"),
-                          content: Text("You must enter the food quantity before add it to the list."),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text("Ok"),
-                              onPressed: () => Navigator.of(context).pop(),
-                            ),
-                          ],
-                        );
-                      });
-                  }else{
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Opps!"),
+                            content: Text("You must enter the food quantity before add it to the list."),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text("Ok"),
+                                onPressed: () => Navigator.of(context).pop(),
+                              ),
+                            ],
+                          );
+                        });
+                  } else {
                     setMap();
                     foodNameList = foodMap.keys.toList();
                     foodQtyList = foodMap.values.toList();
@@ -130,11 +130,10 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
         children: [
           Container(
             margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.055),
-            //color: Colors.lightBlue,
+            //color: Colors.red,
             height: MediaQuery.of(context).size.height * 0.6,
             width: MediaQuery.of(context).size.width,
             child: SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.05),
               child: Column(
                 children: [
                   Container(
@@ -208,22 +207,22 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
                             ),
                           ),
                           onTap: () {
-                            if(_controllerFoodName.text.isEmpty){
+                            if (_controllerFoodName.text.isEmpty) {
                               return showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text("Opps!"),
-                                    content: Text("You must enter the food your baby consumed before add it to the list."),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                        child: Text("Ok"),
-                                        onPressed: () => Navigator.of(context).pop(),
-                                      ),
-                                    ],
-                                  );
-                                });
-                            }else{
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text("Opps!"),
+                                      content: Text("You must enter the food your baby consumed before add it to the list."),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text("Ok"),
+                                          onPressed: () => Navigator.of(context).pop(),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            } else {
                               createAlertDialog(context);
                               //_controllerFoodName.clear();
                             }
@@ -235,82 +234,84 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
                   Container(
                     //color: Colors.blue,
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
+                    height: MediaQuery.of(context).size.height * 0.45,
                     child: Padding(
                       padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                      child: ListView.builder(
-                          itemCount: foodNameList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Slidable(
-                              actionPane: SlidableDrawerActionPane(),
-                              actionExtentRatio: 0.18,
-                              secondaryActions: <Widget>[
-                                IconSlideAction(
-                                  caption: "Delete",
-                                  color: Colors.red,
-                                  icon: Icons.delete,
-                                  onTap: () {
-                                    setState(() {
-                                      foodMap.remove(foodNameList[index]);
-                                      foodNameList.removeAt(index);
-                                      foodQtyList.removeAt(index);
-                                      print(foodNameList);
-                                      print(foodQtyList);
-                                      print(foodMap);
-                                    });
-                                  },
-                                )
-                              ],
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width * 0.8,
-                                    height: MediaQuery.of(context).size.width * 0.1,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context).size.width * 0.5,
-                                          child: Text(
-                                            "${foodNameList[index]}",
-                                            style: TextStyle(
-                                              fontFamily: 'Comfortaa',
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: MediaQuery.of(context).size.height * 0.025,
-                                              color: Colors.black,
-                                            ),
-                                            textAlign: TextAlign.left,
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                            softWrap: true,
-                                          ),
-                                        ),
-                                        Container(
-                                          width: MediaQuery.of(context).size.width * 0.3,
-                                          child: Text(
-                                            "   x${foodQtyList[index]}",
-                                            style: TextStyle(
-                                              fontFamily: 'Comfortaa',
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: MediaQuery.of(context).size.height * 0.025,
-                                              color: Colors.black,
-                                            ),
-                                            textAlign: TextAlign.left,
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                            softWrap: true,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02),
+                        child: ListView.builder(
+                            itemCount: foodNameList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Slidable(
+                                actionPane: SlidableDrawerActionPane(),
+                                actionExtentRatio: 0.18,
+                                secondaryActions: <Widget>[
+                                  IconSlideAction(
+                                    caption: "Delete",
+                                    color: Colors.red,
+                                    icon: Icons.delete,
+                                    onTap: () {
+                                      setState(() {
+                                        foodMap.remove(foodNameList[index]);
+                                        foodNameList.removeAt(index);
+                                        foodQtyList.removeAt(index);
+                                        print(foodNameList);
+                                        print(foodQtyList);
+                                        print(foodMap);
+                                      });
+                                    },
+                                  )
                                 ],
-                              ),
-                            );
-                          }),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width * 0.8,
+                                      height: MediaQuery.of(context).size.width * 0.11,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            width: MediaQuery.of(context).size.width * 0.5,
+                                            child: Text(
+                                              "${foodNameList[index]}",
+                                              style: TextStyle(
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                color: Colors.black,
+                                              ),
+                                              textAlign: TextAlign.left,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              softWrap: true,
+                                            ),
+                                          ),
+                                          Container(
+                                            width: MediaQuery.of(context).size.width * 0.2,
+                                            child: Text(
+                                              "   x${foodQtyList[index]}",
+                                              style: TextStyle(
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                color: Colors.black,
+                                              ),
+                                              textAlign: TextAlign.left,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              softWrap: true,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                                  ],
+                                ),
+                              );
+                            }),
+                      ),
                     ),
                   ),
                 ],

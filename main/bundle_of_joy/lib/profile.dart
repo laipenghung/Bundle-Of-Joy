@@ -53,7 +53,7 @@ class _ProfileState extends State<ProfileTab> {
   }
 
   singleCard(iconLoc, title, index) {
-    double height = MediaQuery.of(context).size.height * 0.15;
+    double height = MediaQuery.of(context).size.height * 0.1;
     double fontSize = MediaQuery.of(context).size.width * 0.045;
     return Card(
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
@@ -97,7 +97,7 @@ class _ProfileState extends State<ProfileTab> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 10.0),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 20.0),
               child: Image.asset(
                 iconLoc,
                 height: height,
@@ -113,6 +113,7 @@ class _ProfileState extends State<ProfileTab> {
                   fontWeight: FontWeight.bold,
                   fontSize: fontSize,
                 ),
+                textAlign: TextAlign.center,
               ),
             )
           ],
@@ -160,10 +161,10 @@ class _ProfileState extends State<ProfileTab> {
       body: GridView.count(
         crossAxisCount: 2,
         shrinkWrap: true,
-        padding: EdgeInsets.only(top: 20.0, left: 15, right: 15),
+        padding: EdgeInsets.only(top: 20.0, left: 20, right: 20),
         children: <Widget>[
-          singleCard("assets/icons/mother.png", "Mother's Profile", 0),
-          singleCard("assets/icons/baby_color.png", "Baby's Profile", 1),
+          singleCard("assets/icons/mother.png", "Mother's\nProfile", 0),
+          singleCard("assets/icons/baby_color.png", "Baby's\nProfile", 1),
           singleCard("assets/icons/logout.png", "Log Out", 2),
         ],
       ),

@@ -1,3 +1,5 @@
+import 'package:bundle_of_joy/careForBaby/babyTemp/babyTemptMain.dart';
+import 'package:bundle_of_joy/careForBaby/careForBabyTab.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -63,7 +65,7 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
         "recordID": value.id,
       });
       print("Data uploaded");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherForBabyTab()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyTab(selectedBabyID: widget.selectedBabyID)));
     }).catchError((error) => print("wrong"));
   }
 
@@ -74,7 +76,7 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "Baby Temperature Tracking",
+          "Medicine Intake Tracking",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
@@ -156,10 +158,16 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
                   SizedBox(height: MediaQuery.of(context).size.height * 0.06),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.01,
+                          bottom: MediaQuery.of(context).size.height * 0.01,
+                          left: MediaQuery.of(context).size.width * 0.02,
+                        ),
                         child: Image.asset(
-                          "assets/icons/food-intake.png",
+                          "assets/icons/medicine.png",
                           height: MediaQuery.of(context).size.height * 0.05,
                         ),
                       ),
@@ -167,7 +175,7 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
                         children: [
                           Container(
                             width: MediaQuery.of(context).size.width * 0.4,
-                            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.09),
                             child: Table(
                               //border: TableBorder.all(width: 1.0, color: Colors.black),
                               children: [
@@ -175,11 +183,25 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
                                   TableRow(children: [
                                     TableCell(
                                         child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Container(
+                                          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02),
                                           //color: Colors.blue,
-                                          width: MediaQuery.of(context).size.width * 0.4,
+                                          child: new Text(
+                                            "- ",
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: MediaQuery.of(context).size.height * 0.023,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02),
+                                          //color: Colors.blue,
+                                          width: MediaQuery.of(context).size.width * 0.35,
                                           child: new Text(
                                             x.toString(),
                                             style: TextStyle(
