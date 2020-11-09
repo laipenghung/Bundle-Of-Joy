@@ -4,7 +4,9 @@ import 'package:bundle_of_joy/mother-for-baby.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:quiver/iterables.dart';
+import '../../main.dart';
 
 class BabyFoodIntakeRecordPending extends StatefulWidget {
   final String recordID, selectedBabyID;
@@ -18,6 +20,29 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
   var content;
   TextEditingController _controller = TextEditingController();
   String userInput = "", noInput = "No allergy and symptoms found.";
+  MyApp main = MyApp();
+
+  void _showNotification() async {
+    await notification();
+  }
+
+  Future<void> notification() async {
+    //tz.initializeTimeZones();
+    //final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+    //tz.setLocalLocation(tz.getLocation(currentTimeZone));
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'Channel Id',
+      'Channel title',
+      'channel body',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+    );
+
+    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+    await main.createState().flutterLocalNotificationsPlugin.show(
+        0, 'Medicine Intake Tracking', 'Medicine record successfully created.', notificationDetails);
+  }
 
   void initState() {
     super.initState();
@@ -289,10 +314,12 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
                           print(userInput);
                           if (_controller.text.isEmpty) {
                             updateBabyFoodIntakeRecord(snapshot.data.data()["selectedDate"], snapshot.data.data()["selectedTime"], snapshot.data.data()["foodMap"], noInput,
-                                widget.selectedBabyID, snapshot.data.data()["recordID"]);
+                                widget.selectedBabyID, snapshot.data.data()["recordID"], false);
+                            _showNotification();
                           } else {
                             updateBabyFoodIntakeRecord(snapshot.data.data()["selectedDate"], snapshot.data.data()["selectedTime"], snapshot.data.data()["foodMap"], userInput,
-                                widget.selectedBabyID, snapshot.data.data()["recordID"]);
+                                widget.selectedBabyID, snapshot.data.data()["recordID"], true);
+                            _showNotification();
                           }
                         }, //ADD TO DATABASE
                       ),
@@ -334,7 +361,7 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
     );
   }
 
-  Future<void> updateBabyFoodIntakeRecord(selectedDate, selectedTime, foodMap, userInput, babyID, recordID) {
+  Future<void> updateBabyFoodIntakeRecord(selectedDate, selectedTime, foodMap, userInput, babyID, recordID, symptomsAndAllergies) {
     //final User user = FirebaseAuth.instance.currentUser;
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     final User user = FirebaseAuth.instance.currentUser;
@@ -346,6 +373,7 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
       "foodMap": foodMap,
       "babysymptoms": userInput,
       "babyID": babyID,
+      "symptomsAndAllergies": symptomsAndAllergies,
     }).then((value) {
       babyFoodIntakeRecord.doc(value.id).update({
         "recordID": value.id,

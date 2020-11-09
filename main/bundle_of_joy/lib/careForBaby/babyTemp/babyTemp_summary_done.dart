@@ -2,8 +2,10 @@ import 'package:bundle_of_joy/careForBaby/babyTemp/babyTemptMain.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:quiver/iterables.dart';
 
+import '../../main.dart';
 import '../../mother-for-baby.dart';
 import '../careForBabyTab.dart';
 
@@ -17,6 +19,7 @@ class BabyTempSummaryDone extends StatefulWidget {
 }
 
 class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
+  MyApp main = MyApp();
   Map meds = Map();
   List<dynamic> medsName = List<dynamic>();
 
@@ -69,6 +72,28 @@ class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
       print("Data uploaded");
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyTab(selectedBabyID: widget.selectedBabyID)));
     }).catchError((error) => print(error));
+  }
+
+  void _showNotification() async {
+    await notification();
+  }
+
+  Future<void> notification() async {
+    //tz.initializeTimeZones();
+    //final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+    //tz.setLocalLocation(tz.getLocation(currentTimeZone));
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'Channel Id',
+      'Channel title',
+      'channel body',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+    );
+
+    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+    await main.createState().flutterLocalNotificationsPlugin.show(
+        0, 'Medicine Intake Tracking', 'Medicine record successfully created.', notificationDetails);
   }
 
   @override
@@ -348,6 +373,7 @@ class BabyTempSummaryDoneState extends State<BabyTempSummaryDone> {
                   ),
                   onTap: () {
                     addTempRecord();
+                    _showNotification();
                   }, //ADD TO DATABASE
                 ),
               ],
