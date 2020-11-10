@@ -1,12 +1,12 @@
+import "package:bundle_of_joy/appointmentBaby/appointmentBaby_verify.dart";
 import "package:bundle_of_joy/baby/addBaby.dart";
 import "package:bundle_of_joy/careForBaby/careForBabyTab.dart";
-import 'package:bundle_of_joy/vaccinationAndGrowth/vacAndGrowthTab.dart';
+import "package:bundle_of_joy/vaccinationAndGrowth/vacAndGrowthTab.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "baby/baby.dart";
-import "appointmentBaby/appointmentBaby_main.dart";
-import 'vaccinationAppointment/vaccinationAppointment.dart';
+import "vaccinationAppointment/vaccinationAppointment.dart";
 
 class MotherForBabyTab extends StatefulWidget {
   @override
@@ -166,7 +166,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AppointmentBabyMain(
+                      builder: (context) => AppointmentBabyVerify(
                             babyID: selectedBabyID,
                           )),
                 );
@@ -317,6 +317,37 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
     }
   }
 
+  Widget loading(){
+    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.width * 0.15,
+            width: MediaQuery.of(context).size.width * 0.15,
+            child: CircularProgressIndicator(
+              strokeWidth: 5,
+              backgroundColor: Colors.black,
+              valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.05,
+          ),
+          Text(
+            "Loading...",
+            style: TextStyle(
+              fontFamily: "Comfortaa",
+              fontSize: fontSizeText,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final User user = FirebaseAuth.instance.currentUser;
@@ -358,7 +389,11 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
       body: StreamBuilder(
           stream: baby.snapshots(),
           builder: (context, collection) {
-            return hasData(collection);
+            if(collection.hasData) {
+              return hasData(collection);
+            } else {
+              return loading();
+            }
           }),
     );
   }

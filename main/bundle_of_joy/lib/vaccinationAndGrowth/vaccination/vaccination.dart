@@ -142,6 +142,37 @@ class _Vaccination extends State<Vaccination> {
     }
   }
 
+  Widget loading(){
+    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.width * 0.15,
+            width: MediaQuery.of(context).size.width * 0.15,
+            child: CircularProgressIndicator(
+              strokeWidth: 5,
+              backgroundColor: Colors.black,
+              valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.05,
+          ),
+          Text(
+            "Loading...",
+            style: TextStyle(
+              fontFamily: "Comfortaa",
+              fontSize: fontSizeText,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   // BUILD THE WIDGET
   @override
   Widget build(BuildContext context) {
@@ -158,7 +189,11 @@ class _Vaccination extends State<Vaccination> {
     return StreamBuilder(
         stream: vaccination.snapshots(),
         builder: (context, collection) {
-          return hasData(collection);
+          if(collection.hasData) {
+            return hasData(collection);
+          } else {
+            return loading();
+          }
         });
   }
 }

@@ -1,8 +1,8 @@
+import "package:bundle_of_joy/appointmentMother/appointmentMother_verify.dart";
 import "package:flutter/material.dart";
-import "appointmentMother/appointmentMother_main.dart";
 import "foodIntake/foodIntake_main.dart";
 import "emergencyContact/emergencyContactTab.dart";
-import 'MotherHealthTracking/healthTrackingMother.dart';
+import "MotherHealthTracking/healthTrackingMother.dart";
 
 class MotherToBeTab extends StatefulWidget {
   @override
@@ -30,7 +30,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AppointmentMotherMain()),
+                    MaterialPageRoute(builder: (context) => AppointmentMotherVerify()),
                   );
                 }
                 break;
@@ -113,7 +113,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
             Text(
               "Mother-to-be",
               style: TextStyle(
-                fontFamily: 'Comfortaa',
+                fontFamily: "Comfortaa",
                 fontWeight: FontWeight.bold,
                 fontSize: MediaQuery.of(context).size.width * 0.06,
                 color: Colors.black,
@@ -128,7 +128,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
       body: GridView.count(
         crossAxisCount: 2,
         shrinkWrap: true,
-        padding: const EdgeInsets.only(top: 100.0, left: 15, right: 15),
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1, left: 15, right: 15),
         children: <Widget>[
           singleCard("assets/icons/appointment.png", "Appointment\nManagement", 0),
           singleCard("assets/icons/food-intake.png", "Food Intake\nTracking", 1),

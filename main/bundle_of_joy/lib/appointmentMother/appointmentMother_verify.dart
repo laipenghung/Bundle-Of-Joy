@@ -1,144 +1,21 @@
 import "dart:async";
-import 'package:bundle_of_joy/motherProfile/motherInfo.dart';
+import "package:bundle_of_joy/appointmentMother/appointmentMother_main.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/services.dart";
-import 'mother.dart';
 import "package:pinput/pin_put/pin_put.dart";
 
-class MotherProfile extends StatefulWidget {
+class AppointmentMotherVerify extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _MotherProfile();
+  State<StatefulWidget> createState() => _AppointmentMotherVerify();
 }
 
-class _MotherProfile extends State<MotherProfile> {
+class _AppointmentMotherVerify extends State<AppointmentMotherVerify> {
   String input;
   final TextEditingController _pinPutController = TextEditingController();
   final FocusNode _pinPutFocusNode = FocusNode();
-
-/*  Future<bool> editBox(int index, AsyncSnapshot<DocumentSnapshot> document, BuildContext context) {
-    Mother mother = new Mother();
-    final _listEditTitles = [
-      "Edit Name",
-      "Edit Age",
-      "Edit Date Of Birth",
-      "Edit Blood Type",
-      "Edit No Of Child",
-      "Edit Personal Phone",
-      "Edit Emergency Contact"
-    ];
-    final _listField = ["m_name", "m_age", "m_dob", "m_bloodType", "m_no_of_child", "m_phone", "m_emergencyContact"];
-    Future<bool> _selectDate() async {
-      DateTime selectedDate = DateTime.now();
-      String year, month, day, DOB;
-      final DateTime picked = await showDatePicker(
-          context: context,
-          initialDate: selectedDate,
-          firstDate: DateTime(selectedDate.year - 150),
-          lastDate: DateTime(selectedDate.year + 10),
-          builder: (BuildContext context, Widget child) {
-            return Theme(
-              data: ThemeData.light().copyWith(
-                colorScheme: ColorScheme.dark(
-                  surface: Color(int.parse("0xFFFCFFD5")),
-                  onSurface: Colors.black,
-                ),
-              ),
-              child: child,
-            );
-          });
-      if (picked != null) {
-        setState(() {
-          year = picked.year.toString();
-          month = picked.month.toString();
-          day = picked.day.toString();
-          DOB = "$year-$month-$day";
-          mother.editProfile(_listField[index], DOB);
-        });
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-    if (index == 2) {
-      return _selectDate();
-    } else {
-      input = document.data.data()[_listField[index]].toString();
-      return showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              backgroundColor: Color(0xFFFCFFD5),
-              title: Center(child: Text(_listEditTitles[index])),
-              content: editField(index, document, _listField),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text("Done"),
-                  onPressed: () {
-                    mother.editProfile(_listField[index], input);
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            );
-          });
-    }
-  }
-
-  Widget editField(int index, AsyncSnapshot<DocumentSnapshot> document, List _listField) {
-    double margin = 30;
-    if (index == 3) {
-      return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-        return Container(
-          margin: EdgeInsets.only(left: margin, right: margin),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              isExpanded: true,
-              dropdownColor: Color(0xFFFCFFD5),
-              value: input,
-              items: <String>["A", "B", "O", "AB"].map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: new Text(value),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  input = value;
-                });
-              },
-            ),
-          ),
-        );
-      });
-    } else if (index == 1 || index == 4 || index == 5 || index == 6) {
-      return Container(
-        margin: EdgeInsets.only(left: margin + 20, right: margin + 20),
-        child: TextField(
-          textAlign: TextAlign.center,
-          controller: TextEditingController(text: document.data.data()[_listField[index]].toString()),
-          keyboardType: TextInputType.number,
-          onChanged: (value) {
-            input = value;
-          },
-        ),
-      );
-    } else {
-      return Container(
-        margin: EdgeInsets.only(left: margin, right: margin),
-        child: TextField(
-          textAlign: TextAlign.center,
-          controller: TextEditingController(text: document.data.data()[_listField[index]].toString()),
-          onChanged: (value) {
-            input = value;
-          },
-        ),
-      );
-    }
-  }*/
 
   Widget is_verify(AsyncSnapshot<DocumentSnapshot> mother, CollectionReference patient, String uid){
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
@@ -184,17 +61,17 @@ class _MotherProfile extends State<MotherProfile> {
                               "pin_code": pin.toString(),
                               "is_verify": true
                             }).then((value) => print("Mother profile updated"))
-                              .catchError((e) => print("Failed to update mother profile: $e"));
+                                .catchError((e) => print("Failed to update mother profile: $e"));
 
                             patient.doc(value.docs.first.data()["patient_id"]).update({
                               "m_id": uid
                             }).then((value) => print("Patient updated"))
-                              .catchError((e) => print("Failed to update patient: $e"));
+                                .catchError((e) => print("Failed to update patient: $e"));
 
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => MotherInfo(document: value.docs.first.data()),
+                                builder: (context) => AppointmentMotherMain(),
                               ),
                             );
                           }
@@ -223,7 +100,7 @@ class _MotherProfile extends State<MotherProfile> {
                         shape: buttonShape(),
                         onPressed: () => _pinPutFocusNode.requestFocus(),
                         child: Text(
-                            'Focus',
+                            "Focus",
                             style: TextStyle(
                               fontFamily: "Comfortaa",
                             )
@@ -234,7 +111,7 @@ class _MotherProfile extends State<MotherProfile> {
                         shape: buttonShape(),
                         onPressed: () => _pinPutFocusNode.unfocus(),
                         child: Text(
-                            'Unfocus',
+                            "Unfocus",
                             style: TextStyle(
                               fontFamily: "Comfortaa",
                             )),
@@ -242,9 +119,9 @@ class _MotherProfile extends State<MotherProfile> {
                       RaisedButton(
                         color: Color(0xFFFCFFD5),
                         shape: buttonShape(),
-                        onPressed: () => _pinPutController.text = '',
+                        onPressed: () => _pinPutController.text = "",
                         child: Text(
-                            'Clear All',
+                            "Clear All",
                             style: TextStyle(
                               fontFamily: "Comfortaa",
                             )
@@ -264,7 +141,7 @@ class _MotherProfile extends State<MotherProfile> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => MotherInfo(document: value.docs.first.data()),
+            builder: (context) => AppointmentMotherMain(),
           ),
         );
       });
@@ -274,8 +151,8 @@ class _MotherProfile extends State<MotherProfile> {
 
   RoundedRectangleBorder buttonShape() {
     return RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(18),
-      side: BorderSide(width: 1, color: Colors.black)
+        borderRadius: BorderRadius.circular(18),
+        side: BorderSide(width: 1, color: Colors.black)
     );
   }
 
@@ -345,14 +222,14 @@ class _MotherProfile extends State<MotherProfile> {
       body: Container(
         color: Colors.white,
         child: StreamBuilder(
-          stream: users.snapshots(),
-          builder: (context, mother) {
-            if(mother.hasData) {
-              return is_verify(mother, patient, user.uid.toString());
-            } else {
-              return loading();
+            stream: users.snapshots(),
+            builder: (context, mother) {
+              if(mother.hasData) {
+                return is_verify(mother, patient, user.uid.toString());
+              } else {
+                return loading();
+              }
             }
-          }
         ),
       ),
     );
