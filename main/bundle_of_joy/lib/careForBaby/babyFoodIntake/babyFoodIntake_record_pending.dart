@@ -37,11 +37,14 @@ class _BabyFoodIntakeRecordPendingState extends State<BabyFoodIntakeRecordPendin
       priority: Priority.high,
       importance: Importance.max,
       ticker: 'test',
+      styleInformation: BigTextStyleInformation(''),
     );
 
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await main.createState().flutterLocalNotificationsPlugin.show(
-        0, 'Medicine Intake Tracking', 'Medicine record successfully created.', notificationDetails);
+    await main
+        .createState()
+        .flutterLocalNotificationsPlugin
+        .show(0, 'Baby Food Intake Tracking', 'Allergy or Symptoms updated. \nYou can now view it in Food Intake Record of the baby.', notificationDetails);
   }
 
   void initState() {

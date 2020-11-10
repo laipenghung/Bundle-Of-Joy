@@ -31,25 +31,25 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
     return SingleChildScrollView(
       child: StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
-          if(healthReport.bloodSugar.toDouble() > 6){
+          if (healthReport.bloodSugar.toDouble() > 6) {
             bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L) (Too high)";
             colorBS = Colors.red;
-          } else if (healthReport.bloodSugar.toDouble() < 4){
+          } else if (healthReport.bloodSugar.toDouble() < 4) {
             bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L) (Too low)";
             colorBS = Colors.orange;
-          } else{
+          } else {
             bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L)";
           }
 
-          if(healthReport.bloodPressure > 120){
-            if(healthReport.bloodPressure > 130){
+          if (healthReport.bloodPressure > 120) {
+            if (healthReport.bloodPressure > 130) {
               bloodPressure = healthReport.bloodPressure.toString() + " (mm/Hg) (High blood pressure)";
               colorBP = Colors.red;
             } else {
               bloodPressure = healthReport.bloodPressure.toString() + " (mm/Hg) (Elevated)";
               colorBP = Colors.orange;
             }
-          } else{
+          } else {
             bloodPressure = healthReport.bloodPressure.toString() + " (mm/Hg)";
           }
 
@@ -81,26 +81,22 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
                               children: [
                                 Text(
                                   "Blood Sugar",
-                                  style: (
-                                      TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: fontSizeTitle,
-                                        fontFamily: "Comfortaa",
-                                      )
-                                  ),
+                                  style: (TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: fontSizeTitle,
+                                    fontFamily: "Comfortaa",
+                                  )),
                                 ),
                                 Divider(
                                   height: divider,
                                 ),
                                 Text(
                                   bloodSugar,
-                                  style: (
-                                      TextStyle(
-                                        fontSize: fontSizeText,
-                                        fontFamily: "Comfortaa",
-                                        color: colorBS,
-                                      )
-                                  ),
+                                  style: (TextStyle(
+                                    fontSize: fontSizeText,
+                                    fontFamily: "Comfortaa",
+                                    color: colorBS,
+                                  )),
                                 ),
                               ],
                             ),
@@ -139,13 +135,11 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
                                 ),
                                 Text(
                                   bloodPressure,
-                                  style: (
-                                      TextStyle(
-                                        fontSize: fontSizeText,
-                                        fontFamily: "Comfortaa",
-                                        color: colorBP,
-                                      )
-                                  ),
+                                  style: (TextStyle(
+                                    fontSize: fontSizeText,
+                                    fontFamily: "Comfortaa",
+                                    color: colorBP,
+                                  )),
                                 ),
                               ],
                             ),
@@ -244,7 +238,6 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.05),
                     InkWell(
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.4,
@@ -263,11 +256,8 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
                         ),
                       ),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HealthTrackingMother()),
-                        );
-                      }, //ADD TO DATABASE
+                        Navigator.of(context).pop();
+                      },
                     ),
                   ],
                 ),

@@ -32,7 +32,10 @@ class _AppointmentMotherAdd1State extends State<AppointmentMotherAdd1> {
           ),
         ),
 
-        automaticallyImplyLeading: false, // CENTER THE TEXT
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        //automaticallyImplyLeading: false, // CENTER THE TEXT
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),

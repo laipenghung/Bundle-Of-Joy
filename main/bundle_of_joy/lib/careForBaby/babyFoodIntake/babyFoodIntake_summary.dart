@@ -91,12 +91,12 @@ class _BabyFoodIntakeSummaryState extends State<BabyFoodIntakeSummary> {
       priority: Priority.high,
       importance: Importance.max,
       ticker: 'test',
+      styleInformation: BigTextStyleInformation(''),
     );
 
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(
-        0, 'Food Intake Tracking', 'It\'s time to update your baby\'s food intake record.', tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)), notificationDetails,
-        androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
+    await main.createState().flutterLocalNotificationsPlugin.show(
+        0, 'Baby Food Intake Tracking', 'You have added a food intake record for your baby. \nRemember to update if there is any discomfort symptoms!', notificationDetails);
   }
 
   @override

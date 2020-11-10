@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/appointmentMother/appointmentMother_add_2.dart';
 import "package:flutter/material.dart";
 import 'appointmentBaby_add_2.dart';
 import 'appointmentBaby_main.dart';
@@ -391,7 +392,10 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
                             ),
                           ),
                           onTap: () {
-                            //Navigator.push(context,MaterialPageRoute(builder: (context) => AppointmentMotherAdd2(name: nameFrom2)),);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => AppointmentBabyAdd2(name: nameFrom2)),
+                            );
                           },
                         ),
                         SizedBox(width: MediaQuery.of(context).size.width * 0.05),
@@ -623,8 +627,8 @@ class _AppointmentBabyAdd3State extends State<AppointmentBabyAdd3> {
 
     await main.createState().flutterLocalNotificationsPlugin.show(
           0,
-          'Appointment Management',
-          'You have succesfully booked a slot for ' + dateFrom2,
+          'Appointment Management - Baby',
+          'You have succesfully booked a slot for ' + dateFrom2 + ".",
           notificationDetails,
         );
   }

@@ -188,10 +188,7 @@ class _AppointmentMotherAdd2State extends State<AppointmentMotherAdd2> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AppointmentMotherAdd1()),
-                  );
+                  Navigator.of(context).pop();
                 },
               ),
               SizedBox(width: MediaQuery.of(context).size.width * 0.05),
@@ -223,32 +220,32 @@ class _AppointmentMotherAdd2State extends State<AppointmentMotherAdd2> {
     );
   }
 
-  _checkAppointment() async{
+  _checkAppointment() async {
     final User user = FirebaseAuth.instance.currentUser;
     final FirebaseFirestore _db = FirebaseFirestore.instance;
 
     var x = await _db.collection('mother_appointment').where("m_id", isEqualTo: user.uid).where("a_date", isEqualTo: dateToPass).get();
 
-    if(x.docs.isEmpty){
+    if (x.docs.isEmpty) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => AppointmentMotherAdd3(name: hospitalName, date: dateToPass)),
       );
-    }else{
+    } else {
       return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Opps!"),
-          content: Text("You already have an appointment on $dateToPass. Please select another day to book an appointment or delete the current appointment."),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("Ok"),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
-        );
-      });
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Opps!"),
+              content: Text("You already have an appointment on $dateToPass. Please select another day."),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("Ok"),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            );
+          });
     }
   }
 
