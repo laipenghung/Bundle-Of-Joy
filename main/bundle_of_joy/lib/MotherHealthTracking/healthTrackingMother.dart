@@ -18,131 +18,101 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
     List<HealthReport> _listInfo = List<HealthReport>();
 
     if (collection.data.docs.isNotEmpty) {
-      if (collection.connectionState == ConnectionState.waiting) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.width * 0.15,
-                width: MediaQuery.of(context).size.width * 0.15,
-                child: CircularProgressIndicator(
-                  strokeWidth: 5,
-                  backgroundColor: Colors.black,
-                  valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
-              ),
-              Text(
-                "Loading...",
-                style: TextStyle(
-                  fontFamily: "Comfortaa",
-                  fontSize: fontSizeText,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-        );
-      } else {
-        collection.data.docs.forEach((doc) {
-          _listInfo.add(HealthReport(doc.data()[_listField[0]], doc.data()[_listField[1]], doc.data()[_listField[2]], doc.data()[_listField[3]].toDouble(),
-              doc.data()[_listField[4]].toDouble(), doc.data()[_listField[5]].toDouble(), doc.data()[_listField[6]].toDouble(), doc.data()[_listField[7]]));
-        });
+      collection.data.docs.forEach((doc) {
+        _listInfo.add(HealthReport(doc.data()[_listField[0]], doc.data()[_listField[1]], doc.data()[_listField[2]], doc.data()[_listField[3]].toDouble(),
+            doc.data()[_listField[4]].toDouble(), doc.data()[_listField[5]].toDouble(), doc.data()[_listField[6]].toDouble(), doc.data()[_listField[7]]));
+      });
 
-        return Container(
-          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),
-          child: ListView.builder(
-            itemCount: _listInfo.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MotherHealthTracking(healthReport: _listInfo[index])),
-                  );
-                },
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.015, bottom: MediaQuery.of(context).size.height * 0.015, left: MediaQuery.of(context).size.width * 0.07),
-                      child: Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.1),
-                            child: Image.asset(
-                              "assets/icons/health-tracking.png",
-                              height: MediaQuery.of(context).size.height * 0.06,
+      return Container(
+        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),
+        child: ListView.builder(
+          itemCount: _listInfo.length,
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MotherHealthTracking(healthReport: _listInfo[index])),
+                );
+              },
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.015, bottom: MediaQuery.of(context).size.height * 0.015, left: MediaQuery.of(context).size.width * 0.07),
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.1),
+                          child: Image.asset(
+                            "assets/icons/health-tracking.png",
+                            height: MediaQuery.of(context).size.height * 0.06,
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Day:",
+                              style: TextStyle(
+                                fontFamily: "Comfortaa",
+                                fontWeight: FontWeight.bold,
+                                fontSize: fontSizeText,
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Day:",
-                                style: TextStyle(
-                                  fontFamily: "Comfortaa",
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: fontSizeText,
-                                  color: Colors.black,
-                                ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                            Text(
+                              "Date:",
+                              style: TextStyle(
+                                fontFamily: "Comfortaa",
+                                fontWeight: FontWeight.bold,
+                                fontSize: fontSizeText,
+                                color: Colors.black,
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                              Text(
-                                "Date:",
-                                style: TextStyle(
-                                  fontFamily: "Comfortaa",
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: fontSizeText,
-                                  color: Colors.black,
-                                ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _listInfo[index].dayOfPregnancy.toString(),
+                              style: TextStyle(
+                                fontFamily: "Comfortaa",
+                                fontWeight: FontWeight.bold,
+                                fontSize: fontSizeText,
+                                color: Colors.black,
                               ),
-                            ],
-                          ),
-                          SizedBox(width: MediaQuery.of(context).size.width * 0.05),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                _listInfo[index].dayOfPregnancy.toString(),
-                                style: TextStyle(
-                                  fontFamily: "Comfortaa",
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: fontSizeText,
-                                  color: Colors.black,
-                                ),
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                            Text(
+                              _listInfo[index].date.toString(),
+                              style: TextStyle(
+                                fontFamily: "Comfortaa",
+                                fontWeight: FontWeight.bold,
+                                fontSize: fontSizeText,
+                                color: Colors.black,
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                              Text(
-                                _listInfo[index].date.toString(),
-                                style: TextStyle(
-                                  fontFamily: "Comfortaa",
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: fontSizeText,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    Divider(
-                      indent: MediaQuery.of(context).size.width * 0.03,
-                      endIndent: MediaQuery.of(context).size.width * 0.03,
-                      color: Colors.black,
-                      thickness: MediaQuery.of(context).size.height * 0.001,
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        );
-      }
+                  ),
+                  Divider(
+                    indent: MediaQuery.of(context).size.width * 0.03,
+                    endIndent: MediaQuery.of(context).size.width * 0.03,
+                    color: Colors.black,
+                    thickness: MediaQuery.of(context).size.height * 0.001,
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      );
     } else {
       return Center(
         child: Text(
@@ -155,6 +125,37 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
         ),
       );
     }
+  }
+
+  Widget loading(){
+    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.width * 0.15,
+            width: MediaQuery.of(context).size.width * 0.15,
+            child: CircularProgressIndicator(
+              strokeWidth: 5,
+              backgroundColor: Colors.black,
+              valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.05,
+          ),
+          Text(
+            "Loading...",
+            style: TextStyle(
+              fontFamily: "Comfortaa",
+              fontSize: fontSizeText,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -185,7 +186,11 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
       body: StreamBuilder(
         stream: health.snapshots(),
         builder: (context, collection) {
-          return _listView(collection);
+          if(collection.hasData) {
+            return _listView(collection);
+          } else {
+            return loading();
+          }
         },
       ),
     );

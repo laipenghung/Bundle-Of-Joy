@@ -289,7 +289,6 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
             color: Colors.black,
           ),
         ),
-        automaticallyImplyLeading: false, // CENTER THE TEXT
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),

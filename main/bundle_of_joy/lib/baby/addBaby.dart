@@ -1,7 +1,6 @@
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-import "package:firebase_auth/firebase_auth.dart";
-import "package:cloud_firestore/cloud_firestore.dart";
+import "package:age/age.dart";
 import "package:intl/intl.dart";
 import "baby.dart";
 import "package:flutter_form_builder/flutter_form_builder.dart";
@@ -13,6 +12,7 @@ class AddBaby extends StatefulWidget {
 
 class _AddBaby extends State<AddBaby> {
   final GlobalKey<FormBuilderState> _key = GlobalKey<FormBuilderState>();
+  String finalAge = "";
 
   @override
   Widget build(BuildContext context) {
@@ -86,26 +86,6 @@ class _AddBaby extends State<AddBaby> {
                   ],
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: shortHeight),
-                      width: longWidth,
-                      child: FormBuilderTextField(
-                        attribute: "age",
-                        decoration: InputDecoration(
-                            labelText: "Age* (Eg: 1 month)",
-                            labelStyle: TextStyle(
-                              fontFamily: "Comfortaa",
-                            )),
-                        validators: [
-                          FormBuilderValidators.required(),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
@@ -147,6 +127,24 @@ class _AddBaby extends State<AddBaby> {
                       margin: EdgeInsets.only(top: shortHeight),
                       width: longWidth,
                       child: FormBuilderDateTimePicker(
+                        lastDate: DateTime.now(),
+                        onChanged: (selected){
+                          if(selected != null){
+                            DateTime today = DateTime.now();
+                            AgeDuration age;
+                            age = Age.dateDifference(fromDate: selected, toDate: today);
+                            int years = age.years;
+                            int months = age.months;
+                            int days = age.days;
+                            if(years>0){
+                              finalAge = years.toString() + " years";
+                            } else if(months>0){
+                              finalAge = months.toString() + " months";
+                            } else if (days>0){
+                              finalAge = days.toString() + " days";
+                            }
+                          }
+                        },
                         attribute: "dob",
                         inputType: InputType.date,
                         format: DateFormat("yyyy-MM-dd"),
@@ -227,14 +225,15 @@ class _AddBaby extends State<AddBaby> {
                         onTap: () {
                           if (_key.currentState.saveAndValidate()) {
                             print(_key.currentState.value);
+                            DateTime tob = _key.currentState.value["tob"] ?? DateTime.parse("2020-00-00 00:00:00.000");
                             Baby baby = new Baby.empty();
                             baby.addBaby(
                                 _key.currentState.value["name"],
                                 _key.currentState.value["registered_id"],
-                                _key.currentState.value["age"],
+                                finalAge,
                                 _key.currentState.value["gender"],
                                 _key.currentState.value["dob"],
-                                _key.currentState.value["tob"],
+                                tob,
                                 _key.currentState.value["bloodType"],
                                 context);
                           }

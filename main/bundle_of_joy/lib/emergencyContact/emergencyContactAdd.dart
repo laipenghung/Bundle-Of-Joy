@@ -85,7 +85,7 @@ class _EmerContactAddState extends State<EmerContactAdd> {
               child: RaisedButton(
                 color: Colors.yellow,
                 onPressed: () {
-                  emerContact.addEmerContact(_emerContactNo);
+                  //emerContact.addEmerContact(_emerContactNo);
                   Navigator.push(context, MaterialPageRoute(builder: (context) => MotherToBeTab()));
                   Fluttertoast.showToast(
                     msg: "Contact Added",
