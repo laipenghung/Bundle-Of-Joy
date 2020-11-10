@@ -39,7 +39,7 @@ class _GrowthMain extends State<GrowthMain> {
                     ),
                     Container(
                       child: Text(
-                        "Length/Height Graph",
+                        "Height Graph",
                         style: TextStyle(
                           fontFamily: "Comfortaa",
                           fontWeight: FontWeight.bold,
@@ -78,7 +78,7 @@ class _GrowthMain extends State<GrowthMain> {
                     ),
                     Container(
                       child: Text(
-                        "Add Appointments",
+                        "Weight Graph",
                         style: TextStyle(
                           fontFamily: "Comfortaa",
                           fontWeight: FontWeight.bold,
