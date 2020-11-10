@@ -1,4 +1,5 @@
-import "package:bundle_of_joy/vaccinationAndGrowth/growth/growth.dart";
+import "package:bundle_of_joy/vaccinationAndGrowth/growth/growthMain.dart";
+import "package:bundle_of_joy/vaccinationAndGrowth/growth/growthWeight.dart";
 import "package:bundle_of_joy/vaccinationAndGrowth/vaccination/vaccination.dart";
 import "package:flutter/material.dart";
 
@@ -50,7 +51,7 @@ class VacAndGrowthTab extends StatelessWidget {
         body: TabBarView(
           children: [
             Vaccination(selectedBabyID: selectedBabyID),
-            Growth(selectedBabyID: selectedBabyID),
+            GrowthMain(selectedBabyID: selectedBabyID),
           ],
         ),
       ),

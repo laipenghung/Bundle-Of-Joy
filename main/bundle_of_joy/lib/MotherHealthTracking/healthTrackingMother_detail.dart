@@ -240,38 +240,6 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
                   ],
                 ),
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.05),
-                    InkWell(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        height: MediaQuery.of(context).size.height * 0.06,
-                        decoration: myBoxDecoration(),
-                        child: Center(
-                          child: Text(
-                            "Back",
-                            style: TextStyle(
-                              fontFamily: 'Comfortaa',
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.height * 0.025,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HealthTrackingMother()),
-                        );
-                      }, //ADD TO DATABASE
-                    ),
-                  ],
-                ),
-              ),
             ],
           );
         },
@@ -299,7 +267,6 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
             color: Colors.black,
           ),
         ),
-        automaticallyImplyLeading: false, // CENTER THE TEXT
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
