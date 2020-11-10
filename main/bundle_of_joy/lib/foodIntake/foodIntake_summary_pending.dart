@@ -78,7 +78,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "Food Intake Tracking P",
+          "Food Intake Tracking",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
@@ -93,257 +93,288 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
       ),
 
       // BODY
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.055),
-            //color: Colors.lightBlue,
-            height: MediaQuery.of(context).size.height * 0.6,
-            width: MediaQuery.of(context).size.width,
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, bottom: MediaQuery.of(context).size.height * 0.05),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Image.asset(
-                          "assets/icons/calendar.png",
-                          height: MediaQuery.of(context).size.height * 0.05,
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                        child: Text(
-                          widget.selectedDate,
-                          style: TextStyle(
-                            fontFamily: 'Comfortaa',
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.height * 0.025,
-                            color: Colors.black,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.055),
+              //color: Colors.lightBlue,
+              height: MediaQuery.of(context).size.height * 0.6,
+              width: MediaQuery.of(context).size.width,
+              child: SingleChildScrollView(
+                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, bottom: MediaQuery.of(context).size.height * 0.05),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Image.asset(
+                            "assets/icons/calendar.png",
+                            height: MediaQuery.of(context).size.height * 0.05,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.06),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Image.asset(
-                          "assets/icons/time.png",
-                          height: MediaQuery.of(context).size.height * 0.05,
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                        child: Text(
-                          widget.selectedTime,
-                          style: TextStyle(
-                            fontFamily: 'Comfortaa',
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.height * 0.025,
-                            color: Colors.black,
+                        Container(
+                          //color: Colors.red,
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                          child: Text(
+                            widget.selectedDate,
+                            style: TextStyle(
+                              fontFamily: 'Comfortaa',
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.height * 0.025,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.left,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.06),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Image.asset(
-                          "assets/icons/food-intake.png",
-                          height: MediaQuery.of(context).size.height * 0.05,
+                      ],
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Image.asset(
+                            "assets/icons/time.png",
+                            height: MediaQuery.of(context).size.height * 0.05,
+                          ),
                         ),
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                            child: Table(
-                              //border: TableBorder.all(width: 1.0, color: Colors.black),
-                              children: [
-                                for (var x in zip([foodName, foodQty]))
-                                  TableRow(children: [
-                                    TableCell(
-                                        child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Container(
-                                          //color: Colors.blue,
-                                          width: MediaQuery.of(context).size.width * 0.4,
-                                          child: new Text(
-                                            x[0].toString() + "\n x" + x[1].toString(),
-                                            style: TextStyle(
-                                              fontFamily: 'Comfortaa',
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: MediaQuery.of(context).size.height * 0.023,
-                                              color: Colors.black,
+                        Container(
+                          //color: Colors.red,
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                          child: Text(
+                            widget.selectedTime,
+                            style: TextStyle(
+                              fontFamily: 'Comfortaa',
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.height * 0.025,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.005),
+                          child: Image.asset(
+                            "assets/icons/food-intake.png",
+                            height: MediaQuery.of(context).size.height * 0.05,
+                          ),
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              //color: Colors.red,
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                              child: Table(
+                                children: [
+                                  for (var x in zip([foodName, foodQty]))
+                                    TableRow(children: [
+                                      TableCell(
+                                          child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            //color: Colors.green,
+                                            width: MediaQuery.of(context).size.width * 0.4,
+                                            child: Padding(
+                                              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015, bottom: MediaQuery.of(context).size.height * 0.015),
+                                              child: new Text(
+                                                x[0].toString(),
+                                                style: TextStyle(
+                                                  fontFamily: 'Comfortaa',
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                  color: Colors.black,
+                                                ),
+                                                textAlign: TextAlign.left,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ))
-                                  ])
-                              ],
+                                          Container(
+                                            width: MediaQuery.of(context).size.width * 0.05,
+                                          ),
+                                          Container(
+                                            //color: Colors.white,
+                                            width: MediaQuery.of(context).size.width * 0.1,
+                                            child: new Text(
+                                              "x" + x[1].toString(),
+                                              style: TextStyle(
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                color: Colors.black,
+                                              ),
+                                              textAlign: TextAlign.left,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              softWrap: true,
+                                            ),
+                                          ),
+                                        ],
+                                      ))
+                                    ])
+                                ],
+                              ),
                             ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Image.asset(
+                            "assets/icons/blood-sugar-level.png",
+                            height: MediaQuery.of(context).size.height * 0.05,
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.06),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Image.asset(
-                          "assets/icons/blood-sugar-level.png",
-                          height: MediaQuery.of(context).size.height * 0.05,
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Before: ",
+                                    style: TextStyle(
+                                      fontFamily: 'Comfortaa',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: MediaQuery.of(context).size.height * 0.025,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    widget.bSugarBefore + " mmol/L",
+                                    style: TextStyle(
+                                      fontFamily: 'Comfortaa',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: MediaQuery.of(context).size.height * 0.025,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "After: ",
+                                    style: TextStyle(
+                                      fontFamily: 'Comfortaa',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: MediaQuery.of(context).size.height * 0.025,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.2,
+                                    height: MediaQuery.of(context).size.height * 0.04,
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      decoration: new InputDecoration(
+                                        //labelText: "Blood sugar reading",
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(5.0),
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 1,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 1,
+                                          ),
+                                        ),
+                                      ),
+                                      onSaved: (String value) {},
+                                      validator: (String value) {
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      decoration: myBoxDecoration(),
+                      child: Center(
+                        child: Text(
+                          "Back",
+                          style: TextStyle(
+                            fontFamily: 'Comfortaa',
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.height * 0.025,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
-                      Column(
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Before: ",
-                                  style: TextStyle(
-                                    fontFamily: 'Comfortaa',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: MediaQuery.of(context).size.height * 0.025,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  widget.bSugarBefore,
-                                  style: TextStyle(
-                                    fontFamily: 'Comfortaa',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: MediaQuery.of(context).size.height * 0.025,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+                  InkWell(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      decoration: myBoxDecoration(),
+                      child: Center(
+                        child: Text(
+                          "Done",
+                          style: TextStyle(
+                            fontFamily: 'Comfortaa',
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.height * 0.025,
+                            color: Colors.black,
                           ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "After: ",
-                                  style: TextStyle(
-                                    fontFamily: 'Comfortaa',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: MediaQuery.of(context).size.height * 0.025,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width * 0.2,
-                                  height: MediaQuery.of(context).size.height * 0.04,
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.number,
-                                    decoration: new InputDecoration(
-                                      //labelText: "Blood sugar reading",
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(5.0),
-                                        borderSide: BorderSide(
-                                          color: Colors.black,
-                                          width: 1,
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10.0),
-                                        borderSide: BorderSide(
-                                          color: Colors.black,
-                                          width: 1,
-                                        ),
-                                      ),
-                                    ),
-                                    onSaved: (String value) {},
-                                    validator: (String value) {
-                                      return null;
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ],
+                    ),
+                    onTap: () async {
+                      addFoodRecord();
+                      _showNotification();
+                    }, //ADD TO DATABASE
                   ),
                 ],
               ),
             ),
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    decoration: myBoxDecoration(),
-                    child: Center(
-                      child: Text(
-                        "Back",
-                        style: TextStyle(
-                          fontFamily: 'Comfortaa',
-                          fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.height * 0.025,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.05),
-                InkWell(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    decoration: myBoxDecoration(),
-                    child: Center(
-                      child: Text(
-                        "Done",
-                        style: TextStyle(
-                          fontFamily: 'Comfortaa',
-                          fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.height * 0.025,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                  onTap: () async {
-                    addFoodRecord();
-                    _showNotification();
-                  }, //ADD TO DATABASE
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

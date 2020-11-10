@@ -39,62 +39,114 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
       ),
 
       // BODY
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.055),
-            //color: Colors.lightBlue,
-            height: MediaQuery.of(context).size.height * 0.6,
-            width: MediaQuery.of(context).size.width,
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.05),
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    child: Text(
-                      "Enter the blood sugar reading",
-                      style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontWeight: FontWeight.bold,
-                        fontSize: MediaQuery.of(context).size.height * 0.025,
-                        color: Colors.black,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.055),
+              //color: Colors.lightBlue,
+              height: MediaQuery.of(context).size.height * 0.6,
+              width: MediaQuery.of(context).size.width,
+              child: SingleChildScrollView(
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.05),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      child: Text(
+                        "Enter the blood sugar reading",
+                        style: TextStyle(
+                          fontFamily: 'Comfortaa',
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.height * 0.025,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, left: MediaQuery.of(context).size.width * 0.03),
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    child: Text(
-                      "Before eating",
-                      style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontSize: MediaQuery.of(context).size.height * 0.022,
-                        color: Colors.black,
+                    Container(
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, left: MediaQuery.of(context).size.width * 0.03),
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      child: Text(
+                        "Before eating",
+                        style: TextStyle(
+                          fontFamily: 'Comfortaa',
+                          fontSize: MediaQuery.of(context).size.height * 0.022,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 10,
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: 10,
+                      ),
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      height: MediaQuery.of(context).size.height * 0.055,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            height: MediaQuery.of(context).size.height * 0.055,
+                            child: Form(
+                              child: TextFormField(
+                                controller: bSugarBeforeController,
+                                onChanged: (val) {
+                                  setState(() => bSugarBefore = val);
+                                },
+                                keyboardType: TextInputType.number,
+                                decoration: new InputDecoration(
+                                  labelText: "Blood sugar reading",
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
+                                onSaved: (String value) {},
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    height: MediaQuery.of(context).size.height * 0.055,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          height: MediaQuery.of(context).size.height * 0.055,
-                          child: Form(
+                    Container(
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      child: Text(
+                        "After eating (2 hours)",
+                        style: TextStyle(
+                          fontFamily: 'Comfortaa',
+                          fontSize: MediaQuery.of(context).size.height * 0.022,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015),
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      height: MediaQuery.of(context).size.height * 0.055,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            height: MediaQuery.of(context).size.height * 0.055,
                             child: TextFormField(
-                              controller: bSugarBeforeController,
+                              controller: controllerBP,
                               onChanged: (val) {
-                                setState(() => bSugarBefore = val);
+                                setState(() => bSugarAfter = val);
                               },
                               keyboardType: TextInputType.number,
                               decoration: new InputDecoration(
-                                labelText: "Blood sugar reading",
+                                labelText: "Blood sugar reading (Optional)",
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                   borderSide: BorderSide(
@@ -111,121 +163,71 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                                 ),
                               ),
                               onSaved: (String value) {},
+                              validator: (String value) {
+                                return null;
+                              },
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    child: Text(
-                      "After eating (2 hours)",
-                      style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontSize: MediaQuery.of(context).size.height * 0.022,
-                        color: Colors.black,
+                        ],
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015),
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    height: MediaQuery.of(context).size.height * 0.055,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          height: MediaQuery.of(context).size.height * 0.055,
-                          child: TextFormField(
-                            controller: controllerBP,
-                            onChanged: (val) {
-                              setState(() => bSugarAfter = val);
-                            },
-                            keyboardType: TextInputType.number,
-                            decoration: new InputDecoration(
-                              labelText: "Blood sugar reading (Optional)",
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 1,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 1,
-                                ),
-                              ),
-                            ),
-                            onSaved: (String value) {},
-                            validator: (String value) {
-                              return null;
-                            },
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      decoration: myBoxDecoration(),
+                      child: Center(
+                        child: Text(
+                          "Back",
+                          style: TextStyle(
+                            fontFamily: 'Comfortaa',
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.height * 0.025,
+                            color: Colors.black,
                           ),
                         ),
-                      ],
+                      ),
                     ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+                  InkWell(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      decoration: myBoxDecoration(),
+                      child: Center(
+                        child: Text(
+                          "Next",
+                          style: TextStyle(
+                            fontFamily: 'Comfortaa',
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.height * 0.025,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      validateInput(controllerBP.text, bSugarBeforeController.text);
+                      //print(widget.foodMap);
+                    },
                   ),
                 ],
               ),
             ),
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    decoration: myBoxDecoration(),
-                    child: Center(
-                      child: Text(
-                        "Back",
-                        style: TextStyle(
-                          fontFamily: 'Comfortaa',
-                          fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.height * 0.025,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.05),
-                InkWell(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    decoration: myBoxDecoration(),
-                    child: Center(
-                      child: Text(
-                        "Next",
-                        style: TextStyle(
-                          fontFamily: 'Comfortaa',
-                          fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.height * 0.025,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    validateInput(controllerBP.text, bSugarBeforeController.text);
-                    //print(widget.foodMap);
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -276,19 +278,15 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
             context,
             // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
             MaterialPageRoute(
-                builder: (context) => FoodIntakeSummaryPending(
-                    selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore)));
+                builder: (context) =>
+                    FoodIntakeSummaryPending(selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore)));
       } else {
         Navigator.push(
             context,
             // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
             MaterialPageRoute(
                 builder: (context) => FoodIntakeSummaryDone(
-                    selectedDate: widget.selectedDate,
-                    selectedTime: widget.selectedTime,
-                    foodMap: widget.foodMap,
-                    bSugarBefore: bSugarBefore,
-                    bSugarAfter: bSugarAfter)));
+                    selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore, bSugarAfter: bSugarAfter)));
       }
     }
   }

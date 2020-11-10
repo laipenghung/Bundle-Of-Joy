@@ -50,8 +50,15 @@ class _BabyFoodIntakeListDoneState extends State<BabyFoodIntakeListDone> {
         centerTitle: true,
       ),
       body: StreamBuilder(
-        stream: _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Done")
-          .orderBy('selectedDate', descending: true).orderBy('selectedTime', descending: true).snapshots(),
+        stream: _db
+            .collection('mother')
+            .doc(user.uid)
+            .collection("baby")
+            .doc(widget.selectedBabyID)
+            .collection("babyFoodIntake_Done")
+            .orderBy('selectedDate', descending: true)
+            .orderBy('selectedTime', descending: true)
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -109,91 +116,188 @@ class _BabyFoodIntakeListDoneState extends State<BabyFoodIntakeListDone> {
                                 },
                               )
                             ],
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                  top: MediaQuery.of(context).size.height * 0.015,
-                                  bottom: MediaQuery.of(context).size.height * 0.015,
-                                  left: MediaQuery.of(context).size.width * 0.07),
-                              //color: Colors.lightBlue,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.1),
-                                    child: Image.asset(
-                                      "assets/icons/meal.png",
-                                      height: MediaQuery.of(context).size.height * 0.06,
-                                    ),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Builder(builder: (context) {
+                              if (snapshot.data.documents[index]['symptomsAndAllergies'] == true) {
+                                return Container(
+                                  padding: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height * 0.015,
+                                      bottom: MediaQuery.of(context).size.height * 0.015,
+                                      left: MediaQuery.of(context).size.width * 0.07),
+                                  //color: Colors.lightBlue,
+                                  child: Row(
                                     children: [
-                                      Row(
+                                      Container(
+                                        margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.1),
+                                        child: Image.asset(
+                                          "assets/icons/meal.png",
+                                          height: MediaQuery.of(context).size.height * 0.06,
+                                        ),
+                                      ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                          Row(
                                             children: [
-                                              Text(
-                                                "Date:",
-                                                style: TextStyle(
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: MediaQuery.of(context).size.width * 0.04,
-                                                  color: Colors.black,
-                                                ),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "Date:",
+                                                    style: TextStyle(
+                                                      fontFamily: 'Comfortaa',
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                                  Text(
+                                                    "Time:",
+                                                    style: TextStyle(
+                                                      fontFamily: 'Comfortaa',
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                                              Text(
-                                                "Time:",
-                                                style: TextStyle(
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: MediaQuery.of(context).size.width * 0.04,
-                                                  color: Colors.black,
-                                                ),
+                                              SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    snapshot.data.documents[index]['selectedDate'],
+                                                    style: TextStyle(
+                                                      fontFamily: 'Comfortaa',
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                                  Text(
+                                                    snapshot.data.documents[index]['selectedTime'],
+                                                    style: TextStyle(
+                                                      fontFamily: 'Comfortaa',
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
-                                          SizedBox(width: MediaQuery.of(context).size.width * 0.04),
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                snapshot.data.documents[index]['selectedDate'],
-                                                style: TextStyle(
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: MediaQuery.of(context).size.width * 0.04,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                                              Text(
-                                                snapshot.data.documents[index]['selectedTime'],
-                                                style: TextStyle(
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: MediaQuery.of(context).size.width * 0.04,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ],
+                                          SizedBox(height: MediaQuery.of(context).size.width * 0.025),
+                                          Text(
+                                            'View Record >>>',
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontSize: MediaQuery.of(context).size.width * 0.03,
+                                              color: Colors.black,
+                                            ),
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: MediaQuery.of(context).size.width * 0.025),
-                                      Text(
-                                        'View Record >>>',
-                                        style: TextStyle(
-                                          fontFamily: 'Comfortaa',
-                                          fontSize: MediaQuery.of(context).size.width * 0.03,
-                                          color: Colors.black,
+                                      Container(
+                                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.2),
+                                        child: Image.asset(
+                                          "assets/icons/danger.png",
+                                          height: MediaQuery.of(context).size.height * 0.04,
                                         ),
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                            ),
+                                );
+                              } else {
+                                return Container(
+                                  padding: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height * 0.015,
+                                      bottom: MediaQuery.of(context).size.height * 0.015,
+                                      left: MediaQuery.of(context).size.width * 0.07),
+                                  //color: Colors.lightBlue,
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.1),
+                                        child: Image.asset(
+                                          "assets/icons/meal.png",
+                                          height: MediaQuery.of(context).size.height * 0.06,
+                                        ),
+                                      ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "Date:",
+                                                    style: TextStyle(
+                                                      fontFamily: 'Comfortaa',
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                                  Text(
+                                                    "Time:",
+                                                    style: TextStyle(
+                                                      fontFamily: 'Comfortaa',
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    snapshot.data.documents[index]['selectedDate'],
+                                                    style: TextStyle(
+                                                      fontFamily: 'Comfortaa',
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                                  Text(
+                                                    snapshot.data.documents[index]['selectedTime'],
+                                                    style: TextStyle(
+                                                      fontFamily: 'Comfortaa',
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: MediaQuery.of(context).size.width * 0.025),
+                                          Text(
+                                            'View Record >>>',
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontSize: MediaQuery.of(context).size.width * 0.03,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            }),
                           ),
                           Divider(
                             indent: MediaQuery.of(context).size.width * 0.03,

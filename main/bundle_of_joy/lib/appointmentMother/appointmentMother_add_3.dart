@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 
 import 'package:bundle_of_joy/main.dart';
+import 'appointmentMother_add_2.dart';
 import "appointmentMother_main.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -387,8 +388,10 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
                             ),
                           ),
                           onTap: () {
-                            //Navigator.push(context,MaterialPageRoute(builder: (context) => AppointmentMotherAdd2(name: nameFrom2)),);
-                            checkAppointmentExist();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => AppointmentMotherAdd2(name: nameFrom2)),
+                            );
                           },
                         ),
                         SizedBox(width: MediaQuery.of(context).size.width * 0.05),
@@ -601,24 +604,6 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
     }).catchError((error) => print("Something is wrong here"));
   }
 
-  checkAppointmentExist() {
-    List<String> productName = [];
-
-    final FirebaseFirestore _db = FirebaseFirestore.instance;
-    final User user = FirebaseAuth.instance.currentUser;
-    print("RUNNINGGG");
-
-    Stream<QuerySnapshot> appointmentRecord = _db.collection("mother_appointment").where("m_id", isEqualTo: user.uid).where("date_string", isEqualTo: dateFrom2).snapshots();
-
-    appointmentRecord.forEach((field) {
-      field.docs.asMap().forEach((index, data) {
-        productName.add(field.docs[index]["name"]);
-      });
-    });
-
-    print(productName.length);
-  }
-
   void _showNotification() async {
     await notification();
   }
@@ -637,8 +622,8 @@ class _AppointmentMotherAdd3State extends State<AppointmentMotherAdd3> {
 
     await main.createState().flutterLocalNotificationsPlugin.show(
           0,
-          'Appointment Management',
-          'You have succesfully booked a slot for ' + dateFrom2,
+          'Appointment Management - Mother',
+          'You have succesfully booked a slot for ' + dateFrom2 + ".",
           notificationDetails,
         );
   }

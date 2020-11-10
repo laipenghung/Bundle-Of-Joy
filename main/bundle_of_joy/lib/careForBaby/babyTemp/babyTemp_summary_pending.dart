@@ -89,12 +89,12 @@ class _BabyTempSummaryPendingState extends State<BabyTempSummaryPending> {
       priority: Priority.high,
       importance: Importance.max,
       ticker: 'test',
+      styleInformation: BigTextStyleInformation(''),
     );
 
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(
-        0, 'Medicine Intake Tracking', 'It\'s time to update your baby\'s body temperature.', tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)), notificationDetails,
-        androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
+    await main.createState().flutterLocalNotificationsPlugin.show(
+        0, 'Medicine Intake Tracking', 'You have added a pending record.\nRemember to update the baby\'s body temperature after taking the medicine！', notificationDetails);
   }
 
   @override

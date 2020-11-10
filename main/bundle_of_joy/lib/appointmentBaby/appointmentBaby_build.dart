@@ -11,60 +11,63 @@ class HospitalRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
         InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AppointmentBabyAdd2(name: name, babyID: babyID)),
+            );
+          },
           child: Container(
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.015, bottom: MediaQuery.of(context).size.height * 0.015, left: MediaQuery.of(context).size.width * 0.07),
+            //color: Colors.lightBlue,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
+              children: [
                 Container(
-                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.03),
-                  width: MediaQuery.of(context).size.height * 0.15,
-                  height: MediaQuery.of(context).size.height * 0.15,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage("https://kuchingborneo.info/wp-content/uploads/2017/03/KPJ-Kuching-Medical-Centre.jpg"),
-                    ),
+                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02, right: MediaQuery.of(context).size.width * 0.1),
+                  child: Image.asset(
+                    "assets/icons/hospital(1).png",
+                    height: MediaQuery.of(context).size.height * 0.06,
                   ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05, top: MediaQuery.of(context).size.height * 0.008),
-                      //color: Colors.lightBlue,
-                      height: MediaQuery.of(context).size.height * 0.1,
-                      width: MediaQuery.of(context).size.width * 0.53,
-
-                      child: Text(
-                        name,
-                        style: TextStyle(
-                          fontFamily: 'Comfortaa',
-                          fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.height * 0.023,
-                          color: Colors.black,
+                  children: [
+                    Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              //color: Colors.lightBlue,
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              child: Text(
+                                name,
+                                style: TextStyle(
+                                  fontFamily: 'Comfortaa',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: MediaQuery.of(context).size.width * 0.04,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                          ],
                         ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
-                        softWrap: true,
-                      ),
+                      ],
                     ),
+                    SizedBox(height: MediaQuery.of(context).size.width * 0.025),
                     Row(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.05,
-                          ),
                           child: Image.asset(
                             "assets/icons/hospitalNum.png",
-                            height: MediaQuery.of(context).size.height * 0.035,
+                            height: MediaQuery.of(context).size.height * 0.03,
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.04,
-                          ),
+                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
                           child: Text(
                             "082 - 507236",
                             style: TextStyle(
@@ -82,21 +85,10 @@ class HospitalRow extends StatelessWidget {
               ],
             ),
           ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AppointmentBabyAdd2(
-                        name: name,
-                        babyID: babyID,
-                      )),
-            );
-          },
         ),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
         Divider(
-          indent: MediaQuery.of(context).size.width * 0.05,
-          endIndent: MediaQuery.of(context).size.width * 0.05,
+          indent: MediaQuery.of(context).size.width * 0.03,
+          endIndent: MediaQuery.of(context).size.width * 0.03,
           color: Colors.black,
           thickness: MediaQuery.of(context).size.height * 0.001,
         ),

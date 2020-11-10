@@ -46,8 +46,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
     );
 
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await main.createState().flutterLocalNotificationsPlugin.show(
-        0, 'Food Intake Tracking', 'Food record successfully created.', notificationDetails);
+    await main.createState().flutterLocalNotificationsPlugin.show(0, 'Food Intake Tracking', 'Food record successfully created.', notificationDetails);
   }
 
   @override
@@ -57,7 +56,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
-          "Food Intake Tracking D",
+          "Food Intake Tracking",
           style: TextStyle(
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.bold,
@@ -93,7 +92,8 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        //color: Colors.red,
+                        width: MediaQuery.of(context).size.width * 0.6,
                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                         child: Text(
                           widget.selectedDate,
@@ -103,6 +103,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                             fontSize: MediaQuery.of(context).size.height * 0.025,
                             color: Colors.black,
                           ),
+                          textAlign: TextAlign.left,
                         ),
                       ),
                     ],
@@ -118,7 +119,8 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        //color: Colors.red,
+                        width: MediaQuery.of(context).size.width * 0.6,
                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                         child: Text(
                           widget.selectedTime,
@@ -128,6 +130,7 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                             fontSize: MediaQuery.of(context).size.height * 0.025,
                             color: Colors.black,
                           ),
+                          textAlign: TextAlign.left,
                         ),
                       ),
                     ],
@@ -135,8 +138,10 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                   SizedBox(height: MediaQuery.of(context).size.height * 0.06),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.005),
                         child: Image.asset(
                           "assets/icons/food-intake.png",
                           height: MediaQuery.of(context).size.height * 0.05,
@@ -145,28 +150,51 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                       Column(
                         children: [
                           Container(
-                            width: MediaQuery.of(context).size.width * 0.4,
+                            //color: Colors.red,
+                            width: MediaQuery.of(context).size.width * 0.6,
                             margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                             child: Table(
-                              //border: TableBorder.all(width: 1.0, color: Colors.black),
                               children: [
                                 for (var x in zip([foodName, foodQty]))
                                   TableRow(children: [
                                     TableCell(
                                         child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Container(
-                                          //color: Colors.blue,
+                                          //color: Colors.green,
                                           width: MediaQuery.of(context).size.width * 0.4,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015, bottom: MediaQuery.of(context).size.height * 0.015),
+                                            child: new Text(
+                                              x[0].toString(),
+                                              style: TextStyle(
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                color: Colors.black,
+                                              ),
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context).size.width * 0.05,
+                                        ),
+                                        Container(
+                                          //color: Colors.white,
+                                          width: MediaQuery.of(context).size.width * 0.1,
                                           child: new Text(
-                                            x[0].toString() + "\n x" + x[1].toString(),
+                                            "x" + x[1].toString(),
                                             style: TextStyle(
                                               fontFamily: 'Comfortaa',
                                               fontWeight: FontWeight.bold,
-                                              fontSize: MediaQuery.of(context).size.height * 0.023,
+                                              fontSize: MediaQuery.of(context).size.height * 0.025,
                                               color: Colors.black,
                                             ),
+                                            textAlign: TextAlign.left,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            softWrap: true,
                                           ),
                                         ),
                                       ],
@@ -192,21 +220,24 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                       Column(
                         children: [
                           Container(
-                            width: MediaQuery.of(context).size.width * 0.4,
+                            width: MediaQuery.of(context).size.width * 0.6,
                             margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                             child: Row(
                               children: [
-                                Text(
-                                  "Before: ",
-                                  style: TextStyle(
-                                    fontFamily: 'Comfortaa',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: MediaQuery.of(context).size.height * 0.025,
-                                    color: Colors.black,
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.2,
+                                  child: Text(
+                                    "Before: ",
+                                    style: TextStyle(
+                                      fontFamily: 'Comfortaa',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: MediaQuery.of(context).size.height * 0.025,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
                                 Text(
-                                  widget.bSugarBefore,
+                                  widget.bSugarBefore + " mmol/L",
                                   style: TextStyle(
                                     fontFamily: 'Comfortaa',
                                     fontWeight: FontWeight.bold,
@@ -217,23 +248,26 @@ class _FoodIntakeSummaryDoneState extends State<FoodIntakeSummaryDone> {
                               ],
                             ),
                           ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                           Container(
-                            width: MediaQuery.of(context).size.width * 0.4,
+                            width: MediaQuery.of(context).size.width * 0.6,
                             margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                             child: Row(
                               children: [
-                                Text(
-                                  "After: ",
-                                  style: TextStyle(
-                                    fontFamily: 'Comfortaa',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: MediaQuery.of(context).size.height * 0.025,
-                                    color: Colors.black,
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.2,
+                                  child: Text(
+                                    "After: ",
+                                    style: TextStyle(
+                                      fontFamily: 'Comfortaa',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: MediaQuery.of(context).size.height * 0.025,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
                                 Text(
-                                  widget.bSugarAfter,
+                                  widget.bSugarAfter + " mmol/L",
                                   style: TextStyle(
                                     fontFamily: 'Comfortaa',
                                     fontWeight: FontWeight.bold,

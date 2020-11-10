@@ -3,6 +3,9 @@ import 'package:bundle_of_joy/mother-for-baby.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import '../../main.dart';
 
 class BabyTempRecordPending extends StatefulWidget {
   final String babyTempRecordID, selectedBabyID;
@@ -13,9 +16,32 @@ class BabyTempRecordPending extends StatefulWidget {
 }
 
 class _BabyTempRecordPendingState extends State<BabyTempRecordPending> {
+  MyApp main = MyApp();
   String bTempUpdate = "";
   TextEditingController controllerBT = TextEditingController();
   var content;
+
+  void _showNotification() async {
+    await notification();
+  }
+
+  Future<void> notification() async {
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'Channel Id',
+      'Channel title',
+      'channel body',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+      styleInformation: BigTextStyleInformation(''),
+    );
+
+    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+    await main
+        .createState()
+        .flutterLocalNotificationsPlugin
+        .show(0, 'Medicine Intake Tracking', 'Baby\'s body temperature updated.\nYou can now view it in Medicine Intake Record of the baby.', notificationDetails);
+  }
 
   void initState() {
     super.initState();
@@ -331,6 +357,7 @@ class _BabyTempRecordPendingState extends State<BabyTempRecordPending> {
                           } else {
                             updateBabyTemoRecord(snapshot.data.data()["motherID"], snapshot.data.data()["selectedDate"], snapshot.data.data()["selectedTime"],
                                 snapshot.data.data()["bTempBefore"], bTempUpdate, widget.babyTempRecordID, widget.selectedBabyID, snapshot.data.data()["medsMap"]);
+                            _showNotification();
                           }
                         }, //ADD TO DATABASE
                       ),

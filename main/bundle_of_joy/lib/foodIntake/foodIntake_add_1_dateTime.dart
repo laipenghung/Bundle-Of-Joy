@@ -210,10 +210,7 @@ class _FoodIntakeAdd1State extends State<FoodIntakeAdd1> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FoodIntakeMain()),
-                    );
+                    Navigator.of(context).pop();
                   },
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width * 0.05),

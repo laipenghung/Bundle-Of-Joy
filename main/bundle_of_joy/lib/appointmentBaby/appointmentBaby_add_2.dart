@@ -95,22 +95,25 @@ class _AppointmentBabyAdd2State extends State<AppointmentBabyAdd2> {
                       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.85,
-                        height: MediaQuery.of(context).size.height * 0.07,
                         padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
                         decoration: myBoxDecoration(),
                         child: Center(
-                          child: Text(
-                            hospitalName,
-                            style: TextStyle(
-                              fontFamily: 'Comfortaa',
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.height * 0.025,
-                              color: Colors.black,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0,
+                              top: MediaQuery.of(context).size.width * 0.03,
+                              bottom: MediaQuery.of(context).size.width * 0.03,
                             ),
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            softWrap: true,
+                            child: Text(
+                              hospitalName,
+                              style: TextStyle(
+                                fontFamily: 'Comfortaa',
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                color: Colors.black,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                       ),
@@ -244,7 +247,7 @@ class _AppointmentBabyAdd2State extends State<AppointmentBabyAdd2> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text("Opps!"),
-              content: Text("You already have an appointment on $dateToPass. Please select another day to book an appointment or delete the current appointment."),
+              content: Text("You already have an appointment on $dateToPass. Please select another day."),
               actions: <Widget>[
                 FlatButton(
                   child: Text("Ok"),

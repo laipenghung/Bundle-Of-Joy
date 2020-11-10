@@ -53,8 +53,8 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
             List<dynamic> foodQty = List<dynamic>();
             foodName = food.keys.toList();
             foodQty = food.values.toList();
-            var bSugarBefore = double.parse(snapshot.data.data()["bsBefore"]);  
-            var bSugarAfter = double.parse(snapshot.data.data()["bsAfter"]);       
+            var bSugarBefore = double.parse(snapshot.data.data()["bsBefore"]);
+            var bSugarAfter = double.parse(snapshot.data.data()["bsAfter"]);
             //print(foodName);
             //print(foodQty);
 
@@ -84,7 +84,8 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
+                                //color: Colors.red,
+                                width: MediaQuery.of(context).size.width * 0.6,
                                 margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                 child: Text(
                                   snapshot.data.data()["selectedDate"],
@@ -94,6 +95,7 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
                                     fontSize: MediaQuery.of(context).size.height * 0.025,
                                     color: Colors.black,
                                   ),
+                                  textAlign: TextAlign.left,
                                 ),
                               ),
                             ],
@@ -109,7 +111,8 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
+                                //color: Colors.red,
+                                width: MediaQuery.of(context).size.width * 0.6,
                                 margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                 child: Text(
                                   snapshot.data.data()["selectedTime"],
@@ -119,6 +122,7 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
                                     fontSize: MediaQuery.of(context).size.height * 0.025,
                                     color: Colors.black,
                                   ),
+                                  textAlign: TextAlign.left,
                                 ),
                               ),
                             ],
@@ -126,8 +130,10 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
                           SizedBox(height: MediaQuery.of(context).size.height * 0.06),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
+                                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.005),
                                 child: Image.asset(
                                   "assets/icons/food-intake.png",
                                   height: MediaQuery.of(context).size.height * 0.05,
@@ -136,28 +142,52 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
                               Column(
                                 children: [
                                   Container(
-                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    //color: Colors.red,
+                                    width: MediaQuery.of(context).size.width * 0.6,
                                     margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                     child: Table(
-                                      //border: TableBorder.all(width: 1.0, color: Colors.black),
                                       children: [
                                         for (var x in zip([foodName, foodQty]))
                                           TableRow(children: [
                                             TableCell(
                                                 child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: <Widget>[
                                                 Container(
-                                                  //color: Colors.blue,
+                                                  //color: Colors.green,
                                                   width: MediaQuery.of(context).size.width * 0.4,
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015, bottom: MediaQuery.of(context).size.height * 0.015),
+                                                    child: new Text(
+                                                      x[0].toString(),
+                                                      style: TextStyle(
+                                                        fontFamily: 'Comfortaa',
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                        color: Colors.black,
+                                                      ),
+                                                      textAlign: TextAlign.left,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context).size.width * 0.05,
+                                                ),
+                                                Container(
+                                                  //color: Colors.white,
+                                                  width: MediaQuery.of(context).size.width * 0.1,
                                                   child: new Text(
-                                                    x[0].toString() + "\n x" + x[1].toString(),
+                                                    "x" + x[1].toString(),
                                                     style: TextStyle(
                                                       fontFamily: 'Comfortaa',
                                                       fontWeight: FontWeight.bold,
-                                                      fontSize: MediaQuery.of(context).size.height * 0.023,
+                                                      fontSize: MediaQuery.of(context).size.height * 0.025,
                                                       color: Colors.black,
                                                     ),
+                                                    textAlign: TextAlign.left,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    softWrap: true,
                                                   ),
                                                 ),
                                               ],
@@ -183,7 +213,7 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
                               Column(
                                 children: [
                                   Container(
-                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    width: MediaQuery.of(context).size.width * 0.6,
                                     margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                     child: Row(
                                       children: [
@@ -197,7 +227,7 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
                                           ),
                                         ),
                                         Text(
-                                          '${snapshot.data.data()["bsBefore"]} (mmol/L)',
+                                          snapshot.data.data()["bsBefore"] + " mmol/L",
                                           style: TextStyle(
                                             fontFamily: 'Comfortaa',
                                             fontWeight: FontWeight.bold,
@@ -205,76 +235,73 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
                                             color: Colors.black,
                                           ),
                                         ),
-
-                                        
                                       ],
                                     ),
                                   ),
                                   Container(
-                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    width: MediaQuery.of(context).size.width * 0.6,
                                     margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                     child: Row(
                                       children: [
-                                        StatefulBuilder(
-                                          builder: (BuildContext context, StateSetter setState){
-                                            if(bSugarBefore < 4.1){
-                                              return Text(
-                                                "Too Low",
-                                                style: TextStyle(
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
-                                                  color: Colors.red,
-                                                ),
-                                              );
-                                            }else if(bSugarBefore < 6.1){
-                                              return Text(
-                                                "Excellent",
-                                                style: TextStyle(
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
-                                                  color: Colors.green,
-                                                ),
-                                              );
-                                            }else if(bSugarBefore < 8.1){
-                                              return Text(
-                                                "Good",
-                                                style: TextStyle(
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
-                                                  color: Colors.lime,
-                                                ),
-                                              );
-                                            }else if(bSugarBefore < 10.1){
-                                              return Text(
-                                                "Acceptable",
-                                                style: TextStyle(
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
-                                                  color: Colors.orange,
-                                                ),
-                                              );
-                                            }else{
-                                              return Text(
-                                                "Poor",
-                                                style: TextStyle(
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
-                                                  color: Colors.red,
-                                                ),
-                                              );
-                                            }
-                                          }) 
+                                        StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+                                          if (bSugarBefore < 5.1) {
+                                            return Text(
+                                              "Too Low",
+                                              style: TextStyle(
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                color: Colors.red,
+                                              ),
+                                            );
+                                          } else if (bSugarBefore < 6.1) {
+                                            return Text(
+                                              "Excellent",
+                                              style: TextStyle(
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                color: Colors.green,
+                                              ),
+                                            );
+                                          } else if (bSugarBefore < 8.1) {
+                                            return Text(
+                                              "Good",
+                                              style: TextStyle(
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                color: Colors.lime,
+                                              ),
+                                            );
+                                          } else if (bSugarBefore < 10.1) {
+                                            return Text(
+                                              "Acceptable",
+                                              style: TextStyle(
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                color: Colors.orange,
+                                              ),
+                                            );
+                                          } else {
+                                            return Text(
+                                              "Poor",
+                                              style: TextStyle(
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                color: Colors.red,
+                                              ),
+                                            );
+                                          }
+                                        })
                                       ],
                                     ),
                                   ),
-                                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                                   Container(
-                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    width: MediaQuery.of(context).size.width * 0.6,
                                     margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                     child: Row(
                                       children: [
@@ -288,7 +315,7 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
                                           ),
                                         ),
                                         Text(
-                                          snapshot.data.data()["bsAfter"],
+                                          snapshot.data.data()["bsBefore"] + " mmol/L",
                                           style: TextStyle(
                                             fontFamily: 'Comfortaa',
                                             fontWeight: FontWeight.bold,
@@ -300,64 +327,63 @@ class _FoodIntakeRecordDoneState extends State<FoodIntakeRecordDone> {
                                     ),
                                   ),
                                   Container(
-                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    width: MediaQuery.of(context).size.width * 0.6,
                                     margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
                                     child: Row(
                                       children: [
-                                        StatefulBuilder(
-                                          builder: (BuildContext context, StateSetter setState){
-                                            if(bSugarBefore < 5.1){
-                                              return Text(
-                                                "Too Low",
-                                                style: TextStyle(
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
-                                                  color: Colors.red,
-                                                ),
-                                              );
-                                            }else if(bSugarAfter < 7.1){
-                                              return Text(
-                                                "Excellent",
-                                                style: TextStyle(
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
-                                                  color: Colors.green,
-                                                ),
-                                              );
-                                            }else if(bSugarAfter < 10.1){
-                                              return Text(
-                                                "Good",
-                                                style: TextStyle(
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
-                                                  color: Colors.lime,
-                                                ),
-                                              );
-                                            }else if(bSugarAfter < 13.1){
-                                              return Text(
-                                                "Acceptable",
-                                                style: TextStyle(
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
-                                                  color: Colors.orange,
-                                                ),
-                                              );
-                                            }else{
-                                              return Text(
-                                                "Poor",
-                                                style: TextStyle(
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: MediaQuery.of(context).size.height * 0.025,
-                                                  color: Colors.red,
-                                                ),
-                                              );
-                                            }
-                                          }) 
+                                        StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+                                          if (bSugarAfter < 5.1) {
+                                            return Text(
+                                              "Too Low",
+                                              style: TextStyle(
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                color: Colors.red,
+                                              ),
+                                            );
+                                          } else if (bSugarAfter < 7.1) {
+                                            return Text(
+                                              "Excellent",
+                                              style: TextStyle(
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                color: Colors.green,
+                                              ),
+                                            );
+                                          } else if (bSugarAfter < 10.1) {
+                                            return Text(
+                                              "Good",
+                                              style: TextStyle(
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                color: Colors.lime,
+                                              ),
+                                            );
+                                          } else if (bSugarAfter < 13.1) {
+                                            return Text(
+                                              "Acceptable",
+                                              style: TextStyle(
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                color: Colors.orange,
+                                              ),
+                                            );
+                                          } else {
+                                            return Text(
+                                              "Poor",
+                                              style: TextStyle(
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
+                                                color: Colors.red,
+                                              ),
+                                            );
+                                          }
+                                        })
                                       ],
                                     ),
                                   ),
