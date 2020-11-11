@@ -6,9 +6,6 @@ import 'package:bundle_of_joy/mother-to-be.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddEmerContactScreen extends StatefulWidget {
-  final String patientID;
-  AddEmerContactScreen({Key key, this.patientID}) : super(key: key);
-
   @override
   _AddEmerContactScreenState createState() => _AddEmerContactScreenState();
 }
@@ -59,7 +56,7 @@ class _AddEmerContactScreenState extends State<AddEmerContactScreen> {
               setState(() {
                 _emerContactNo = contact.phoneNumber.number;
                 //_emerContactName = contact.fullName;      #Remove comment if have to add contact name into firebse
-                emerContact.addEmerContact(_emerContactNo, widget.patientID);
+                emerContact.addEmerContact(_emerContactNo);
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherToBeTab()));
                 Fluttertoast.showToast(
                   msg: "Contact Successfully Added",

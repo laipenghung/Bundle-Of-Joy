@@ -7,12 +7,12 @@ import "package:cloud_firestore/cloud_firestore.dart";
 class EmergencyContactTab extends StatelessWidget {
   final User user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  String patientID;
+  //String patientID;
 
   Future _getContact() async {
-    var x = await _db.collection('patient').where("m_id", isEqualTo: user.uid).get();
-    if (x.docs[0].data()["m_emergencyContact"] == null || x.docs[0].data()["m_emergencyContact"] == "") {
-      patientID = x.docs[0].data()["patient_id"];
+    var x = await _db.collection('mother').doc(user.uid).get();
+    //print(x.data()['m_emergencyContact']);
+    if (x.data()['m_emergencyContact'] == null || x.data()['m_emergencyContact'] == "" || x.data().isEmpty) {
       return false;
     } else {
       return true;
@@ -52,7 +52,7 @@ class EmergencyContactTab extends StatelessWidget {
             } else if (snapshot.data == true) {
               return EmerContactCall();
             } else {
-              return AddEmerContactScreen(patientID: patientID);
+              return AddEmerContactScreen();
             }
           } else if (snapshot.hasError) {
             print("error");
