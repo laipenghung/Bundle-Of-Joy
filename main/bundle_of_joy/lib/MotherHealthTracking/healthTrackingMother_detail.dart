@@ -32,10 +32,10 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
       child: StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
           if (healthReport.bloodSugar.toDouble() > 6) {
-            bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L) (Too high)";
+            bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L) \n(Too high)";
             colorBS = Colors.red;
           } else if (healthReport.bloodSugar.toDouble() < 4) {
-            bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L) (Too low)";
+            bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L) \n(Too low)";
             colorBS = Colors.orange;
           } else {
             bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L)";
@@ -60,178 +60,180 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
                 //color: Colors.lightBlue,
                 height: MediaQuery.of(context).size.height * 0.64,
                 width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, 0),
-                      child: Row(
-                        children: [
-                          Column(
-                            children: [
-                              Image.asset(
-                                "assets/icons/blood-sugar-level.png",
-                                width: pictureSize,
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(paddingLeft, 0, 0, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, 0),
+                        child: Row(
+                          children: [
+                            Column(
                               children: [
-                                Text(
-                                  "Blood Sugar",
-                                  style: (TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: fontSizeTitle,
-                                    fontFamily: "Comfortaa",
-                                  )),
-                                ),
-                                Divider(
-                                  height: divider,
-                                ),
-                                Text(
-                                  bloodSugar,
-                                  style: (TextStyle(
-                                    fontSize: fontSizeText,
-                                    fontFamily: "Comfortaa",
-                                    color: colorBS,
-                                  )),
+                                Image.asset(
+                                  "assets/icons/blood-sugar-level.png",
+                                  width: pictureSize,
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: sizedBoxHeight),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, 0),
-                      child: Row(
-                        children: [
-                          Column(
-                            children: [
-                              Image.asset(
-                                "assets/icons/blood-pressure-level.png",
-                                width: pictureSize,
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(paddingLeft, 0, 0, 0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Blood Sugar",
+                                    style: (TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: fontSizeTitle,
+                                      fontFamily: "Comfortaa",
+                                    )),
+                                  ),
+                                  Divider(
+                                    height: divider,
+                                  ),
+                                  Text(
+                                    bloodSugar,
+                                    style: (TextStyle(
+                                      fontSize: fontSizeText,
+                                      fontFamily: "Comfortaa",
+                                      color: colorBS,
+                                    )),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(paddingLeft, 0, 0, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: sizedBoxHeight),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, 0),
+                        child: Row(
+                          children: [
+                            Column(
                               children: [
-                                Text(
-                                  "Blood Pressure",
-                                  style: (TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: fontSizeTitle,
-                                    fontFamily: "Comfortaa",
-                                  )),
-                                ),
-                                Divider(
-                                  height: divider,
-                                ),
-                                Text(
-                                  bloodPressure,
-                                  style: (TextStyle(
-                                    fontSize: fontSizeText,
-                                    fontFamily: "Comfortaa",
-                                    color: colorBP,
-                                  )),
+                                Image.asset(
+                                  "assets/icons/blood-pressure-level.png",
+                                  width: pictureSize,
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: sizedBoxHeight),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, 0),
-                      child: Row(
-                        children: [
-                          Column(
-                            children: [
-                              Image.asset(
-                                "assets/icons/weight.png",
-                                width: pictureSize,
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(paddingLeft, 0, 0, 0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Blood Pressure",
+                                    style: (TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: fontSizeTitle,
+                                      fontFamily: "Comfortaa",
+                                    )),
+                                  ),
+                                  Divider(
+                                    height: divider,
+                                  ),
+                                  Text(
+                                    bloodPressure,
+                                    style: (TextStyle(
+                                      fontSize: fontSizeText,
+                                      fontFamily: "Comfortaa",
+                                      color: colorBP,
+                                    )),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(paddingLeft, 0, paddingLeft, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: sizedBoxHeight),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, 0),
+                        child: Row(
+                          children: [
+                            Column(
                               children: [
-                                Text(
-                                  "Weight",
-                                  style: (TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: fontSizeTitle,
-                                    fontFamily: "Comfortaa",
-                                  )),
-                                ),
-                                Divider(
-                                  height: divider,
-                                ),
-                                Text(
-                                  healthReport.weight.toString() + " (kg)",
-                                  style: (TextStyle(
-                                    fontSize: fontSizeText,
-                                    fontFamily: "Comfortaa",
-                                  )),
+                                Image.asset(
+                                  "assets/icons/weight.png",
+                                  width: pictureSize,
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: sizedBoxHeight),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, paddingTopPic),
-                      child: Row(
-                        children: [
-                          Column(
-                            children: [
-                              Image.asset(
-                                "assets/icons/height.png",
-                                width: pictureSize,
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(paddingLeft, 0, paddingLeft, 0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Weight",
+                                    style: (TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: fontSizeTitle,
+                                      fontFamily: "Comfortaa",
+                                    )),
+                                  ),
+                                  Divider(
+                                    height: divider,
+                                  ),
+                                  Text(
+                                    healthReport.weight.toString() + " (kg)",
+                                    style: (TextStyle(
+                                      fontSize: fontSizeText,
+                                      fontFamily: "Comfortaa",
+                                    )),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(paddingLeft, 0, paddingLeft, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: sizedBoxHeight),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(paddingLeft, paddingTopPic, 0, paddingTopPic),
+                        child: Row(
+                          children: [
+                            Column(
                               children: [
-                                Text(
-                                  "Height",
-                                  style: (TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: fontSizeTitle,
-                                    fontFamily: "Comfortaa",
-                                  )),
-                                ),
-                                Divider(
-                                  height: divider,
-                                ),
-                                Text(
-                                  healthReport.height.toString() + " (cm)",
-                                  style: (TextStyle(
-                                    fontSize: fontSizeText,
-                                    fontFamily: "Comfortaa",
-                                  )),
+                                Image.asset(
+                                  "assets/icons/height.png",
+                                  width: pictureSize,
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(paddingLeft, 0, paddingLeft, 0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Height",
+                                    style: (TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: fontSizeTitle,
+                                      fontFamily: "Comfortaa",
+                                    )),
+                                  ),
+                                  Divider(
+                                    height: divider,
+                                  ),
+                                  Text(
+                                    healthReport.height.toString() + " (cm)",
+                                    style: (TextStyle(
+                                      fontSize: fontSizeText,
+                                      fontFamily: "Comfortaa",
+                                    )),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Container(

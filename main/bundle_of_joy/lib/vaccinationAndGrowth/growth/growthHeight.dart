@@ -33,10 +33,10 @@ class _Growth extends State<GrowthHeight> {
         bottomTitles: SideTitles(
             showTitles: true,
             getTextStyles: (value) => TextStyle(
-              fontFamily: "Comfortaa",
-              fontSize: fontSizeText,
-              color: Colors.black,
-            )),
+                  fontFamily: "Comfortaa",
+                  fontSize: fontSizeText,
+                  color: Colors.black,
+                )),
         leftTitles: SideTitles(
           showTitles: true,
           getTextStyles: (value) => TextStyle(
@@ -111,7 +111,7 @@ class _Growth extends State<GrowthHeight> {
             Padding(
               padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.06, bottom: MediaQuery.of(context).size.height * 0.08),
               child: Text(
-                "Baby Growth - Weight",
+                "Baby Growth - Height",
                 style: TextStyle(
                   fontFamily: "Comfortaa",
                   fontWeight: FontWeight.bold,
@@ -124,7 +124,7 @@ class _Growth extends State<GrowthHeight> {
             Padding(
               padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02, left: MediaQuery.of(context).size.width * 0.03),
               child: Text(
-                "Height (CM)",
+                "Height (cm)",
                 style: TextStyle(
                   fontFamily: "Comfortaa",
                   fontSize: fontSizeText,
@@ -169,7 +169,7 @@ class _Growth extends State<GrowthHeight> {
     }
   }
 
-  Widget loading(){
+  Widget loading() {
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     return Center(
       child: Column(
@@ -205,7 +205,7 @@ class _Growth extends State<GrowthHeight> {
   Widget build(BuildContext context) {
     final User user = FirebaseAuth.instance.currentUser;
     Query growth =
-    FirebaseFirestore.instance.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("baby_growth").orderBy("bg_month", descending: false);
+        FirebaseFirestore.instance.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("baby_growth").orderBy("bg_month", descending: false);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
@@ -228,13 +228,12 @@ class _Growth extends State<GrowthHeight> {
       body: StreamBuilder(
           stream: growth.snapshots(),
           builder: (context, collection) {
-            if(collection.hasData) {
+            if (collection.hasData) {
               return hasData(collection);
             } else {
               return loading();
             }
-          }
-      ),
+          }),
     );
   }
 }

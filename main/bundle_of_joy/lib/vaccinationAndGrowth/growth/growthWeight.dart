@@ -124,7 +124,7 @@ class _Growth extends State<GrowthWeight> {
             Padding(
               padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02, left: MediaQuery.of(context).size.width * 0.03),
               child: Text(
-                "Weight (KG)",
+                "Weight (kg)",
                 style: TextStyle(
                   fontFamily: "Comfortaa",
                   fontSize: fontSizeText,
@@ -169,7 +169,7 @@ class _Growth extends State<GrowthWeight> {
     }
   }
 
-  Widget loading(){
+  Widget loading() {
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     return Center(
       child: Column(
@@ -228,13 +228,12 @@ class _Growth extends State<GrowthWeight> {
       body: StreamBuilder(
           stream: growth.snapshots(),
           builder: (context, collection) {
-              if(collection.hasData) {
-                return hasData(collection);
-              } else {
-                return loading();
-              }
-          }
-      ),
+            if (collection.hasData) {
+              return hasData(collection);
+            } else {
+              return loading();
+            }
+          }),
     );
   }
 }
