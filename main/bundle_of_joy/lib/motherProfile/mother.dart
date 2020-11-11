@@ -31,11 +31,13 @@ class Mother {
     });
   }
 
-  void editProfile(String field, String value) async{
-    CollectionReference users = _db.collection("mother");
-    users.doc(user.uid).update({
-      field: value.toString()
-    }).then((value) => print("$field updated"))
-    .catchError((e) => print("Failed to update $field: $e"));
+  void editProfile(String field, String change, String pid) async{
+    DocumentReference patient = FirebaseFirestore.instance.collection("patient").doc(pid);
+
+    patient.update({
+      field: change.toString()
+    }).then((value){
+      print("$field updated");
+    }).catchError((e) => print("Failed to update $field: $e"));
   }
 }

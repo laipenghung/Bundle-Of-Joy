@@ -59,7 +59,12 @@ class _AppointmentBabyVerify extends State<AppointmentBabyVerify> {
 
                         pin_code.then((value) {
                           if(value.size == 0){
-                            print("No record found");
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext alertContext) {
+                                return noRecordFound();
+                              },
+                            );
                           } else {
                             CollectionReference users = FirebaseFirestore.instance.collection("mother");
                             users.doc(uid).update({
@@ -166,6 +171,42 @@ class _AppointmentBabyVerify extends State<AppointmentBabyVerify> {
       border: Border.all(color: Colors.deepPurpleAccent),
       borderRadius: BorderRadius.circular(15.0),
     );
+  }
+
+  AlertDialog noRecordFound() {
+    Widget closeButton = FlatButton(
+      child: Text("Close"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text(
+        "Warning!",
+        style: TextStyle(
+          fontFamily: "Comfortaa",
+        ),
+        textAlign: TextAlign.center,
+      ),
+      content: Text(
+        "Sorry the verification code is invalid.\nPlease check again.",
+        style: TextStyle(
+          fontFamily: "Comfortaa",
+        ),
+        textAlign: TextAlign.center,
+      ),
+      actionsPadding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.28),
+      actions: [
+        Align(
+            alignment: Alignment.center,
+            child: closeButton
+        ),
+      ],
+      backgroundColor: Color(0xFFFCFFD5),
+    );
+
+    return alert;
   }
 
   Widget loading(){

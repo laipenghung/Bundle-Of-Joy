@@ -14,13 +14,13 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
   Widget _listView(AsyncSnapshot<QuerySnapshot> collection) {
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
-    final _listField = ["mh_id", "mh_date", "mh_time", "mh_bloodPressure", "mh_bloodSugar", "mh_height", "mh_weight", "mh_day_of_pregnancy"];
+    final _listField = ["mh_id", "mh_date", "mh_time", "mh_bloodPressure_dia", "mh_bloodPressure_sys","mh_bloodSugar", "mh_height", "mh_weight", "mh_day_of_pregnancy"];
     List<HealthReport> _listInfo = List<HealthReport>();
 
     if (collection.data.docs.isNotEmpty) {
       collection.data.docs.forEach((doc) {
-        _listInfo.add(HealthReport(doc.data()[_listField[0]], doc.data()[_listField[1]], doc.data()[_listField[2]], doc.data()[_listField[3]].toDouble(),
-            doc.data()[_listField[4]].toDouble(), doc.data()[_listField[5]].toDouble(), doc.data()[_listField[6]].toDouble(), doc.data()[_listField[7]]));
+        _listInfo.add(HealthReport(doc.data()[_listField[0]], doc.data()[_listField[1]], doc.data()[_listField[2]], double.parse(doc.data()[_listField[3]]),
+            double.parse(doc.data()[_listField[4]]), doc.data()[_listField[5]].toDouble(), doc.data()[_listField[6]].toDouble(), doc.data()[_listField[7]].toDouble(), doc.data()[_listField[8]]));
       });
 
       return Container(
