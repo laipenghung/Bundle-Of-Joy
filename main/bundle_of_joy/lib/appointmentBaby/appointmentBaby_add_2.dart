@@ -267,7 +267,12 @@ class _AppointmentBabyAdd2State extends State<AppointmentBabyAdd2> {
       initialDate: pickedDate,
       builder: (BuildContext context, Widget child) {
         return Theme(
-          data: ThemeData(primarySwatch: Colors.pink, splashColor: Colors.green),
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.dark(
+              surface: Color(int.parse("0xFFFCFFD5")),
+              onSurface: Colors.black,
+            ),
+          ),
           child: child,
         );
       },

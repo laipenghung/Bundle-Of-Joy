@@ -128,6 +128,17 @@ class _AddBaby extends State<AddBaby> {
                       width: longWidth,
                       child: FormBuilderDateTimePicker(
                         lastDate: DateTime.now(),
+                        builder: (BuildContext context, Widget child) {
+                          return Theme(
+                            data: ThemeData.light().copyWith(
+                              colorScheme: ColorScheme.dark(
+                                surface: Color(int.parse("0xFFFCFFD5")),
+                                onSurface: Colors.black,
+                              ),
+                            ),
+                            child: child,
+                          );
+                        },
                         onChanged: (selected){
                           if(selected != null){
                             DateTime today = DateTime.now();
@@ -169,6 +180,17 @@ class _AddBaby extends State<AddBaby> {
                       child: FormBuilderDateTimePicker(
                         attribute: "tob",
                         inputType: InputType.time,
+                        builder: (BuildContext context, Widget child) {
+                          return Theme(
+                            data: ThemeData.light().copyWith(
+                              colorScheme: ColorScheme.dark(
+                                surface: Color(int.parse("0xFFFCFFD5")),
+                                onSurface: Colors.black,
+                              ),
+                            ),
+                            child: child,
+                          );
+                        },
                         format: DateFormat("H:m"),
                         decoration: InputDecoration(
                             labelText: "Time of Birth",

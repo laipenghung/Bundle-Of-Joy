@@ -1,16 +1,16 @@
 class HealthReport {
   String mhID, date, time;
-  double bloodPressure, bloodSugar, height, weight;
+  double bloodPressure_dia, bloodPressure_sys, bloodSugar, height, weight;
   int dayOfPregnancy;
 
-  HealthReport(String mhID, String date, String time, double bloodPressure, double bloodSugar, double height, double weight, int dayOfPregnancy) {
-    this.mhID = mhID;
-    this.date = date;
-    this.time = time;
-    this.bloodPressure = bloodPressure;
-    this.bloodSugar = bloodSugar;
-    this.height = height;
-    this.weight = weight;
-    this.dayOfPregnancy = dayOfPregnancy;
-  }
+  HealthReport(
+      this.mhID,
+      this.date,
+      this.time,
+      this.bloodPressure_dia,
+      this.bloodPressure_sys,
+      this.bloodSugar,
+      this.height,
+      this.weight,
+      this.dayOfPregnancy);
 }
