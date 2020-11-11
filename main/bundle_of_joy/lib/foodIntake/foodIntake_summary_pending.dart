@@ -31,6 +31,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
   Map food;
   List<dynamic> foodName = List<dynamic>();
   List<dynamic> foodQty = List<dynamic>();
+  final User user = FirebaseAuth.instance.currentUser;
 
   void initState() {
     super.initState();
@@ -366,7 +367,7 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
                       ),
                     ),
                     onTap: () async {
-                      addFoodRecord();
+                      addFoodRecord(user.uid, widget.selectedDate, widget.selectedTime, widget.bSugarBefore, widget.foodMap);
                       _showNotification();
                     }, //ADD TO DATABASE
                   ),
@@ -403,17 +404,17 @@ class _FoodIntakeSummaryPendingState extends State<FoodIntakeSummaryPending> {
     );
   }
 
-  Future<void> addFoodRecord() {
+  Future<void> addFoodRecord(motherID, selectedDate, selectedTime, bsBefore, foodMap) {
     final User user = FirebaseAuth.instance.currentUser;
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     CollectionReference foodIntakeRecord = _db.collection("mother").doc(user.uid).collection("foodIntake_Pending");
     return foodIntakeRecord.add({
-      "motherID": user.uid,
-      "selectedDate": widget.selectedDate,
-      "selectedTime": widget.selectedTime,
-      "bsBefore": widget.bSugarBefore,
+      "motherID": motherID,
+      "selectedDate":selectedDate,
+      "selectedTime": selectedTime,
+      "bsBefore": bsBefore,
       "bsAfter": null,
-      "foodMap": widget.foodMap,
+      "foodMap": foodMap,
     }).then((value) {
       foodIntakeRecord.doc(value.id).update({
         "recordID": value.id,

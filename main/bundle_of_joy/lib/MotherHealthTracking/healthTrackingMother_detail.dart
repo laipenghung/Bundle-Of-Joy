@@ -32,10 +32,10 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
       child: StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
           if (healthReport.bloodSugar.toDouble() > 6) {
-            bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L) (Too high)";
+            bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L) \n(Too high)";
             colorBS = Colors.red;
           } else if (healthReport.bloodSugar.toDouble() < 4) {
-            bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L) (Too low)";
+            bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L) \n(Too low)";
             colorBS = Colors.orange;
           } else {
             bloodSugar = healthReport.bloodSugar.toString() + "  (mmol/L)";

@@ -15,11 +15,11 @@ class MotherProfile extends StatefulWidget {
 class _MotherProfile extends State<MotherProfile> {
   final TextEditingController _pinPutController = TextEditingController();
   final FocusNode _pinPutFocusNode = FocusNode();
-
+  
   Widget is_verify(AsyncSnapshot<DocumentSnapshot> mother, CollectionReference patient, String uid){
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
     double paddingTop = MediaQuery.of(context).size.height * 0.03;
-    if(mother.data.data()["is_verify"] == false){
+    if (mother.data.data()["is_verify"] == false) {
       return Builder(
         builder: (context) {
           return Center(
@@ -61,16 +61,17 @@ class _MotherProfile extends State<MotherProfile> {
                             );
                           } else {
                             CollectionReference users = FirebaseFirestore.instance.collection("mother");
-                            users.doc(uid).update({
-                              "pin_code": pin.toString(),
-                              "is_verify": true
-                            }).then((value) => print("Mother profile updated"))
-                              .catchError((e) => print("Failed to update mother profile: $e"));
+                            users
+                                .doc(uid)
+                                .update({"pin_code": pin.toString(), "is_verify": true})
+                                .then((value) => print("Mother profile updated"))
+                                .catchError((e) => print("Failed to update mother profile: $e"));
 
-                            patient.doc(value.docs.first.data()["patient_id"]).update({
-                              "m_id": uid
-                            }).then((value) => print("Patient updated"))
-                              .catchError((e) => print("Failed to update patient: $e"));
+                            patient
+                                .doc(value.docs.first.data()["patient_id"])
+                                .update({"m_id": uid})
+                                .then((value) => print("Patient updated"))
+                                .catchError((e) => print("Failed to update patient: $e"));
 
                             Navigator.pushReplacement(
                               context,
@@ -103,33 +104,34 @@ class _MotherProfile extends State<MotherProfile> {
                         color: Color(0xFFFCFFD5),
                         shape: buttonShape(),
                         onPressed: () => _pinPutFocusNode.requestFocus(),
-                        child: Text(
-                            'Focus',
+                        child: Text('Focus',
                             style: TextStyle(
                               fontFamily: "Comfortaa",
-                            )
-                        ),
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.height * 0.022,
+                            )),
                       ),
                       RaisedButton(
                         color: Color(0xFFFCFFD5),
                         shape: buttonShape(),
                         onPressed: () => _pinPutFocusNode.unfocus(),
-                        child: Text(
-                            'Unfocus',
+                        child: Text('Unfocus',
                             style: TextStyle(
                               fontFamily: "Comfortaa",
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.height * 0.022,
                             )),
                       ),
                       RaisedButton(
                         color: Color(0xFFFCFFD5),
                         shape: buttonShape(),
                         onPressed: () => _pinPutController.text = '',
-                        child: Text(
-                            'Clear All',
+                        child: Text('Clear All',
                             style: TextStyle(
                               fontFamily: "Comfortaa",
-                            )
-                        ),
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.height * 0.022,
+                            )),
                       ),
                     ],
                   ),
@@ -141,7 +143,7 @@ class _MotherProfile extends State<MotherProfile> {
       );
     } else {
       Future<QuerySnapshot> mother = patient.where("m_id", isEqualTo: uid).get();
-      mother.then((value){
+      mother.then((value) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -154,15 +156,12 @@ class _MotherProfile extends State<MotherProfile> {
   }
 
   RoundedRectangleBorder buttonShape() {
-    return RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(18),
-      side: BorderSide(width: 1, color: Colors.black)
-    );
+    return RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), side: BorderSide(width: 1.5, color: Colors.black));
   }
 
   BoxDecoration get _pinPutDecoration {
     return BoxDecoration(
-      border: Border.all(color: Colors.deepPurpleAccent),
+      border: Border.all(width: 2, color: Colors.black),
       borderRadius: BorderRadius.circular(15.0),
     );
   }
@@ -248,7 +247,7 @@ class _MotherProfile extends State<MotherProfile> {
           color: Colors.black,
         ),
         title: Text(
-          "Verify Account",
+          "Account Verification",
           style: TextStyle(
             fontFamily: "Comfortaa",
             fontWeight: FontWeight.bold,
@@ -262,15 +261,14 @@ class _MotherProfile extends State<MotherProfile> {
       body: Container(
         color: Colors.white,
         child: StreamBuilder(
-          stream: users.snapshots(),
-          builder: (context, mother) {
-            if(mother.hasData) {
-              return is_verify(mother, patient, user.uid.toString());
-            } else {
-              return loading();
-            }
-          }
-        ),
+            stream: users.snapshots(),
+            builder: (context, mother) {
+              if (mother.hasData) {
+                return is_verify(mother, patient, user.uid.toString());
+              } else {
+                return loading();
+              }
+            }),
       ),
     );
   }

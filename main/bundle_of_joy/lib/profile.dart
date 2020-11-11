@@ -34,12 +34,16 @@ class _ProfileState extends State<ProfileTab> {
         "Log Out",
         style: TextStyle(
           fontFamily: "Comfortaa",
+          fontWeight: FontWeight.bold,
+          fontSize: MediaQuery.of(context).size.height * 0.03,
         ),
       ),
       content: Text(
         "Would you like to log out?",
         style: TextStyle(
           fontFamily: "Comfortaa",
+          fontWeight: FontWeight.bold,
+          fontSize: MediaQuery.of(context).size.height * 0.022,
         ),
       ),
       actions: [
