@@ -262,62 +262,65 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
       );
     } else {
       return Center(
-        child: Column(
-          children: [
-            SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-            Container(
-              width: 110,
-              height: 110,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage("assets/icons/baby_color.png"),
-              )),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-            Padding(
-              padding: const EdgeInsets.only(left: 50, right: 50),
-              child: Text(
-                "Seems like you don't have any baby save in your profile.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: "Comfortaa",
-                  fontWeight: FontWeight.bold,
-                  fontSize: fontSizeText,
-                  color: Colors.black,
-                ),
+        child: Container(
+          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
+          child: Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+              Container(
+                width: 110,
+                height: 110,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage("assets/icons/baby_color.png"),
+                )),
               ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-            RaisedButton(
-              color: Color(0xFFFCFFD5),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18), side: BorderSide(width: 1.5, color: Colors.black)),
-              onPressed: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddBaby()),
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 12, bottom: 12),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+              Padding(
+                padding: const EdgeInsets.only(left: 50, right: 50),
                 child: Text(
-                  "Add Baby",
+                  "Seems like you don't have any baby save in your profile.",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: "Comfortaa",
                     fontWeight: FontWeight.bold,
-                    fontSize: fontSizeTitle,
+                    fontSize: fontSizeText,
                     color: Colors.black,
                   ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+              RaisedButton(
+                color: Color(0xFFFCFFD5),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18), side: BorderSide(width: 1.5, color: Colors.black)),
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddBaby()),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 12, bottom: 12),
+                  child: Text(
+                    "Add Baby",
+                    style: TextStyle(
+                      fontFamily: "Comfortaa",
+                      fontWeight: FontWeight.bold,
+                      fontSize: fontSizeTitle,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       );
     }
   }
 
-  Widget loading(){
+  Widget loading() {
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     return Center(
       child: Column(
@@ -389,7 +392,7 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
       body: StreamBuilder(
           stream: baby.snapshots(),
           builder: (context, collection) {
-            if(collection.hasData) {
+            if (collection.hasData) {
               return hasData(collection);
             } else {
               return loading();
