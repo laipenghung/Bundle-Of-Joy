@@ -43,10 +43,10 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
 
           if (healthReport.bloodPressure_sys > 120) {
             if (healthReport.bloodPressure_sys > 130) {
-              bloodPressureSys = healthReport.bloodPressure_sys.toString() + " (mm/Hg) (High)";
+              bloodPressureSys = healthReport.bloodPressure_sys.toString() + " (mm/Hg) \n(High)";
               colorBPS = Colors.red;
             } else {
-              bloodPressureSys = healthReport.bloodPressure_sys.toString() + " (mm/Hg) (Elevated)";
+              bloodPressureSys = healthReport.bloodPressure_sys.toString() + " (mm/Hg) \n(Elevated)";
               colorBPS = Colors.orange;
             }
           } else {
@@ -55,10 +55,10 @@ class _MotherHealthTracking extends State<MotherHealthTracking> {
 
           if (healthReport.bloodPressure_dia > 80) {
             if (healthReport.bloodPressure_dia > 120) {
-              bloodPressureDia = healthReport.bloodPressure_dia.toString() + " (mm/Hg) (High)";
+              bloodPressureDia = healthReport.bloodPressure_dia.toString() + " (mm/Hg) \n(High)";
               colorBPD = Colors.red;
             } else {
-              bloodPressureDia = healthReport.bloodPressure_dia.toString() + " (mm/Hg) (Elevated)";
+              bloodPressureDia = healthReport.bloodPressure_dia.toString() + " (mm/Hg) \n(Elevated)";
               colorBPD = Colors.orange;
             }
           } else {
