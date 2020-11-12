@@ -6,7 +6,7 @@ import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "baby/baby.dart";
-import "vaccinationAppointment/vaccinationAppointment.dart";
+import "vaccinationSchedule/vaccinationSchedule.dart";
 
 class MotherForBabyTab extends StatefulWidget {
   @override

@@ -22,7 +22,12 @@ class _Vaccination extends State<Vaccination> {
     collection.data.docs.forEach((doc) {
       _row.add(TableRow(children: [
         Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02),
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.02,
+            bottom: MediaQuery.of(context).size.height * 0.02,
+            left: MediaQuery.of(context).size.width * 0.04,
+            right: MediaQuery.of(context).size.width * 0.04,
+          ),
           child: Container(
             child: Center(
               child: Text(
@@ -142,7 +147,7 @@ class _Vaccination extends State<Vaccination> {
     }
   }
 
-  Widget loading(){
+  Widget loading() {
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     return Center(
       child: Column(
@@ -189,7 +194,7 @@ class _Vaccination extends State<Vaccination> {
     return StreamBuilder(
         stream: vaccination.snapshots(),
         builder: (context, collection) {
-          if(collection.hasData) {
+          if (collection.hasData) {
             return hasData(collection);
           } else {
             return loading();
