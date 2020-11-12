@@ -142,7 +142,7 @@ class _FoodIntakeAdd2State extends State<FoodIntakeAdd2> {
                       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
                       width: MediaQuery.of(context).size.width * 0.85,
                       child: Text(
-                        "Enter the food the baby eat",
+                        "Enter the food you have eaten",
                         style: TextStyle(
                           fontFamily: 'Comfortaa',
                           fontWeight: FontWeight.bold,

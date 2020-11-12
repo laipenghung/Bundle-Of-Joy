@@ -31,15 +31,15 @@ class _BabyTempMainState extends State<BabyTempMain> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(bottom: 20),
+                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05, bottom: 20),
                         child: Image.asset(
-                          "assets/icons/thermometer.png",
+                          "assets/icons/medicine.png",
                           height: 70,
                         ),
                       ),
                       Container(
                         child: Text(
-                          "Temperature Record",
+                          "Medicine Intake Record",
                           style: TextStyle(
                             fontFamily: 'Comfortaa',
                             fontWeight: FontWeight.bold,

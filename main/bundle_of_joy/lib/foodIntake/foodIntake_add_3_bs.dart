@@ -95,7 +95,7 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                                 },
                                 keyboardType: TextInputType.number,
                                 decoration: new InputDecoration(
-                                  labelText: "Blood sugar reading",
+                                  labelText: "Blood sugar reading (mmol/L)",
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5.0),
                                     borderSide: BorderSide(
@@ -122,7 +122,7 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, left: MediaQuery.of(context).size.width * 0.03),
                       width: MediaQuery.of(context).size.width * 0.85,
                       child: Text(
-                        "After eating (2 hours)",
+                        "After eating (2 hours) (Optional)",
                         style: TextStyle(
                           fontFamily: 'Comfortaa',
                           fontSize: MediaQuery.of(context).size.height * 0.022,
@@ -146,7 +146,7 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
                               },
                               keyboardType: TextInputType.number,
                               decoration: new InputDecoration(
-                                labelText: "Blood sugar reading (Optional)",
+                                labelText: "Blood sugar reading (mmol/L)",
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                   borderSide: BorderSide(

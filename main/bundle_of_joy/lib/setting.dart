@@ -18,7 +18,7 @@ class _Setting extends State<Setting> {
       },
     );
     Widget continueButton = FlatButton(
-      child: Text("Log Out"),
+      child: Text("Yes"),
       onPressed: () {
         signOut();
         Navigator.of(context, rootNavigator: true).push(
