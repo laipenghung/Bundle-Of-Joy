@@ -39,7 +39,12 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02),
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.02,
+            bottom: MediaQuery.of(context).size.height * 0.02,
+            left: MediaQuery.of(context).size.width * 0.04,
+            right: MediaQuery.of(context).size.width * 0.04,
+          ),
           child: Container(
             child: Center(
               child: Text(
@@ -152,8 +157,7 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
         .collection("baby")
         .doc(selectedBabyID)
         .collection("baby_vaccination")
-        .where("bv_dateGiven", isGreaterThan: "")
-        .orderBy("bv_dateGiven", descending: false);
+        .orderBy("bv_age", descending: false);
 
     return StreamBuilder(
         stream: vaccination.snapshots(),
@@ -162,7 +166,7 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
             appBar: AppBar(
               toolbarHeight: MediaQuery.of(context).size.height * 0.1,
               title: Text(
-                "Vaccination Appointment",
+                "Vaccination Schedule",
                 style: TextStyle(
                   fontFamily: 'Comfortaa',
                   fontWeight: FontWeight.bold,
