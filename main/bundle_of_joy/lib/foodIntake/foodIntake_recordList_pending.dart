@@ -48,8 +48,13 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
       ),
 
       body: StreamBuilder(
-        stream: _db.collection('mother').doc(FirebaseAuth.instance.currentUser.uid).collection('foodIntake_Pending')
-          .orderBy('selectedDate', descending: true).orderBy('selectedTime', descending: true).snapshots(),
+        stream: _db
+            .collection('mother')
+            .doc(FirebaseAuth.instance.currentUser.uid)
+            .collection('foodIntake_Pending')
+            .orderBy('selectedDate', descending: true)
+            .orderBy('selectedTime', descending: true)
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -81,21 +86,32 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
                 child: ListView.builder(
                   itemCount: snapshot.data.documents.length,
                   itemBuilder: (_, index) {
-                    return Slidable(
-                      actionPane: SlidableDrawerActionPane(),
-                      actionExtentRatio: 0.25,
-                      child: InkWell(
-                        onTap: () {
-                          print(snapshot.data.documents[index]['recordID']);
-                          //go to record_pending
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => FoodIntakeRecordPending(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Container(
+                    return InkWell(
+                      onTap: () {
+                        print(snapshot.data.documents[index]['recordID']);
+                        //go to record_pending
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => FoodIntakeRecordPending(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Slidable(
+                            actionPane: SlidableDrawerActionPane(),
+                            actionExtentRatio: 0.22,
+                            secondaryActions: <Widget>[
+                              IconSlideAction(
+                                caption: "Delete",
+                                color: Colors.red,
+                                icon: Icons.delete,
+                                onTap: () {
+                                  print(snapshot.data.documents[index]['recordID']);
+                                  deleteSelected(snapshot.data.documents[index]['recordID']);
+                                },
+                              )
+                            ],
+                            child: Container(
                               padding: EdgeInsets.only(
                                   top: MediaQuery.of(context).size.height * 0.015,
                                   bottom: MediaQuery.of(context).size.height * 0.015,
@@ -146,26 +162,15 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
                                 ],
                               ),
                             ),
-                            Divider(
-                              indent: MediaQuery.of(context).size.width * 0.03,
-                              endIndent: MediaQuery.of(context).size.width * 0.03,
-                              color: Colors.black,
-                              thickness: MediaQuery.of(context).size.height * 0.001,
-                            ),
-                          ],
-                        ),
+                          ),
+                          Divider(
+                            indent: MediaQuery.of(context).size.width * 0.03,
+                            endIndent: MediaQuery.of(context).size.width * 0.03,
+                            color: Colors.black,
+                            thickness: MediaQuery.of(context).size.height * 0.001,
+                          ),
+                        ],
                       ),
-                      secondaryActions: <Widget>[
-                        IconSlideAction(
-                          caption: "Delete",
-                          color: Colors.red,
-                          icon: Icons.delete,
-                          onTap: () {
-                            print(snapshot.data.documents[index]['recordID']);
-                            deleteSelected(snapshot.data.documents[index]['recordID']);
-                          },
-                        )
-                      ],
                     );
                   },
                 ),
