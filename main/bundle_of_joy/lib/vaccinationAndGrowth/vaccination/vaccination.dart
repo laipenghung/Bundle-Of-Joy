@@ -15,12 +15,28 @@ class _Vaccination extends State<Vaccination> {
   _Vaccination(this.selectedBabyID);
 
   List<TableRow> _tableList(AsyncSnapshot<QuerySnapshot> collection) {
-    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
-    final _listField = ["bv_vaccinationName", "bv_dateGiven"];
+    double fontSizeText = MediaQuery.of(context).size.width * 0.035;
+    final _listField = ["bv_age", "bv_vaccinationName", "bv_dateGiven"];
     List<TableRow> _row = [];
 
     collection.data.docs.forEach((doc) {
       _row.add(TableRow(children: [
+        Padding(
+          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02),
+          child: Container(
+            child: Center(
+              child: Text(
+                doc.data()[_listField[0]].toString(),
+                style: TextStyle(
+                  fontFamily: "Comfortaa",
+                  fontSize: fontSizeText,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
         Padding(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).size.height * 0.02,
@@ -31,10 +47,9 @@ class _Vaccination extends State<Vaccination> {
           child: Container(
             child: Center(
               child: Text(
-                doc.data()[_listField[0]].toString(),
+                doc.data()[_listField[1]].toString(),
                 style: TextStyle(
                   fontFamily: "Comfortaa",
-                  fontWeight: FontWeight.bold,
                   fontSize: fontSizeText,
                   color: Colors.black,
                 ),
@@ -48,7 +63,7 @@ class _Vaccination extends State<Vaccination> {
           child: Container(
             child: Center(
               child: Text(
-                doc.data()[_listField[1]].toString(),
+                doc.data()[_listField[2]].toString(),
                 style: TextStyle(
                   fontFamily: "Comfortaa",
                   fontSize: fontSizeText,
@@ -69,7 +84,7 @@ class _Vaccination extends State<Vaccination> {
     double paddingTopBottom = MediaQuery.of(context).size.height * 0.03;
     double paddingTopBottomSmall = MediaQuery.of(context).size.height * 0.01;
     double heightSpacing = MediaQuery.of(context).size.height * 0.075;
-    double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
+    double fontSizeTitle = MediaQuery.of(context).size.width * 0.04;
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     if (collection.data.docs.isNotEmpty) {
       return SingleChildScrollView(
@@ -79,12 +94,28 @@ class _Vaccination extends State<Vaccination> {
               padding: EdgeInsets.fromLTRB(paddingLeftRight, paddingTopBottom, paddingLeftRight, 0),
               child: Table(
                 columnWidths: {
-                  0: FlexColumnWidth(6),
-                  1: FlexColumnWidth(4),
+                  0: FlexColumnWidth(2),
+                  1: FlexColumnWidth(5),
+                  2: FlexColumnWidth(3),
                 },
                 border: TableBorder.all(width: 1.0, color: Colors.black),
                 children: [
                   TableRow(children: [
+                    Container(
+                      color: Color(0xFFFCFFD5),
+                      height: heightSpacing,
+                      child: Center(
+                        child: Text(
+                          "Age",
+                          style: TextStyle(
+                            fontFamily: "Comfortaa",
+                            fontWeight: FontWeight.bold,
+                            fontSize: fontSizeTitle,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
                     Container(
                       color: Color(0xFFFCFFD5),
                       height: heightSpacing,
@@ -123,8 +154,9 @@ class _Vaccination extends State<Vaccination> {
               padding: EdgeInsets.fromLTRB(paddingLeftRight, paddingTopBottomSmall, paddingLeftRight, paddingTopBottomSmall),
               child: Table(
                 columnWidths: {
-                  0: FlexColumnWidth(6),
-                  1: FlexColumnWidth(4),
+                  0: FlexColumnWidth(2),
+                  1: FlexColumnWidth(5),
+                  2: FlexColumnWidth(3),
                 },
                 border: TableBorder.all(width: 1.0, color: Colors.black),
                 children: _tableList(collection),
