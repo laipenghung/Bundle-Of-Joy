@@ -6,13 +6,33 @@ import 'package:bundle_of_joy/mother-to-be.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddEmerContactScreen extends StatefulWidget {
+  final String patientID;
+  AddEmerContactScreen({Key key, this.patientID});
+
   @override
   _AddEmerContactScreenState createState() => _AddEmerContactScreenState();
 }
 
 class _AddEmerContactScreenState extends State<AddEmerContactScreen> {
-  String _emerContactNo = ""; //_emerContactName = "";
+  String _emerContactNo = "", _emerContactName = "";
   EmerContact emerContact = EmerContact();
+
+  _showDialogBox(BuildContext context, message){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Emergency contact added."),
+          content: Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Ok"),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        );
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,15 +73,14 @@ class _AddEmerContactScreenState extends State<AddEmerContactScreen> {
             onPressed: () async {
               //Contact contact = await _contactPicker.selectContact();
               var contact = await FlutterContactPicker.pickPhoneContact();
+              String message = "You have successfully save your emergency contact to your profile. You can always manage your emergency contacts in Profile." +
+                "To add your second emergency contact click on the add icon located on the top right.";
               setState(() {
                 _emerContactNo = contact.phoneNumber.number;
-                //_emerContactName = contact.fullName;      #Remove comment if have to add contact name into firebse
-                emerContact.addEmerContact(_emerContactNo);
+                _emerContactName = contact.fullName;     
+                emerContact.addEmerContactPrimary(_emerContactNo, _emerContactName, widget.patientID);
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherToBeTab()));
-                Fluttertoast.showToast(
-                  msg: "Contact Successfully Added",
-                  toastLength: Toast.LENGTH_LONG,
-                );
+                _showDialogBox(context, message);
               });
             },
             child: Padding(

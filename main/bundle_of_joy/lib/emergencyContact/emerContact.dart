@@ -7,12 +7,28 @@ class EmerContact {
   final User user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<void> addEmerContact(mEmerContactNo) {
-    CollectionReference users = _db.collection("mother");
+  Future<void> addEmerContactPrimary(mEmerContactNo, mEmerContactName, patientID) {
+    CollectionReference users = _db.collection("patient");
     return users
-        .doc(user.uid)
-        .update({"m_emergencyContact": mEmerContactNo,})
+        .doc(patientID)
+        .update({
+          "m_emergencyContactNoPrimary": mEmerContactNo,
+          "m_emergencyContactNamePrimary": mEmerContactName,
+        })
         .then((value) => print("User Updated"),)
         .catchError((error) => print("Failed to update user: $error"));
+  }
+
+  Future<void> addEmerContactSecondary(mEmerContactNo, mEmerContactName, patientID) {
+    CollectionReference users = _db.collection("patient");
+    return users
+        .doc(patientID)
+        .update({
+          "m_emergencyContactNoSecondary": mEmerContactNo,
+          "m_emergencyContactNameSecondary": mEmerContactName,
+        })
+        .then((value) => print("User Updated"),)
+        //.catchError((error) => print("Failed to update user: $error"))
+        ;
   }
 }
