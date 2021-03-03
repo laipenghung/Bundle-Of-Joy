@@ -2,7 +2,6 @@ import 'package:bundle_of_joy/MotherHealthTracking/healthReport.dart';
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
-
 import 'healthTrackingMother_detail.dart';
 
 class HealthTrackingMother extends StatefulWidget {

@@ -37,7 +37,17 @@ class Mother {
     patient.update({
       field: change.toString()
     }).then((value){
-      print("$field updated");
+      //print("$field updated");
     }).catchError((e) => print("Failed to update $field: $e"));
+  }
+
+  void updateProfilePicture(String photoURL, String pid) async{
+    DocumentReference patient = FirebaseFirestore.instance.collection("patient").doc(pid);
+
+    patient.update({
+      "photoURL": photoURL.toString()
+    }).then((value){
+      print("photoURL updated");
+    }).catchError((e) => print("Failed to update photoURL: $e"));
   }
 }

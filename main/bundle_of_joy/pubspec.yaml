@@ -29,6 +29,7 @@ dependencies:
   google_sign_in: ^4.5.4
   flutter_facebook_login: ^3.0.0
   cloud_firestore: ^0.14.0+2
+  firebase_storage: ^4.0.1
   flare_splash_screen: ^3.0.1
   flutter_signin_button: ^1.1.0
   font_awesome_flutter: ^8.8.1
@@ -50,6 +51,8 @@ dependencies:
   fl_chart: ^0.12.0
   pinput: ^0.2.6
   age: ^0.0.1
+  image_picker: ^0.6.7+22
+  path: ^1.7.0
 
 dev_dependencies:
   flutter_test:
