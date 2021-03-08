@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "appointmentMother_add_1.dart";
+import "appointmentMother_add_full.dart";
 import "appointmentMother_recordList.dart";
 
 class AppointmentMotherMain extends StatefulWidget {
@@ -109,7 +110,7 @@ class _AppointmentMotherMainState extends State<AppointmentMotherMain> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AppointmentMotherAdd1()),
+                    MaterialPageRoute(builder: (context) => AppointmentMotherAddFull()),
                   );
                 },
               ),
