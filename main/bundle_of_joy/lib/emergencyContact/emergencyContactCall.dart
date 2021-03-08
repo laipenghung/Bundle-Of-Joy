@@ -43,9 +43,9 @@ class _EmerContactCallState extends State<EmerContactCall> {
       secondaryEmerContact = x.docs[0].data()["m_emergencyContactNoSecondary"];
       //primaryEmerContact = secondaryEmerContactName + " ("+secondaryEmerContactNo+")"; 
       //log(secondaryEmerContact);
-      setState(() {
+      //setState(() {
         contact.add(secondaryEmerContact);
-      });
+      //});
     }
   }
 
