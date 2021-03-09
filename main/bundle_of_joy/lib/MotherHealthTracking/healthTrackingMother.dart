@@ -15,9 +15,9 @@ class HealthTrackingMother extends StatefulWidget {
 class _HealthTrackingMotherState extends State<HealthTrackingMother> {
   int _pageIndex = 0;
 
-  List<LineChartBarData> bloodPressureData(List<FlSpot> bloodSugarData) {
+  List<LineChartBarData> graphData(List<FlSpot> data) {
     final LineChartBarData chartData = LineChartBarData(
-      spots: bloodSugarData,
+      spots: data,
       isCurved: true,
       colors: [
         Colors.black,
@@ -36,8 +36,22 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
     return [chartData];
   }
 
-  LineChartData bloodPressureChart(List<FlSpot> bloodSugarData) {
+  LineChartData drawChart(List<FlSpot> data, String type) {
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
+    double minX, maxX, minY, maxY;
+    String text = '';
+
+    if(type == "BLOODSUGAR"){
+      text = " (mmol/L)";
+      maxY = data.last.y;
+      minY = data.first.y;
+    } else if (type == "WEIGHT"){
+      text = " (kg)";
+      maxY = data.first.y;
+      minY = data.last.y;
+    } else if (type == "HEIGHT"){
+      text = " (cm)";
+    }
 
     return LineChartData(
       lineTouchData: LineTouchData(
@@ -48,7 +62,7 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
               final flSpot = barSpot;
 
               return LineTooltipItem(
-                'Day ${flSpot.x.toInt()} \n${flSpot.y} (mmol/L)',
+                'Day ${flSpot.x.toInt()} \n${flSpot.y}${text}',
                 const TextStyle(color: Colors.white),
               );
             }).toList();
@@ -96,16 +110,16 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
           ),
         ),
       ),
-      minX: double.parse(bloodSugarData.last.x.toString()),
-      maxX: double.parse(bloodSugarData.first.x.toString()),
-      maxY: double.parse(bloodSugarData.last.y.toString()),
-      minY: double.parse(bloodSugarData.first.y.toString()),
-      lineBarsData: bloodPressureData(bloodSugarData),
+      minX: data.last.x,
+      maxX: data.first.x,
+      maxY: maxY,
+      minY: minY,
+      lineBarsData: graphData(data),
     );
   }
 
   Widget _listView(AsyncSnapshot<QuerySnapshot> collection) {
-    List<FlSpot> bloodSugarData = List<FlSpot>();
+    List<FlSpot> bloodSugarData = List<FlSpot>(), weightData = List<FlSpot>(), heightData = List<FlSpot>(), bloodPressureData = List<FlSpot>();
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.06;
     double fontSizeSubTitle = MediaQuery.of(context).size.width * 0.05;
     double fontSizeText = MediaQuery.of(context).size.width * 0.035;
@@ -123,6 +137,9 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
         _listInfo.add(HealthReport(doc.data()[_listField[0]], doc.data()[_listField[1]], doc.data()[_listField[2]], double.parse(doc.data()[_listField[3]]),
             double.parse(doc.data()[_listField[4]]), doc.data()[_listField[5]].toDouble(), doc.data()[_listField[6]].toDouble(), doc.data()[_listField[7]].toDouble(), doc.data()[_listField[8]]));
         bloodSugarData.add(FlSpot(double.parse(doc.data()["mh_day_of_pregnancy"].toString()), double.parse(doc.data()["mh_bloodSugar"].toString())));
+        weightData.add(FlSpot(double.parse(doc.data()["mh_day_of_pregnancy"].toString()), double.parse(doc.data()["mh_weight"].toString())));
+        heightData.add(FlSpot(double.parse(doc.data()["mh_day_of_pregnancy"].toString()), double.parse(doc.data()["mh_height"].toString())));
+        bloodPressureData.add(FlSpot(double.parse(doc.data()["mh_day_of_pregnancy"].toString()), double.parse(doc.data()["mh_bloodPressure_sys"].toString())));
       });
 
       if (_listInfo[0].bloodSugar.toDouble() > 6) {
@@ -165,7 +182,7 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.4,
             child: PageView.builder(
-              itemCount: 3,
+              itemCount: 5,
               controller: PageController(viewportFraction: 0.8),
               onPageChanged: (int index) => setState(()=> _pageIndex = index),
               itemBuilder: (_, i){
@@ -411,8 +428,145 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
                             Expanded(
                               child: Padding(
                                 padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.02),
+                                child: new LineChart(
+                                  drawChart(bloodSugarData, "BLOODSUGAR"),
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Day of Pregnancy",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: fontSizeText,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Comfortaa",
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                } else if (i == 2) {
+                  return Transform.scale(
+                    scale: i == _pageIndex ? 1 : 0.95,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 3,
+                      color: Color(0xFFFCFFD5),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.4,
+                        child: Column(
+                          children: [
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                            Text(
+                              "Blood Pressure Systolic Chart",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: fontSizeTitle,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Comfortaa",
+                              ),
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.01),
+                                  child: Text(
+                                    "Blood Pressure\n(mm/Hg)",
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                      fontSize: fontSizeText,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Comfortaa",
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.02),
                                 child: LineChart(
-                                    bloodPressureChart(bloodSugarData),
+                                  drawChart(bloodPressureData, "BLOODPRESSURE"),
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Day of Pregnancy",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: fontSizeText,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Comfortaa",
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                } else if (i == 3) {
+                  return Transform.scale(
+                    scale: i == _pageIndex ? 1 : 0.95,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 3,
+                      color: Color(0xFFFCFFD5),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.4,
+                        child: Column(
+                          children: [
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                            Text(
+                              "Weight Chart",
+                              style: TextStyle(
+                                fontSize: fontSizeTitle,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Comfortaa",
+                              ),
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.01),
+                                  child: Text(
+                                    "Weight (kg)",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: fontSizeText,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Comfortaa",
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.02),
+                                child: LineChart(
+                                  drawChart(weightData, "WEIGHT"),
                                 ),
                               ),
                             ),
@@ -444,9 +598,63 @@ class _HealthTrackingMotherState extends State<HealthTrackingMother> {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       elevation: 3,
-                      color: Colors.red,
+                      color: Color(0xFFFCFFD5),
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.4,
+                        child: Column(
+                          children: [
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                            Text(
+                              "Height Chart",
+                              style: TextStyle(
+                                fontSize: fontSizeTitle,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Comfortaa",
+                              ),
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.01),
+                                  child: Text(
+                                    "Height (cm)",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: fontSizeText,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Comfortaa",
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.02),
+                                child: LineChart(
+                                  drawChart(heightData, "HEIGHT"),
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Day of Pregnancy",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: fontSizeText,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Comfortaa",
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                          ],
+                        ),
                       ),
                     ),
                   );
