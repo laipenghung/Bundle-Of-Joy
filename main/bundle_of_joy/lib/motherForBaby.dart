@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'widgets/cardWidget.dart';
-import "package:bundle_of_joy/appointmentMother/appointmentMother_verify.dart";
-import "foodIntake/foodIntake_main.dart";
-import "emergencyContact/emergencyContactTab.dart";
-import "MotherHealthTracking/healthTrackingMother.dart";
 
-class MotherToBeHome extends StatefulWidget {
+import 'appointmentBaby/appointmentBaby_verify.dart';
+import 'careForBaby/careForBabyTab.dart';
+import 'vaccinationAndGrowth/vacAndGrowthTab.dart';
+import 'vaccinationSchedule/vaccinationSchedule.dart';
+import 'widgets/cardWidget.dart';
+
+class MotherForBabyHome extends StatefulWidget {
   @override
-  _MotherToBeHomeState createState() => _MotherToBeHomeState();
+  _MotherForBabyHomeState createState() => _MotherForBabyHomeState();
 }
 
-class _MotherToBeHomeState extends State<MotherToBeHome> {
-  final kShadowColor = Color(0xFFE6E6E6);
+class _MotherForBabyHomeState extends State<MotherForBabyHome> {
+  final kShadowColor = Color(0xFFC7B8F5);
   //var press;
 
   //Card view Widget
@@ -24,7 +24,7 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
             // Here the height of the container is 45% of our total height
             height: MediaQuery.of(context).size.height * .40,
             decoration: BoxDecoration(
-              color: Color(0xFFF5CEB8),
+              color: Color(0xFFC7B8F5),
               image: DecorationImage(
                 alignment: Alignment.centerLeft,
                 image: AssetImage("assets/images/undraw_pilates_gpdb.png"),
@@ -52,9 +52,9 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                   Text(
-                    "Mother to Be",
+                    "Mother for Baby",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.095,
+                      fontSize: MediaQuery.of(context).size.width * 0.08,
                       fontWeight: FontWeight.bold,
                       color: Colors.black.withOpacity(0.65),
                     )
@@ -70,41 +70,41 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                       children: <Widget>[
                         CardWidget(
                           title: "Appointment Management",
-                          svgSrc: "assets/icons/testAM.svg",
-                          press: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => AppointmentMotherVerify()),
-                            );
-                          },
-                        ),
-                        CardWidget(
-                          title: "Food Intake Tracking",
                           svgSrc: "assets/icons/Hamburger.svg",
                           press: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => FoodIntakeMain()),
+                              MaterialPageRoute(builder: (context) => AppointmentBabyVerify()),
                             );
                           },
                         ),
                         CardWidget(
-                          title: "Health Tracking",
-                          svgSrc: "assets/icons/testHT.svg",
-                          press: () {
-                             Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => HealthTrackingMother()),
-                            );
-                          },
-                        ),
-                        CardWidget(
-                          title: "Emergency Contact",
-                          svgSrc: "assets/icons/testEC.svg",
+                          title: "Vaccination Schedule",
+                          svgSrc: "assets/icons/Hamburger.svg",
                           press: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => EmergencyContactTab()),
+                              MaterialPageRoute(builder: (context) => VaccinationSchedule()),
+                            );
+                          },
+                        ),
+                        CardWidget(
+                          title: "Vaccination & Growth Tracking",
+                          svgSrc: "assets/icons/Meditation.svg",
+                          press: () {
+                             Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => VacAndGrowthTab()),
+                            );
+                          },
+                        ),
+                        CardWidget(
+                          title: "Care For Baby",
+                          svgSrc: "assets/icons/yoga.svg",
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => CareForBabyTab()),
                             );
                           },
                         ),

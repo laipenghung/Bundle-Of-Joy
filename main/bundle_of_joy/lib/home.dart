@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'motherForBaby.dart';
 import 'motherToBe.dart';
 import "profile.dart";
 import "mother-for-baby.dart";
@@ -48,6 +49,7 @@ class _HomePageState extends State<HomePageState> {
       MotherForBabyTab(),
       //Text("Notification", style: optionStyle),
       MotherToBeHome(),
+      //MotherForBabyHome(),
       ProfileTab(),
     ];
   }
