@@ -18,6 +18,7 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
   //Card view Widget
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFf5f5f5),
       body: Stack(
         children: <Widget>[
           Container(
@@ -60,7 +61,7 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                     )
                   ),
                   
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                   Expanded(
                     child: GridView.count(
                       crossAxisCount: 2,
