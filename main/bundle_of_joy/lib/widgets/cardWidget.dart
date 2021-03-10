@@ -23,7 +23,7 @@ class CardWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(13),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 17),
+              offset: Offset(0, 3),
               blurRadius: 50,
               spreadRadius: 23,
               color: Color(0xFF878787),
@@ -44,10 +44,10 @@ class CardWidget extends StatelessWidget {
                   Text(
                     title,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .title
-                        .copyWith(fontSize: 14),
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.035,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),

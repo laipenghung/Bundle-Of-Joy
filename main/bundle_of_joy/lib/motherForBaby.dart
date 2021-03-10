@@ -18,6 +18,7 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
   //Card view Widget
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFf5f5f5),
       body: Stack(
         children: <Widget>[
           Container(
@@ -60,7 +61,22 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                     )
                   ),
                   
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                  //SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 30),
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(29.5),
+                    ),
+                    child: TextField( // change to drop down for selecting baby
+                      decoration: InputDecoration(
+                        hintText: "Drop down here",
+                        //icon: SvgPicture.asset("assets/icons/search.svg"),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
                   Expanded(
                     child: GridView.count(
                       crossAxisCount: 2,
