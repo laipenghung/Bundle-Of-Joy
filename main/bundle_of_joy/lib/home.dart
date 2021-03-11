@@ -45,12 +45,10 @@ class _HomePageState extends State<HomePageState> {
 
   List<Widget> _widgetOptions() {
     return <Widget>[
-      MotherToBeTab(),
-      MotherForBabyTab(),
-      //Text("Notification", style: optionStyle),
-      //MotherToBeHome(),
-      //MotherForBabyHome(),
-      ProfileTab(),
+      MotherToBeHome(), //[1] //MotherToBeTab() <- Old mother to be screen
+      MotherForBabyTab(), //[2] <- Old mother to be screen
+      MotherForBabyHome(), //[3] <- New  mother to be screen
+      ProfileTab(), //[4]
     ];
   }
 
@@ -92,12 +90,12 @@ class _HomePageState extends State<HomePageState> {
             _title = "Mother-for-baby";
           }
           break;
-        // case 2:
-        // {
-        //   _title = "Notification";
-        // }
-        //  break;
-        case 2: //Was 3
+        case 2:
+        {
+          _title = "Notification";
+          }
+          break;
+        case 3: //Was 3
           {
             _title = "Profile";
           }
