@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'foodIntake/foodIntakeTrackMain.dart';
 import 'widgets/cardWidget.dart';
 import "package:bundle_of_joy/appointmentMother/appointmentMother_verify.dart";
 import "foodIntake/foodIntake_main.dart";
@@ -85,7 +86,7 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                           press: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => FoodIntakeMain()),
+                              MaterialPageRoute(builder: (context) => FoodIntakeTrackMain()),
                             );
                           },
                         ),

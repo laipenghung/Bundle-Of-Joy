@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:bundle_of_joy/foodIntake/foodIntake_recordList_done.dart';
 import 'package:bundle_of_joy/foodIntake/foodIntake_recordList_pending.dart';
+import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
 import "package:flutter/material.dart";
 import "foodIntake_add_1_dateTime.dart";
 import "foodIntake_record_done.dart";
@@ -118,6 +121,7 @@ class _FoodIntakeMainState extends State<FoodIntakeMain> {
               },
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+            /*
             InkWell(
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.75,
@@ -155,7 +159,19 @@ class _FoodIntakeMainState extends State<FoodIntakeMain> {
                   MaterialPageRoute(builder: (context) => FoodIntakeListPending()),
                 );
               },
-            ),
+            ),*/
+
+            HorizontalCardWidget(
+              title: "Testing",
+              description: "Testing for description",
+              svgSrc: "assets/icons/Hamburger.svg",
+              press: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
+                );
+              },
+            )
           ],
         ),
       ),
