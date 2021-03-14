@@ -6,6 +6,7 @@ import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "baby/baby.dart";
+import 'careForBaby/careForBabyMain.dart';
 import "vaccinationSchedule/vaccinationSchedule.dart";
 
 class MotherForBabyTab extends StatefulWidget {
@@ -199,9 +200,9 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => CareForBabyTab(
-                            selectedBabyID: selectedBabyID,
-                          )),
+                      //builder: (context) => CareForBabyTab(selectedBabyID: selectedBabyID,)), //Old UI
+                      builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID,) //Updated UI
+                  ),
                 );
               }
               break;
