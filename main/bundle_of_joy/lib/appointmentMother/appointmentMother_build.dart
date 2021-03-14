@@ -12,62 +12,106 @@ class HospitalRow extends StatelessWidget {
     return Column(
       children: [
         InkWell(
+          // Tap Functtion
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AppointmentMotherAdd2(name: name)),
             );
           },
+
           child: Container(
             padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.015, bottom: MediaQuery.of(context).size.height * 0.015, left: MediaQuery.of(context).size.width * 0.07),
-            //color: Colors.lightBlue,
+              top: MediaQuery.of(context).size.height * 0.015,
+              bottom: MediaQuery.of(context).size.height * 0.015,
+            ),
             child: Row(
               children: [
-                Container(
-                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02, right: MediaQuery.of(context).size.width * 0.1),
-                  child: Image.asset(
-                    "assets/icons/hospital(1).png",
-                    height: MediaQuery.of(context).size.height * 0.06,
-                  ),
-                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Hospital Name
+                    Container(
+                      //color: Colors.lightBlue,
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      child: Text(
+                        name,
+                        style: TextStyle(
+                          fontFamily: 'Comfortaa',
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+
+                    // Address
                     Row(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              //color: Colors.lightBlue,
-                              width: MediaQuery.of(context).size.width * 0.6,
-                              child: Text(
-                                name,
-                                style: TextStyle(
-                                  fontFamily: 'Comfortaa',
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: MediaQuery.of(context).size.width * 0.04,
-                                  color: Colors.black,
-                                ),
-                              ),
+                        Container(
+                          child: Image.asset(
+                            "assets/icons/address.png",
+                            height: MediaQuery.of(context).size.height * 0.03, // Icon Size
+                          ),
+                        ),
+                        Container(
+                          //color: Colors.lightBlue,
+                          width: MediaQuery.of(context).size.width * 0.67,
+                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02),
+                          child: Text(
+                            "Lot 18807, Block 11 Land District, Jalan Stutong, Muara Tebas, 93350 Kuching, Sarawak",
+                            style: TextStyle(
+                              fontFamily: 'Comfortaa',
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.height * 0.02,
+                              color: Colors.black,
                             ),
-                            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                          ],
+                          ),
                         ),
                       ],
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.width * 0.025),
+
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+
+                    // Operating Hours
+                    Row(
+                      children: [
+                        Container(
+                          child: Image.asset(
+                            "assets/icons/clock.png",
+                            height: MediaQuery.of(context).size.height * 0.03, // Icon Size
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02),
+                          child: Text(
+                            "9am - 5pm",
+                            style: TextStyle(
+                              fontFamily: 'Comfortaa',
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.height * 0.02,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+
+                    // Phone Number
                     Row(
                       children: [
                         Container(
                           child: Image.asset(
                             "assets/icons/hospitalNum.png",
-                            height: MediaQuery.of(context).size.height * 0.03,
+                            height: MediaQuery.of(context).size.height * 0.03, // Icon Size
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
+                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02),
                           child: Text(
                             "082 - 507236",
                             style: TextStyle(
@@ -87,10 +131,10 @@ class HospitalRow extends StatelessWidget {
           ),
         ),
         Divider(
-          indent: MediaQuery.of(context).size.width * 0.03,
-          endIndent: MediaQuery.of(context).size.width * 0.03,
+          indent: MediaQuery.of(context).size.width * 0.0,
+          endIndent: MediaQuery.of(context).size.width * 0.0,
           color: Colors.black,
-          thickness: MediaQuery.of(context).size.height * 0.001,
+          thickness: MediaQuery.of(context).size.height * 0.002,
         ),
       ],
     );
