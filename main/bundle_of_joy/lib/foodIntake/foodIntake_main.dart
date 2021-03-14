@@ -121,7 +121,6 @@ class _FoodIntakeMainState extends State<FoodIntakeMain> {
               },
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-            /*
             InkWell(
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.75,
@@ -159,19 +158,7 @@ class _FoodIntakeMainState extends State<FoodIntakeMain> {
                   MaterialPageRoute(builder: (context) => FoodIntakeListPending()),
                 );
               },
-            ),*/
-
-            HorizontalCardWidget(
-              title: "Testing",
-              description: "Testing for description",
-              svgSrc: "assets/icons/Hamburger.svg",
-              press: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
-                );
-              },
-            )
+            ),
           ],
         ),
       ),

@@ -36,7 +36,7 @@ class HorizontalCardWidget extends StatelessWidget {
         onTap: press,
         child: Row(
           children: <Widget>[
-            SvgPicture.asset(svgSrc, height: 50, width: 50),
+            SvgPicture.asset(svgSrc, height: 40, width: 40),
             SizedBox(width: 20),
             Expanded(
               child: Column(
@@ -53,7 +53,7 @@ class HorizontalCardWidget extends StatelessWidget {
                   Text(
                     description,
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.03,
+                      fontSize: MediaQuery.of(context).size.width * 0.033,
                       //fontWeight: FontWeight.bold,
                       color: Colors.black.withOpacity(0.65),
                     )
