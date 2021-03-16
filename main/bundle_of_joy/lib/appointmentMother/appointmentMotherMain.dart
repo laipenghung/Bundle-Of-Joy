@@ -1,14 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
+import 'package:flutter/material.dart';
 
-import 'foodIntake_recordList_done.dart';
+import 'appointmentMother_add_full.dart';
+import 'appointmentMother_recordList.dart';
 
-class FoodIntakeTrackMain extends StatefulWidget {
+class AppointmentMotherMain extends StatefulWidget {
   @override
-  _FoodIntakeTrackMainState createState() => _FoodIntakeTrackMainState();
+  _AppointmentMotherMainState createState() => _AppointmentMotherMainState();
 }
 
-class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
+class _AppointmentMotherMainState extends State<AppointmentMotherMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +30,7 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
                 StretchMode.zoomBackground,
               ],
               title: Text(
-                  "Food Intake Tracking",
+                  "Appointment Management",
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.045,
                   ),
@@ -48,35 +49,24 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
               child: Column(
                 children: [
                   HorizontalCardWidget(
-                    title: "Food Intake Record",
-                    description: "View all of your food record.",
+                    title: "View Appointments",
+                    description: "View and manage all of your appointments.",
                     svgSrc: "assets/icons/Hamburger.svg",
                     press: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
+                        MaterialPageRoute(builder: (context) => AppointmentMotherRecordList()),
                       );
                     }
                   ),
                   HorizontalCardWidget(
-                    title: "Create New Food Record",
-                    description: "Create a new food record.",
+                    title: "Create New Appoinment",
+                    description: "Book an appointment with the doctor.",
                     svgSrc: "assets/icons/Hamburger.svg",
                     press: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
-                      );
-                    }
-                  ),
-                  HorizontalCardWidget(
-                    title: "Update Pending Food Record",
-                    description: "Update your existing food record.",
-                    svgSrc: "assets/icons/Hamburger.svg",
-                    press: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
+                        MaterialPageRoute(builder: (context) => AppointmentMotherAddFull()),
                       );
                     }
                   ),

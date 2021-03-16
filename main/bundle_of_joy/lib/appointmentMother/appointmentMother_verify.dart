@@ -1,5 +1,6 @@
 import "dart:async";
-import "package:bundle_of_joy/appointmentMother/appointmentMother_main.dart";
+//import "package:bundle_of_joy/appointmentMother/appointmentMother_main.dart"; //Old UI
+import "package:bundle_of_joy/appointmentMother/appointmentMotherMain.dart"; //New UI 
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
