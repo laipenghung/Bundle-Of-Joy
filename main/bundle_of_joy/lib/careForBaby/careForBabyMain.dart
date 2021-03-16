@@ -32,7 +32,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
             stretchTriggerOffset: 100.0,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
-              collapseMode: CollapseMode.pin,
+              collapseMode: CollapseMode.parallax,
               stretchModes: [
                 StretchMode.zoomBackground,
               ],
@@ -139,7 +139,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                     }
                   ),
                   HorizontalCardWidget(
-                    title: "Update Pending Mood Record",
+                    title: "Update Pending Medicine Record",
                     description: "Update your baby's existing medicine record.",
                     svgSrc: "assets/icons/Hamburger.svg",
                     press: (){

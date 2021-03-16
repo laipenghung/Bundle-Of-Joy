@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:path/path.dart';
+import 'appointmentMother/appointmentMotherVerification.dart';
 import 'foodIntake/foodIntakeTrackMain.dart';
 import 'widgets/cardWidget.dart';
 import "package:bundle_of_joy/appointmentMother/appointmentMother_verify.dart";
@@ -20,6 +22,7 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
+      //resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
           Container(
@@ -74,9 +77,20 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                           title: "Appointment Management",
                           svgSrc: "assets/icons/testAM.svg",
                           press: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => AppointmentMotherVerify()),
+                            //Navigator.push( //For Old verification UI
+                              //context,
+                              //MaterialPageRoute(builder: (context) => AppointmentMotherVerify()),
+                            //);
+                            showModalBottomSheet(
+                              context: context, 
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                              ),
+                              isScrollControlled: true,
+                              builder: (context) => SingleChildScrollView(
+                                physics: ClampingScrollPhysics(),
+                                child: AppointmentMotherVerification(),
+                              )
                             );
                           },
                         ),
