@@ -86,6 +86,7 @@ class _Vaccination extends State<Vaccination> {
     double heightSpacing = MediaQuery.of(context).size.height * 0.075;
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.04;
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
+
     if (collection.data.docs.isNotEmpty) {
       return SingleChildScrollView(
         child: Column(

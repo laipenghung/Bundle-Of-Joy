@@ -14,8 +14,6 @@ class Baby {
   final User user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Baby.empty();
-
   Baby(
       this.b_id,
       this.m_id,
@@ -31,6 +29,8 @@ class Baby {
       this.b_length_at_birth,
       this.b_head_circumference,
       this.b_order);
+
+  Baby.empty();
 
   Future<void> addBaby(String name, String registered_id, String age, String gender, DateTime dob, DateTime tob, String blood, BuildContext context) async{
     CollectionReference baby = _db.collection("mother").doc(user.uid).collection("baby");
@@ -68,5 +68,15 @@ class Baby {
     }).catchError((onError){
       print("Baby $onError");
     });
+  }
+
+  void updateAge(String age, String id) async{
+    DocumentReference baby = _db.collection("mother").doc(user.uid).collection("baby").doc(id);
+
+    baby.update({
+      "b_age": age.toString()
+    }).then((value){
+      print("Baby age updated");
+    }).catchError((e) => print("Failed to update baby age: $e"));
   }
 }

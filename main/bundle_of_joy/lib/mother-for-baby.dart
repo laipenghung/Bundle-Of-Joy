@@ -1,3 +1,4 @@
+import 'package:age/age.dart';
 import "package:bundle_of_joy/appointmentBaby/appointmentBaby_verify.dart";
 import "package:bundle_of_joy/baby/addBaby.dart";
 import "package:bundle_of_joy/careForBaby/careForBabyTab.dart";
@@ -41,8 +42,30 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
       "b_order"
     ];
     List<Baby> _listBaby = List<Baby>();
+    Baby baby = new Baby.empty();
+
     if (collection.hasData) {
       collection.data.docs.forEach((doc) {
+        DateTime birthday = doc.data()["b_dob"].toDate();
+        DateTime today = DateTime.now();
+        AgeDuration age;
+        String age_string = "";
+        age = Age.dateDifference(fromDate: birthday, toDate: today, includeToDate: false);
+
+        if(age.years != 0){
+          age_string += age.years.toString() + " years ";
+        }
+
+        if(age.months != 0){
+          age_string += age.months.toString() + " months ";
+        }
+
+        if(age.days != 0){
+          age_string += age.days.toString() + " days ";
+        }
+
+        baby.updateAge(age_string.trim(), doc.data()["b_id"]);
+
         _listBaby.add(Baby(
             doc.data()[_listField[0]],
             doc.data()[_listField[1]],
