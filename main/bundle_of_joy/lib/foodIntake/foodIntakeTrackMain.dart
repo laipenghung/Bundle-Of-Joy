@@ -42,7 +42,7 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
           ),
           SliverFillRemaining(
             fillOverscroll: true,
-            hasScrollBody: true,
+            hasScrollBody: false,
             child: Padding(
               padding: const EdgeInsets.all(5),
               child: Column(

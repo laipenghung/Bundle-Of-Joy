@@ -43,7 +43,7 @@ class _AppointmentMotherMainState extends State<AppointmentMotherMain> {
           ),
           SliverFillRemaining(
             fillOverscroll: true,
-            hasScrollBody: true,
+            hasScrollBody: false,
             child: Padding(
               padding: const EdgeInsets.all(5),
               child: Column(
@@ -60,7 +60,7 @@ class _AppointmentMotherMainState extends State<AppointmentMotherMain> {
                     }
                   ),
                   HorizontalCardWidget(
-                    title: "Create New Appoinment",
+                    title: "Book An Appoinment",
                     description: "Book an appointment with the doctor.",
                     svgSrc: "assets/icons/Hamburger.svg",
                     press: (){

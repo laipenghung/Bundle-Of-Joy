@@ -6,8 +6,10 @@ import "package:bundle_of_joy/vaccinationAndGrowth/vacAndGrowthTab.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
+import 'appointmentBaby/appointmentBabyVerification.dart';
 import "baby/baby.dart";
 import 'careForBaby/careForBabyMain.dart';
+import 'vaccinationAndGrowth/vacGworthMain.dart';
 import "vaccinationSchedule/vaccinationSchedule.dart";
 
 class MotherForBabyTab extends StatefulWidget {
@@ -187,12 +189,21 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
           switch (index) {
             case 0:
               {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => AppointmentBabyVerify(
-                            babyID: selectedBabyID,
-                          )),
+                //Navigator.push(
+                  //context,
+                  //MaterialPageRoute(
+                      //builder: (context) => AppointmentBabyVerify(babyID: selectedBabyID,)), // Old UI
+               //);
+                showModalBottomSheet( //New UI 
+                  context: context, 
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                  ),
+                  isScrollControlled: true,
+                  builder: (context) => SingleChildScrollView(
+                    physics: ClampingScrollPhysics(),
+                    child: AppointmentBabyVerification(),
+                  )
                 );
               }
               break;
@@ -200,10 +211,8 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
               {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => VaccinationSchedule(
-                            selectedBabyID: selectedBabyID,
-                          )),
+                  MaterialPageRoute(builder: (context) => VaccinationSchedule(selectedBabyID: selectedBabyID,)),//Old UI
+                  //MaterialPageRoute(builder: (context) => VaccinationSchedule(selectedBabyID: selectedBabyID,)),//New UI //In progress
                 );
               }
               break;
@@ -211,10 +220,8 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
               {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => VacAndGrowthTab(
-                            selectedBabyID: selectedBabyID,
-                          )),
+                  //MaterialPageRoute(builder: (context) => VacAndGrowthTab(selectedBabyID: selectedBabyID,)),//Old UI
+                  MaterialPageRoute(builder: (context) => VaccninationGrowthMain(selectedBabyID: selectedBabyID,)),//New UI
                 );
               }
               break;

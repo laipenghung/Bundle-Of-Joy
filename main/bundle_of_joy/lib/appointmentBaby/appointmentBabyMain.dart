@@ -47,14 +47,14 @@ class _AppointmentBabyMainState extends State<AppointmentBabyMain> {
           ),
           SliverFillRemaining(
             fillOverscroll: true,
-            hasScrollBody: true,
+            hasScrollBody: false,
             child: Padding(
               padding: const EdgeInsets.all(5),
               child: Column(
                 children: [
                   HorizontalCardWidget(
                     title: "View Appointments",
-                    description: "View and manage all of your appointments.",
+                    description: "View and manage all of your baby's appointments.",
                     svgSrc: "assets/icons/Hamburger.svg",
                     press: (){
                       Navigator.push(
@@ -64,8 +64,8 @@ class _AppointmentBabyMainState extends State<AppointmentBabyMain> {
                     }
                   ),
                   HorizontalCardWidget(
-                    title: "Create New Appoinment",
-                    description: "Book an appointment with the doctor.",
+                    title: "Book An Appoinment",
+                    description: "Book an appointment for your baby with the doctor.",
                     svgSrc: "assets/icons/Hamburger.svg",
                     press: (){
                       Navigator.push(
