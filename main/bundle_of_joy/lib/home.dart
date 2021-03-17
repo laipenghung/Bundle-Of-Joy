@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/userProfile.dart';
 import "package:flutter/material.dart";
 import 'motherForBaby.dart';
 import 'motherToBe.dart';
@@ -48,7 +49,8 @@ class _HomePageState extends State<HomePageState> {
       MotherToBeHome(), //[1] //MotherToBeTab() <- Old mother to be screen
       MotherForBabyTab(), //[2] <- Old mother to be screen
       MotherForBabyHome(), //[3] <- New  mother to be screen
-      ProfileTab(), //[4]
+      ProfileTab(), //[4] <- Old Profile screen
+      //UserProfile(), //[4] <- New Profile screen
     ];
   }
 

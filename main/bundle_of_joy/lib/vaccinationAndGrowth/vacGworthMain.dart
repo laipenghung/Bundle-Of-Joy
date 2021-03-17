@@ -1,22 +1,19 @@
-import 'package:flutter/material.dart';
 import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
+import 'package:flutter/material.dart';
 
-import 'babyFoodIntake/babyFoodIntake_add_dateTime.dart';
-import 'babyFoodIntake/babyFoodIntake_recordList_done.dart';
-import 'babyFoodIntake/babyFoodIntake_recordList_pending.dart';
-import 'babyTemp/babyTemp_add_dateTime.dart';
-import 'babyTemp/babyTemp_recordList_done.dart';
-import 'babyTemp/babyTemp_recordList_pending.dart';
+import 'growth/growthHeight.dart';
+import 'growth/growthWeight.dart';
+import 'vaccination/vaccination.dart';
 
-class CareForBabyMain extends StatefulWidget {
+class VaccninationGrowthMain extends StatefulWidget {
   final String selectedBabyID;
-  CareForBabyMain({Key key, this.selectedBabyID}) : super(key: key);
+  VaccninationGrowthMain({Key key, this.selectedBabyID}) : super(key: key);
 
   @override
-  _CareForBabyMainState createState() => _CareForBabyMainState();
+  _VaccninationGrowthMainState createState() => _VaccninationGrowthMainState();
 }
 
-class _CareForBabyMainState extends State<CareForBabyMain> {
+class _VaccninationGrowthMainState extends State<VaccninationGrowthMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +34,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                 StretchMode.zoomBackground,
               ],
               title: Text(
-                  "Care For Baby",
+                  "Vaccination & Growth Tracking",
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.045,
                   ),
@@ -55,13 +52,13 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
               padding: const EdgeInsets.all(5),
               child: Column(
                 children: [
-                  //Baby Food Tracking
+                  //Baby Vaccination Tracking
                   Container(
                     width: MediaQuery.of(context).size.width * 1,
                     //padding: const EdgeInsets.all(5),
                     margin: const EdgeInsets.fromLTRB(15, 20, 10, 5),
                     child: Text(
-                      "Baby Food Tracking",
+                      "Baby Vaccination Tracking",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width *0.055,
@@ -70,45 +67,23 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                     ),
                   ),
                   HorizontalCardWidget(
-                    title: "Baby Food Intake Record",
-                    description: "View all of your baby's food record.",
+                    title: "Baby Vaccination Records",
+                    description: "View all vaccines that that took by your baby.",
                     svgSrc: "assets/icons/Hamburger.svg",
                     press: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BabyFoodIntakeListDone(selectedBabyID: widget.selectedBabyID)),
+                        MaterialPageRoute(builder: (context) => Vaccination(selectedBabyID: widget.selectedBabyID)),
                       );
                     }
                   ),
-                  HorizontalCardWidget(
-                    title: "Create New Baby Food Record",
-                    description: "Create a new food record for your baby.",
-                    svgSrc: "assets/icons/Hamburger.svg",
-                    press: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => BabyFoodIntakeAdd1(selectedBabyID: widget.selectedBabyID)),
-                      );
-                    }
-                  ),
-                  HorizontalCardWidget(
-                    title: "Update Pending Baby Food Record",
-                    description: "Update your baby's existing food record.",
-                    svgSrc: "assets/icons/Hamburger.svg",
-                    press: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => BabyFoodIntakeListPending(selectedBabyID: widget.selectedBabyID)),
-                      );
-                    }
-                  ),
-                  //Baby Medicine Tracking
+                  //Baby Growth Tracking
                   Container(
                     width: MediaQuery.of(context).size.width * 1,
                     //padding: const EdgeInsets.all(5),
                     margin: const EdgeInsets.fromLTRB(15, 20, 10, 5),
                     child: Text(
-                      "Baby Medicine Tracking",
+                      "Baby Growth Tracking",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width *0.055,
@@ -117,35 +92,24 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                     ),
                   ),
                   HorizontalCardWidget(
-                    title: "Medicine Intake Record",
-                    description: "View all of your baby's medicine record.",
+                    title: "Baby Height Tracking",
+                    description: "View your baby height record.",
                     svgSrc: "assets/icons/Hamburger.svg",
                     press: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>BabyTempListDone(selectedBabyID: widget.selectedBabyID)),
+                        MaterialPageRoute(builder: (context) =>GrowthHeight(selectedBabyID: widget.selectedBabyID)),
                       );
                     }
                   ),
                   HorizontalCardWidget(
-                    title: "Create New Medicine Record",
-                    description: "Create a new medicine record for your baby.",
+                    title: "Baby Weight Tracking",
+                    description: "View your baby weight record.",
                     svgSrc: "assets/icons/Hamburger.svg",
                     press: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BabyTempAdd1(selectedBabyID: widget.selectedBabyID)),
-                      );
-                    }
-                  ),
-                  HorizontalCardWidget(
-                    title: "Update Pending Medicine Record",
-                    description: "Update your baby's existing medicine record.",
-                    svgSrc: "assets/icons/Hamburger.svg",
-                    press: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => BabyTempListPending(selectedBabyID: widget.selectedBabyID)),
+                        MaterialPageRoute(builder: (context) => GrowthWeight(selectedBabyID: widget.selectedBabyID)),
                       );
                     }
                   ),

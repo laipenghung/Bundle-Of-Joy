@@ -1,18 +1,19 @@
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+//import 'package:bundle_of_joy/appointmentBaby/appointmentBaby_main.dart';
+import 'package:bundle_of_joy/appointmentBaby/appointmentBabyMain.dart';
 
-import 'appointmentMotherMain.dart';
+class AppointmentBabyVerification extends StatefulWidget {
+  final String babyID;
+  AppointmentBabyVerification({Key key, this.babyID}) : super(key: key);
 
-class AppointmentMotherVerification extends StatefulWidget {
   @override
-  _AppointmentMotherVerificationState createState() => _AppointmentMotherVerificationState();
+  _AppointmentBabyVerificationState createState() => _AppointmentBabyVerificationState();
 }
 
-class _AppointmentMotherVerificationState extends State<AppointmentMotherVerification> {
+class _AppointmentBabyVerificationState extends State<AppointmentBabyVerification> {
   String input;
   final TextEditingController _pinPutController = TextEditingController();
   final FocusNode _pinPutFocusNode = FocusNode();
@@ -76,7 +77,7 @@ class _AppointmentMotherVerificationState extends State<AppointmentMotherVerific
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => AppointmentMotherMain(),
+                                  builder: (context) => AppointmentBabyMain(babyID: widget.babyID,),
                                 ),
                               );
                             }
@@ -181,7 +182,7 @@ class _AppointmentMotherVerificationState extends State<AppointmentMotherVerific
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => AppointmentMotherMain(),
+            builder: (context) => AppointmentBabyMain(babyID: widget.babyID,),
           ),
         );
       });

@@ -1,21 +1,66 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:path/path.dart';
-import 'appointmentMother/appointmentMotherVerification.dart';
-import 'foodIntake/foodIntakeTrackMain.dart';
-import 'widgets/cardWidget.dart';
-import "package:bundle_of_joy/appointmentMother/appointmentMother_verify.dart";
-import "foodIntake/foodIntake_main.dart";
-import "emergencyContact/emergencyContactTab.dart";
-import "MotherHealthTracking/healthTrackingMother.dart";
+import 'dart:developer';
 
-class MotherToBeHome extends StatefulWidget {
+import 'package:bundle_of_joy/auth/auth.dart';
+import 'package:bundle_of_joy/sign_up.dart';
+import 'package:flutter/material.dart';
+
+import 'baby/babyProfile.dart';
+import 'motherProfile/motherProfile.dart';
+import 'widgets/cardWidget.dart';
+
+class UserProfile extends StatefulWidget {
   @override
-  _MotherToBeHomeState createState() => _MotherToBeHomeState();
+  _UserProfileState createState() => _UserProfileState();
 }
 
-class _MotherToBeHomeState extends State<MotherToBeHome> {
+class _UserProfileState extends State<UserProfile> {
   final kShadowColor = Color(0xFFE6E6E6);
+
+  AlertDialog _signOut() {
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Yes"),
+      onPressed: () {
+        signOut();
+        Navigator.of(context, rootNavigator: true).push(
+          MaterialPageRoute(builder: (context) {
+            return SignUpScreen();
+          }),
+        );
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text(
+        "Log Out",
+        style: TextStyle(
+          fontFamily: "Comfortaa",
+          fontWeight: FontWeight.bold,
+          fontSize: MediaQuery.of(context).size.height * 0.03,
+        ),
+      ),
+      content: Text(
+        "Would you like to log out?",
+        style: TextStyle(
+          fontFamily: "Comfortaa",
+          fontWeight: FontWeight.bold,
+          fontSize: MediaQuery.of(context).size.height * 0.022,
+        ),
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+      backgroundColor: Color(0xFFFCFFD5),
+    );
+
+    return alert;
+  }
 
   //Card view Widget
   Widget build(BuildContext context) {
@@ -56,7 +101,7 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                   Text(
-                    "Mother to Be",
+                    "Profile",
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.095,
                       fontWeight: FontWeight.bold,
@@ -73,13 +118,9 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                       mainAxisSpacing: 20,
                       children: <Widget>[
                         CardWidget(
-                          title: "Appointment Management",
+                          title: "Mother Profile",
                           svgSrc: "assets/icons/testAM.svg",
                           press: () {
-                            //Navigator.push( //For Old verification UI
-                              //context,
-                              //MaterialPageRoute(builder: (context) => AppointmentMotherVerify()),
-                            //);
                             showModalBottomSheet(
                               context: context, 
                               shape: RoundedRectangleBorder(
@@ -88,39 +129,41 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                               isScrollControlled: true,
                               builder: (context) => SingleChildScrollView(
                                 physics: ClampingScrollPhysics(),
-                                child: AppointmentMotherVerification(),
+                                child: MotherProfile(),
                               )
                             );
                           },
                         ),
                         CardWidget(
-                          title: "Food Intake Tracking",
+                          title: "Baby Profile",
                           svgSrc: "assets/icons/Hamburger.svg",
                           press: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => FoodIntakeTrackMain()), //Updated UI
-                              //MaterialPageRoute(builder: (context) => FoodIntakeMain()), //Old UI
+                              MaterialPageRoute(builder: (context) => BabyProfile()), 
                             );
                           },
                         ),
                         CardWidget(
-                          title: "Health Tracking",
+                          title: "App Review & Bugs Report",
                           svgSrc: "assets/icons/testHT.svg",
                           press: () {
-                             Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => HealthTrackingMother()),
-                            );
+                             //Navigator.push(
+                              //context,
+                              //MaterialPageRoute(builder: (context) => HealthTrackingMother()),
+                            //);
+                            log("Test onPress function");
                           },
                         ),
                         CardWidget(
-                          title: "Emergency Contact",
+                          title: "Sign Out",
                           svgSrc: "assets/icons/testEC.svg",
                           press: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => EmergencyContactTab()),
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext alertContext) {
+                                return _signOut();
+                              },
                             );
                           },
                         ),
