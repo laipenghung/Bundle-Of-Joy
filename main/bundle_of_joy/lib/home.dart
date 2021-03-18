@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePageState> {
         activeColor: Colors.black,
         inactiveColor: Colors.black.withOpacity(0.3),
       ),
-      //PersistentBottomNavBarItem(icon: Image.asset("assets/icons/bell.png"), title: ("Test"), activeColor: Colors.black, inactiveColor: Colors.black.withOpacity(0.3)),
+      PersistentBottomNavBarItem(icon: Image.asset("assets/icons/bell.png"), title: ("Test"), activeColor: Colors.black, inactiveColor: Colors.black.withOpacity(0.3)),
       PersistentBottomNavBarItem(
         icon: Image.asset("assets/icons/user.png"),
         title: ("Profile"),
@@ -91,8 +91,8 @@ class _HomePageState extends State<HomePageState> {
           }
           break;
         case 2:
-        {
-          _title = "Notification";
+          {
+            _title = "Notification";
           }
           break;
         case 3: //Was 3

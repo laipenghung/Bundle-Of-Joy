@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "appointmentMother_add_hospital.dart";
 import "appointmentMother_add_doctor.dart";
+import "appointmentMother_add_date.dart";
 
 class AppointmentMotherAddFull extends StatefulWidget {
   final String name;
@@ -32,7 +33,7 @@ class _AppointmentMotherAddFullState extends State<AppointmentMotherAddFull> {
           color: Colors.black,
         ),
       ),
-      isActive: true,
+      //isActive: true,
       //state: FAStepstate.disabled,
       content: Scrollbar(
         child: Container(
@@ -54,6 +55,8 @@ class _AppointmentMotherAddFullState extends State<AppointmentMotherAddFull> {
           color: Colors.black,
         ),
       ),
+      //isActive: true,
+      //state: FAStepstate.disabled,
       content: Scrollbar(
         child: Container(
           height: 350,
@@ -65,17 +68,22 @@ class _AppointmentMotherAddFullState extends State<AppointmentMotherAddFull> {
 
     // SELECT DATE /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     FAStep(
-        title: Text('Select a date'),
-        content: Column(
-          children: <Widget>[
-            TextFormField(
-              decoration: InputDecoration(labelText: 'First Name'),
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Last Name'),
-            )
-          ],
-        )),
+      title: Text(
+        'Select a date',
+        style: TextStyle(
+          fontFamily: 'Comfortaa',
+          fontWeight: FontWeight.bold,
+          fontSize: 15,
+          color: Colors.black,
+        ),
+      ),
+      //isActive: true,
+      //state: FAStepstate.disabled,
+      content: Container(
+        //color: Colors.blue,
+        child: AppointmentMotherAddDate(),
+      ),
+    ),
 
     // SELECT TIME /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     FAStep(
@@ -112,7 +120,7 @@ class _AppointmentMotherAddFullState extends State<AppointmentMotherAddFull> {
           color: Colors.black, //change your color here
         ),
 
-        //automaticallyImplyLeading: false, // CENTER THE TEXT
+        //automaticallyImplyLeading: false,
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
