@@ -6,18 +6,19 @@ import "appointmentMother_add_doctor.dart";
 import "appointmentMother_add_date.dart";
 
 class AppointmentMotherAddFull extends StatefulWidget {
-  final String name;
+  final String hospital;
 
-  AppointmentMotherAddFull({this.name});
+  AppointmentMotherAddFull({this.hospital});
 
   @override
-  _AppointmentMotherAddFullState createState() => _AppointmentMotherAddFullState(name);
+  _AppointmentMotherAddFullState createState() => _AppointmentMotherAddFullState(hospital);
 }
 
 class _AppointmentMotherAddFullState extends State<AppointmentMotherAddFull> {
-  final String name;
   final User user = FirebaseAuth.instance.currentUser;
-  _AppointmentMotherAddFullState(this.name);
+  final String hospital;
+
+  _AppointmentMotherAddFullState(this.hospital);
 
   int _currentStep = 0;
 
@@ -87,17 +88,25 @@ class _AppointmentMotherAddFullState extends State<AppointmentMotherAddFull> {
 
     // SELECT TIME /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     FAStep(
-        title: Text('Select a time'),
-        content: Column(
-          children: <Widget>[
-            TextFormField(
-              decoration: InputDecoration(labelText: 'First Name'),
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Last Name'),
-            )
-          ],
-        )),
+      title: Text(
+        'Select a time',
+        style: TextStyle(
+          fontFamily: 'Comfortaa',
+          fontWeight: FontWeight.bold,
+          fontSize: 15,
+          color: Colors.black,
+        ),
+      ),
+      //isActive: true,
+      //state: FAStepstate.disabled,
+      content: Scrollbar(
+        child: Container(
+          height: 350,
+          //color: Colors.blue,
+          child: AppointmentMotherAddDoctor(),
+        ),
+      ),
+    ),
   ];
 
   @override
