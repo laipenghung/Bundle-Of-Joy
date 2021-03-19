@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
-
 import 'foodIntake_add_1_dateTime.dart';
 import 'foodIntake_recordList_done.dart';
 import 'foodIntake_recordList_pending.dart';
@@ -31,11 +30,11 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
                 StretchMode.zoomBackground,
               ],
               title: Text(
-                  "Food Intake Tracking",
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                  ),
+                "Food Intake Tracking",
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.045,
                 ),
+              ),
               background: Image.network(
                 "https://static.vecteezy.com/system/resources/previews/000/171/284/original/free-hand-drawn-vector-nightscape-illustration.jpg",
                 fit: BoxFit.cover,
