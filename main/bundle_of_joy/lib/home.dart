@@ -93,8 +93,8 @@ class _HomePageState extends State<HomePageState> {
           }
           break;
         case 2:
-        {
-          _title = "Notification";
+          {
+            _title = "Notification";
           }
           break;
         case 3: //Was 3
