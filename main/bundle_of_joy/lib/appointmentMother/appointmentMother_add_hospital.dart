@@ -1,6 +1,6 @@
-import 'package:bundle_of_joy/foodIntake/foodIntake_record_done.dart';
 import "package:flutter/material.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
+import "appointmentMother_add_full.dart";
 // import "package:firebase_auth/firebase_auth.dart";
 
 class AppointmentMotherAddHospital extends StatefulWidget {
@@ -61,10 +61,7 @@ class _AppointmentMotherAddHospitalState extends State<AppointmentMotherAddHospi
                 itemBuilder: (_, index) {
                   return InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => FoodIntakeRecordDone(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
-                      );
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => AppointmentMotherAddFull(hospital: snapshot.data.documents[index]["h_name"])));
                     },
                     child: Column(
                       children: [

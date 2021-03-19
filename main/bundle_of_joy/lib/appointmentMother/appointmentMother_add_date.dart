@@ -42,77 +42,9 @@ class _AppointmentMotherAddDateState extends State<AppointmentMotherAddDate> {
     ),
   );
 
-  // MARKED DATE MAP
-  EventList<Event> _markedDateMap = new EventList<Event>(
-    events: {
-      new DateTime(2019, 2, 10): [
-        new Event(
-          date: new DateTime(2019, 2, 10),
-          title: 'Event 1',
-          icon: _eventIcon,
-          dot: Container(
-            margin: EdgeInsets.symmetric(horizontal: 1.0),
-            color: Colors.red,
-            height: 5.0,
-            width: 5.0,
-          ),
-        ),
-        new Event(
-          date: new DateTime(2019, 2, 10),
-          title: 'Event 2',
-          icon: _eventIcon,
-        ),
-        new Event(
-          date: new DateTime(2019, 2, 10),
-          title: 'Event 3',
-          icon: _eventIcon,
-        ),
-      ],
-    },
-  );
-
   // CREATE CALENDARCAROUSEL
   // CalendarCarousel _calendarCarousel, _calendarCarouselNoHeader;
   CalendarCarousel _calendarCarouselNoHeader;
-
-  // Add more events to _markedDateMap EventList
-  @override
-  void initState() {
-    _markedDateMap.add(
-        new DateTime(2019, 2, 25),
-        new Event(
-          date: new DateTime(2019, 2, 25),
-          title: 'Event 5',
-          icon: _eventIcon,
-        ));
-
-    _markedDateMap.add(
-        new DateTime(2019, 2, 10),
-        new Event(
-          date: new DateTime(2019, 2, 10),
-          title: 'Event 4',
-          icon: _eventIcon,
-        ));
-
-    _markedDateMap.addAll(new DateTime(2019, 2, 11), [
-      new Event(
-        date: new DateTime(2019, 2, 11),
-        title: 'Event 1',
-        icon: _eventIcon,
-      ),
-      new Event(
-        date: new DateTime(2019, 2, 11),
-        title: 'Event 2',
-        icon: _eventIcon,
-      ),
-      new Event(
-        date: new DateTime(2019, 2, 11),
-        title: 'Event 3',
-        icon: _eventIcon,
-      ),
-    ]);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,19 +109,10 @@ class _AppointmentMotherAddDateState extends State<AppointmentMotherAddDate> {
 
       height: 300.0,
 
-      markedDatesMap: _markedDateMap,
       selectedDateTime: _currentDate2,
       targetDateTime: _targetDateTime,
 
       customGridViewPhysics: NeverScrollableScrollPhysics(),
-
-      markedDateCustomShapeBorder: CircleBorder(
-        side: BorderSide(color: Colors.yellow),
-      ),
-      markedDateCustomTextStyle: TextStyle(
-        fontSize: 18,
-        color: Colors.blue,
-      ),
 
       showHeader: false,
 
@@ -203,6 +126,7 @@ class _AppointmentMotherAddDateState extends State<AppointmentMotherAddDate> {
         fontSize: MediaQuery.of(context).size.height * 0.02,
         color: Colors.black,
       ),
+      selectedDayBorderColor: Colors.black,
       selectedDayButtonColor: Colors.blue,
 
       // markedDateShowIcon: true,
@@ -251,6 +175,7 @@ class _AppointmentMotherAddDateState extends State<AppointmentMotherAddDate> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            /*
             Row(
               children: [
                 Container(
@@ -283,10 +208,12 @@ class _AppointmentMotherAddDateState extends State<AppointmentMotherAddDate> {
                 )
               ],
             ),
+            */
+
             Row(
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.04, right: MediaQuery.of(context).size.width * 0.01),
+                  margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.01),
                   width: MediaQuery.of(context).size.height * 0.015,
                   height: MediaQuery.of(context).size.height * 0.015,
                   color: Colors.blue,
