@@ -36,7 +36,8 @@ class HorizontalCardWidget extends StatelessWidget {
         onTap: press,
         child: Row(
           children: <Widget>[
-            SvgPicture.asset(svgSrc, height: 40, width: 40),
+            SizedBox(width: 20),
+            SvgPicture.asset(svgSrc, height: 50, width: 50),
             SizedBox(width: 20),
             Expanded(
               child: Column(

@@ -58,7 +58,7 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                   Text(
                     "Mother to Be",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.095,
+                      fontSize: MediaQuery.of(context).size.width * 0.08,
                       fontWeight: FontWeight.bold,
                       color: Colors.black.withOpacity(0.65),
                     )

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
 import 'foodIntake_add_1_dateTime.dart';
 import 'foodIntake_recordList_done.dart';
+import 'foodIntake_recordList_pending.dart';
 
 class FoodIntakeTrackMain extends StatefulWidget {
   @override
@@ -48,35 +49,38 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
               child: Column(
                 children: [
                   HorizontalCardWidget(
-                      title: "Food Intake Record",
-                      description: "View all of your food record.",
-                      svgSrc: "assets/icons/Hamburger.svg",
-                      press: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
-                        );
-                      }),
+                    title: "Food Intake Record",
+                    description: "View all of your food record.",
+                    svgSrc: "assets/icons/verify.svg",
+                    press: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
+                      );
+                    }
+                  ),
                   HorizontalCardWidget(
-                      title: "Create New Food Record",
-                      description: "Create a new food record.",
-                      svgSrc: "assets/icons/Hamburger.svg",
-                      press: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => FoodIntakeAdd1()),
-                        );
-                      }),
+                    title: "Create New Food Record",
+                    description: "Create a new food record.",
+                    svgSrc: "assets/icons/add.svg",
+                    press: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FoodIntakeAdd1()),
+                      );
+                    }
+                  ),
                   HorizontalCardWidget(
-                      title: "Update Pending Food Record",
-                      description: "Update your existing food record.",
-                      svgSrc: "assets/icons/Hamburger.svg",
-                      press: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
-                        );
-                      }),
+                    title: "Update Pending Food Record",
+                    description: "Update your existing food record.",
+                    svgSrc: "assets/icons/edit.svg",
+                    press: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FoodIntakeListPending()),
+                      );
+                    }
+                  ),
                 ],
               ),
             ),

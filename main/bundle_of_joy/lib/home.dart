@@ -49,8 +49,8 @@ class _HomePageState extends State<HomePageState> {
       MotherToBeHome(), //[1] //MotherToBeTab() <- Old mother to be screen
       MotherForBabyTab(), //[2] <- Old mother to be screen
       MotherForBabyHome(), //[3] <- New  mother to be screen
-      ProfileTab(), //[4] <- Old Profile screen
-      //UserProfile(), //[4] <- New Profile screen
+      //ProfileTab(), //[4] <- Old Profile screen
+      UserProfile(), //[4] <- New Profile screen
     ];
   }
 
