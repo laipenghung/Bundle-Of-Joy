@@ -1,9 +1,8 @@
 import 'dart:developer';
-
 import 'package:bundle_of_joy/auth/auth.dart';
 import 'package:bundle_of_joy/sign_up.dart';
 import 'package:flutter/material.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'baby/babyProfile.dart';
 import 'motherProfile/motherProfile.dart';
 import 'widgets/cardWidget.dart';
@@ -14,7 +13,11 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  final kShadowColor = Color(0xFFE6E6E6);
+  void _launchURL() async {
+    //Change the URL to the new form
+    const url = "https://forms.gle/QssMrNjWWubLJ2uf7"; //Old google form
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+  }
 
   AlertDialog _signOut() {
     Widget cancelButton = FlatButton(
@@ -103,7 +106,7 @@ class _UserProfileState extends State<UserProfile> {
                   Text(
                     "Profile",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.095,
+                      fontSize: MediaQuery.of(context).size.width * 0.08,
                       fontWeight: FontWeight.bold,
                       color: Colors.black.withOpacity(0.65),
                     )
@@ -119,7 +122,7 @@ class _UserProfileState extends State<UserProfile> {
                       children: <Widget>[
                         CardWidget(
                           title: "Mother Profile",
-                          svgSrc: "assets/icons/testAM.svg",
+                          svgSrc: "assets/icons/woman.svg",
                           press: () {
                             showModalBottomSheet(
                               context: context, 
@@ -136,7 +139,7 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                         CardWidget(
                           title: "Baby Profile",
-                          svgSrc: "assets/icons/Hamburger.svg",
+                          svgSrc: "assets/icons/baby-boy.svg",
                           press: () {
                             Navigator.push(
                               context,
@@ -146,18 +149,15 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                         CardWidget(
                           title: "App Review & Bugs Report",
-                          svgSrc: "assets/icons/testHT.svg",
+                          svgSrc: "assets/icons/loudspeaker.svg",
                           press: () {
-                             //Navigator.push(
-                              //context,
-                              //MaterialPageRoute(builder: (context) => HealthTrackingMother()),
-                            //);
-                            log("Test onPress function");
+                            //For google form
+                            _launchURL();
                           },
                         ),
                         CardWidget(
                           title: "Sign Out",
-                          svgSrc: "assets/icons/testEC.svg",
+                          svgSrc: "assets/icons/log-out.svg",
                           press: () {
                             showDialog(
                               context: context,

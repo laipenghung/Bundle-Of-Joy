@@ -34,7 +34,7 @@ class _VaccninationGrowthMainState extends State<VaccninationGrowthMain> {
                 StretchMode.zoomBackground,
               ],
               title: Text(
-                  "Vaccination & Growth Tracking",
+                  "Vaccination & Growth",
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.045,
                   ),
@@ -69,7 +69,7 @@ class _VaccninationGrowthMainState extends State<VaccninationGrowthMain> {
                   HorizontalCardWidget(
                     title: "Baby Vaccination Records",
                     description: "View all vaccines that that took by your baby.",
-                    svgSrc: "assets/icons/Hamburger.svg",
+                    svgSrc: "assets/icons/records.svg",
                     press: (){
                       Navigator.push(
                         context,
@@ -94,7 +94,7 @@ class _VaccninationGrowthMainState extends State<VaccninationGrowthMain> {
                   HorizontalCardWidget(
                     title: "Baby Height Tracking",
                     description: "View your baby height record.",
-                    svgSrc: "assets/icons/Hamburger.svg",
+                    svgSrc: "assets/icons/height.svg",
                     press: (){
                       Navigator.push(
                         context,
@@ -105,7 +105,7 @@ class _VaccninationGrowthMainState extends State<VaccninationGrowthMain> {
                   HorizontalCardWidget(
                     title: "Baby Weight Tracking",
                     description: "View your baby weight record.",
-                    svgSrc: "assets/icons/Hamburger.svg",
+                    svgSrc: "assets/icons/weight.svg",
                     press: (){
                       Navigator.push(
                         context,
