@@ -43,7 +43,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                   ),
                 ),
               background: Image.network(
-                "https://static.vecteezy.com/system/resources/previews/000/171/284/original/free-hand-drawn-vector-nightscape-illustration.jpg",
+                "https://image.freepik.com/free-vector/psychedelic-groovy-background-with-eaves_23-2148837578.jpg",
                 fit: BoxFit.cover,
               ),
             ),
@@ -72,7 +72,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                   HorizontalCardWidget(
                     title: "Baby Food Intake Record",
                     description: "View all of your baby's food record.",
-                    svgSrc: "assets/icons/Hamburger.svg",
+                    svgSrc: "assets/icons/verify.svg",
                     press: (){
                       Navigator.push(
                         context,
@@ -83,7 +83,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                   HorizontalCardWidget(
                     title: "Create New Baby Food Record",
                     description: "Create a new food record for your baby.",
-                    svgSrc: "assets/icons/Hamburger.svg",
+                    svgSrc: "assets/icons/add.svg",
                     press: (){
                       Navigator.push(
                         context,
@@ -94,7 +94,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                   HorizontalCardWidget(
                     title: "Update Pending Baby Food Record",
                     description: "Update your baby's existing food record.",
-                    svgSrc: "assets/icons/Hamburger.svg",
+                    svgSrc: "assets/icons/edit.svg",
                     press: (){
                       Navigator.push(
                         context,
@@ -119,7 +119,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                   HorizontalCardWidget(
                     title: "Medicine Intake Record",
                     description: "View all of your baby's medicine record.",
-                    svgSrc: "assets/icons/Hamburger.svg",
+                    svgSrc: "assets/icons/verify.svg",
                     press: (){
                       Navigator.push(
                         context,
@@ -130,7 +130,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                   HorizontalCardWidget(
                     title: "Create New Medicine Record",
                     description: "Create a new medicine record for your baby.",
-                    svgSrc: "assets/icons/Hamburger.svg",
+                    svgSrc: "assets/icons/add.svg",
                     press: (){
                       Navigator.push(
                         context,
@@ -141,7 +141,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                   HorizontalCardWidget(
                     title: "Update Pending Medicine Record",
                     description: "Update your baby's existing medicine record.",
-                    svgSrc: "assets/icons/Hamburger.svg",
+                    svgSrc: "assets/icons/edit.svg",
                     press: (){
                       Navigator.push(
                         context,
