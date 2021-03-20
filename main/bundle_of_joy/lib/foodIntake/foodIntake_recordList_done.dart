@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/foodIntake/foodIntakeTrackView.dart';
 import 'package:bundle_of_joy/foodIntake/foodIntake_record_done.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
@@ -85,7 +86,7 @@ class _FoodIntakeListDoneState extends State<FoodIntakeListDone> {
                         //go to record_pending
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => FoodIntakeRecordDone(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
+                          MaterialPageRoute(builder: (context) => FoodIntakeTrackView(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
                         );
                       },
                       child: Column(
