@@ -40,7 +40,6 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
 
     collection.data.docs.forEach((doc) {
       RegExp exp = new RegExp(r"\d+ \w+");
-      print(exp.stringMatch(age).toString());
 
       if(doc.data()[_listField[0]].toString() == exp.stringMatch(age).toString()) {
         _showNotification(age);
@@ -105,7 +104,7 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
     double heightSpacing = MediaQuery.of(context).size.height * 0.075;
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
-    if(collection.hasData){
+    if(collection.hasData && baby.hasData){
       if (collection.data.docs.isNotEmpty) {
         String age = baby.data["b_age"];
 

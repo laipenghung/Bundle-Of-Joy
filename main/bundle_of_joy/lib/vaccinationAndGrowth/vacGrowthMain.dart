@@ -1,19 +1,18 @@
 import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
 import 'package:flutter/material.dart';
-
 import 'growth/growthHeight.dart';
 import 'growth/growthWeight.dart';
 import 'vaccination/vaccination.dart';
 
-class VaccninationGrowthMain extends StatefulWidget {
+class VaccinationGrowthMain extends StatefulWidget {
   final String selectedBabyID;
-  VaccninationGrowthMain({Key key, this.selectedBabyID}) : super(key: key);
+  VaccinationGrowthMain({Key key, this.selectedBabyID}) : super(key: key);
 
   @override
-  _VaccninationGrowthMainState createState() => _VaccninationGrowthMainState();
+  _VaccinationGrowthMainState createState() => _VaccinationGrowthMainState();
 }
 
-class _VaccninationGrowthMainState extends State<VaccninationGrowthMain> {
+class _VaccinationGrowthMainState extends State<VaccinationGrowthMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

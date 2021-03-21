@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePageState> {
   List<Widget> _widgetOptions() {
     return <Widget>[
       MotherToBeHome(), //[1] //MotherToBeTab() <- Old mother to be screen
-      MotherForBabyTab(), //[2] <- Old mother to be screen
+      //MotherForBabyTab(), //[2] <- Old mother to be screen
       MotherForBabyHome(), //[3] <- New  mother to be screen
       //ProfileTab(), //[4] <- Old Profile screen
       UserProfile(), //[4] <- New Profile screen
@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePageState> {
         activeColor: Colors.black,
         inactiveColor: Colors.black.withOpacity(0.3),
       ),
-      PersistentBottomNavBarItem(icon: Image.asset("assets/icons/bell.png"), title: ("Test"), activeColor: Colors.black, inactiveColor: Colors.black.withOpacity(0.3)),
+      //PersistentBottomNavBarItem(icon: Image.asset("assets/icons/bell.png"), title: ("Test"), activeColor: Colors.black, inactiveColor: Colors.black.withOpacity(0.3)),
       PersistentBottomNavBarItem(
         icon: Image.asset("assets/icons/user.png"),
         title: ("Profile"),
@@ -92,12 +92,12 @@ class _HomePageState extends State<HomePageState> {
             _title = "Mother-for-baby";
           }
           break;
-        case 2:
-          {
-            _title = "Notification";
-          }
-          break;
-        case 3: //Was 3
+        // case 2:
+        //   {
+        //     _title = "Notification";
+        //   }
+        //   break;
+        case 2: //Was 3
           {
             _title = "Profile";
           }
