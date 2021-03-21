@@ -21,7 +21,7 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
   final User user = FirebaseAuth.instance.currentUser;
   _AppointmentMotherAddHospitalState(this.name);
   */
-
+  int selectedIndex;
   _AppointmentMotherAddDoctorState();
 
   @override
@@ -45,7 +45,7 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
           } else if (snapshot.data.documents.isEmpty) {
             return Center(
               child: Text(
-                'There is currently no records',
+                'There is currently no doctors available',
                 style: TextStyle(
                   fontFamily: 'Comfortaa',
                   fontSize: MediaQuery.of(context).size.width * 0.04,
@@ -61,20 +61,21 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
                 itemBuilder: (_, index) {
                   return InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => FoodIntakeRecordDone(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
-                      );
+                      selectedIndex = index;
+                      setState(() {}); //Rebuild this page
+                      //Navigator.push(context, MaterialPageRoute(builder: (context) => FoodIntakeRecordDone(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])));
                     },
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.015,
-                            bottom: MediaQuery.of(context).size.height * 0.015,
-                          ),
+                          color: selectedIndex == index ? Color(0xFFBBBBBB) : Colors.transparent,
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015, bottom: MediaQuery.of(context).size.height * 0.015),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              // LEFT
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -88,9 +89,13 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
                                       fit: BoxFit.cover,
                                     ),
                                   ),
-
-                                  SizedBox(height: MediaQuery.of(context).size.height * 0.025),
-
+                                ],
+                              ),
+                              SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                              // RIGHT
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
                                   // NAME
                                   Row(
                                     children: [
@@ -101,8 +106,7 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
                                         ),
                                       ),
                                       Container(
-                                        //color: Colors.lightBlue,
-                                        width: MediaQuery.of(context).size.width * 0.67,
+                                        width: MediaQuery.of(context).size.width * 0.5,
                                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02),
                                         child: Text(
                                           snapshot.data.documents[index]['d_name'],
@@ -117,7 +121,7 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
                                     ],
                                   ),
 
-                                  SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+                                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
                                   // Location in Hospital
                                   Row(
@@ -129,13 +133,14 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
                                         ),
                                       ),
                                       Container(
+                                        width: MediaQuery.of(context).size.width * 0.5,
                                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02),
                                         child: Text(
                                           snapshot.data.documents[index]['d_h_location'],
                                           style: TextStyle(
                                             fontFamily: 'Comfortaa',
                                             fontWeight: FontWeight.bold,
-                                            fontSize: MediaQuery.of(context).size.height * 0.02,
+                                            fontSize: MediaQuery.of(context).size.height * 0.018,
                                             color: Colors.black,
                                           ),
                                         ),
@@ -143,7 +148,7 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
                                     ],
                                   ),
 
-                                  SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+                                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
                                   // Phone Number
                                   Row(
@@ -155,13 +160,14 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
                                         ),
                                       ),
                                       Container(
+                                        width: MediaQuery.of(context).size.width * 0.5,
                                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02),
                                         child: Text(
                                           snapshot.data.documents[index]['d_tel'],
                                           style: TextStyle(
                                             fontFamily: 'Comfortaa',
                                             fontWeight: FontWeight.bold,
-                                            fontSize: MediaQuery.of(context).size.height * 0.02,
+                                            fontSize: MediaQuery.of(context).size.height * 0.018,
                                             color: Colors.black,
                                           ),
                                         ),
@@ -169,7 +175,7 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
                                     ],
                                   ),
 
-                                  SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+                                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
                                   // Email
                                   Row(
@@ -181,13 +187,14 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
                                         ),
                                       ),
                                       Container(
+                                        width: MediaQuery.of(context).size.width * 0.5,
                                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02),
                                         child: Text(
                                           snapshot.data.documents[index]['d_email'],
                                           style: TextStyle(
                                             fontFamily: 'Comfortaa',
                                             fontWeight: FontWeight.bold,
-                                            fontSize: MediaQuery.of(context).size.height * 0.02,
+                                            fontSize: MediaQuery.of(context).size.height * 0.018,
                                             color: Colors.black,
                                           ),
                                         ),
@@ -195,7 +202,7 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
                                     ],
                                   ),
 
-                                  SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+                                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
                                   // Education
                                   Row(
@@ -207,13 +214,14 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
                                         ),
                                       ),
                                       Container(
+                                        width: MediaQuery.of(context).size.width * 0.5,
                                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02),
                                         child: Text(
                                           snapshot.data.documents[index]['d_education'],
                                           style: TextStyle(
                                             fontFamily: 'Comfortaa',
                                             fontWeight: FontWeight.bold,
-                                            fontSize: MediaQuery.of(context).size.height * 0.02,
+                                            fontSize: MediaQuery.of(context).size.height * 0.018,
                                             color: Colors.black,
                                           ),
                                         ),
@@ -225,12 +233,7 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
                             ],
                           ),
                         ),
-                        Divider(
-                          indent: MediaQuery.of(context).size.width * 0.0,
-                          endIndent: MediaQuery.of(context).size.width * 0.0,
-                          color: Colors.black,
-                          thickness: MediaQuery.of(context).size.height * 0.002,
-                        ),
+                        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       ],
                     ),
                   );

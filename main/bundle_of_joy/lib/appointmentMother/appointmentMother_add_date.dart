@@ -171,6 +171,8 @@ class _AppointmentMotherAddDateState extends State<AppointmentMotherAddDate> {
 
     return Column(
       children: <Widget>[
+        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+
         // LEGEND
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -285,7 +287,7 @@ class _AppointmentMotherAddDateState extends State<AppointmentMotherAddDate> {
         ),
 
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 10.0),
+          margin: EdgeInsets.symmetric(horizontal: 40.0),
           child: _calendarCarouselNoHeader,
         ),
       ],
