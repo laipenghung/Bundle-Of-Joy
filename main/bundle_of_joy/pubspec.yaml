@@ -58,7 +58,7 @@ dependencies:
   draggable_scrollbar: ^0.0.4
   url_launcher: ^5.7.2
   flutter_calendar_carousel: ^1.5.3
-
+  charts_flutter: ^0.8.1
 
 dev_dependencies:
   flutter_test:
