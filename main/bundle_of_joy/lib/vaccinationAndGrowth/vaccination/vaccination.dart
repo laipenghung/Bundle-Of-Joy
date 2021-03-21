@@ -224,14 +224,34 @@ class _Vaccination extends State<Vaccination> {
         .where("bv_dateGiven", isGreaterThan: "")
         .orderBy("bv_dateGiven", descending: false);
 
-    return StreamBuilder(
-        stream: vaccination.snapshots(),
-        builder: (context, collection) {
-          if (collection.hasData) {
-            return hasData(collection);
-          } else {
-            return loading();
-          }
-        });
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
+        title: Text(
+          "Baby Vaccination Records",
+          style: TextStyle(
+            fontFamily: 'Comfortaa',
+            fontWeight: FontWeight.bold,
+            fontSize: MediaQuery.of(context).size.width * 0.05,
+            color: Colors.black,
+          ),
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        //automaticallyImplyLeading: false, // CENTER THE TEXT
+        backgroundColor: Color(0xFFFCFFD5),
+        centerTitle: true,
+      ),
+      body: StreamBuilder(
+          stream: vaccination.snapshots(),
+          builder: (context, collection) {
+            if (collection.hasData) {
+              return hasData(collection);
+            } else {
+              return loading();
+            }
+          }),
+    );
   }
 }
