@@ -1,42 +1,42 @@
-import 'dart:ffi';
-import 'package:bundle_of_joy/foodIntake/foodIntakeBloodSugarTips.dart';
-import 'package:bundle_of_joy/widgets/recordChart/recordChartData.dart';
+import 'package:bundle_of_joy/widgets/bsAnalyzerWidget.dart';
+import 'package:bundle_of_joy/widgets/textWidgets.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'recordChart/recordChartWidget.dart';
 
-class RecordBloodSugarWidget extends StatelessWidget {
-  final Color chartBeforeColor, chartColorAfter;
+class RecordBloodSugarDoneWidget extends StatelessWidget {
   final String svgSrc;
   final double bSugarBefore;
   final double bSugarAfter;
-  final List<RecordChartData> chartData;
+  final bool showAnalyzer;
   
-  const RecordBloodSugarWidget({
+  const RecordBloodSugarDoneWidget({
     Key key,
     this.svgSrc,
     this.bSugarBefore,
     this.bSugarAfter,
-    this.chartBeforeColor,
-    this.chartColorAfter,
-    this.chartData,
+    this.showAnalyzer,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    //TextStle normalTextStye = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.032,);
+    //TextStyle highlightedTextStyle = TextStyle(color: Colors.black.withOpacity(0.8), fontWeight: FontWeight.bold, fontSize: MediaQuery.of(context).size.width * 0.032,);
+    //bool showAnalyzer = false;
+
     return SizedBox(
       width: double.infinity,
       child: Container(
-        margin: EdgeInsets.all(10.0),
+        margin: EdgeInsets.fromLTRB(10, 10, 10, 20),
         padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              offset: Offset(30, 17),
-              blurRadius: 23,
-              spreadRadius: -13,
+              offset: Offset(15, 15),
+              blurRadius: 20,
+              spreadRadius: 15,
               color: Color(0xFFE6E6E6),
             ),
           ],
@@ -45,11 +45,11 @@ class RecordBloodSugarWidget extends StatelessWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                SvgPicture.asset("assets/icons/testAM.svg", height: 23, width: 23,),
+                SvgPicture.asset(svgSrc, height: 23, width: 23,),
                 Container(
                   padding: EdgeInsets.only(left: 10.0,),
                   child: Text(
-                    "Blood Pressue Reading",
+                    "Blood Sugar Reading",
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.045,
                       fontWeight: FontWeight.bold,
@@ -60,7 +60,19 @@ class RecordBloodSugarWidget extends StatelessWidget {
             ),
             Container(
               width: double.infinity,
-              margin: EdgeInsets.only(top: 15.0,),
+              margin: EdgeInsets.only(top: 8.0,),
+              child: Text(
+                "Your blood sugar reading before meal and 2 hours after meal.",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.035,
+                  color: Colors.black.withOpacity(0.65),
+                ),
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 15.0, bottom: 15.0,),
               child: Table(
                 //border: TableBorder.all(color: Colors.black),
                 children: [
@@ -68,7 +80,7 @@ class RecordBloodSugarWidget extends StatelessWidget {
                     children: [
                       TableCell(
                         child: Container(
-                          padding: EdgeInsets.only(top: 8, bottom: 5,),
+                          padding: EdgeInsets.only(top: 8, bottom: 8,),
                           decoration: BoxDecoration(
                             border: Border(
                               right: BorderSide(
@@ -79,20 +91,12 @@ class RecordBloodSugarWidget extends StatelessWidget {
                           ),
                           child: Column(
                             children: [
-                              Container(
-                                padding: EdgeInsets.fromLTRB(5, 2.5, 5, 2.5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                  color: chartBeforeColor,
-                                ),
-                                child: Text(
-                                  bSugarBefore.toString() + " mmol/L",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: MediaQuery.of(context).size.width * 0.05,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
+                              Text(
+                                bSugarBefore.toString() + " mmol/L",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.width * 0.05,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Container(
@@ -112,25 +116,18 @@ class RecordBloodSugarWidget extends StatelessWidget {
                       ),
                       TableCell(
                         child: Container(
-                          padding: EdgeInsets.only(top: 8, bottom: 5,),
+                          padding: EdgeInsets.only(top: 8, bottom: 8,),
                           child: Column(
                             children: [
-                              Container(
-                                padding: EdgeInsets.fromLTRB(5, 2.5, 5, 2.5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                  color: chartColorAfter,
+                              Text(
+                                //bSugarAfter.toString() + " mmol/L",
+                                (bSugarAfter == null)? "-" : bSugarAfter.toString() + " mmol/L",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.width * 0.05,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                child: Text(
-                                  bSugarAfter.toString() + " mmol/L",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: MediaQuery.of(context).size.width * 0.05,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
+                              ),  
                               Container(
                                 padding: EdgeInsets.only(top: 3),
                                 child: Text(
@@ -151,43 +148,21 @@ class RecordBloodSugarWidget extends StatelessWidget {
                 ],
               ),
             ),
-            RecordChartWidget(chartData: chartData,),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              width: double.infinity,
-              child: FlatButton(
-                padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                ),
-                color: Colors.red,
-                textColor: Colors.white,
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context, 
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                    ),
-                    isScrollControlled: true,
-                    builder: (context) => SingleChildScrollView(
-                      physics: ClampingScrollPhysics(),
-                      child: FoodIntakeBloodSugarTips(),
-                    )
-                  );
-                },
-                child: Text(
-                  "Cancel •",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                  ),
-                ), 
-              ),
-            ),
+            (showAnalyzer == true) ? BloodSugarAnalyzerWidget(
+              svgSrc: "assets/icons/web-analytics.svg", bSugarBefore: bSugarBefore, bSugarAfter: bSugarAfter,
+            ) : (bSugarAfter == null) ? BloodSugarAddPendingText() : BloodSugarAddDoneText(),
           ],
         ), 
       ),
+    );
+  }
+}
+
+class RecordBloodSugarPendingWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      
     );
   }
 }

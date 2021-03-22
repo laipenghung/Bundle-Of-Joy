@@ -29,9 +29,9 @@ class RecordListWidget extends StatelessWidget {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              offset: Offset(30, 17),
-              blurRadius: 23,
-              spreadRadius: -13,
+              offset: Offset(15, 15),
+              blurRadius: 20,
+              spreadRadius: 15,
               color: Color(0xFFE6E6E6),
             ),
           ],),
@@ -39,7 +39,7 @@ class RecordListWidget extends StatelessWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                SvgPicture.asset("assets/icons/testAM.svg", height: 23, width: 23,),
+                SvgPicture.asset(svgSrc, height: 23, width: 23,),
                 Container(
                   padding: EdgeInsets.only(left: 8.0,),
                   child: Text(
