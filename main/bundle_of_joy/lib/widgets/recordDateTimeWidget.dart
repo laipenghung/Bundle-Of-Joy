@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class RecordDateTimeWidget extends StatelessWidget {
-  final String svgSrc;
+  final String svgSrcDate;
+  final String svgSrcTime;
   final String date;
   final String time;
   const RecordDateTimeWidget({
     Key key,
-    this.svgSrc,
+    this.svgSrcDate,
+    this.svgSrcTime,
     this.date,
     this.time,
   }) : super(key: key);
@@ -25,8 +27,8 @@ class RecordDateTimeWidget extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               offset: Offset(15, 15),
-              blurRadius:30,
-              spreadRadius: 20,
+              blurRadius: 20,
+              spreadRadius: 15,
               color: Color(0xFFE6E6E6),
             ),
           ],
@@ -35,7 +37,7 @@ class RecordDateTimeWidget extends StatelessWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                SvgPicture.asset(svgSrc, height: 23, width: 23,),
+                SvgPicture.asset(svgSrcDate, height: 23, width: 23,),
                 Container(
                   padding: EdgeInsets.only(left: 10.0,),
                   child: Text(
@@ -74,7 +76,7 @@ class RecordDateTimeWidget extends StatelessWidget {
             SizedBox(height: 25.0,),
             Row(
               children: <Widget>[
-                SvgPicture.asset("assets/icons/testAM.svg", height: 23, width: 23,),
+                SvgPicture.asset(svgSrcTime, height: 23, width: 23,),
                 Container(
                   padding: EdgeInsets.only(left: 10.0,),
                   child: Text(

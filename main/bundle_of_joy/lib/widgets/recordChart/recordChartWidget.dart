@@ -20,12 +20,12 @@ class RecordChartWidget extends StatelessWidget {
     ];
 
     return Container(
+      margin: EdgeInsets.only(bottom: 10.0,),
       height: 150,
       width: double.infinity,
-      
-        child: Container(
-          child:
-            Expanded(child:charts.BarChart(
+      child: Column(
+        children: <Widget>[
+          Expanded(child:charts.BarChart(
               series,
               animate: true,
               vertical: false,
@@ -35,7 +35,8 @@ class RecordChartWidget extends StatelessWidget {
               ),
             )
           ,)
-        ),
+        ],
+      )
     );
   }
 }

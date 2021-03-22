@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/foodIntake/foodIntakeTrackAddSummary.dart';
 import "package:flutter/material.dart";
 import "foodIntake_add_2_food.dart";
 import "foodIntake_summary_done.dart";
@@ -278,14 +279,18 @@ class _FoodIntakeAdd3State extends State<FoodIntakeAdd3> {
             context,
             // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
             MaterialPageRoute(
-                builder: (context) =>
-                    FoodIntakeSummaryPending(selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore)));
+                //builder: (context) =>
+                    //FoodIntakeSummaryPending(selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore)));
+                builder: (context) => FoodIntakeTrackAddSummary(
+                    selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore, bSugarAfter: null)));
       } else {
         Navigator.push(
             context,
             // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
             MaterialPageRoute(
-                builder: (context) => FoodIntakeSummaryDone(
+                //builder: (context) => FoodIntakeSummaryDone(
+                    //selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore, bSugarAfter: bSugarAfter)));
+                builder: (context) => FoodIntakeTrackAddSummary(
                     selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: widget.foodMap, bSugarBefore: bSugarBefore, bSugarAfter: bSugarAfter)));
       }
     }
