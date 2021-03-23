@@ -1,5 +1,21 @@
 import 'package:flutter/material.dart';
 
+const String motherRecordDateDesc =  "The date you record this intake.";
+const String motherRecordTimeDesc =  "The time you record this intake.";
+const String motherRecordListTitle = "Food";
+const String motherRecordListTitleDesc = "Food that you consumed.";
+
+const String babyFoodDateDesc =  "The date you record this intake.";
+const String babyFoodTimeDesc =  "The time you record this intake.";
+const String babyFoodRecordListTitle = "Food";
+const String babyFoodRecordListTitleDesc = "Food consumed by your baby.";
+
+const String babyMedsDateDesc =  "Date you record your baby medicine intake.";
+const String babyMedsTimeDesc =  "Time you record your baby medicine intake.";
+const String babyMedsRecordListTitle = "Medicine";
+const String babyMedsRecordListTitleDesc = "Medicine consumed by your baby.";
+
+
 class BloodSugarAddDoneText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -49,6 +65,87 @@ class BloodSugarAddPendingText extends StatelessWidget {
             TextSpan(text: " > ",),
             TextSpan(text: "Update Pending Food Record", style: highlightedTextStyle,),
             TextSpan(text: " and select the pending food intake record you wish to update.",),
+          ]
+        )
+      ), 
+    );
+  }
+}
+
+class BloodSugarUpdateText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    TextStyle normalTextStye = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.033,);
+    TextStyle highlightedTextStyle = TextStyle(color: Colors.black.withOpacity(0.8), fontWeight: FontWeight.bold, fontSize: MediaQuery.of(context).size.width * 0.033,);
+
+    return Container(
+        width: double.infinity,
+        child: RichText(
+        textAlign: TextAlign.left,
+        text: TextSpan(
+          style: normalTextStye,
+          children: <TextSpan>[
+            TextSpan(
+              text: "If you wish to view your Blood Sugar condition in detailed mode with BoJ Blood Sugar Analyzer™." +
+                " First, you will have to update this pending food intake record. Then navigate to ",
+            ),
+            TextSpan(text: "Food Intake Tracking", style: highlightedTextStyle,),
+            TextSpan(text: " > ",),
+            TextSpan(text: "Food Intake Record", style: highlightedTextStyle,),
+            TextSpan(text: " and select the food intake record you wish to view.",),
+          ]
+        )
+      ), 
+    );
+  }
+}
+
+class BabyTempRecordViewText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    TextStyle normalTextStye = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.033,);
+    TextStyle highlightedTextStyle = TextStyle(color: Colors.black.withOpacity(0.8), fontWeight: FontWeight.bold, fontSize: MediaQuery.of(context).size.width * 0.033,);
+
+    return Container(
+        width: double.infinity,
+        child: RichText(
+        textAlign: TextAlign.left,
+        text: TextSpan(
+          style: normalTextStye,
+          children: <TextSpan>[
+            TextSpan(text: "If your baby's body temperature in the "),
+            TextSpan(text: "After 2 hours", style: highlightedTextStyle,),
+            TextSpan(text: " section is still higher than the body temperature reading at the ",),
+            TextSpan(text: "Before taking meds", style: highlightedTextStyle,),
+            TextSpan(text: " section. We recommended you bring your baby to the nearest hospital or clinic for further checkup.",),
+          ]
+        )
+      ), 
+    );
+  }
+}
+
+class BabyTempRecordAddText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    TextStyle normalTextStye = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.033,);
+    TextStyle highlightedTextStyle = TextStyle(color: Colors.black.withOpacity(0.8), fontWeight: FontWeight.bold, fontSize: MediaQuery.of(context).size.width * 0.033,);
+
+    return Container(
+        width: double.infinity,
+        child: RichText(
+        textAlign: TextAlign.left,
+        text: TextSpan(
+          style: normalTextStye,
+          children: <TextSpan>[
+            TextSpan(
+              text: "Once you upload the current medicine intake record, you will receive a notification after " +
+                "2 hours to inform you to update the you baby's body temperature reading after 2 hours taking the medicine. To update it, navigate to ",
+            ),
+            TextSpan(text: "Care For Baby", style: highlightedTextStyle,),
+            TextSpan(text: " > ",),
+            TextSpan(text: "Update Pending Medicine Record", style: highlightedTextStyle,),
+            TextSpan(text: " and select the pending medicine intake record you wish to update.",),
           ]
         )
       ), 

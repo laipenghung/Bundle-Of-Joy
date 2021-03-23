@@ -3,14 +3,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:quiver/iterables.dart';
 
 class RecordListWidget extends StatelessWidget {
-  final String svgSrc;
-  final List foodName;
-  final List foodQty;
+  final String svgSrc, title, titleDesc;
+  final List foodName,  foodQty;
 
   
   const RecordListWidget({
     Key key,
     this.svgSrc,
+    this.title,
+    this.titleDesc,
     this.foodName,
     this.foodQty,
   }) : super(key: key);
@@ -43,7 +44,7 @@ class RecordListWidget extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.only(left: 8.0,),
                   child: Text(
-                    "Food",
+                    title,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.045,
                       fontWeight: FontWeight.bold,
@@ -56,7 +57,7 @@ class RecordListWidget extends StatelessWidget {
               width: double.infinity,
               margin: EdgeInsets.only(top: 8.0,),
               child: Text(
-                "Food that you consumed.",
+                titleDesc,
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width * 0.035,

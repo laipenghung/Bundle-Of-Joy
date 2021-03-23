@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/foodIntake/foodIntakeTrackUpdate.dart';
 import 'package:bundle_of_joy/foodIntake/foodIntake_record_pending.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
@@ -92,7 +93,8 @@ class _FoodIntakeListPendingState extends State<FoodIntakeListPending> {
                         //go to record_pending
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => FoodIntakeRecordPending(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
+                          //MaterialPageRoute(builder: (context) => FoodIntakeRecordPending(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
+                          MaterialPageRoute(builder: (context) => FoodIntakeTrackUpdate(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
                         );
                       },
                       child: Column(
