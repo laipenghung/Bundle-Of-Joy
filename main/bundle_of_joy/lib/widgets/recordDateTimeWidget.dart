@@ -4,14 +4,17 @@ import 'package:flutter_svg/svg.dart';
 class RecordDateTimeWidget extends StatelessWidget {
   final String svgSrcDate;
   final String svgSrcTime;
-  final String date;
-  final String time;
+  final String date, dateDesc;
+  final String time, timeDesc;
   const RecordDateTimeWidget({
     Key key,
+    @required
     this.svgSrcDate,
     this.svgSrcTime,
     this.date,
     this.time,
+    this.dateDesc,
+    this.timeDesc,
   }) : super(key: key);
 
   @override
@@ -65,7 +68,7 @@ class RecordDateTimeWidget extends StatelessWidget {
             Container(
               width: double.infinity,
               child: Text(
-                "The date you record this intake.",
+                dateDesc,
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -104,7 +107,7 @@ class RecordDateTimeWidget extends StatelessWidget {
             Container(
               width: double.infinity,
               child: Text(
-                "The time you record this intake.",
+                timeDesc,
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width * 0.035,

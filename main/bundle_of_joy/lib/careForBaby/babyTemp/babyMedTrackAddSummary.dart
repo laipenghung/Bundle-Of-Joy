@@ -1,24 +1,26 @@
-import 'package:bundle_of_joy/foodIntake/foodIntakeTrackFunction.dart';
-import 'package:bundle_of_joy/widgets/recordBloodSugarWidget.dart';
+import 'dart:developer';
+
+import 'package:bundle_of_joy/careForBaby/careForBabyFunction.dart';
+import 'package:bundle_of_joy/widgets/recordBodyTempWidget.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
 import 'package:bundle_of_joy/widgets/recordListWidget.dart';
 import 'package:bundle_of_joy/widgets/textWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
-import '../main.dart';
 
-class FoodIntakeTrackAddSummary extends StatefulWidget {
-  final String selectedDate, selectedTime, bSugarBefore, bSugarAfter;
-  final Map foodMap;
+import '../../main.dart';
 
-  FoodIntakeTrackAddSummary({Key key, this.selectedDate, this.selectedTime, this.foodMap, this.bSugarBefore, this.bSugarAfter}) : super(key: key);
+class BabyMedTrackAddSummary extends StatefulWidget {
+  final String selectedDate, selectedTime, bTempBefore, bTempAfter, selectedBabyID;
+  final Map medsMap;
+  BabyMedTrackAddSummary({Key key, @required this.selectedDate, this.selectedTime, this.bTempBefore, this.bTempAfter, this.selectedBabyID, this.medsMap}) : super(key: key);
 
   @override
-  _FoodIntakeTrackAddSummaryState createState() => _FoodIntakeTrackAddSummaryState();
+  _BabyMedTrackAddSummaryState createState() => _BabyMedTrackAddSummaryState();
 }
 
-class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
+class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
   MyApp main = MyApp();
   String notificationMessage;
   
@@ -31,20 +33,20 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
       'Channel Id', 'Channel title', 'channel body', priority: Priority.high, importance: Importance.max, ticker: 'test', styleInformation: BigTextStyleInformation(''),
     );
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await main.createState().flutterLocalNotificationsPlugin.show(0, 'Food Intake Tracking', notificationMessage, notificationDetails);
+    await main.createState().flutterLocalNotificationsPlugin.show(0, 'Baby Medicine Intake Tracking', notificationMessage, notificationDetails);
   }
   
   @override
   Widget build(BuildContext context) {
-    FoodIntakeTrackFunction foodIntakeTrackFunction = FoodIntakeTrackFunction();
+    CareForBabyFunction careForBabyFunction = CareForBabyFunction();
     DateTime parsedDate = DateTime.parse(widget.selectedDate);
     String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
-    DateTime parsedTime = DateTime.parse(widget.selectedDate + " " + widget.selectedTime);
+    DateTime parsedTime = DateTime.parse(widget.selectedDate+ " " + widget.selectedTime);
     String formattedTime =  DateFormat('h:mm a').format(parsedTime);
-    Map food = widget.foodMap;
-    double bSugarBefore = double.parse(widget.bSugarBefore);
-    //double bSugarAfter = double.parse(widget.bSugarAfter);
-
+    Map medicine = widget.medsMap;
+    double tempBeforeMeds = double.parse(widget.bTempBefore);
+    //double tempAfterMeds = double.parse(widget.bTempAfter);
+    
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       body: CustomScrollView(
@@ -64,7 +66,7 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
               ],
               title: Container(
                 child: Text(
-                  "Summary",
+                  "Medicine Intake Record",
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.045,
                   ),
@@ -95,15 +97,15 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                   svgSrcDate: "assets/icons/testAM.svg",
                   svgSrcTime: "assets/icons/clock.svg",
                   date: formattedDate,
-                  dateDesc: motherRecordDateDesc,
+                  dateDesc: babyMedsDateDesc,
                   time: formattedTime,
-                  timeDesc: motherRecordTimeDesc,
+                  timeDesc: babyMedsTimeDesc,
                 ),
                 Container(
                   width: double.infinity,
                   margin: EdgeInsets.only(top: 13.0, left: 13.0,),
                   child: Text(
-                    "Conusmed Food",
+                    "Conusmed Medicine",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -115,16 +117,16 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                 //Widget for display Consumed Food
                 RecordListWidget(
                   svgSrc: "assets/icons/healthy-food.svg",
-                  title: motherRecordListTitle,
-                  titleDesc: motherRecordListTitleDesc,
-                  foodName: food.keys.toList(),
-                  foodQty: food.values.toList(),
+                  title: babyMedsRecordListTitle,
+                  titleDesc: babyMedsRecordListTitleDesc,
+                  foodName: medicine.keys.toList(),
+                  foodQty: medicine.values.toList(),
                 ),
                 Container(
                   width: double.infinity,
                   margin: EdgeInsets.only(top: 13.0, left: 13.0,),
                   child: Text(
-                    "Blood Sugar",
+                    "Body Temperature",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -133,12 +135,11 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                     ),
                   ),
                 ),
-                //Blood Sugar section
-                RecordBloodSugarDoneWidget(
-                  svgSrc: "assets/icons/blood-donation.svg",
-                  bSugarBefore: bSugarBefore,
-                  bSugarAfter: (widget.bSugarAfter == null)? null : double.parse(widget.bSugarAfter),
-                  showAnalyzer: false,
+                //Body Temperature section
+                RecordBodyTempWidget(
+                  svgSrc: "assets/icons/testAM.svg",
+                  tempBeforeMeds: tempBeforeMeds,
+                  tempAferMeds: (widget.bTempAfter == null)? null : double.parse(widget.bTempAfter),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 13, right: 13, bottom: 25),
@@ -152,15 +153,15 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                       color: Colors.red,
                       textColor: Colors.white,
                       onPressed: () {
-                        if(widget.bSugarAfter != null){
-                          notificationMessage = "Food Record upload successfully.";
-                          foodIntakeTrackFunction.uploadFoodRecordDone(
-                            widget.selectedDate, widget.selectedTime, widget.bSugarBefore, widget.bSugarAfter, widget.foodMap, context,
+                        if(widget.bTempAfter != null){
+                          notificationMessage = "Baby Medicine Record upload successfully.";
+                          careForBabyFunction.uploadBabyMedsRecordDone(
+                            widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.bTempBefore, widget.bTempAfter, widget.medsMap, context
                           ).then((value) => _showNotification(notificationMessage));
                         }else{
-                          notificationMessage = "Remember to update your food record after 2 hours.";
-                          foodIntakeTrackFunction.uploadFoodRecordPending(
-                            widget.selectedDate, widget.selectedTime, widget.bSugarBefore, widget.bSugarAfter, widget.foodMap, context,
+                          notificationMessage = "Remember to update your baby's body temperature reading after 2 hours.";
+                          careForBabyFunction.uploadBabyMedsRecordPending(
+                            widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.bTempBefore, widget.bTempAfter, widget.medsMap, context
                           ).then((value) => _showNotification(notificationMessage));
                         }
                       },

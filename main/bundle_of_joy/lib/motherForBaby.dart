@@ -145,7 +145,7 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
           // Here the height of the container is 45% of our total height
           height: MediaQuery.of(context).size.height * .40,
           decoration: BoxDecoration(
-            color: Color(0xFFC7B8F5),
+            color: Color(0xFFF5CEB8),
             image: DecorationImage(
               alignment: Alignment.centerLeft,
               image: AssetImage("assets/images/undraw_pilates_gpdb.png"),
@@ -186,11 +186,11 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 30),
+                      margin: EdgeInsets.symmetric(vertical: 20),
                       padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(29.5),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       child: _listView(collection),
                     ),
