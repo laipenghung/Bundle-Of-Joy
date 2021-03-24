@@ -152,3 +152,85 @@ class BabyTempRecordAddText extends StatelessWidget {
     );
   }
 }
+
+class SymptompAndAllergyFoundText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    TextStyle normalTextStye = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.033,);
+    TextStyle highlightedTextStyle = TextStyle(color: Colors.black.withOpacity(0.8), fontWeight: FontWeight.bold, fontSize: MediaQuery.of(context).size.width * 0.033,);
+
+    return Container(
+        width: double.infinity,
+        child: RichText(
+        textAlign: TextAlign.left,
+        text: TextSpan(
+          style: normalTextStye,
+          children: <TextSpan>[
+            TextSpan(
+              text: "If your baby has shown signs of abnormal "),
+            TextSpan(text: "Symptoms", style: highlightedTextStyle,),
+            TextSpan(text: " or ",),
+            TextSpan(text: "Allergies", style: highlightedTextStyle,),
+            TextSpan(text: ". We strongly suggest you bring your baby to the nearest hospital or clinic for further checkup.",),
+          ]
+        )
+      ), 
+    );
+  }
+}
+
+class BabyFoodRecrodAddText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    TextStyle normalTextStye = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.033,);
+    TextStyle highlightedTextStyle = TextStyle(color: Colors.black.withOpacity(0.8), fontWeight: FontWeight.bold, fontSize: MediaQuery.of(context).size.width * 0.033,);
+
+    return Container(
+        width: double.infinity,
+        child: RichText(
+        textAlign: TextAlign.left,
+        text: TextSpan(
+          style: normalTextStye,
+          children: <TextSpan>[
+            TextSpan(
+              text: "Once you upload the current baby food intake record, you will receive a notification after " +
+                "2 hours to inform you to update this food record on whether your baby show any signs of symptomps and allergies. To update it, navigate to ",
+            ),
+            TextSpan(text: "Care For Baby", style: highlightedTextStyle,),
+            TextSpan(text: " > ",),
+            TextSpan(text: "Update Pending Baby Food Record", style: highlightedTextStyle,),
+            TextSpan(text: " and select the pending baby food intake record you wish to update.",),
+          ]
+        )
+      ), 
+    );
+  }
+}
+
+class BabyFoodRecrodDoneText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    TextStyle normalTextStye = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.033,);
+    TextStyle highlightedTextStyle = TextStyle(color: Colors.black.withOpacity(0.8), fontWeight: FontWeight.bold, fontSize: MediaQuery.of(context).size.width * 0.033,);
+
+    return Container(
+        width: double.infinity,
+        child: RichText(
+        textAlign: TextAlign.left,
+        text: TextSpan(
+          style: normalTextStye,
+          children: <TextSpan>[
+            TextSpan(
+              text: "Once you upload the current baby food intake record, it will be saved on the database. " +
+                "To view this baby food record, please navigate to ",
+            ),
+            TextSpan(text: "Care For Baby", style: highlightedTextStyle,),
+            TextSpan(text: " > ",),
+            TextSpan(text: "Baby Food Intake Record", style: highlightedTextStyle,),
+            TextSpan(text: " and select the baby food record you wish to view.",),
+          ]
+        )
+      ), 
+    );
+  }
+}

@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/widgets/recordBabyAfterMealWidget.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
 import 'package:bundle_of_joy/widgets/recordListWidget.dart';
 import 'package:bundle_of_joy/widgets/textWidgets.dart';
@@ -115,7 +116,7 @@ class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
                           width: double.infinity,
                           margin: EdgeInsets.only(top: 13.0, left: 13.0,),
                           child: Text(
-                            "symptomp",
+                            "After Meal Behavior",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -125,7 +126,11 @@ class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
                           ),
                         ),
                         //Blood Sugar section
-                        
+                        RecordBabyAfterMealWidget(
+                          svgSrc: "assets/icons/testAM.svg",
+                          symptomsAndAllergies: sympAndAlle,
+                          symptomsAndAllergiesDesc: babySymptoms,
+                        ),
                       ],
                     );
                   }
