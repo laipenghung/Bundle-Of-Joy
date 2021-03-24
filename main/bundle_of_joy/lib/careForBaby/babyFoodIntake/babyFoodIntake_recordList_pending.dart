@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeTrackUpdate.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -90,7 +91,8 @@ class _BabyFoodIntakeListPendingState extends State<BabyFoodIntakeListPending> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => BabyFoodIntakeRecordPending(recordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
+                              //builder: (context) => BabyFoodIntakeRecordPending(recordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
+                              builder: (context) => BabyFoodIntakeTrackUpdate(recordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
                         );
                       },
                       child: Column(
