@@ -30,7 +30,7 @@ class _MotherToBeTabState extends State<MotherToBeTab> {
                 {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AppointmentMotherVerify()),
+                    MaterialPageRoute(builder: (context) => AppointmentMotherVerification()),
                   );
                 }
                 break;

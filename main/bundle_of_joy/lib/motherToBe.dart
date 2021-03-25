@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:path/path.dart';
-import 'appointmentMother/appointmentMotherVerification.dart';
+import 'appointmentMother/appointmentMother_verify.dart';
 import 'foodIntake/foodIntakeTrackMain.dart';
 import 'widgets/cardWidget.dart';
 import "package:bundle_of_joy/appointmentMother/appointmentMother_verify.dart";
@@ -55,15 +55,12 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                  Text(
-                    "Mother to Be",
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.08,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black.withOpacity(0.65),
-                    )
-                  ),
-                  
+                  Text("Mother to Be",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.08,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black.withOpacity(0.65),
+                      )),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                   Expanded(
                     child: GridView.count(
@@ -77,20 +74,19 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                           svgSrc: "assets/icons/testAM.svg",
                           press: () {
                             //Navigator.push( //For Old verification UI
-                              //context,
-                              //MaterialPageRoute(builder: (context) => AppointmentMotherVerify()),
+                            //context,
+                            //MaterialPageRoute(builder: (context) => AppointmentMotherVerify()),
                             //);
                             showModalBottomSheet(
-                              context: context, 
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                              ),
-                              isScrollControlled: true,
-                              builder: (context) => SingleChildScrollView(
-                                physics: ClampingScrollPhysics(),
-                                child: AppointmentMotherVerification(),
-                              )
-                            );
+                                context: context,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                                ),
+                                isScrollControlled: true,
+                                builder: (context) => SingleChildScrollView(
+                                      physics: ClampingScrollPhysics(),
+                                      child: AppointmentMotherVerification(),
+                                    ));
                           },
                         ),
                         CardWidget(
@@ -108,7 +104,7 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                           title: "Health Tracking",
                           svgSrc: "assets/icons/testHT.svg",
                           press: () {
-                             Navigator.push(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => HealthTrackingMother()),
                             );
