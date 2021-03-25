@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/careForBaby/babyTemp/babyMedTrackAddSummary.dart';
 import 'package:flutter/material.dart';
 
 import 'babyTemp_add_dateTime.dart';
@@ -63,11 +64,20 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
         Navigator.push(
             context,
             // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
+            //MaterialPageRoute(
+                //builder: (context) => BabyTempSummaryPending(
+                      //selectedDate: widget.selectedDate,
+                      //selectedTime: widget.selectedTime,
+                      //bTempBefore: bTempBefore,
+                      //selectedBabyID: widget.selectedBabyID,
+                      //medsMap: widget.medsMap,
+                    //)));
             MaterialPageRoute(
-                builder: (context) => BabyTempSummaryPending(
+                builder: (context) => BabyMedTrackAddSummary(
                       selectedDate: widget.selectedDate,
                       selectedTime: widget.selectedTime,
                       bTempBefore: bTempBefore,
+                      bTempAfter: null, 
                       selectedBabyID: widget.selectedBabyID,
                       medsMap: widget.medsMap,
                     )));
@@ -76,14 +86,16 @@ class _BabyTempAdd2State extends State<BabyTempAdd2> {
             context,
             // IF ALL FIELD IS FILLED, GO SUMMARY_DONE, ELSE GO SUMMARY_PENDING
             MaterialPageRoute(
-                builder: (context) => BabyTempSummaryDone(
-                      selectedDate: widget.selectedDate,
-                      selectedTime: widget.selectedTime,
-                      bTempBefore: bTempBefore,
-                      bTempAfter: bTempAfter,
-                      selectedBabyID: widget.selectedBabyID,
-                      medsMap: widget.medsMap,
-                    )));
+                builder: (context) => 
+                  //BabyTempSummaryDone( selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, bTempBefore: bTempBefore, bTempAfter: bTempAfter, selectedBabyID: widget.selectedBabyID, medsMap: widget.medsMap,))
+                  BabyMedTrackAddSummary(
+                    selectedDate: widget.selectedDate, 
+                    selectedTime: widget.selectedTime, 
+                    bTempBefore: bTempBefore, 
+                    bTempAfter: bTempAfter, 
+                    selectedBabyID: widget.selectedBabyID, 
+                    medsMap: widget.medsMap,))
+            );
       }
     }
   }

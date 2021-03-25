@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeAddSummary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:quiver/iterables.dart';
@@ -381,8 +382,11 @@ class _BabyFoodIntakeAdd2State extends State<BabyFoodIntakeAdd2> {
                     } else {
                       Navigator.push(
                         context,
+                        //MaterialPageRoute(
+                            //builder: (context) => BabyFoodIntakeSummary(
+                                //selectedBabyID: widget.selectedBabyID, selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: foodMap)),
                         MaterialPageRoute(
-                            builder: (context) => BabyFoodIntakeSummary(
+                            builder: (context) => BabyFoodIntakeAddSummary(
                                 selectedBabyID: widget.selectedBabyID, selectedDate: widget.selectedDate, selectedTime: widget.selectedTime, foodMap: foodMap)),
                       );
                     }

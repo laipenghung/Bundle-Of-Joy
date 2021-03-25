@@ -81,9 +81,9 @@ class _BabyFoodIntakeSummaryState extends State<BabyFoodIntakeSummary> {
   }
 
   Future<void> notification() async {
-    tz.initializeTimeZones();
-    final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(currentTimeZone));
+    //tz.initializeTimeZones();
+    //final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+    //tz.setLocalLocation(tz.getLocation(currentTimeZone));
     AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
       'Channel Id',
       'Channel title',

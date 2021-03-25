@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/careForBaby/babyTemp/babyMedTrackView.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -97,7 +98,8 @@ class _BabyTempListDoneState extends State<BabyTempListDone> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => BabyTempRecordDone(babyTempRecordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
+                              //builder: (context) => BabyTempRecordDone(babyTempRecordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
+                              builder: (context) => BabyMedTrackView(babyTempRecordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
                         );
                       },
                       child: Column(

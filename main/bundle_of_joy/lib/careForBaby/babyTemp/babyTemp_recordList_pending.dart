@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/careForBaby/babyTemp/babyMedTrackUpdate.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -100,7 +101,8 @@ class _BabyTempListPendingState extends State<BabyTempListPending> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  BabyTempRecordPending(babyTempRecordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
+                                  //BabyTempRecordPending(babyTempRecordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
+                                  BabyMedTrackUpadte(babyTempRecordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
                         );
                       },
                       child: Column(

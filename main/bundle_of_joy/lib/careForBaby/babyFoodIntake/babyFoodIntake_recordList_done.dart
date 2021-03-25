@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeTrackView.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -97,7 +98,7 @@ class _BabyFoodIntakeListDoneState extends State<BabyFoodIntakeListDone> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => BabyFoodIntakeRecordDone(recordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
+                              builder: (context) => BabyFoodIntakeTrackView(recordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID)),
                         );
                       },
                       child: Column(
