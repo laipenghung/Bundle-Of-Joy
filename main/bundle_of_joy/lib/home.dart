@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePageState> {
       screens: _widgetOptions(),
       items: _navBarsItems(),
       confineInSafeArea: true,
-      backgroundColor: Color(0xFFFCFFD5),
+      backgroundColor: Color(0xFFF6C5AF),
       handleAndroidBackButtonPress: true,
       stateManagement: true,
       resizeToAvoidBottomInset: true,
