@@ -1,16 +1,8 @@
-import 'dart:developer';
-
-import 'package:bundle_of_joy/careForBaby/careForBabyFunction.dart';
 import 'package:bundle_of_joy/widgets/recordBabyAfterMealUpdateWidget.dart';
-import 'package:bundle_of_joy/widgets/recordBabyAfterMealWidget.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
 import 'package:bundle_of_joy/widgets/recordListWidget.dart';
 import 'package:bundle_of_joy/widgets/textWidgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_svg/svg.dart';
-
-import '../../main.dart';
 
 class BabyFoodIntakeAddSummary extends StatefulWidget {
   final String selectedBabyID, selectedDate, selectedTime;
@@ -22,45 +14,6 @@ class BabyFoodIntakeAddSummary extends StatefulWidget {
 }
 
 class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
-  CareForBabyFunction careForBabyFunction = CareForBabyFunction();
-  MyApp main = MyApp();
-  String notificationMessage;
-  
-  void _showNotification(notificationMessage) async {
-    await notification(notificationMessage);
-  }
-
-  Future<void> notification(notificationMessage) async {
-    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-      'Channel Id', 'Channel title', 'channel body', priority: Priority.high, importance: Importance.max, ticker: 'test', styleInformation: BigTextStyleInformation(''),
-    );
-    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await main.createState().flutterLocalNotificationsPlugin.show(0, 'Baby Medicine Intake Tracking', notificationMessage, notificationDetails);
-  }
-
-  _showDialogBox(BuildContext context){
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Opps!"),
-          content: Text(
-            "Looks like u didn't enter anyting into the symptomps or allergies section" +
-            "To upload your baby current food record, please make sure you enter the symptomps or " + 
-            "allergies shown by your baby.",
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("Ok"),
-              onPressed: (){
-                Navigator.of(context).pop();  
-              },
-            ),
-          ],
-        );
-      });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,50 +109,15 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
                   //update
                   RecordBabyAfterMealUpdateWidget(
                     svgSrc: "assets/icons/testAM.svg",
+                    selectedBabyID: widget.selectedBabyID,
+                    selectedDate: widget.selectedDate,
+                    selectedTime: widget.selectedTime,
+                    foodMap: widget.foodMap,
                     //symptomsAndAllergies: false,
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: 13, right: 13, bottom: 25),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: FlatButton(
-                        padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        ),
-                        color: Colors.red,
-                        textColor: Colors.white,
-                        onPressed: () {
-                          if(completeFoodRecord == true && symptomsAndAllergies == false){
-                            notificationMessage = "Baby food record upload successfully.";
-                            careForBabyFunction.uploadBabyFoodRecordDone(
-                              widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, symptomsAndAllergies, null, context,
-                            ).then((value) => _showNotification(notificationMessage));
-                          }else if(textFieldController.text.isNotEmpty && completeFoodRecord == false && symptomsAndAllergies == true){
-                            notificationMessage = "Baby food record upload successfully.";
-                            careForBabyFunction.uploadBabyFoodRecordDone(
-                              widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, symptomsAndAllergies, symptomsAndAllergiesDesc, context,
-                            ).then((value) => _showNotification(notificationMessage));
-                          }else if(textFieldController.text.isEmpty && symptomsAndAllergies == true){
-                            _showDialogBox(context);
-                          }else{
-                            notificationMessage = "Remember to update your baby's food record after 2 hours.";
-                            careForBabyFunction.uploadBabyFoodRecordPending(
-                              widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, context
-                            ).then((value) => _showNotification(notificationMessage));
-                          }
-                        },
-                        child: Text(
-                          "Upload Record",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.width * 0.045,
-                          ),
-                        ), 
-                      ),
-                    ),
-                  ),
+                  //
+                  
+                  //
                 ],
               ),
             ),

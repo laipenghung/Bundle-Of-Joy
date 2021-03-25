@@ -8,12 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-
 import '../../main.dart';
-
-bool symptomsAndAllergies = false;
-String symptomsAndAllergiesDesc = "";
-TextEditingController textFieldController = TextEditingController();
 
 class BabyFoodIntakeTrackUpdate extends StatefulWidget {
   final String recordID, selectedBabyID;
@@ -23,12 +18,8 @@ class BabyFoodIntakeTrackUpdate extends StatefulWidget {
   _BabyFoodIntakeTrackUpdateState createState() => _BabyFoodIntakeTrackUpdateState();
 }
 
-class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
-  CareForBabyFunction careForBabyFunction = CareForBabyFunction();
-  MyApp main = MyApp();
-  String notificationMessage;
+class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {  
   var bodyContent;
-
   void initState(){
     super.initState();
     CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Pending");
@@ -110,48 +101,14 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
                   //Update symptoms and allergies
                   RecordSymptomsAndAllergiesUpdate(
                     svgSrc: "assets/icons/testAM.svg",
+                    selectedBabyID: widget.selectedBabyID,
+                    recordID: widget.recordID,
+                    selectedDate: snapshot.data.data()["selectedDate"],
+                    selectedTime: snapshot.data.data()["selectedTime"],
+                    foodMap: food,
                   ),
                   //Update data to database
-                  Container(
-                    margin: EdgeInsets.only(left: 13, right: 13, bottom: 25),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: FlatButton(
-                        padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        ),
-                        color: Colors.red,
-                        textColor: Colors.white,
-                        onPressed: () {
-                          if(textFieldController.text.isNotEmpty && symptomsAndAllergies == true){
-                            notificationMessage = "Baby food record successfully updated.";
-                            careForBabyFunction.updateBabyFoodRecordPending(
-                              widget.selectedBabyID, snapshot.data.data()["selectedDate"], snapshot.data.data()["selectedTime"],
-                                food, symptomsAndAllergies, symptomsAndAllergiesDesc, widget.recordID, context
-                            ).then((value) => _showNotification(notificationMessage));
-                          }else{
-                            if(symptomsAndAllergies == false){
-                              notificationMessage = "Baby food record successfully updated.";
-                              careForBabyFunction.updateBabyFoodRecordPending(
-                                widget.selectedBabyID, snapshot.data.data()["selectedDate"], snapshot.data.data()["selectedTime"],
-                                food, symptomsAndAllergies, null, widget.recordID, context
-                              ).then((value) => _showNotification(notificationMessage));
-                            }
-                            _showDialogBox(context);
-                          }
-                        },
-                        child: Text(
-                          "Upload Record",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.width * 0.045,
-                          ),
-                        ), 
-                      ),
-                    ),
-                  ),
+                  
                 ],
               ),
             );
@@ -162,41 +119,6 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
         return CircularProgressIndicator();
       },
     );
-  }
-  
-  void _showNotification(notificationMessage) async {
-    await notification(notificationMessage);
-  }
-
-  Future<void> notification(notificationMessage) async {
-    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-      'Channel Id', 'Channel title', 'channel body', priority: Priority.high, importance: Importance.max, ticker: 'test', styleInformation: BigTextStyleInformation(''),
-    );
-    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await main.createState().flutterLocalNotificationsPlugin.show(0, 'Baby Medicine Intake Tracking', notificationMessage, notificationDetails);
-  }
-
-  _showDialogBox(BuildContext context){
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Opps!"),
-          content: Text(
-            "Looks like u didn't enter anyting into the symptomps or allergies section" +
-            "To update your baby current food record, please make sure you enter the symptomps or " + 
-            "allergies shown by your baby.",
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("Ok"),
-              onPressed: (){
-                Navigator.of(context).pop();  
-              },
-            ),
-          ],
-        );
-      });
   }
 
   @override
@@ -241,128 +163,199 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
 }
 
 class RecordSymptomsAndAllergiesUpdate extends StatefulWidget {
-  final String svgSrc;
-  RecordSymptomsAndAllergiesUpdate({Key key, this.svgSrc,}) : super(key: key);
+  final String svgSrc, selectedBabyID, recordID, selectedDate, selectedTime;
+  final Map foodMap;
+  RecordSymptomsAndAllergiesUpdate({Key key, this.svgSrc, this.selectedBabyID, this.recordID, this.selectedDate, this.selectedTime, this.foodMap}) : super(key: key);
 
   @override
   _RecordSymptomsAndAllergiesUpdateState createState() => _RecordSymptomsAndAllergiesUpdateState();
 }
 
 class _RecordSymptomsAndAllergiesUpdateState extends State<RecordSymptomsAndAllergiesUpdate> {
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Container(
-        margin: EdgeInsets.fromLTRB(10, 10, 10, 20),
-        padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 20.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(15, 15),
-              blurRadius: 20,
-              spreadRadius: 15,
-              color: Color(0xFFE6E6E6),
-            ),
-          ],),
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                SvgPicture.asset(widget.svgSrc, height: 23, width: 23,),
-                Container(
-                  padding: EdgeInsets.only(left: 8.0,),
-                  child: Text(
-                    "Symptoms and Allergies",
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.045,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Spacer(flex: 3,),
-                Container(
-                  height: 20,
-                  width: 60,
-                  child: Switch(
-                    value: symptomsAndAllergies,
-                    activeColor: Colors.green,
-                    onChanged: (value) {
-                      setState(() {
-                        symptomsAndAllergies = value;
-                      });
-                    },
-                  ),
-                )
-              ],
-            ),
-            (symptomsAndAllergies == false)? UpdateSymptomsAndAllergiesFalse() : UpdateSymptomsAndAllergiesTrue(),
-          ],
-        ),
-      ),
-    );
+  CareForBabyFunction careForBabyFunction = CareForBabyFunction();
+  MyApp main = MyApp();
+  String notificationMessage;
+  bool symptomsAndAllergies = false;
+  String symptomsAndAllergiesDesc;
+  TextEditingController textFieldController = TextEditingController();
+
+  void _showNotification(notificationMessage) async {
+    await notification(notificationMessage);
   }
-}
 
-class UpdateSymptomsAndAllergiesTrue extends StatefulWidget {
-  @override
-  _UpdateSymptomsAndAllergiesTrueState createState() => _UpdateSymptomsAndAllergiesTrueState();
-}
+  Future<void> notification(notificationMessage) async {
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'Channel Id', 'Channel title', 'channel body', priority: Priority.high, importance: Importance.max, ticker: 'test', styleInformation: BigTextStyleInformation(''),
+    );
+    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+    await main.createState().flutterLocalNotificationsPlugin.show(0, 'Baby Medicine Intake Tracking', notificationMessage, notificationDetails);
+  }
 
-class _UpdateSymptomsAndAllergiesTrueState extends State<UpdateSymptomsAndAllergiesTrue> {
-  //TextEditingController textFieldController = TextEditingController();
-  //String userInput;
+  _showDialogBox(BuildContext context){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Opps!"),
+          content: Text(
+            "Looks like u didn't enter anyting into the symptomps or allergies section" +
+            "To update your baby current food record, please make sure you enter the symptomps or " + 
+            "allergies shown by your baby.",
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Ok"),
+              onPressed: (){
+                Navigator.of(context).pop();  
+              },
+            ),
+          ],
+        );
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Container(
+        SizedBox(
           width: double.infinity,
-          margin: EdgeInsets.only(top: 10, bottom: 10),
-          child: Text(
-            "You can enter all the symptoms or allergies that shown on your baby in the textarea provided below.",
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              fontSize: MediaQuery.of(context).size.width * 0.035,
-              color: Colors.black.withOpacity(0.65),
+          child: Container(
+            margin: EdgeInsets.fromLTRB(10, 10, 10, 20),
+            padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 20.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(15, 15),
+                  blurRadius: 20,
+                  spreadRadius: 15,
+                  color: Color(0xFFE6E6E6),
+                ),
+              ],),
+            child: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    SvgPicture.asset(widget.svgSrc, height: 23, width: 23,),
+                    Container(
+                      padding: EdgeInsets.only(left: 8.0,),
+                      child: Text(
+                        "Symptoms and Allergies",
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.045,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Spacer(flex: 3,),
+                    Container(
+                      height: 20,
+                      width: 60,
+                      child: Switch(
+                        value: symptomsAndAllergies,
+                        activeColor: Colors.green,
+                        onChanged: (value) {
+                          setState(() {
+                            symptomsAndAllergies = value;
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+                (symptomsAndAllergies == false)
+                ? UpdateSymptomsAndAllergiesFalse() 
+                : Column(
+                    children: <Widget>[
+                      Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(top: 10, bottom: 10),
+                        child: Text(
+                          "You can enter all the symptoms or allergies that shown on your baby in the textarea provided below.",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
+                            color: Colors.black.withOpacity(0.65),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: TextFormField(
+                          maxLines: 7,
+                          controller: textFieldController,
+                          onChanged: (val) {
+                            setState(() => symptomsAndAllergiesDesc = val);
+                          },
+                          //textInputAction: TextInputAction.send,
+                          decoration: new InputDecoration(
+                            hintText: "Enter the description of the symptoms or allergies that found on your baby.",
+                            hintStyle: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width * 0.035,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: BorderSide(
+                                color: Colors.black.withOpacity(0.65),
+                                //width: 1,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                                //width: 1,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      BabyFoodRecrodDoneText(),
+                    ],
+                  ),
+              ],
             ),
           ),
         ),
         Container(
-          margin: EdgeInsets.only(bottom: 10),
-          child: TextFormField(
-            maxLines: 7,
-            controller: textFieldController,
-            onChanged: (val) {
-              setState(() => symptomsAndAllergiesDesc = val);
-            },
-            //textInputAction: TextInputAction.send,
-            decoration: new InputDecoration(
-              hintText: "Enter the description of the symptoms or allergies that found on your baby.",
-              hintStyle: TextStyle(
-                fontSize: MediaQuery.of(context).size.width * 0.035,
+          margin: EdgeInsets.only(left: 13, right: 13, bottom: 25),
+          child: SizedBox(
+            width: double.infinity,
+            child: FlatButton(
+              padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5.0),
-                borderSide: BorderSide(
-                  color: Colors.black.withOpacity(0.65),
-                  //width: 1,
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                if(textFieldController.text.isNotEmpty && symptomsAndAllergies == true){
+                  notificationMessage = "Baby food record successfully updated.";
+                  careForBabyFunction.updateBabyFoodRecordPending(
+                    widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, symptomsAndAllergies, symptomsAndAllergiesDesc, widget.recordID, context
+                  ).then((value) => _showNotification(notificationMessage));
+                }else if(symptomsAndAllergies == false){
+                    notificationMessage = "Baby food record successfully updated.";
+                    careForBabyFunction.updateBabyFoodRecordPending(
+                      widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, symptomsAndAllergies, null, widget.recordID, context
+                    ).then((value) => _showNotification(notificationMessage));
+                }else if(textFieldController.text.isEmpty && symptomsAndAllergies == true){
+                  _showDialogBox(context);
+                }
+              },
+              child: Text(
+                "Upload Record",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: MediaQuery.of(context).size.width * 0.045,
                 ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5.0),
-                borderSide: BorderSide(
-                  color: Colors.red,
-                  //width: 1,
-                ),
-              ),
+              ), 
             ),
           ),
         ),
-        BabyFoodRecrodDoneText(),
       ],
     );
   }
