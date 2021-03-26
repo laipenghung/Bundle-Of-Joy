@@ -1,7 +1,7 @@
 import 'package:bundle_of_joy/careForBaby/careForBabyFunction.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
 import 'package:bundle_of_joy/widgets/recordListWidget.dart';
-import 'package:bundle_of_joy/widgets/textWidgets.dart';
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -100,7 +100,7 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
                   ),
                   //Update symptoms and allergies
                   RecordSymptomsAndAllergiesUpdate(
-                    svgSrc: "assets/icons/testAM.svg",
+                    svgSrc: "assets/icons/face-swelling.svg",
                     selectedBabyID: widget.selectedBabyID,
                     recordID: widget.recordID,
                     selectedDate: snapshot.data.data()["selectedDate"],
@@ -130,11 +130,10 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
         physics: const BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverAppBar(
-            //expandedHeight: MediaQuery.of(context).size.height * 0.15,
             floating: true,
             pinned: true,
             stretch: true,
-            //stretchTriggerOffset: 70.0,
+            backgroundColor: appThemeColor,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               collapseMode: CollapseMode.pin,
@@ -143,7 +142,7 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
               ],
               title: Container(
                 child: Text(
-                  "Food Intake Record",
+                  "Update Food Intake Record",
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.045,
                   ),
@@ -328,7 +327,7 @@ class _RecordSymptomsAndAllergiesUpdateState extends State<RecordSymptomsAndAlle
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
-              color: Colors.red,
+              color: appThemeColor,
               textColor: Colors.white,
               onPressed: () {
                 if(textFieldController.text.isNotEmpty && symptomsAndAllergies == true){

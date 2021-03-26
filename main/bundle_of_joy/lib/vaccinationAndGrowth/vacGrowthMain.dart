@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
 import 'package:flutter/material.dart';
 import 'growth/growthHeight.dart';
@@ -25,6 +26,7 @@ class _VaccinationGrowthMainState extends State<VaccinationGrowthMain> {
             floating: true,
             pinned: true,
             stretch: true,
+            backgroundColor: appThemeColor,
             stretchTriggerOffset: 100.0,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,

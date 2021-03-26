@@ -1,5 +1,5 @@
 import 'package:bundle_of_joy/careForBaby/careForBabyFunction.dart';
-import 'package:bundle_of_joy/widgets/textWidgets.dart';
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/svg.dart';
@@ -242,7 +242,7 @@ class _RecordBabyAfterMealUpdateWidgetState extends State<RecordBabyAfterMealUpd
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
-              color: Colors.red,
+              color: appThemeColor,
               textColor: Colors.white,
               onPressed: () {
                 if(completeFoodRecord == true && symptomsAndAllergies == false){

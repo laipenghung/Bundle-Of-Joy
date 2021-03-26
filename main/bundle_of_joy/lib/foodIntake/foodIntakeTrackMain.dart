@@ -1,4 +1,6 @@
+import 'package:bundle_of_joy/foodIntake/foodIntakeAdd.dart';
 import 'package:bundle_of_joy/foodIntake/foodIntakeTrackView.dart';
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
 import 'foodIntake_add_1_dateTime.dart';
@@ -24,6 +26,7 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
             pinned: true,
             stretch: true,
             stretchTriggerOffset: 70.0,
+            backgroundColor: appThemeColor,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               collapseMode: CollapseMode.parallax,
@@ -68,7 +71,7 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => FoodIntakeAdd1()),
-                        //MaterialPageRoute(builder: (context) => FoodIntakeAddTest()),
+                        //MaterialPageRoute(builder: (context) => FoodIntakeTrackAdd()),
                       );
                     }
                   ),
