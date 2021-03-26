@@ -20,15 +20,14 @@ class _MyAppState extends State<MyApp> {
   AndroidInitializationSettings androidInitializationSettings;
   //IOSInitializationSettings iosInitializationSettings;
   InitializationSettings initializationSettings;
+  //Color test = Color(0xFFF6C5AF);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Color(int.parse("0xFFFCFFD5")),
-        appBarTheme: AppBarTheme(
-          color: Color(0xFFF6C5AF),
-        )
+        
       ),
       home: WelcomeScreen(),
     );

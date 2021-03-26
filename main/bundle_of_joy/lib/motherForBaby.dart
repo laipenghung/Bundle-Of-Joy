@@ -206,7 +206,7 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                     children: <Widget>[
                       CardWidget(
                         title: "Appointment Management",
-                        svgSrc: "assets/icons/Hamburger.svg",
+                        svgSrc: "assets/icons/testAM.svg",
                         press: () {
                           showModalBottomSheet( //New UI
                               context: context,
@@ -223,7 +223,7 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                       ),
                       CardWidget(
                         title: "Vaccination Schedule",
-                        svgSrc: "assets/icons/Hamburger.svg",
+                        svgSrc: "assets/icons/vaccination.svg",
                         press: () {
                           Navigator.push(
                             context,
@@ -233,7 +233,7 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                       ),
                       CardWidget(
                         title: "Vaccination & Growth Tracking",
-                        svgSrc: "assets/icons/Meditation.svg",
+                        svgSrc: "assets/icons/medical-report.svg",
                         press: () {
                           Navigator.push(
                             context,
@@ -242,8 +242,8 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                         },
                       ),
                       CardWidget(
-                        title: "Care For Baby",
-                        svgSrc: "assets/icons/yoga.svg",
+                        title: "Care For \nBaby",
+                        svgSrc: "assets/icons/breastfeeding.svg",
                         press: () {
                           Navigator.push(
                             context,

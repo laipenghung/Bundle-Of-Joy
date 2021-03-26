@@ -2,7 +2,7 @@ import 'package:bundle_of_joy/foodIntake/foodIntakeTrackFunction.dart';
 import 'package:bundle_of_joy/widgets/recordBloodSugarWidget.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
 import 'package:bundle_of_joy/widgets/recordListWidget.dart';
-import 'package:bundle_of_joy/widgets/textWidgets.dart';
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
@@ -51,11 +51,10 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
         physics: const BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverAppBar(
-            //expandedHeight: MediaQuery.of(context).size.height * 0.15,
             floating: true,
             pinned: true,
             stretch: true,
-            //stretchTriggerOffset: 70.0,
+            backgroundColor: appThemeColor,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               collapseMode: CollapseMode.pin,

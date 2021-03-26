@@ -1,7 +1,7 @@
 import 'package:bundle_of_joy/widgets/recordBabyAfterMealWidget.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
 import 'package:bundle_of_joy/widgets/recordListWidget.dart';
-import 'package:bundle_of_joy/widgets/textWidgets.dart';
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +26,10 @@ class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
         physics: const BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverAppBar(
-            //expandedHeight: MediaQuery.of(context).size.height * 0.15,
             floating: true,
             pinned: true,
             stretch: true,
-            //stretchTriggerOffset: 70.0,
+            backgroundColor: appThemeColor,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               collapseMode: CollapseMode.pin,
@@ -127,7 +126,7 @@ class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
                         ),
                         //Blood Sugar section
                         RecordBabyAfterMealWidget(
-                          svgSrc: "assets/icons/testAM.svg",
+                          svgSrc: "assets/icons/face-swelling.svg",
                           symptomsAndAllergies: sympAndAlle,
                           symptomsAndAllergiesDesc: babySymptoms,
                         ),

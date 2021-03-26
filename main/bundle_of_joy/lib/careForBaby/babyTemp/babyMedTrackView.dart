@@ -1,7 +1,7 @@
 import 'package:bundle_of_joy/widgets/recordBodyTempWidget.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
 import 'package:bundle_of_joy/widgets/recordListWidget.dart';
-import 'package:bundle_of_joy/widgets/textWidgets.dart';
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -27,11 +27,10 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
         physics: const BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverAppBar(
-            //expandedHeight: MediaQuery.of(context).size.height * 0.15,
             floating: true,
             pinned: true,
             stretch: true,
-            //stretchTriggerOffset: 70.0,
+            backgroundColor: appThemeColor,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               collapseMode: CollapseMode.pin,
@@ -107,7 +106,7 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
                         ),
                         //Widget for display Consumed Food
                         RecordListWidget(
-                          svgSrc: "assets/icons/healthy-food.svg",
+                          svgSrc: "assets/icons/drugs.svg",
                           title: babyMedsRecordListTitle,
                           titleDesc: babyMedsRecordListTitleDesc,
                           foodName: medicine.keys.toList(),
@@ -128,7 +127,7 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
                         ),
                         //Body Temperature section
                         RecordBodyTempWidget(
-                          svgSrc: "assets/icons/testAM.svg",
+                          svgSrc: "assets/icons/thermometer.svg",
                           tempBeforeMeds: tempBeforeMeds,
                           tempAferMeds: tempAfterMeds,
                         ),

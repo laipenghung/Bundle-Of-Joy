@@ -60,20 +60,23 @@ class _HomePageState extends State<HomePageState> {
         contentPadding: 0,
         icon: Image.asset("assets/icons/pregnant.png"),
         title: ("Mother-to-be"),
-        activeColor: Colors.black,
+        //activeColor: Colors.black,
+        activeColor: Color(0xFFff713a),
         inactiveColor: Colors.black.withOpacity(0.4),
       ),
       PersistentBottomNavBarItem(
         icon: Image.asset("assets/icons/baby.png"),
         title: ("Mother-for-baby"),
-        activeColor: Colors.black,
+        //activeColor: Colors.black,
+        activeColor: Color(0xFFff713a),
         inactiveColor: Colors.black.withOpacity(0.3),
       ),
       //PersistentBottomNavBarItem(icon: Image.asset("assets/icons/bell.png"), title: ("Test"), activeColor: Colors.black, inactiveColor: Colors.black.withOpacity(0.3)),
       PersistentBottomNavBarItem(
         icon: Image.asset("assets/icons/user.png"),
         title: ("Profile"),
-        activeColor: Colors.black,
+        //activeColor: Colors.black,
+        activeColor: Color(0xFFff713a),
         inactiveColor: Colors.black.withOpacity(0.3),
       )
     ];
@@ -111,11 +114,20 @@ class _HomePageState extends State<HomePageState> {
     return PersistentTabView(
       navBarHeight: MediaQuery.of(context).size.height * 0.1,
       padding: NavBarPadding.all(4),
+      decoration:  NavBarDecoration(
+          //borderRadius: BorderRadius.circular(10.0),
+          //colorBehindNavBar: Colors.white,
+          border: Border(
+            top: BorderSide(width: 0.5, color: Colors.black.withOpacity(0.5)),
+            //bottom: BorderSide(width: 16.0, color: Colors.lightBlue.shade900),
+          ),
+        ),
       controller: _persistentTabController,
       screens: _widgetOptions(),
       items: _navBarsItems(),
       confineInSafeArea: true,
-      backgroundColor: Color(0xFFF6C5AF),
+      //backgroundColor: Color(0xFFdcdcdc),
+      backgroundColor: Colors.white,
       handleAndroidBackButtonPress: true,
       stateManagement: true,
       resizeToAvoidBottomInset: true,

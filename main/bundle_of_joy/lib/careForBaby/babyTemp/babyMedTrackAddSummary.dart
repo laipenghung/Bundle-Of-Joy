@@ -4,7 +4,7 @@ import 'package:bundle_of_joy/careForBaby/careForBabyFunction.dart';
 import 'package:bundle_of_joy/widgets/recordBodyTempWidget.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
 import 'package:bundle_of_joy/widgets/recordListWidget.dart';
-import 'package:bundle_of_joy/widgets/textWidgets.dart';
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
@@ -53,11 +53,10 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
         physics: const BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverAppBar(
-            //expandedHeight: MediaQuery.of(context).size.height * 0.15,
             floating: true,
             pinned: true,
             stretch: true,
-            //stretchTriggerOffset: 70.0,
+            backgroundColor: appThemeColor,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               collapseMode: CollapseMode.pin,
@@ -116,7 +115,7 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
                 ),
                 //Widget for display Consumed Food
                 RecordListWidget(
-                  svgSrc: "assets/icons/healthy-food.svg",
+                  svgSrc: "assets/icons/drugs.svg",
                   title: babyMedsRecordListTitle,
                   titleDesc: babyMedsRecordListTitleDesc,
                   foodName: medicine.keys.toList(),
@@ -137,7 +136,7 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
                 ),
                 //Body Temperature section
                 RecordBodyTempWidget(
-                  svgSrc: "assets/icons/testAM.svg",
+                  svgSrc: "assets/icons/thermometer.svg",
                   tempBeforeMeds: tempBeforeMeds,
                   tempAferMeds: (widget.bTempAfter == null)? null : double.parse(widget.bTempAfter),
                 ),
@@ -150,7 +149,7 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
-                      color: Colors.red,
+                      color: appThemeColor,
                       textColor: Colors.white,
                       onPressed: () {
                         if(widget.bTempAfter != null){

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const Color appThemeColor = Color(0xFFff713a);
+
 const String motherRecordDateDesc =  "The date you record this intake.";
 const String motherRecordTimeDesc =  "The time you record this intake.";
 const String motherRecordListTitle = "Food";

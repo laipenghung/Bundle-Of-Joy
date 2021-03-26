@@ -1,7 +1,7 @@
 import 'package:bundle_of_joy/widgets/recordBabyAfterMealUpdateWidget.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
 import 'package:bundle_of_joy/widgets/recordListWidget.dart';
-import 'package:bundle_of_joy/widgets/textWidgets.dart';
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 
 class BabyFoodIntakeAddSummary extends StatefulWidget {
@@ -22,11 +22,10 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
         physics: const BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverAppBar(
-            //expandedHeight: MediaQuery.of(context).size.height * 0.15,
             floating: true,
             pinned: true,
             stretch: true,
-            //stretchTriggerOffset: 70.0,
+            backgroundColor: appThemeColor,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               collapseMode: CollapseMode.pin,
@@ -108,7 +107,7 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
                   ),
                   //update
                   RecordBabyAfterMealUpdateWidget(
-                    svgSrc: "assets/icons/testAM.svg",
+                    svgSrc: "assets/icons/face-swelling.svg",
                     selectedBabyID: widget.selectedBabyID,
                     selectedDate: widget.selectedDate,
                     selectedTime: widget.selectedTime,
