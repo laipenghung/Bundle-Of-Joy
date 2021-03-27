@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color appThemeColor = Color(0xFFff713a);
+//const Color appThemeColor = Color(0xFFD44B87); //test color
 
 const String motherRecordDateDesc =  "The date you record this intake.";
 const String motherRecordTimeDesc =  "The time you record this intake.";
