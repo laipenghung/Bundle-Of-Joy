@@ -1,4 +1,4 @@
-import 'package:bundle_of_joy/foodIntake/foodIntakeAdd.dart';
+import 'package:bundle_of_joy/foodIntake/foodIntakeTrackAdd.dart';
 import 'package:bundle_of_joy/foodIntake/foodIntakeTrackView.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
@@ -70,8 +70,9 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
                     press: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => FoodIntakeAdd1()),
-                        //MaterialPageRoute(builder: (context) => FoodIntakeTrackAdd()),
+                        //MaterialPageRoute(builder: (context) => FoodIntakeAdd1()),
+                        MaterialPageRoute(builder: (context) => FoodIntakeTrackAdd()),
+                        //MaterialPageRoute(builder: (context) => FoodIntakeAddTest()),
                       );
                     }
                   ),
