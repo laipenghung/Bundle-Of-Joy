@@ -96,7 +96,7 @@ class RecordListWidget extends StatelessWidget {
                               width: double.infinity,
                               margin: EdgeInsets.only(bottom: 8.0),
                               child: Text(
-                                "x " + x[1].toString() + " MEASUREMENT",
+                                "x " + x[1].toString(),
                                 //"Food name 1",
                                 textAlign: TextAlign.left,
                                 overflow: TextOverflow.ellipsis,

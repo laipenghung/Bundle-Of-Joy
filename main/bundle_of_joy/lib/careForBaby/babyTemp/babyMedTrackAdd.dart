@@ -1,25 +1,28 @@
 import 'dart:developer';
 
-import 'package:bundle_of_joy/foodIntake/foodIntakeTrackAddSummary.dart';
+import 'package:bundle_of_joy/careForBaby/babyTemp/babyMedTrackAddSummary.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
-class FoodIntakeTrackAdd extends StatefulWidget {
+class BabyMedTrackAdd extends StatefulWidget {
+  final String selectedBabyID;
+  BabyMedTrackAdd({Key key, this.selectedBabyID,}) : super(key: key);
+
   @override
-  _FoodIntakeTrackAddState createState() => _FoodIntakeTrackAddState();
+  _BabyMedTrackAddState createState() => _BabyMedTrackAddState();
 }
 
-class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
-  Map foodMap = Map();
-  List foodNameList = [], foodQuantityList = [], foodQuantityMeasurementList = [];
-  String foodName, foodQuantity, foodQuantityMeasurement, bSugarBefore, bSugarAfter, dialogBoxContent;
-  TextEditingController foodNameController = TextEditingController();
-  TextEditingController foodQuantityController = TextEditingController();
+class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
+  Map medMap = Map();
+  List medNameList = [], medQuantityList = [], medQuantityMeasurementList = [];
+  String medName, medQuantity, medQuantityMeasurement, bTempBefore, bTempAfter, dialogBoxContent;
+  TextEditingController medNameController = TextEditingController();
+  TextEditingController medQuantityController = TextEditingController();
   TextEditingController quantityMearsurementController = TextEditingController();
-  TextEditingController bSugarBeforeController = TextEditingController();
-  TextEditingController bSugarAfterController = TextEditingController();
+  TextEditingController bTempBeforeController = TextEditingController();
+  TextEditingController bTempAfterController = TextEditingController();
 
   //Used for date section only
   DateTime pickedDate;
@@ -28,8 +31,8 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
   TimeOfDay time;
   String hour, min, timeToPass, formattedTime;
   //Used for food section only
-  String foodMapKey, foodWidgetTitle = "Consumed Food";
-  bool editFood = false;
+  String foodMapKey, foodWidgetTitle = "Consumed Medicine";
+  bool editMed = false;
   int listIndex;
 
   void initState(){
@@ -331,7 +334,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
 
 
   //Food Section Widget
-  Widget foodModalBottomSheetWidget(BuildContext context){
+  Widget medicineModalBottomSheetWidget(BuildContext context){
     return Container(
       height: MediaQuery.of(context).size.height * 0.6,
       child: GestureDetector(
@@ -388,15 +391,15 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                     Column(
                       children: <Widget>[
                         ModalSheetText(
-                          title: "Food Name",
-                          desc: "Enter the name of the food you want to add to the record.",
+                          title: "Medicine Name",
+                          desc: "Enter the name of the medicine.",
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 5, bottom: 10),
                           height: MediaQuery.of(context).size.width * 0.09,
                           child: TextFormField(
-                            controller: foodNameController,
-                            onChanged: (val) => setState(() => foodName = val),
+                            controller: medNameController,
+                            onChanged: (val) => setState(() => medName = val),
                             decoration: InputDecoration(
                               hintText: "Enter your food name.",
                               contentPadding: EdgeInsets.all(5),
@@ -419,18 +422,18 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                     Column(
                       children: <Widget>[
                         ModalSheetText(
-                          title: "Food Quantity",
-                          desc: "Enter the quantity of the food you want to add to the record.",
+                          title: "Medicine Quantity",
+                          desc: "Enter the quantity of the medicine.",
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 5, bottom: 15),
                           height: MediaQuery.of(context).size.width * 0.09,
                           child: TextFormField(
-                            controller: foodQuantityController,
-                            onChanged: (val) => setState(() => foodQuantity = val),
+                            controller: medQuantityController,
+                            onChanged: (val) => setState(() => medQuantity = val),
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                              hintText: "Enter your food quantity.",
+                              hintText: "Enter your medicine quantity.",
                               contentPadding: EdgeInsets.all(5),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -450,15 +453,15 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                     Column(
                       children: <Widget>[
                         ModalSheetText(
-                          title: "Food Quantity Measurement",
-                          desc: "Enter the quantity measurement of the food.",
+                          title: "Medicine Quantity Measurement",
+                          desc: "Enter the quantity measurement of the medicine.",
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 5, bottom: 15),
                           height: MediaQuery.of(context).size.width * 0.09,
                           child: TextFormField(
                             controller: quantityMearsurementController,
-                            onChanged: (val) => setState(() => foodQuantityMeasurement = val),
+                            onChanged: (val) => setState(() => medQuantityMeasurement = val),
                             decoration: InputDecoration(
                               hintText: "Enter your food quantity measurement. (Optional)",
                               contentPadding: EdgeInsets.all(2),
@@ -478,7 +481,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                         ),
                       ],
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                    //SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                     Column(
                       children: <Widget>[
                         SizedBox(
@@ -487,7 +490,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                             padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
                             textColor: Colors.black.withOpacity(0.65),
                             onPressed: () {
-                              foodNameController.clear(); foodQuantityController.clear(); quantityMearsurementController.clear();
+                              medNameController.clear(); medQuantityController.clear(); quantityMearsurementController.clear();
                             },
                             child: Text(
                               "Reset",
@@ -509,17 +512,17 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                             color: appThemeColor,
                             textColor: Colors.white,
                             onPressed: () {
-                              if(editFood == false){
-                                if(foodNameController.text.isNotEmpty && foodQuantityController.text.isNotEmpty 
+                              if(editMed == false){
+                                if(medNameController.text.isNotEmpty && medQuantityController.text.isNotEmpty 
                                   && quantityMearsurementController.text.isNotEmpty){
                                   setState(() {
-                                    foodMap[foodName] = foodQuantity + " " + foodQuantityMeasurement; 
-                                    foodNameList.add(foodName); 
-                                    foodQuantityList.add(foodQuantity);
-                                    foodQuantityMeasurementList.add(foodQuantityMeasurement);
-                                    log(foodMap.toString());
+                                    medMap[medName] = medQuantity + " " + medQuantityMeasurement; 
+                                    medNameList.add(medName); 
+                                    medQuantityList.add(medQuantity);
+                                    medQuantityMeasurementList.add(medQuantityMeasurement);
+                                    log(medMap.toString());
                                   });
-                                  foodNameController.clear(); foodQuantityController.clear(); quantityMearsurementController.clear();
+                                  medNameController.clear(); medQuantityController.clear(); quantityMearsurementController.clear();
                                   Navigator.of(context).pop();
                                 }else{
                                   dialogBoxContent = "Please make sure you entered all of the field." + 
@@ -527,24 +530,24 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                                   _showDialogBox(context, dialogBoxContent);
                                 }
                               }else{
-                                if(foodNameController.text.isNotEmpty && foodQuantityController.text.isNotEmpty 
+                                if(medNameController.text.isNotEmpty && medQuantityController.text.isNotEmpty 
                                   && quantityMearsurementController.text.isNotEmpty){
                                   setState(() {
-                                    foodMap.remove(foodMapKey);
-                                    foodMap[foodName] = foodQuantity + " " + foodQuantityMeasurement; 
-                                    foodNameList[listIndex] = foodName;
-                                    foodQuantityList[listIndex] = foodQuantity;
-                                    foodQuantityMeasurementList[listIndex] = foodQuantityMeasurement;
-                                    foodNameController.clear(); foodQuantityController.clear(); quantityMearsurementController.clear();
-                                    foodWidgetTitle = "Consumed Food"; editFood = false; listIndex = null; foodMapKey = null;
-                                    log(foodMap.toString());
+                                    medMap.remove(foodMapKey);
+                                    medMap[medName] = medQuantity + " " + medQuantityMeasurement; 
+                                    medNameList[listIndex] = medName;
+                                    medQuantityList[listIndex] = medQuantity;
+                                    medQuantityMeasurementList[listIndex] = medQuantityMeasurement;
+                                    medNameController.clear(); medQuantityController.clear(); quantityMearsurementController.clear();
+                                    foodWidgetTitle = "Consumed Food"; editMed = false; listIndex = null; foodMapKey = null;
+                                    log(medMap.toString());
                                     Navigator.of(context).pop();
                                   });
                                 }
                               }
                             },
                             child: Text(
-                              (editFood == false)? "Add" : "Update",
+                              (editMed == false)? "Add" : "Update",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -564,13 +567,13 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
     );
   }
 
-  Widget addEditFoodWidget(){
+  Widget addEditMedicineWidget(){
     return Container(
       margin: EdgeInsets.only(top: 10.0,),
       child: ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: foodNameList.length,
+        itemCount: medNameList.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
             child: Row(
@@ -583,7 +586,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                             Container(
                               width: double.infinity,
                               child: Text(
-                                foodNameList[index],
+                                medNameList[index],
                                 textAlign: TextAlign.left,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
@@ -597,7 +600,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                             Container(
                               width: double.infinity,
                               child: Text(
-                                "x " + foodQuantityList[index] + " " + foodQuantityMeasurementList[index],
+                                "x " + medQuantityList[index] + " " + medQuantityMeasurementList[index],
                                 textAlign: TextAlign.left,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
@@ -618,13 +621,13 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                             child: IconButton(
                                 icon: Icon(Icons.edit, color: Colors.black.withOpacity(0.65),), 
                                 onPressed: () {
-                                  foodWidgetTitle = "Edit Food";
-                                  editFood = true;
+                                  foodWidgetTitle = "Edit Medicine";
+                                  editMed = true;
                                   listIndex = index;
-                                  foodMapKey = foodNameList[index].toString();
-                                  foodNameController.text = foodNameList[index].toString();
-                                  foodQuantityController.text = foodQuantityList[index].toString();
-                                  quantityMearsurementController.text = foodQuantityMeasurementList[index].toString();
+                                  foodMapKey = medNameList[index].toString();
+                                  medNameController.text = medNameList[index].toString();
+                                  medQuantityController.text = medQuantityList[index].toString();
+                                  quantityMearsurementController.text = medQuantityMeasurementList[index].toString();
                                   showModalBottomSheet(
                                   context: context,
                                   shape: RoundedRectangleBorder(
@@ -633,7 +636,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                                   isScrollControlled: true,
                                   builder: (context) => SingleChildScrollView(
                                     physics: ClampingScrollPhysics(),
-                                        child: foodModalBottomSheetWidget(context),
+                                        child: medicineModalBottomSheetWidget(context),
                                   ));
                                 }
                               )
@@ -648,11 +651,11 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                                 icon: Icon(Icons.delete, color: Colors.red,), 
                                 onPressed: (){
                                   setState(() {
-                                    foodMap.remove(foodNameList[index]);
-                                    foodNameList.removeAt(index);
-                                    foodQuantityList.removeAt(index);
-                                    foodQuantityMeasurementList.removeAt(index);
-                                    print(foodNameList); print(foodQuantityList); print(foodMap);
+                                    medMap.remove(medNameList[index]);
+                                    medNameList.removeAt(index);
+                                    medQuantityList.removeAt(index);
+                                    medQuantityMeasurementList.removeAt(index);
+                                    print(medNameList); print(medQuantityList); print(medMap);
                                   });
                                 },
                               )
@@ -667,7 +670,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
     );
   }
 
-  Widget noFoodWidget(){
+  Widget noMedicineWidget(){
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(top: 10),
@@ -689,7 +692,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
               Container(
                 margin: EdgeInsets.only(bottom: 10),
                 child: Text(
-                  "Looks like you haven't add any food. Tap on the buton below to add some food into the record.",
+                  "Looks like you haven't add any medicine. Tap on the buton below to add some medicine into the record.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -707,7 +710,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
     return Column(
       children: <Widget>[
         WidgetTitle(
-          title: "Consumed Food",
+          title: "Consumed Medicine",
         ),
         SizedBox(
           width: double.infinity,
@@ -729,11 +732,11 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    SvgPicture.asset("assets/icons/healthy-food.svg", height: 23, width: 23,),
+                    SvgPicture.asset("assets/icons/drugs.svg", height: 23, width: 23,),
                     Container(
                       padding: EdgeInsets.only(left: 8.0,),
                       child: Text(
-                        "Food",
+                        "Medicine",
                         style: TextStyle(
                           fontSize: MediaQuery.of(context).size.width * 0.045,
                           fontWeight: FontWeight.bold,
@@ -746,7 +749,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                   width: double.infinity,
                   margin: EdgeInsets.only(top: 8.0,),
                   child: Text(
-                    "Please enter the food that you consumed.",
+                    "Please enter the medicine that your baby consumed.",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -754,7 +757,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                     ),
                   ),
                 ),
-                (foodNameList.length != 0)? addEditFoodWidget() : noFoodWidget(),
+                (medNameList.length != 0)? addEditMedicineWidget() : noMedicineWidget(),
                 Container(
                   margin: EdgeInsets.fromLTRB(15, 10, 15, 5),
                   child: SizedBox(
@@ -775,11 +778,11 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                         isScrollControlled: true,
                         builder: (context) => SingleChildScrollView(
                           physics: ClampingScrollPhysics(),
-                              child: foodModalBottomSheetWidget(context),
+                              child: medicineModalBottomSheetWidget(context),
                         ));
                       },
                       child: Text(
-                        (foodNameList.length == 0)? "Add Food" : "Add More Food",
+                        (medNameList.length == 0)? "Add Medicine" : "Add More Medicine",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -799,7 +802,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
 
 
   //Blood Glucose Section Widget
-  Widget bloodGlucoseModalBottomSheetWidget(BuildContext context){
+  Widget bodyTempModalBottomSheetWidget(BuildContext context){
     return Container(
       height: MediaQuery.of(context).size.height * 0.5,
       child: GestureDetector(
@@ -822,7 +825,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                     child: Container(
                       width: double.infinity,
                       child: Text(
-                        "Blood Glucose",
+                        "Body Temperature",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: MediaQuery.of(context).size.width * 0.045,
@@ -856,18 +859,18 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                     Column(
                       children: <Widget>[
                         ModalSheetText(
-                          title: "Blood Glucose Reading",
-                          desc: "Blood glucose reading before meal.",
+                          title: "Body Temperature Reading",
+                          desc: "Body Temperature reading before medication.",
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 5, bottom: 10),
                           height: MediaQuery.of(context).size.width * 0.09,
                           child: TextFormField(
-                            controller: bSugarBeforeController,
-                            onChanged: (val) => setState(() => bSugarBefore = val),
+                            controller: bTempBeforeController,
+                            onChanged: (val) => setState(() => bTempBefore = val),
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                              hintText: "Blood glucose reading before meal.",
+                              hintText: "Body Temperature reading before medication.",
                               contentPadding: EdgeInsets.all(5),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -887,18 +890,18 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                     Column(
                       children: <Widget>[
                         ModalSheetText(
-                          title: "Blood Glucose Reading",
-                          desc: "Blood glucose reading 2 hour after meal.",
+                          title: "Body Temperature Reading",
+                          desc: "Body Temperature reading reading 2 hour after medication.",
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 5, bottom: 15),
                           height: MediaQuery.of(context).size.width * 0.09,
                           child: TextFormField(
-                            controller: bSugarAfterController,
-                            onChanged: (val) => setState(() => bSugarAfter = val),
+                            controller: bTempAfterController,
+                            onChanged: (val) => setState(() => bTempAfter = val),
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                              hintText: "Blood glucose reading 2 hour after meal.",
+                              hintText: "Body Temperature reading reading 2 hour after medication.",
                               contentPadding: EdgeInsets.all(5),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -924,7 +927,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                             padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
                             textColor: Colors.black.withOpacity(0.65),
                             onPressed: () {
-                              bSugarBeforeController.clear(); bSugarAfterController.clear();
+                              bTempBeforeController.clear(); bTempAfterController.clear();
                             },
                             child: Text(
                               "Reset",
@@ -946,12 +949,12 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                             color: appThemeColor,
                             textColor: Colors.white,
                             onPressed: () {
-                              if(bSugarBeforeController.text.isNotEmpty){
-                                bSugarBeforeController.clear(); bSugarAfterController.clear(); 
+                              if(bTempBeforeController.text.isNotEmpty){
+                                bTempBeforeController.clear(); bTempAfterController.clear(); 
                                 Navigator.of(context).pop();
                               }else{
-                                dialogBoxContent = "Please make sure you entered your blood glucose reading into the " + 
-                                  "before meal section. Only 2 hour after meal section can be left empty.";
+                                dialogBoxContent = "Please make sure you entered your baby body temperature reading into the " + 
+                                  "before medication section. Only 2 hour after medication section can be left empty.";
                                 _showDialogBox(context, dialogBoxContent);
                               }
                             },
@@ -976,11 +979,11 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
     );
   }
 
-  Widget bloodGlucoseWidgetContent(BuildContext context){
+  Widget bodyTempWidgetContent(BuildContext context){
     return Column(
       children: <Widget>[
         WidgetTitle(
-          title: "Blood Glucose",
+          title: "Body Temperature",
         ),
         SizedBox(
           width: double.infinity,
@@ -1003,11 +1006,11 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    SvgPicture.asset("assets/icons/blood-donation.svg", height: 23, width: 23,),
+                    SvgPicture.asset("assets/icons/thermometer.svg", height: 23, width: 23,),
                     Container(
                       padding: EdgeInsets.only(left: 10.0,),
                       child: Text(
-                        "Blood Glucose Reading",
+                        "Body Temperature Reading",
                         style: TextStyle(
                           fontSize: MediaQuery.of(context).size.width * 0.045,
                           fontWeight: FontWeight.bold,
@@ -1020,8 +1023,8 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                   width: double.infinity,
                   margin: EdgeInsets.only(top: 8.0,),
                   child: Text(
-                    "Your blood sugar reading before meal and 2 hours after meal. You " +
-                    "can leave the 2 hours after meal section empty if u wish to update it later.",
+                    "Your baby body temperature reading before medication and 2 hours after medication. You " +
+                    "can leave the 2 hours after medication section empty if u wish to update it later.",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -1051,7 +1054,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                               child: Column(
                                 children: [
                                   Text(
-                                    (bSugarBefore == null || bSugarBefore == "")? "-" : bSugarBefore + " mmol/L",
+                                    (bTempBefore == null || bTempBefore == "")? "-" : bTempBefore + "°C",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: MediaQuery.of(context).size.width * 0.05,
@@ -1061,7 +1064,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                                   Container(
                                     padding: EdgeInsets.only(top: 3),
                                     child: Text(
-                                      "Before meal",
+                                      "Before medication",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: MediaQuery.of(context).size.width * 0.033,
@@ -1079,7 +1082,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                               child: Column(
                                 children: [
                                   Text(
-                                    (bSugarAfter == null || bSugarAfter == "")? "-" : bSugarAfter + " mmol/L",
+                                    (bTempAfter == null || bTempAfter == "")? "-" : bTempAfter + "°C",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: MediaQuery.of(context).size.width * 0.05,
@@ -1089,7 +1092,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                                   Container(
                                     padding: EdgeInsets.only(top: 3),
                                     child: Text(
-                                      "2 hours after meal",
+                                      "After 2 hours",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: MediaQuery.of(context).size.width * 0.033,
@@ -1118,8 +1121,8 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                       color: appThemeColor,
                       textColor: Colors.white,
                       onPressed: () {
-                        if(bSugarBefore != null){bSugarBeforeController.text = bSugarBefore;}
-                        if(bSugarAfter != null){bSugarAfterController.text = bSugarAfter;}
+                        if(bTempBefore != null){bTempBeforeController.text = bTempBefore;}
+                        if(bTempAfter != null){bTempAfterController.text = bTempAfter;}
                         showModalBottomSheet(
                         context: context,
                         shape: RoundedRectangleBorder(
@@ -1128,11 +1131,11 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                         isScrollControlled: true,
                         builder: (context) => SingleChildScrollView(
                           physics: ClampingScrollPhysics(),
-                              child: bloodGlucoseModalBottomSheetWidget(context),
+                              child: bodyTempModalBottomSheetWidget(context),
                         ));
                       },
                       child: Text(
-                        (bSugarBefore == null && bSugarAfter == null)? "Add Blood Sugar Reading" : "Edit Blood Sugar Reading",
+                        (bTempBefore == null && bTempAfter == null)? "Add Body Temperature Reading" : "Edit Body Temperature Reading",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -1156,7 +1159,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
         title: Text(
-          "Add Food Record",
+          "Add Baby Medicine Record",
           style: TextStyle(
             color: Colors.white,
              fontSize: MediaQuery.of(context).size.width * 0.045,
@@ -1176,7 +1179,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
             //Food
             foodWidgetContent(context),
             //Blood Sugar
-            bloodGlucoseWidgetContent(context),
+            bodyTempWidgetContent(context),
             //Next Screen
             Container(
               margin: EdgeInsets.only(left: 13, right: 13, bottom: 20),
@@ -1191,19 +1194,21 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                   textColor: Colors.white,
                   onPressed: () {
                     //log(dateToPass); log(timeToPass); log(foodMap.toString()); log(bSugarBefore +" "+ bSugarAfter);
-                    if(foodMap.isNotEmpty && bSugarBefore != null &&  bSugarBefore != ""){
-                      if(bSugarAfter != null && bSugarAfter != ""){
-                          Navigator.push(
+                    if(medMap.isNotEmpty && bTempBefore != null &&  bTempBefore != ""){
+                      if(bTempAfter != null && bTempAfter != ""){
+                        Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => FoodIntakeTrackAddSummary(
-                            selectedDate: dateToPass, selectedTime: timeToPass, foodMap: foodMap, bSugarBefore: bSugarBefore, bSugarAfter: bSugarAfter,
+                          MaterialPageRoute(builder: (context) => BabyMedTrackAddSummary(
+                            selectedDate: dateToPass, selectedTime: timeToPass, 
+                              selectedBabyID: widget.selectedBabyID, medsMap: medMap, bTempBefore: bTempBefore, bTempAfter: bTempAfter,
                           )),
                         );
                       }else{
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => FoodIntakeTrackAddSummary(
-                            selectedDate: dateToPass, selectedTime: timeToPass, foodMap: foodMap, bSugarBefore: bSugarBefore, bSugarAfter: null,
+                          MaterialPageRoute(builder: (context) => BabyMedTrackAddSummary(
+                            selectedDate: dateToPass, selectedTime: timeToPass, 
+                              selectedBabyID: widget.selectedBabyID, medsMap: medMap, bTempBefore: bTempBefore, bTempAfter: null,
                           )),
                         );
                       }
@@ -1214,7 +1219,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                     }
                   },
                   child: Text(
-                    "Review Food Record",
+                    "Review Medicine Record",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,

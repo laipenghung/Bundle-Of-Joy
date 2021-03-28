@@ -237,3 +237,63 @@ class BabyFoodRecrodDoneText extends StatelessWidget {
     );
   }
 }
+
+class WidgetTitle extends StatelessWidget {
+  final String title;
+  const WidgetTitle({
+    Key key,this.title,}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(top: 18.0, left: 13.0,),
+      child: Text(
+        title,
+        textAlign: TextAlign.left,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: MediaQuery.of(context).size.width * 0.05,
+          color: Colors.black,
+        ),
+      ),
+    );
+  }
+}
+
+class ModalSheetText extends StatelessWidget {
+  final String title, desc;
+  const ModalSheetText({
+    Key key,this.title, this.desc}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(top: 5),
+          child: Text(
+            title,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.045,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Container(
+          width: double.infinity,
+          child: Text(
+            desc,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.035,
+              color: Colors.black.withOpacity(0.65)
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
