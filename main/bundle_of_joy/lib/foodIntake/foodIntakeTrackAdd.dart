@@ -32,7 +32,6 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
   bool editFood = false;
   int listIndex;
 
-
   void initState(){
     super.initState();
     pickedDate = DateTime.now();
@@ -332,7 +331,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
 
 
   //Food Section Widget
-  Widget foodModalBottomSheetWidget(BuildContext context) {
+  Widget foodModalBottomSheetWidget(BuildContext context){
     return Container(
       height: MediaQuery.of(context).size.height * 0.6,
       child: GestureDetector(
@@ -342,23 +341,14 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
             Container(
               padding: EdgeInsets.only(top: 3, bottom: 3),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
-                color: appThemeColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.65),
-                    blurRadius: 2.0,
-                    spreadRadius: 0.0,
-                    offset: Offset(2.0, 0),
-                  )
-                ],
-              ),
+                  borderRadius: BorderRadius.only(topLeft:Radius.circular(10.0), topRight:Radius.circular(10.0)),
+                  color: appThemeColor,
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.65), blurRadius: 2.0, spreadRadius: 0.0, offset: Offset(2.0, 0),)],
+              ),   
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Spacer(
-                    flex: 2,
-                  ),
+                  Spacer(flex: 2,),
                   Flexible(
                     flex: 4,
                     child: Container(
@@ -379,148 +369,134 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                     child: Container(
                       width: double.infinity,
                       child: Align(
-                          alignment: Alignment.centerRight,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.close,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => Navigator.of(context).pop(),
-                          )),
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                          icon: Icon(Icons.close, color: Colors.white,), 
+                          onPressed: () => Navigator.of(context).pop(),
+                        )
+                      ),
                     ),
                   )
                 ],
               ),
             ),
             Container(
-              width: double.infinity,
-              margin: EdgeInsets.all(13),
-              child: Column(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      ModalSheetText(
-                        title: "Food Name",
-                        desc: "Enter the name of the food you want to add to the record.",
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 10),
-                        height: MediaQuery.of(context).size.width * 0.09,
-                        child: TextFormField(
-                          controller: foodNameController,
-                          onChanged: (val) => setState(() => foodName = val),
-                          decoration: InputDecoration(
-                            hintText: "Enter your food name.",
-                            contentPadding: EdgeInsets.all(5),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.4),
-                                width: 0.8,
+                width: double.infinity,
+                margin: EdgeInsets.all(13),
+                child: Column(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        ModalSheetText(
+                          title: "Food Name",
+                          desc: "Enter the name of the food you want to add to the record.",
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 5, bottom: 10),
+                          height: MediaQuery.of(context).size.width * 0.09,
+                          child: TextFormField(
+                            controller: foodNameController,
+                            onChanged: (val) => setState(() => foodName = val),
+                            decoration: InputDecoration(
+                              hintText: "Enter your food name.",
+                              contentPadding: EdgeInsets.all(5),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.black.withOpacity(0.4), width: 0.8,),
                               ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                                width: 0.8,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(
+                                  color: Colors.red, width: 0.8,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      ModalSheetText(
-                        title: "Food Quantity",
-                        desc: "Enter the quantity of the food you want to add to the record.",
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 15),
-                        height: MediaQuery.of(context).size.width * 0.09,
-                        child: TextFormField(
-                          controller: foodQuantityController,
-                          onChanged: (val) => setState(() => foodQuantity = val),
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "Enter your food quantity.",
-                            contentPadding: EdgeInsets.all(5),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.4),
-                                width: 0.8,
+                      ],
+                    ),
+
+                    Column(
+                      children: <Widget>[
+                        ModalSheetText(
+                          title: "Food Quantity",
+                          desc: "Enter the quantity of the food you want to add to the record.",
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 5, bottom: 15),
+                          height: MediaQuery.of(context).size.width * 0.09,
+                          child: TextFormField(
+                            controller: foodQuantityController,
+                            onChanged: (val) => setState(() => foodQuantity = val),
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              hintText: "Enter your food quantity.",
+                              contentPadding: EdgeInsets.all(5),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.black.withOpacity(0.4), width: 0.8,),
                               ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                                width: 0.8,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(
+                                  color: Colors.red, width: 0.8,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      ModalSheetText(
-                        title: "Food Quantity Measurement",
-                        desc: "Enter the quantity measurement of the food.",
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 15),
-                        height: MediaQuery.of(context).size.width * 0.09,
-                        child: TextFormField(
-                          controller: quantityMearsurementController,
-                          onChanged: (val) => setState(() => foodQuantityMeasurement = val),
-                          decoration: InputDecoration(
-                            hintText: "Enter your food quantity measurement. (Optional)",
-                            contentPadding: EdgeInsets.all(2),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.4),
-                                width: 0.8,
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        ModalSheetText(
+                          title: "Food Quantity Measurement",
+                          desc: "Enter the quantity measurement of the food.",
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 5, bottom: 15),
+                          height: MediaQuery.of(context).size.width * 0.09,
+                          child: TextFormField(
+                            controller: quantityMearsurementController,
+                            onChanged: (val) => setState(() => foodQuantityMeasurement = val),
+                            decoration: InputDecoration(
+                              hintText: "Enter your food quantity measurement. (Optional)",
+                              contentPadding: EdgeInsets.all(2),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(
+                                  color: Colors.black.withOpacity(0.4), width: 0.8,),
                               ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                                width: 0.8,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(
+                                  color: Colors.red, width: 0.8,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                  Column(children: <Widget>[
-                    SizedBox(
-                      width: double.infinity,
-                      child: FlatButton(
-                        padding: EdgeInsets.only(
-                          top: 10.0,
-                          bottom: 10.0,
-                        ),
-                        textColor: Colors.black.withOpacity(0.65),
-                        onPressed: () {
-                          foodNameController.clear();
-                          foodQuantityController.clear();
-                          quantityMearsurementController.clear();
-                        },
-                        child: Text(
-                          "Reset",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.width * 0.045,
+                      ],
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                    Column(
+                      children: <Widget>[
+                        SizedBox(
+                          width: double.infinity,
+                          child: FlatButton(
+                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
+                            textColor: Colors.black.withOpacity(0.65),
+                            onPressed: () {
+                              foodNameController.clear(); foodQuantityController.clear(); quantityMearsurementController.clear();
+                            },
+                            child: Text(
+                              "Reset",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.width * 0.045,
+                              ),
+                            ), 
                           ),
                         ),
                         SizedBox(
@@ -577,76 +553,70 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                             ), 
                           ),
                         ),
-                      ),
+                      ]
                     ),
-                  ]),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
       ),
     );
   }
 
-  Widget addEditFoodWidget() {
+  Widget addEditFoodWidget(){
     return Container(
-        margin: EdgeInsets.only(
-          top: 10.0,
-        ),
-        child: ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: foodNameList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Flexible(
-                      flex: 7,
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            width: double.infinity,
-                            child: Text(
-                              foodNameList[index],
-                              textAlign: TextAlign.left,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              softWrap: true,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.05,
-                                fontWeight: FontWeight.bold,
+      margin: EdgeInsets.only(top: 10.0,),
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: foodNameList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Flexible(
+                        flex: 7,
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              width: double.infinity,
+                              child: Text(
+                                foodNameList[index],
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                softWrap: true,
+                                style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.width * 0.05,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          ),
-                          Container(
-                            width: double.infinity,
-                            child: Text(
-                              "x " + foodQuantityList[index] + " " + foodQuantityMeasurementList[index],
-                              textAlign: TextAlign.left,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              softWrap: true,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.04,
-                                color: Colors.black.withOpacity(0.65),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: Container(
-                        child: Center(
-                            child: IconButton(
-                                icon: Icon(
-                                  Icons.edit,
+                            Container(
+                              width: double.infinity,
+                              child: Text(
+                                "x " + foodQuantityList[index] + " " + foodQuantityMeasurementList[index],
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                softWrap: true,
+                                style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.width * 0.04,
                                   color: Colors.black.withOpacity(0.65),
                                 ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: Container(
+                          child: Center(
+                            child: IconButton(
+                                icon: Icon(Icons.edit, color: Colors.black.withOpacity(0.65),), 
                                 onPressed: () {
                                   foodWidgetTitle = "Edit Food";
                                   editFood = true;
@@ -656,48 +626,48 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                                   foodQuantityController.text = foodQuantityList[index].toString();
                                   quantityMearsurementController.text = foodQuantityMeasurementList[index].toString();
                                   showModalBottomSheet(
-                                      context: context,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                                      ),
-                                      isScrollControlled: true,
-                                      builder: (context) => SingleChildScrollView(
-                                            physics: ClampingScrollPhysics(),
-                                            child: foodModalBottomSheetWidget(context),
-                                          ));
-                                })),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: Container(
-                        child: Center(
-                            child: IconButton(
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.red,
+                                  context: context,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                                  ),
+                                  isScrollControlled: true,
+                                  builder: (context) => SingleChildScrollView(
+                                    physics: ClampingScrollPhysics(),
+                                        child: foodModalBottomSheetWidget(context),
+                                  ));
+                                }
+                              )
+                            ),
                           ),
-                          onPressed: () {
-                            setState(() {
-                              foodMap.remove(foodNameList[index]);
-                              foodNameList.removeAt(index);
-                              foodQuantityList.removeAt(index);
-                              foodQuantityMeasurementList.removeAt(index);
-                              print(foodNameList);
-                              print(foodQuantityList);
-                              print(foodMap);
-                            });
-                          },
-                        )),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            }));
+                      Flexible(
+                        flex: 1,
+                        child: Container(
+                          child: Center(
+                            child: IconButton(
+                                icon: Icon(Icons.delete, color: Colors.red,), 
+                                onPressed: (){
+                                  setState(() {
+                                    foodMap.remove(foodNameList[index]);
+                                    foodNameList.removeAt(index);
+                                    foodQuantityList.removeAt(index);
+                                    foodQuantityMeasurementList.removeAt(index);
+                                    print(foodNameList); print(foodQuantityList); print(foodMap);
+                                  });
+                                },
+                              )
+                            ),
+                          ),
+                      ),
+                    ],
+                  ),
+          );
+        }
+      )
+    );
   }
 
-  Widget noFoodWidget() {
+  Widget noFoodWidget(){
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(top: 10),
@@ -714,11 +684,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
             children: <Widget>[
               Container(
                 margin: EdgeInsets.only(top: 10, bottom: 8),
-                child: SvgPicture.asset(
-                  "assets/icons/warning.svg",
-                  height: 25,
-                  width: 25,
-                ),
+                child: SvgPicture.asset("assets/icons/warning.svg", height: 25, width: 25,),
               ),
               Container(
                 margin: EdgeInsets.only(bottom: 10),
@@ -737,7 +703,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
     );
   }
 
-  Widget foodWidgetContent(BuildContext context) {
+  Widget foodWidgetContent(BuildContext context){
     return Column(
       children: <Widget>[
         WidgetTitle(
@@ -758,18 +724,14 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                   spreadRadius: 15,
                   color: Color(0xFFE6E6E6),
                 ),
-              ],
-            ),
+              ],),
             child: Column(
               children: <Widget>[
                 Row(
                   children: <Widget>[
-
                     SvgPicture.asset("assets/icons/healthy-food.svg", height: 23, width: 23,),
                     Container(
-                      padding: EdgeInsets.only(
-                        left: 8.0,
-                      ),
+                      padding: EdgeInsets.only(left: 8.0,),
                       child: Text(
                         "Food",
                         style: TextStyle(
@@ -782,9 +744,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                 ),
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.only(
-                    top: 8.0,
-                  ),
+                  margin: EdgeInsets.only(top: 8.0,),
                   child: Text(
                     "Please enter the food that you consumed.",
                     textAlign: TextAlign.left,
@@ -794,16 +754,13 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                     ),
                   ),
                 ),
-                (foodNameList.length != 0) ? addEditFoodWidget() : noFoodWidget(),
+                (foodNameList.length != 0)? addEditFoodWidget() : noFoodWidget(),
                 Container(
                   margin: EdgeInsets.fromLTRB(15, 10, 15, 5),
                   child: SizedBox(
                     width: double.infinity,
                     child: FlatButton(
-                      padding: EdgeInsets.only(
-                        top: 8.0,
-                        bottom: 8.0,
-                      ),
+                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0,),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
@@ -811,24 +768,24 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                       textColor: Colors.white,
                       onPressed: () {
                         showModalBottomSheet(
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                            ),
-                            isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                                  physics: ClampingScrollPhysics(),
-                                  child: foodModalBottomSheetWidget(context),
-                                ));
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                        ),
+                        isScrollControlled: true,
+                        builder: (context) => SingleChildScrollView(
+                          physics: ClampingScrollPhysics(),
+                              child: foodModalBottomSheetWidget(context),
+                        ));
                       },
                       child: Text(
-                        (foodNameList.length == 0) ? "Add Food" : "Add More Food",
+                        (foodNameList.length == 0)? "Add Food" : "Add More Food",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                         ),
-                      ),
+                      ), 
                     ),
                   ),
                 ),
@@ -840,8 +797,9 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
     );
   }
 
+
   //Blood Glucose Section Widget
-  Widget bloodGlucoseModalBottomSheetWidget(BuildContext context) {
+  Widget bloodGlucoseModalBottomSheetWidget(BuildContext context){
     return Container(
       height: MediaQuery.of(context).size.height * 0.5,
       child: GestureDetector(
@@ -851,23 +809,14 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
             Container(
               padding: EdgeInsets.only(top: 3, bottom: 3),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
+                borderRadius: BorderRadius.only(topLeft:Radius.circular(10.0), topRight:Radius.circular(10.0)),
                 color: appThemeColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.65),
-                    blurRadius: 2.0,
-                    spreadRadius: 0.0,
-                    offset: Offset(2.0, 0),
-                  )
-                ],
-              ),
+                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.65), blurRadius: 2.0, spreadRadius: 0.0, offset: Offset(2.0, 0),)],
+              ),   
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Spacer(
-                    flex: 2,
-                  ),
+                  Spacer(flex: 2,),
                   Flexible(
                     flex: 4,
                     child: Container(
@@ -888,114 +837,103 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                     child: Container(
                       width: double.infinity,
                       child: Align(
-                          alignment: Alignment.centerRight,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.close,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => Navigator.of(context).pop(),
-                          )),
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                          icon: Icon(Icons.close, color: Colors.white,), 
+                          onPressed: () => Navigator.of(context).pop(),
+                        )
+                      ),
                     ),
                   )
                 ],
               ),
             ),
             Container(
-              width: double.infinity,
-              margin: EdgeInsets.all(13),
-              child: Column(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      ModalSheetText(
-                        title: "Blood Glucose Reading",
-                        desc: "Blood glucose reading before meal.",
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 10),
-                        height: MediaQuery.of(context).size.width * 0.09,
-                        child: TextFormField(
-                          controller: bSugarBeforeController,
-                          onChanged: (val) => setState(() => bSugarBefore = val),
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "Blood glucose reading before meal.",
-                            contentPadding: EdgeInsets.all(5),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.4),
-                                width: 0.8,
+                width: double.infinity,
+                margin: EdgeInsets.all(13),
+                child: Column(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        ModalSheetText(
+                          title: "Blood Glucose Reading",
+                          desc: "Blood glucose reading before meal.",
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 5, bottom: 10),
+                          height: MediaQuery.of(context).size.width * 0.09,
+                          child: TextFormField(
+                            controller: bSugarBeforeController,
+                            onChanged: (val) => setState(() => bSugarBefore = val),
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              hintText: "Blood glucose reading before meal.",
+                              contentPadding: EdgeInsets.all(5),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.black.withOpacity(0.4), width: 0.8,),
                               ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                                width: 0.8,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(
+                                  color: Colors.red, width: 0.8,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      ModalSheetText(
-                        title: "Blood Glucose Reading",
-                        desc: "Blood glucose reading 2 hour after meal.",
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 15),
-                        height: MediaQuery.of(context).size.width * 0.09,
-                        child: TextFormField(
-                          controller: bSugarAfterController,
-                          onChanged: (val) => setState(() => bSugarAfter = val),
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "Blood glucose reading 2 hour after meal.",
-                            contentPadding: EdgeInsets.all(5),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.4),
-                                width: 0.8,
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        ModalSheetText(
+                          title: "Blood Glucose Reading",
+                          desc: "Blood glucose reading 2 hour after meal.",
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 5, bottom: 15),
+                          height: MediaQuery.of(context).size.width * 0.09,
+                          child: TextFormField(
+                            controller: bSugarAfterController,
+                            onChanged: (val) => setState(() => bSugarAfter = val),
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              hintText: "Blood glucose reading 2 hour after meal.",
+                              contentPadding: EdgeInsets.all(5),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.black.withOpacity(0.4), width: 0.8,),
                               ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                                width: 0.8,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(
+                                  color: Colors.red, width: 0.8,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.035),
-                  Column(children: <Widget>[
-                    SizedBox(
-                      width: double.infinity,
-                      child: FlatButton(
-                        padding: EdgeInsets.only(
-                          top: 10.0,
-                          bottom: 10.0,
-                        ),
-                        textColor: Colors.black.withOpacity(0.65),
-                        onPressed: () {
-                          bSugarBeforeController.clear();
-                          bSugarAfterController.clear();
-                        },
-                        child: Text(
-                          "Reset",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.width * 0.045,
+                      ],
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.035),
+                    Column(
+                      children: <Widget>[
+                        SizedBox(
+                          width: double.infinity,
+                          child: FlatButton(
+                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
+                            textColor: Colors.black.withOpacity(0.65),
+                            onPressed: () {
+                              bSugarBeforeController.clear(); bSugarAfterController.clear();
+                            },
+                            child: Text(
+                              "Reset",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.width * 0.045,
+                              ),
+                            ), 
                           ),
                         ),
                         SizedBox(
@@ -1027,19 +965,18 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                             ), 
                           ),
                         ),
-                      ),
+                      ]
                     ),
-                  ]),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
       ),
     );
   }
 
-  Widget bloodGlucoseWidgetContent(BuildContext context) {
+  Widget bloodGlucoseWidgetContent(BuildContext context){
     return Column(
       children: <Widget>[
         WidgetTitle(
@@ -1068,9 +1005,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                   children: <Widget>[
                     SvgPicture.asset("assets/icons/blood-donation.svg", height: 23, width: 23,),
                     Container(
-                      padding: EdgeInsets.only(
-                        left: 10.0,
-                      ),
+                      padding: EdgeInsets.only(left: 10.0,),
                       child: Text(
                         "Blood Glucose Reading",
                         style: TextStyle(
@@ -1083,11 +1018,10 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                 ),
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.only(
-                    top: 8.0,
-                  ),
+                  margin: EdgeInsets.only(top: 8.0,),
                   child: Text(
-                    "Your blood sugar reading before meal and 2 hours after meal. You " + "can leave the 2 hours after meal section empty if u wish to update it later.",
+                    "Your blood sugar reading before meal and 2 hours after meal. You " +
+                    "can leave the 2 hours after meal section empty if u wish to update it later.",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -1097,25 +1031,22 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                 ),
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.only(
-                    top: 15.0,
-                    bottom: 5.0,
-                  ),
+                  margin: EdgeInsets.only(top: 15.0, bottom: 5.0,),
                   child: Table(
                     //border: TableBorder.all(color: Colors.black),
                     children: [
-                      TableRow(children: [
-                        TableCell(
-                          child: Container(
-                            padding: EdgeInsets.only(
-                              top: 8,
-                              bottom: 8,
-                            ),
-                            decoration: BoxDecoration(
+                      TableRow(
+                        children: [
+                          TableCell(
+                            child: Container(
+                              padding: EdgeInsets.only(top: 8, bottom: 8,),
+                              decoration: BoxDecoration(
                                 border: Border(
-                              right: BorderSide(
-                                width: 0.5,
-                                color: Colors.black.withOpacity(0.65),
+                                  right: BorderSide(
+                                    width: 0.5, 
+                                    color: Colors.black.withOpacity(0.65),
+                                  ),
+                                )
                               ),
                               child: Column(
                                 children: [
@@ -1138,9 +1069,9 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                                       ),
                                     ),
                                   ),
-                                ),
+                                ] 
                               ),
-                            ]),
+                            ),
                           ),
                           TableCell(
                             child: Container(
@@ -1166,12 +1097,12 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                                       ),
                                     ),
                                   ),
-                                ),
+                                ] 
                               ),
-                            ]),
+                            ),
                           ),
-                        ),
-                      ]),
+                        ]
+                      ), 
                     ],
                   ),
                 ),
@@ -1180,46 +1111,39 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                   child: SizedBox(
                     width: double.infinity,
                     child: FlatButton(
-                      padding: EdgeInsets.only(
-                        top: 8.0,
-                        bottom: 8.0,
-                      ),
+                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0,),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
                       color: appThemeColor,
                       textColor: Colors.white,
                       onPressed: () {
-                        if (bSugarBefore != null) {
-                          bSugarBeforeController.text = bSugarBefore;
-                        }
-                        if (bSugarAfter != null) {
-                          bSugarAfterController.text = bSugarAfter;
-                        }
+                        if(bSugarBefore != null){bSugarBeforeController.text = bSugarBefore;}
+                        if(bSugarAfter != null){bSugarAfterController.text = bSugarAfter;}
                         showModalBottomSheet(
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                            ),
-                            isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                                  physics: ClampingScrollPhysics(),
-                                  child: bloodGlucoseModalBottomSheetWidget(context),
-                                ));
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                        ),
+                        isScrollControlled: true,
+                        builder: (context) => SingleChildScrollView(
+                          physics: ClampingScrollPhysics(),
+                              child: bloodGlucoseModalBottomSheetWidget(context),
+                        ));
                       },
                       child: Text(
-                        (bSugarBefore == null && bSugarAfter == null) ? "Add Blood Sugar Reading" : "Edit Blood Sugar Reading",
+                        (bSugarBefore == null && bSugarAfter == null)? "Add Blood Sugar Reading" : "Edit Blood Sugar Reading",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                         ),
-                      ),
+                      ), 
                     ),
                   ),
                 ),
               ],
-            ),
+            ), 
           ),
         ),
       ],
@@ -1237,7 +1161,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
             color: Colors.white,
              fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
-        ),
+        ),        
         backgroundColor: appThemeColor,
         centerTitle: true,
       ),
@@ -1306,4 +1230,3 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
     );
   }
 }
-
