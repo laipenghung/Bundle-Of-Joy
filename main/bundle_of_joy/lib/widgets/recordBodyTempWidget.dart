@@ -82,7 +82,7 @@ class RecordBodyTempWidget extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                tempBeforeMeds.toString() + " °C",
+                                tempBeforeMeds.toString() + "°C",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: MediaQuery.of(context).size.width * 0.05,
@@ -110,7 +110,7 @@ class RecordBodyTempWidget extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                (tempAferMeds == null)? "-" : tempAferMeds.toString() + " °C",
+                                (tempAferMeds == null)? "-" : tempAferMeds.toString() + "°C",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: MediaQuery.of(context).size.width * 0.05,

@@ -1,10 +1,8 @@
-import 'dart:developer';
-
+import 'package:bundle_of_joy/foodIntake/foodIntakeTrackAdd.dart';
 import 'package:bundle_of_joy/foodIntake/foodIntakeTrackFunction.dart';
 import 'package:bundle_of_joy/main.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
 import 'package:bundle_of_joy/widgets/recordListWidget.dart';
-
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -129,36 +127,20 @@ class _FoodIntakeTrackUpdateState extends State<FoodIntakeTrackUpdate> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
-      body: CustomScrollView(
+      appBar: AppBar(
+        title: Text(
+          "Update Food Record",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: MediaQuery.of(context).size.width * 0.045,
+          ),
+        ),        
+        backgroundColor: appThemeColor,
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        slivers: <Widget>[
-          SliverAppBar(
-            floating: true,
-            pinned: true,
-            stretch: true,
-            backgroundColor: appThemeColor,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              collapseMode: CollapseMode.pin,
-              stretchModes: [
-                StretchMode.zoomBackground,
-              ],
-              title: Container(
-                child: Text(
-                  "Update Pending Food Record",
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SliverFillRemaining(
-            fillOverscroll: true,
-            hasScrollBody: false,
-            child: bodyWidget,
-          ),
-        ],
+        child: bodyWidget,
       ),
     );
   }
@@ -182,8 +164,8 @@ class RecordBloodSugarUpdate extends StatefulWidget {
 
 class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
   FoodIntakeTrackFunction foodIntakeTrackFunction = FoodIntakeTrackFunction();
-  TextEditingController textFieldController = TextEditingController();
-  String bSugarUpdate;
+  TextEditingController bSugarUpdateController = TextEditingController();
+  String bSugarUpdate, dialogBoxContent;
   MyApp main = MyApp();
 
   void _showNotification() async {
@@ -198,7 +180,7 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
     await main.createState().flutterLocalNotificationsPlugin.show(0, 'Food Intake Tracking', 'Food record updated successfully.', notificationDetails);
   }
 
-  _showDialogBox(BuildContext context){
+  _showDialogBox(BuildContext context, dialogBoxContent){
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -218,6 +200,154 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
           ],
         );
       });
+  }
+
+  Widget bloodGlucoseModalBottomSheetWidget(BuildContext context){
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(top: 3, bottom: 3),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topLeft:Radius.circular(10.0), topRight:Radius.circular(10.0)),
+                color: appThemeColor,
+                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.65), blurRadius: 2.0, spreadRadius: 0.0, offset: Offset(2.0, 0),)],
+              ),   
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Spacer(flex: 2,),
+                  Flexible(
+                    flex: 4,
+                    child: Container(
+                      width: double.infinity,
+                      child: Text(
+                        "Blood Glucose",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.045,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 2,
+                    child: Container(
+                      width: double.infinity,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                          icon: Icon(Icons.close, color: Colors.white,), 
+                          onPressed: () => Navigator.of(context).pop(),
+                        )
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+                width: double.infinity,
+                margin: EdgeInsets.all(13),
+                child: Column(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        ModalSheetText(
+                          title: "Blood Glucose Reading",
+                          desc: "Blood glucose reading 2 hour after meal.",
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 5, bottom: 15),
+                          height: MediaQuery.of(context).size.width * 0.09,
+                          child: TextFormField(
+                            controller: bSugarUpdateController,
+                            onChanged: (val) => setState(() => bSugarUpdate = val),
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              hintText: "Blood glucose reading 2 hour after meal.",
+                              contentPadding: EdgeInsets.all(5),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.black.withOpacity(0.4), width: 0.8,),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(
+                                  color: Colors.red, width: 0.8,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.035),
+                    Column(
+                      children: <Widget>[
+                        SizedBox(
+                          width: double.infinity,
+                          child: FlatButton(
+                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
+                            textColor: Colors.black.withOpacity(0.65),
+                            onPressed: () {
+                              bSugarUpdateController.clear();
+                            },
+                            child: Text(
+                              "Reset",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.width * 0.045,
+                              ),
+                            ), 
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: FlatButton(
+                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            ),
+                            color: appThemeColor,
+                            textColor: Colors.white,
+                            onPressed: () {
+                              if(bSugarUpdateController.text.isNotEmpty){
+                                setState(() {
+                                  //bSugarUpdateController.clear();
+                                  Navigator.of(context).pop();
+                                });
+                              }else{
+                                dialogBoxContent = "Please make sure you entered your blood glucose reading into the " + 
+                                  "before meal section. Only 2 hour after meal section can be left empty.";
+                                _showDialogBox(context, dialogBoxContent);
+                              }
+                            },
+                            child: Text(
+                              "Add",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.width * 0.045,
+                              ),
+                            ), 
+                          ),
+                        ),
+                      ]
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+      ),
+    );
   }
 
   @override
@@ -272,7 +402,7 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
                 ),
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.only(top: 15.0, bottom: 15.0,),
+                  margin: EdgeInsets.only(top: 15.0, bottom: 5.0,),
                   child: Table(
                     //border: TableBorder.all(color: Colors.black),
                     children: [
@@ -316,30 +446,19 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
                           ),
                           TableCell(
                             child: Container(
-                              padding: EdgeInsets.only(top: 5, bottom: 8,),
+                              padding: EdgeInsets.only(top: 8, bottom: 8,),
                               child: Column(
                                 children: [
-                                  IntrinsicWidth(
-                                    //margin: EdgeInsets.all(20),
-                                    child: TextFormField(
-                                      controller: textFieldController,
-                                      textAlign: TextAlign.center,
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        isDense: true,
-                                        hintText: "Blood Sugar Reading",
-                                        hintStyle: TextStyle(
-                                          fontSize: MediaQuery.of(context).size.width * 0.035,
-                                        ),
-                                        contentPadding: EdgeInsets.fromLTRB(8, 7, 8, 1),
-                                      ),
-                                      onChanged: (value) {
-                                        bSugarUpdate = value;
-                                      },
+                                  Text(
+                                    (bSugarUpdate == null || bSugarUpdate == "")? "-" : bSugarUpdate + " mmol/L",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: MediaQuery.of(context).size.width * 0.05,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),  
                                   Container(
-                                    padding: EdgeInsets.only(top: 4),
+                                    padding: EdgeInsets.only(top: 3),
                                     child: Text(
                                       "2 hours after meal",
                                       textAlign: TextAlign.center,
@@ -358,13 +477,48 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
                     ],
                   ),
                 ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(15, 5, 15, 15),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: FlatButton(
+                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0,),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      color: appThemeColor,
+                      textColor: Colors.white,
+                      onPressed: () {
+                        if(bSugarUpdate != null){bSugarUpdateController.text = bSugarUpdate;}
+                        showModalBottomSheet(
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                        ),
+                        isScrollControlled: true,
+                        builder: (context) => SingleChildScrollView(
+                          physics: ClampingScrollPhysics(),
+                              child: bloodGlucoseModalBottomSheetWidget(context),
+                        ));
+                      },
+                      child: Text(
+                        "Update Blood Sugar Reading",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                        ),
+                      ), 
+                    ),
+                  ),
+                ),
                 BloodSugarUpdateText(),
               ],
             ), 
           ),
         ),
         Container(
-          margin: EdgeInsets.only(left: 13, right: 13, bottom: 25),
+          margin: EdgeInsets.only(left: 13, right: 13, bottom: 20),
           child: SizedBox(
             width: double.infinity,
             child: FlatButton(
@@ -375,8 +529,10 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
               color: appThemeColor,
               textColor: Colors.white,
               onPressed: () {
-                if(textFieldController.text.isEmpty){
-                  _showDialogBox(context);
+                if(bSugarUpdateController.text.isEmpty){
+                  dialogBoxContent = "Looks like u didn't enter anyting into 2 hours after meal section." +
+                    "To update your current food record, please make sure you enter Blood Sugar reading 2 hours after meal.";
+                  _showDialogBox(context, dialogBoxContent);
                 }else{
                   foodIntakeTrackFunction.updateFoodRecordPending(
                     widget.selectedDate, widget.selectedTime, widget.bSugarBefore.toString(), bSugarUpdate, widget.foodMap, context, widget.recordID,

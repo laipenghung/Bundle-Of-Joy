@@ -23,126 +23,110 @@ class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
-      body: CustomScrollView(
+      appBar: AppBar(
+        title: Text(
+          "View Food Record",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: MediaQuery.of(context).size.width * 0.045,
+          ),
+        ),        
+        backgroundColor: appThemeColor,
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        slivers: <Widget>[
-          SliverAppBar(
-            floating: true,
-            pinned: true,
-            stretch: true,
-            backgroundColor: appThemeColor,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              collapseMode: CollapseMode.pin,
-              stretchModes: [
-                StretchMode.zoomBackground,
-              ],
-              title: Container(
-                child: Text(
-                  "Food Intake Record",
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SliverFillRemaining(
-            fillOverscroll: true,
-            hasScrollBody: false,
-            child: FutureBuilder<DocumentSnapshot>(
-              future: collectionReference.doc(widget.foodIntakeRecordID).get(),
-              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if (snapshot.hasData) {
-                  DateTime parsedDate = DateTime.parse(snapshot.data.data()["selectedDate"]);
-                  String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
-                  DateTime parsedTime = DateTime.parse(snapshot.data.data()["selectedDate"] + " " + snapshot.data.data()["selectedTime"]);
-                  String formattedTime =  DateFormat('h:mm a').format(parsedTime);
-                  Map food = snapshot.data.data()["foodMap"];
-                  double bSugarBefore = double.parse(snapshot.data.data()["bsBefore"]);
-                  double bSugarAfter = double.parse(snapshot.data.data()["bsAfter"]);
+        child: FutureBuilder<DocumentSnapshot>(
+          future: collectionReference.doc(widget.foodIntakeRecordID).get(),
+          builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            if (snapshot.hasData) {
+              DateTime parsedDate = DateTime.parse(snapshot.data.data()["selectedDate"]);
+              String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
+              DateTime parsedTime = DateTime.parse(snapshot.data.data()["selectedDate"] + " " + snapshot.data.data()["selectedTime"]);
+              String formattedTime =  DateFormat('h:mm a').format(parsedTime);
+              Map food = snapshot.data.data()["foodMap"];
+              double bSugarBefore = double.parse(snapshot.data.data()["bsBefore"]);
+              double bSugarAfter = double.parse(snapshot.data.data()["bsAfter"]);
 
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return Column(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          margin: EdgeInsets.only(top: 18.0, left: 13.0,),
-                          child: Text(
-                            "Date and Time",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.width * 0.05,
-                              color: Colors.black,
-                            ),
-                          ),
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: 18.0, left: 13.0,),
+                      child: Text(
+                        "Date and Time",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
+                          color: Colors.black,
                         ),
-                        //Widget for display Date and Time
-                        RecordDateTimeWidget(
-                          svgSrcDate: "assets/icons/testAM.svg",
-                          svgSrcTime: "assets/icons/clock.svg",
-                          date: formattedDate,
-                          dateDesc: motherRecordDateDesc,
-                          time: formattedTime,
-                          timeDesc: motherRecordTimeDesc,
+                      ),
+                    ),
+                    //Widget for display Date and Time
+                    RecordDateTimeWidget(
+                      svgSrcDate: "assets/icons/testAM.svg",
+                      svgSrcTime: "assets/icons/clock.svg",
+                      date: formattedDate,
+                      dateDesc: motherRecordDateDesc,
+                      time: formattedTime,
+                      timeDesc: motherRecordTimeDesc,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                      child: Text(
+                        "Conusmed Food",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
+                          color: Colors.black,
                         ),
-                        Container(
-                          width: double.infinity,
-                          margin: EdgeInsets.only(top: 13.0, left: 13.0,),
-                          child: Text(
-                            "Conusmed Food",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.width * 0.05,
-                              color: Colors.black,
-                            ),
-                          ),
+                      ),
+                    ),
+                    //Widget for display Consumed Food
+                    RecordListWidget(
+                      svgSrc: "assets/icons/healthy-food.svg",
+                      title: motherRecordListTitle,
+                      titleDesc: motherRecordListTitleDesc,
+                      foodName: food.keys.toList(),
+                      foodQty: food.values.toList(),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                      child: Text(
+                        "Blood Sugar",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
+                          color: Colors.black,
                         ),
-                        //Widget for display Consumed Food
-                        RecordListWidget(
-                          svgSrc: "assets/icons/healthy-food.svg",
-                          title: motherRecordListTitle,
-                          titleDesc: motherRecordListTitleDesc,
-                          foodName: food.keys.toList(),
-                          foodQty: food.values.toList(),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          margin: EdgeInsets.only(top: 13.0, left: 13.0,),
-                          child: Text(
-                            "Blood Sugar",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.width * 0.05,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        //Blood Sugar section
-                        RecordBloodSugarDoneWidget(
-                          svgSrc: "assets/icons/blood-donation.svg",
-                          bSugarBefore: bSugarBefore,
-                          bSugarAfter: bSugarAfter,
-                          showAnalyzer: true,
-                        )
-                      ],
-                    );
-                  }
-                } else if (snapshot.hasError) {
-                  print("error");
-                }
-                return CircularProgressIndicator();
-              },
-            ),
-          ),
-        ],
+                      ),
+                    ),
+                    //Blood Sugar section
+                    RecordBloodSugarDoneWidget(
+                      svgSrc: "assets/icons/blood-donation.svg",
+                      bSugarBefore: bSugarBefore,
+                      bSugarAfter: bSugarAfter,
+                      showAnalyzer: false,
+                    )
+                  ],
+                );
+              }
+            } else if (snapshot.hasError) {
+              print("error");
+            }
+            return CircularProgressIndicator();
+          },
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/careForBaby/babyTemp/babyMedTrackAdd.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
@@ -136,7 +137,8 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                     press: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BabyTempAdd1(selectedBabyID: widget.selectedBabyID)),
+                        //MaterialPageRoute(builder: (context) => BabyTempAdd1(selectedBabyID: widget.selectedBabyID)),
+                        MaterialPageRoute(builder: (context) => BabyMedTrackAdd(selectedBabyID: widget.selectedBabyID)),
                       );
                     }
                   ),

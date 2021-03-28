@@ -23,125 +23,109 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
                                               
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
-      body: CustomScrollView(
+      appBar: AppBar(
+        title: Text(
+          "Summary",
+          style: TextStyle(
+            color: Colors.white,
+             fontSize: MediaQuery.of(context).size.width * 0.045,
+          ),
+        ),        
+        backgroundColor: appThemeColor,
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        slivers: <Widget>[
-          SliverAppBar(
-            floating: true,
-            pinned: true,
-            stretch: true,
-            backgroundColor: appThemeColor,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              collapseMode: CollapseMode.pin,
-              stretchModes: [
-                StretchMode.zoomBackground,
-              ],
-              title: Container(
-                child: Text(
-                  "Medicine Intake Record",
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SliverFillRemaining(
-            fillOverscroll: true,
-            hasScrollBody: false,
-            child: FutureBuilder<DocumentSnapshot>(
-              future: collectionReference.doc(widget.babyTempRecordID).get(),
-              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if (snapshot.hasData) {
-                  DateTime parsedDate = DateTime.parse(snapshot.data.data()["selectedDate"]);
-                  String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
-                  DateTime parsedTime = DateTime.parse(snapshot.data.data()["selectedDate"] + " " + snapshot.data.data()["selectedTime"]);
-                  String formattedTime =  DateFormat('h:mm a').format(parsedTime);
-                  Map medicine = snapshot.data.data()["medsMap"];
-                  double tempBeforeMeds = double.parse(snapshot.data.data()["bTempBefore"]);
-                  double tempAfterMeds = double.parse(snapshot.data.data()["bTempAfter"]);
+        child: FutureBuilder<DocumentSnapshot>(
+          future: collectionReference.doc(widget.babyTempRecordID).get(),
+          builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            if (snapshot.hasData) {
+              DateTime parsedDate = DateTime.parse(snapshot.data.data()["selectedDate"]);
+              String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
+              DateTime parsedTime = DateTime.parse(snapshot.data.data()["selectedDate"] + " " + snapshot.data.data()["selectedTime"]);
+              String formattedTime =  DateFormat('h:mm a').format(parsedTime);
+              Map medicine = snapshot.data.data()["medsMap"];
+              double tempBeforeMeds = double.parse(snapshot.data.data()["bTempBefore"]);
+              double tempAfterMeds = double.parse(snapshot.data.data()["bTempAfter"]);
 
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return Column(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          margin: EdgeInsets.only(top: 18.0, left: 13.0,),
-                          child: Text(
-                            "Date and Time",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.width * 0.05,
-                              color: Colors.black,
-                            ),
-                          ),
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: 18.0, left: 13.0,),
+                      child: Text(
+                        "Date and Time",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
+                          color: Colors.black,
                         ),
-                        //Widget for display Date and Time
-                        RecordDateTimeWidget(
-                          svgSrcDate: "assets/icons/testAM.svg",
-                          svgSrcTime: "assets/icons/clock.svg",
-                          date: formattedDate,
-                          dateDesc: babyMedsDateDesc,
-                          time: formattedTime,
-                          timeDesc: babyMedsTimeDesc,
+                      ),
+                    ),
+                    //Widget for display Date and Time
+                    RecordDateTimeWidget(
+                      svgSrcDate: "assets/icons/testAM.svg",
+                      svgSrcTime: "assets/icons/clock.svg",
+                      date: formattedDate,
+                      dateDesc: babyMedsDateDesc,
+                      time: formattedTime,
+                      timeDesc: babyMedsTimeDesc,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                      child: Text(
+                        "Conusmed Medicine",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
+                          color: Colors.black,
                         ),
-                        Container(
-                          width: double.infinity,
-                          margin: EdgeInsets.only(top: 13.0, left: 13.0,),
-                          child: Text(
-                            "Conusmed Medicine",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.width * 0.05,
-                              color: Colors.black,
-                            ),
-                          ),
+                      ),
+                    ),
+                    //Widget for display Consumed Food
+                    RecordListWidget(
+                      svgSrc: "assets/icons/drugs.svg",
+                      title: babyMedsRecordListTitle,
+                      titleDesc: babyMedsRecordListTitleDesc,
+                      foodName: medicine.keys.toList(),
+                      foodQty: medicine.values.toList(),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                      child: Text(
+                        "Body Temperature",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
+                          color: Colors.black,
                         ),
-                        //Widget for display Consumed Food
-                        RecordListWidget(
-                          svgSrc: "assets/icons/drugs.svg",
-                          title: babyMedsRecordListTitle,
-                          titleDesc: babyMedsRecordListTitleDesc,
-                          foodName: medicine.keys.toList(),
-                          foodQty: medicine.values.toList(),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          margin: EdgeInsets.only(top: 13.0, left: 13.0,),
-                          child: Text(
-                            "Body Temperature",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.width * 0.05,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        //Body Temperature section
-                        RecordBodyTempWidget(
-                          svgSrc: "assets/icons/thermometer.svg",
-                          tempBeforeMeds: tempBeforeMeds,
-                          tempAferMeds: tempAfterMeds,
-                        ),
-                      ],
-                    );
-                  }
-                } else if (snapshot.hasError) {
-                  print("error");
-                }
-                return CircularProgressIndicator();
-              },
-            ),
-          ),
-        ],
+                      ),
+                    ),
+                    //Body Temperature section
+                    RecordBodyTempWidget(
+                      svgSrc: "assets/icons/thermometer.svg",
+                      tempBeforeMeds: tempBeforeMeds,
+                      tempAferMeds: tempAfterMeds,
+                    ),
+                  ],
+                );
+              }
+            } else if (snapshot.hasError) {
+              print("error");
+            }
+            return CircularProgressIndicator();
+          },
+        ),
       ),
     );
   }
