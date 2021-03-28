@@ -54,15 +54,15 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
         String age_string = "";
         age = Age.dateDifference(fromDate: birthday, toDate: today, includeToDate: false);
 
-        if(age.years != 0){
+        if (age.years != 0) {
           age_string += age.years.toString() + " years ";
         }
 
-        if(age.months != 0){
+        if (age.months != 0) {
           age_string += age.months.toString() + " months ";
         }
 
-        if(age.days != 0){
+        if (age.days != 0) {
           age_string += age.days.toString() + " days ";
         }
 
@@ -138,12 +138,12 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
     }
   }
 
-  Widget hasData(AsyncSnapshot<QuerySnapshot> collection){
+  Widget hasData(AsyncSnapshot<QuerySnapshot> collection) {
     return Stack(
       children: <Widget>[
         Container(
           // Here the height of the container is 45% of our total height
-          height: MediaQuery.of(context).size.height * .40,
+          height: MediaQuery.of(context).size.height * .4,
           decoration: BoxDecoration(
             color: Color(0xFFF5CEB8),
             image: DecorationImage(
@@ -172,14 +172,12 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                Text(
-                    "Mother for Baby",
+                Text("Mother for Baby",
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.08,
                       fontWeight: FontWeight.bold,
                       color: Colors.black.withOpacity(0.65),
-                    )
-                ),
+                    )),
 
                 //SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 Row(
@@ -187,10 +185,10 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                   children: [
                     Container(
                       margin: EdgeInsets.symmetric(vertical: 20),
-                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                      padding: EdgeInsets.symmetric(horizontal: 38, vertical: 0),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: _listView(collection),
                     ),
@@ -208,17 +206,17 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                         title: "Appointment Management",
                         svgSrc: "assets/icons/testAM.svg",
                         press: () {
-                          showModalBottomSheet( //New UI
+                          showModalBottomSheet(
+                              //New UI
                               context: context,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
                               ),
                               isScrollControlled: true,
                               builder: (context) => SingleChildScrollView(
-                                physics: ClampingScrollPhysics(),
-                                child: AppointmentBabyVerification(),
-                              )
-                          );
+                                    physics: ClampingScrollPhysics(),
+                                    child: AppointmentBabyVerification(),
+                                  ));
                         },
                       ),
                       CardWidget(
@@ -227,7 +225,10 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                         press: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => VaccinationSchedule(selectedBabyID: selectedBabyID,)),
+                            MaterialPageRoute(
+                                builder: (context) => VaccinationSchedule(
+                                      selectedBabyID: selectedBabyID,
+                                    )),
                           );
                         },
                       ),
@@ -237,7 +238,10 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                         press: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => VaccinationGrowthMain(selectedBabyID: selectedBabyID,)),
+                            MaterialPageRoute(
+                                builder: (context) => VaccinationGrowthMain(
+                                      selectedBabyID: selectedBabyID,
+                                    )),
                           );
                         },
                       ),
@@ -247,7 +251,10 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                         press: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID,)),
+                            MaterialPageRoute(
+                                builder: (context) => CareForBabyMain(
+                                      selectedBabyID: selectedBabyID,
+                                    )),
                           );
                         },
                       ),
@@ -301,15 +308,14 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       body: StreamBuilder(
-        stream: baby.snapshots(),
-        builder: (context, collection) {
-          if (collection.hasData) {
-            return hasData(collection);
-          } else {
-            return loading();
-          }
-        }
-      ),
+          stream: baby.snapshots(),
+          builder: (context, collection) {
+            if (collection.hasData) {
+              return hasData(collection);
+            } else {
+              return loading();
+            }
+          }),
     );
   }
 }
