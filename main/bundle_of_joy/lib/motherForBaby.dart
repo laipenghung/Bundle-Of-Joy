@@ -46,7 +46,7 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
     List<Baby> _listBaby = List<Baby>();
     Baby baby = new Baby.empty();
 
-    if (collection.hasData) {
+    if (collection.data.docs.isNotEmpty) {
       collection.data.docs.forEach((doc) {
         DateTime birthday = doc.data()["b_dob"].toDate();
         DateTime today = DateTime.now();
@@ -138,135 +138,183 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
     }
   }
 
-  Widget hasData(AsyncSnapshot<QuerySnapshot> collection) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          // Here the height of the container is 45% of our total height
-          height: MediaQuery.of(context).size.height * .4,
-          decoration: BoxDecoration(
-            color: Color(0xFFF5CEB8),
-            image: DecorationImage(
-              alignment: Alignment.centerLeft,
-              image: AssetImage("assets/images/undraw_pilates_gpdb.png"),
+  Widget hasData(AsyncSnapshot<QuerySnapshot> collection){
+    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
+    if (collection.data.docs.isNotEmpty) {
+      return Stack(
+        children: <Widget>[
+          Container(
+            // Here the height of the container is 45% of our total height
+            height: MediaQuery
+                .of(context)
+                .size
+                .height * .40,
+            decoration: BoxDecoration(
+              color: Color(0xFFF5CEB8),
+              image: DecorationImage(
+                alignment: Alignment.centerLeft,
+                image: AssetImage("assets/images/undraw_pilates_gpdb.png"),
+              ),
             ),
           ),
-        ),
-        SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 52,
-                    width: 52,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFF2BEA1),
-                      shape: BoxShape.circle,
-                    ),
-                    //child: SvgPicture.asset("assets/icons/menu.svg"),
-                  ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                Text("Mother for Baby",
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.08,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black.withOpacity(0.65),
-                    )),
-
-                //SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 20),
-                      padding: EdgeInsets.symmetric(horizontal: 38, vertical: 0),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 52,
+                      width: 52,
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0xFFF2BEA1),
+                        shape: BoxShape.circle,
                       ),
-                      child: _listView(collection),
+                      //child: SvgPicture.asset("assets/icons/menu.svg"),
                     ),
-                  ],
-                ),
-
-                Expanded(
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    childAspectRatio: .85,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
-                    children: <Widget>[
-                      CardWidget(
-                        title: "Appointment Management",
-                        svgSrc: "assets/icons/testAM.svg",
-                        press: () {
-                          showModalBottomSheet(
-                              //New UI
-                              context: context,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                              ),
-                              isScrollControlled: true,
-                              builder: (context) => SingleChildScrollView(
-                                    physics: ClampingScrollPhysics(),
-                                    child: AppointmentBabyVerification(),
-                                  ));
-                        },
-                      ),
-                      CardWidget(
-                        title: "Vaccination Schedule",
-                        svgSrc: "assets/icons/vaccination.svg",
-                        press: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => VaccinationSchedule(
-                                      selectedBabyID: selectedBabyID,
-                                    )),
-                          );
-                        },
-                      ),
-                      CardWidget(
-                        title: "Vaccination & Growth Tracking",
-                        svgSrc: "assets/icons/medical-report.svg",
-                        press: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => VaccinationGrowthMain(
-                                      selectedBabyID: selectedBabyID,
-                                    )),
-                          );
-                        },
-                      ),
-                      CardWidget(
-                        title: "Care For \nBaby",
-                        svgSrc: "assets/icons/breastfeeding.svg",
-                        press: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CareForBabyMain(
-                                      selectedBabyID: selectedBabyID,
-                                    )),
-                          );
-                        },
+                  ),
+                  SizedBox(height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.05),
+                  Text(
+                      "Mother for Baby",
+                      style: TextStyle(
+                        fontSize: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.08,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black.withOpacity(0.65),
+                      )
+                  ),
+                  //SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 20),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: _listView(collection),
                       ),
                     ],
                   ),
-                ),
-              ],
+
+                  Expanded(
+                    child: GridView.count(
+                      crossAxisCount: 2,
+                      childAspectRatio: .85,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                      children: <Widget>[
+                        CardWidget(
+                          title: "Appointment Management",
+                          svgSrc: "assets/icons/testAM.svg",
+                          press: () {
+                            showModalBottomSheet( //New UI
+                                context: context,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.0),
+                                      topRight: Radius.circular(20.0)),
+                                ),
+                                isScrollControlled: true,
+                                builder: (context) =>
+                                    SingleChildScrollView(
+                                      physics: ClampingScrollPhysics(),
+                                      child: AppointmentBabyVerification(),
+                                    )
+                            );
+                          },
+                        ),
+                        CardWidget(
+                          title: "Vaccination Schedule",
+                          svgSrc: "assets/icons/vaccination.svg",
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) =>
+                                  VaccinationSchedule(
+                                    selectedBabyID: selectedBabyID,)),
+                            );
+                          },
+                        ),
+                        CardWidget(
+                          title: "Vaccination & Growth Tracking",
+                          svgSrc: "assets/icons/medical-report.svg",
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) =>
+                                  VaccinationGrowthMain(
+                                    selectedBabyID: selectedBabyID,)),
+                            );
+                          },
+                        ),
+                        CardWidget(
+                          title: "Care For \nBaby",
+                          svgSrc: "assets/icons/breastfeeding.svg",
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) =>
+                                  CareForBabyMain(
+                                    selectedBabyID: selectedBabyID,)),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
+          )
+        ],
+      );
+    } else {
+      return Center(
+        child: Container(
+          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
+          child: Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.3),
+              Container(
+                width: 110,
+                height: 110,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/icons/baby_color.png"),
+                    )),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+              Padding(
+                padding: const EdgeInsets.only(left: 50, right: 50),
+                child: Text(
+                  "Seems like you don't have any baby save in your profile.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "Comfortaa",
+                    fontWeight: FontWeight.bold,
+                    fontSize: fontSizeText,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ],
           ),
-        )
-      ],
-    );
+        ),
+      );
+    }
   }
 
   Widget loading() {
@@ -307,8 +355,8 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
 
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
-      body: StreamBuilder(
-          stream: baby.snapshots(),
+      body: FutureBuilder(
+          future: baby.get(),
           builder: (context, collection) {
             if (collection.hasData) {
               return hasData(collection);
