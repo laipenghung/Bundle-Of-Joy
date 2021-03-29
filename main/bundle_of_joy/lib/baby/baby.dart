@@ -70,7 +70,7 @@ class Baby {
     });
   }
 
-  void updateAge(String age, String id) async{
+  void updateAge(String age, String id) async {
     DocumentReference baby = _db.collection("mother").doc(user.uid).collection("baby").doc(id);
 
     baby.update({
