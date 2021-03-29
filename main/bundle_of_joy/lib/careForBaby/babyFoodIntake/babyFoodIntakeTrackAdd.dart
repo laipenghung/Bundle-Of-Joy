@@ -1,28 +1,29 @@
 import 'dart:developer';
 
-import 'package:bundle_of_joy/careForBaby/babyTemp/babyMedTrackAddSummary.dart';
+import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeAddSummary.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
-class BabyMedTrackAdd extends StatefulWidget {
-  final String selectedBabyID;
-  BabyMedTrackAdd({Key key, this.selectedBabyID,}) : super(key: key);
+enum UploadMethod {uploadPending, uploadComplete}
 
+class BabyFoodIntakeTrackAdd extends StatefulWidget {
+  final String selectedBabyID;
+  BabyFoodIntakeTrackAdd({Key key, this.selectedBabyID,}) : super(key: key);
+  
   @override
-  _BabyMedTrackAddState createState() => _BabyMedTrackAddState();
+  _BabyFoodIntakeTrackAddState createState() => _BabyFoodIntakeTrackAddState();
 }
 
-class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
-  Map medMap = Map();
-  List medNameList = [], medQuantityList = [], medQuantityMeasurementList = [];
-  String medName, medQuantity, medQuantityMeasurement, bTempBefore, bTempAfter, dialogBoxContent;
-  TextEditingController medNameController = TextEditingController();
-  TextEditingController medQuantityController = TextEditingController();
+class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
+  Map foodMap = Map();
+  List foodNameList = [], foodQuantityList = [], foodQuantityMeasurementList = [];
+  String foodName, foodQuantity, foodQuantityMeasurement, dialogBoxContent;
+  TextEditingController foodNameController = TextEditingController();
+  TextEditingController foodQuantityController = TextEditingController();
   TextEditingController quantityMearsurementController = TextEditingController();
-  TextEditingController bTempBeforeController = TextEditingController();
-  TextEditingController bTempAfterController = TextEditingController();
+  
 
   //Used for date section only
   DateTime pickedDate;
@@ -31,9 +32,19 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
   TimeOfDay time;
   String hour, min, timeToPass, formattedTime;
   //Used for food section only
-  String foodMapKey, foodWidgetTitle = "Consumed Medicine";
-  bool editMed = false;
+  String foodMapKey, foodWidgetTitle = "Consumed Food";
+  bool editFood = false;
   int listIndex;
+  //Used for after meal behavior section Only
+  bool symptomsAndAllergies = false;
+  bool completeFoodRecord = false;
+  TextEditingController symptomsAndAllergiesDescController = TextEditingController();
+  String symptomsAndAllergiesDesc;
+  String warningComplete = "Your current selection is to upload the food record as complete record.";
+  String warningPending = "Your current selection is to upload the food record as pending record. You are required to update the food record after 2 hours.";
+  UploadMethod uploadMethod = UploadMethod.uploadPending;
+  String uploadPendingText = "Upload as pending record.";
+  String uploadCompleteText = "Upload as complete record.";
 
   void initState(){
     super.initState();
@@ -334,7 +345,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
 
 
   //Food Section Widget
-  Widget medicineModalBottomSheetWidget(BuildContext context){
+  Widget foodModalBottomSheetWidget(BuildContext context){
     return Container(
       height: MediaQuery.of(context).size.height * 0.6,
       child: GestureDetector(
@@ -391,15 +402,15 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                     Column(
                       children: <Widget>[
                         ModalSheetText(
-                          title: "Medicine Name",
-                          desc: "Enter the name of the medicine.",
+                          title: "Food Name",
+                          desc: "Enter the name of the food you want to add to the record.",
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 5, bottom: 10),
                           height: MediaQuery.of(context).size.width * 0.09,
                           child: TextFormField(
-                            controller: medNameController,
-                            onChanged: (val) => setState(() => medName = val),
+                            controller: foodNameController,
+                            onChanged: (val) => setState(() => foodName = val),
                             decoration: InputDecoration(
                               hintText: "Enter your food name.",
                               contentPadding: EdgeInsets.all(5),
@@ -422,18 +433,18 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                     Column(
                       children: <Widget>[
                         ModalSheetText(
-                          title: "Medicine Quantity",
-                          desc: "Enter the quantity of the medicine.",
+                          title: "Food Quantity",
+                          desc: "Enter the quantity of the food you want to add to the record.",
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 5, bottom: 15),
                           height: MediaQuery.of(context).size.width * 0.09,
                           child: TextFormField(
-                            controller: medQuantityController,
-                            onChanged: (val) => setState(() => medQuantity = val),
+                            controller: foodQuantityController,
+                            onChanged: (val) => setState(() => foodQuantity = val),
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                              hintText: "Enter your medicine quantity.",
+                              hintText: "Enter your food quantity.",
                               contentPadding: EdgeInsets.all(5),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -453,15 +464,15 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                     Column(
                       children: <Widget>[
                         ModalSheetText(
-                          title: "Medicine Quantity Measurement",
-                          desc: "Enter the quantity measurement of the medicine.",
+                          title: "Food Quantity Measurement",
+                          desc: "Enter the quantity measurement of the food.",
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 5, bottom: 15),
                           height: MediaQuery.of(context).size.width * 0.09,
                           child: TextFormField(
                             controller: quantityMearsurementController,
-                            onChanged: (val) => setState(() => medQuantityMeasurement = val),
+                            onChanged: (val) => setState(() => foodQuantityMeasurement = val),
                             decoration: InputDecoration(
                               hintText: "Enter your food quantity measurement. (Optional)",
                               contentPadding: EdgeInsets.all(2),
@@ -481,7 +492,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         ),
                       ],
                     ),
-                    //SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                     Column(
                       children: <Widget>[
                         SizedBox(
@@ -490,7 +501,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                             padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
                             textColor: Colors.black.withOpacity(0.65),
                             onPressed: () {
-                              medNameController.clear(); medQuantityController.clear(); quantityMearsurementController.clear();
+                              foodNameController.clear(); foodQuantityController.clear(); quantityMearsurementController.clear();
                             },
                             child: Text(
                               "Reset",
@@ -512,17 +523,17 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                             color: appThemeColor,
                             textColor: Colors.white,
                             onPressed: () {
-                              if(editMed == false){
-                                if(medNameController.text.isNotEmpty && medQuantityController.text.isNotEmpty 
+                              if(editFood == false){
+                                if(foodNameController.text.isNotEmpty && foodQuantityController.text.isNotEmpty 
                                   && quantityMearsurementController.text.isNotEmpty){
                                   setState(() {
-                                    medMap[medName] = medQuantity + " " + medQuantityMeasurement; 
-                                    medNameList.add(medName); 
-                                    medQuantityList.add(medQuantity);
-                                    medQuantityMeasurementList.add(medQuantityMeasurement);
-                                    log(medMap.toString());
+                                    foodMap[foodName] = foodQuantity + " " + foodQuantityMeasurement; 
+                                    foodNameList.add(foodName); 
+                                    foodQuantityList.add(foodQuantity);
+                                    foodQuantityMeasurementList.add(foodQuantityMeasurement);
+                                    log(foodMap.toString());
                                   });
-                                  medNameController.clear(); medQuantityController.clear(); quantityMearsurementController.clear();
+                                  foodNameController.clear(); foodQuantityController.clear(); quantityMearsurementController.clear();
                                   Navigator.of(context).pop();
                                 }else{
                                   dialogBoxContent = "Please make sure you entered all of the field." + 
@@ -530,24 +541,24 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                                   _showDialogBox(context, dialogBoxContent);
                                 }
                               }else{
-                                if(medNameController.text.isNotEmpty && medQuantityController.text.isNotEmpty 
+                                if(foodNameController.text.isNotEmpty && foodQuantityController.text.isNotEmpty 
                                   && quantityMearsurementController.text.isNotEmpty){
                                   setState(() {
-                                    medMap.remove(foodMapKey);
-                                    medMap[medName] = medQuantity + " " + medQuantityMeasurement; 
-                                    medNameList[listIndex] = medName;
-                                    medQuantityList[listIndex] = medQuantity;
-                                    medQuantityMeasurementList[listIndex] = medQuantityMeasurement;
-                                    medNameController.clear(); medQuantityController.clear(); quantityMearsurementController.clear();
-                                    foodWidgetTitle = "Consumed Food"; editMed = false; listIndex = null; foodMapKey = null;
-                                    log(medMap.toString());
+                                    foodMap.remove(foodMapKey);
+                                    foodMap[foodName] = foodQuantity + " " + foodQuantityMeasurement; 
+                                    foodNameList[listIndex] = foodName;
+                                    foodQuantityList[listIndex] = foodQuantity;
+                                    foodQuantityMeasurementList[listIndex] = foodQuantityMeasurement;
+                                    foodNameController.clear(); foodQuantityController.clear(); quantityMearsurementController.clear();
+                                    foodWidgetTitle = "Consumed Food"; editFood = false; listIndex = null; foodMapKey = null;
+                                    log(foodMap.toString());
                                     Navigator.of(context).pop();
                                   });
                                 }
                               }
                             },
                             child: Text(
-                              (editMed == false)? "Add" : "Update",
+                              (editFood == false)? "Add" : "Update",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -567,13 +578,13 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
     );
   }
 
-  Widget addEditMedicineWidget(){
+  Widget addEditFoodWidget(){
     return Container(
       margin: EdgeInsets.only(top: 10.0,),
       child: ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: medNameList.length,
+        itemCount: foodNameList.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
             child: Row(
@@ -586,7 +597,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                             Container(
                               width: double.infinity,
                               child: Text(
-                                medNameList[index],
+                                foodNameList[index],
                                 textAlign: TextAlign.left,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
@@ -600,7 +611,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                             Container(
                               width: double.infinity,
                               child: Text(
-                                "x " + medQuantityList[index] + " " + medQuantityMeasurementList[index],
+                                "x " + foodQuantityList[index] + " " + foodQuantityMeasurementList[index],
                                 textAlign: TextAlign.left,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
@@ -621,13 +632,13 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                             child: IconButton(
                                 icon: Icon(Icons.edit, color: Colors.black.withOpacity(0.65),), 
                                 onPressed: () {
-                                  foodWidgetTitle = "Edit Medicine";
-                                  editMed = true;
+                                  foodWidgetTitle = "Edit Food";
+                                  editFood = true;
                                   listIndex = index;
-                                  foodMapKey = medNameList[index].toString();
-                                  medNameController.text = medNameList[index].toString();
-                                  medQuantityController.text = medQuantityList[index].toString();
-                                  quantityMearsurementController.text = medQuantityMeasurementList[index].toString();
+                                  foodMapKey = foodNameList[index].toString();
+                                  foodNameController.text = foodNameList[index].toString();
+                                  foodQuantityController.text = foodQuantityList[index].toString();
+                                  quantityMearsurementController.text = foodQuantityMeasurementList[index].toString();
                                   showModalBottomSheet(
                                   context: context,
                                   shape: RoundedRectangleBorder(
@@ -636,7 +647,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                                   isScrollControlled: true,
                                   builder: (context) => SingleChildScrollView(
                                     physics: ClampingScrollPhysics(),
-                                        child: medicineModalBottomSheetWidget(context),
+                                        child: foodModalBottomSheetWidget(context),
                                   ));
                                 }
                               )
@@ -651,11 +662,11 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                                 icon: Icon(Icons.delete, color: Colors.red,), 
                                 onPressed: (){
                                   setState(() {
-                                    medMap.remove(medNameList[index]);
-                                    medNameList.removeAt(index);
-                                    medQuantityList.removeAt(index);
-                                    medQuantityMeasurementList.removeAt(index);
-                                    print(medNameList); print(medQuantityList); print(medMap);
+                                    foodMap.remove(foodNameList[index]);
+                                    foodNameList.removeAt(index);
+                                    foodQuantityList.removeAt(index);
+                                    foodQuantityMeasurementList.removeAt(index);
+                                    print(foodNameList); print(foodQuantityList); print(foodMap);
                                   });
                                 },
                               )
@@ -670,7 +681,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
     );
   }
 
-  Widget noMedicineWidget(){
+  Widget noFoodWidget(){
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(top: 10),
@@ -692,7 +703,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
               Container(
                 margin: EdgeInsets.only(bottom: 10),
                 child: Text(
-                  "Looks like you haven't add any medicine. Tap on the buton below to add some medicine into the record.",
+                  "Looks like you haven't add any food. Tap on the buton below to add some food into the record.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -710,7 +721,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
     return Column(
       children: <Widget>[
         WidgetTitle(
-          title: "Consumed Medicine",
+          title: "Consumed Food",
         ),
         SizedBox(
           width: double.infinity,
@@ -732,11 +743,11 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    SvgPicture.asset("assets/icons/drugs.svg", height: 23, width: 23,),
+                    SvgPicture.asset("assets/icons/healthy-food.svg", height: 23, width: 23,),
                     Container(
                       padding: EdgeInsets.only(left: 8.0,),
                       child: Text(
-                        "Medicine",
+                        "Food",
                         style: TextStyle(
                           fontSize: MediaQuery.of(context).size.width * 0.045,
                           fontWeight: FontWeight.bold,
@@ -749,7 +760,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                   width: double.infinity,
                   margin: EdgeInsets.only(top: 8.0,),
                   child: Text(
-                    "Please enter the medicine that your baby consumed.",
+                    "Please enter the food that your baby consumed.",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -757,7 +768,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                     ),
                   ),
                 ),
-                (medNameList.length != 0)? addEditMedicineWidget() : noMedicineWidget(),
+                (foodNameList.length != 0)? addEditFoodWidget() : noFoodWidget(),
                 Container(
                   margin: EdgeInsets.fromLTRB(15, 10, 15, 5),
                   child: SizedBox(
@@ -778,11 +789,11 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         isScrollControlled: true,
                         builder: (context) => SingleChildScrollView(
                           physics: ClampingScrollPhysics(),
-                              child: medicineModalBottomSheetWidget(context),
+                              child: foodModalBottomSheetWidget(context),
                         ));
                       },
                       child: Text(
-                        (medNameList.length == 0)? "Add Medicine" : "Add More Medicine",
+                        (foodNameList.length == 0)? "Add Food" : "Add More Food",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -801,195 +812,170 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
   }
 
 
-  //Blood Glucose Section Widget
-  Widget bodyTempModalBottomSheetWidget(BuildContext context){
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(top: 3, bottom: 3),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft:Radius.circular(10.0), topRight:Radius.circular(10.0)),
-                color: appThemeColor,
-                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.65), blurRadius: 2.0, spreadRadius: 0.0, offset: Offset(2.0, 0),)],
-              ),   
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Spacer(flex: 2,),
-                  Flexible(
-                    flex: 4,
-                    child: Container(
-                      width: double.infinity,
-                      child: Text(
-                        "Body Temperature",
-                        textAlign: TextAlign.center,
+  //After Meal Behavior Section Widget
+  Widget symptomsAndAllergiesFalseWidget(BuildContext context){
+    return Column(
+      children: <Widget>[
+        Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(top: 10, bottom: 5),
+          child: Text(
+            "If you want to update the after meal behavior, you can toogle switch one the top right corner. " + 
+            "You can upload the current food record as the complete record or upload it as pending record.",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.035,
+              color: Colors.black.withOpacity(0.65),
+            ),
+          ),
+        ),
+        Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(top: 5, bottom: 5, ),
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                    //height: 20,
+                    width: double.infinity,
+                    child: RadioListTile<UploadMethod>(
+                      dense: true,
+                      title: Text(
+                        uploadPendingText,
                         style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.045,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
+                      activeColor: appThemeColor,
+                      value: UploadMethod.uploadPending,
+                      groupValue: uploadMethod,
+                      onChanged: (UploadMethod value) {
+                        setState(() {
+                          uploadMethod = value; completeFoodRecord = false;
+                        });
+                      },
                     ),
                   ),
-                  Flexible(
-                    flex: 2,
-                    child: Container(
-                      width: double.infinity,
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          icon: Icon(Icons.close, color: Colors.white,), 
-                          onPressed: () => Navigator.of(context).pop(),
-                        )
+                
+                
+                  SizedBox(
+                    width: double.infinity,
+                    child: RadioListTile<UploadMethod>(
+                      dense: true,
+                      title: Text(
+                        uploadCompleteText,
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                          fontWeight: FontWeight.bold
+                        ),
                       ),
+                      activeColor: appThemeColor,
+                      value: UploadMethod.uploadComplete,
+                      groupValue: uploadMethod,
+                      onChanged: (UploadMethod value) {
+                        setState(() {
+                          uploadMethod = value; completeFoodRecord = true;
+                        });
+                      },
                     ),
-                  )
-                ],
+                  ),
+                
+              ],
+            )
+          )
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 10,),
+          padding: EdgeInsets.all(5.0),
+          decoration: BoxDecoration(
+            color: Color(0xFFf5f5f5),
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            border: Border.all(color: Colors.red.withOpacity(0.4)),
+          ),
+          child: Column(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(top: 10, bottom: 8),
+                child: SvgPicture.asset("assets/icons/warning.svg", height: 25, width: 25,),
               ),
-            ),
-            Container(
-                width: double.infinity,
-                margin: EdgeInsets.all(13),
-                child: Column(
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        ModalSheetText(
-                          title: "Body Temperature Reading",
-                          desc: "Body Temperature reading before medication.",
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5, bottom: 10),
-                          height: MediaQuery.of(context).size.width * 0.09,
-                          child: TextFormField(
-                            controller: bTempBeforeController,
-                            onChanged: (val) => setState(() => bTempBefore = val),
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              hintText: "Body Temperature reading before medication.",
-                              contentPadding: EdgeInsets.all(5),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(color: Colors.black.withOpacity(0.4), width: 0.8,),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(
-                                  color: Colors.red, width: 0.8,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        ModalSheetText(
-                          title: "Body Temperature Reading",
-                          desc: "Body Temperature reading reading 2 hour after medication.",
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5, bottom: 15),
-                          height: MediaQuery.of(context).size.width * 0.09,
-                          child: TextFormField(
-                            controller: bTempAfterController,
-                            onChanged: (val) => setState(() => bTempAfter = val),
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              hintText: "Body Temperature reading reading 2 hour after medication.",
-                              contentPadding: EdgeInsets.all(5),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(color: Colors.black.withOpacity(0.4), width: 0.8,),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(
-                                  color: Colors.red, width: 0.8,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.035),
-                    Column(
-                      children: <Widget>[
-                        SizedBox(
-                          width: double.infinity,
-                          child: FlatButton(
-                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
-                            textColor: Colors.black.withOpacity(0.65),
-                            onPressed: () {
-                              bTempBeforeController.clear(); bTempAfterController.clear();
-                            },
-                            child: Text(
-                              "Reset",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.width * 0.045,
-                              ),
-                            ), 
-                          ),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: FlatButton(
-                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            color: appThemeColor,
-                            textColor: Colors.white,
-                            onPressed: () {
-                              if(bTempBeforeController.text.isNotEmpty){
-                                bTempBeforeController.clear(); bTempAfterController.clear(); 
-                                Navigator.of(context).pop();
-                              }else{
-                                dialogBoxContent = "Please make sure you entered your baby body temperature reading into the " + 
-                                  "before medication section. Only 2 hour after medication section can be left empty.";
-                                _showDialogBox(context, dialogBoxContent);
-                              }
-                            },
-                            child: Text(
-                              "Add",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.width * 0.045,
-                              ),
-                            ), 
-                          ),
-                        ),
-                      ]
-                    ),
-                  ],
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                child: Text(
+                  (completeFoodRecord == false)? warningPending : warningComplete,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.035,
+                  ),
                 ),
               ),
             ],
           ),
-      ),
+        ),
+        //(completeFoodRecord == false)? BabyFoodRecrodAddText() : BabyFoodRecrodDoneText(),
+      ],
     );
   }
 
-  Widget bodyTempWidgetContent(BuildContext context){
+  Widget symptomsAndAllergiesTrueWidget(BuildContext context){
     return Column(
       children: <Widget>[
-        WidgetTitle(
-          title: "Body Temperature",
+        Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(top: 10, bottom: 10),
+          child: Text(
+            "You can enter all the symptoms or allergies that shown on your baby in the textarea provided below.",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.035,
+              color: Colors.black.withOpacity(0.65),
+            ),
+          ),
         ),
+        Container(
+          //margin: EdgeInsets.only(bottom: 10),
+          child: TextFormField(
+            maxLines: 7,
+            controller: symptomsAndAllergiesDescController,
+            onChanged: (val) {
+              setState(() => symptomsAndAllergiesDesc = val);
+            },
+            //textInputAction: TextInputAction.send,
+            decoration: new InputDecoration(
+              hintText: "Enter the description of the symptoms or allergies that found on your baby.",
+              hintStyle: TextStyle(
+                fontSize: MediaQuery.of(context).size.width * 0.035,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5.0),
+                borderSide: BorderSide(
+                  color: Colors.black.withOpacity(0.65),
+                  //width: 1,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5.0),
+                borderSide: BorderSide(
+                  color: Colors.red,
+                  //width: 1,
+                ),
+              ),
+            ),
+          ),
+        ),
+        //BabyFoodRecrodDoneText(),
+      ],
+    );
+  }
+
+  Widget afterMealBehaviorWidgetContent(BuildContext context){
+    return Column(
+      children: <Widget>[
         SizedBox(
           width: double.infinity,
           child: Container(
             margin: EdgeInsets.fromLTRB(10, 10, 10, 20),
-            padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+            padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 20.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
               color: Colors.white,
@@ -1000,158 +986,53 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                   spreadRadius: 15,
                   color: Color(0xFFE6E6E6),
                 ),
-              ],
-            ),
+              ],),
             child: Column(
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    SvgPicture.asset("assets/icons/thermometer.svg", height: 23, width: 23,),
+                    SvgPicture.asset("assets/icons/face-swelling.svg", height: 23, width: 23,),
                     Container(
-                      padding: EdgeInsets.only(left: 10.0,),
+                      padding: EdgeInsets.only(left: 8.0,),
                       child: Text(
-                        "Body Temperature Reading",
+                        "Symptoms and Allergies",
                         style: TextStyle(
                           fontSize: MediaQuery.of(context).size.width * 0.045,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
+                    Spacer(flex: 3,),
+                    Container(
+                      height: 20,
+                      width: 60,
+                      child: Switch(
+                        value: symptomsAndAllergies,
+                        activeColor: appThemeColor,
+                        onChanged: (value) {
+                          setState(() {
+                            symptomsAndAllergies = value;
+                            if(symptomsAndAllergies == true){
+                              completeFoodRecord = false;
+                              uploadMethod = UploadMethod.uploadPending;
+                            }
+                          });
+                        },
+                      ),
+                    )
                   ],
                 ),
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(top: 8.0,),
-                  child: Text(
-                    "Your baby body temperature reading before medication and 2 hours after medication. You " +
-                    "can leave the 2 hours after medication section empty if u wish to update it later.",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.035,
-                      color: Colors.black.withOpacity(0.65),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(top: 15.0, bottom: 5.0,),
-                  child: Table(
-                    //border: TableBorder.all(color: Colors.black),
-                    children: [
-                      TableRow(
-                        children: [
-                          TableCell(
-                            child: Container(
-                              padding: EdgeInsets.only(top: 8, bottom: 8,),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  right: BorderSide(
-                                    width: 0.5, 
-                                    color: Colors.black.withOpacity(0.65),
-                                  ),
-                                )
-                              ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    (bTempBefore == null || bTempBefore == "")? "-" : bTempBefore + "°C",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: MediaQuery.of(context).size.width * 0.05,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(top: 3),
-                                    child: Text(
-                                      "Before medication",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: MediaQuery.of(context).size.width * 0.033,
-                                        color: Colors.black.withOpacity(0.65),
-                                      ),
-                                    ),
-                                  ),
-                                ] 
-                              ),
-                            ),
-                          ),
-                          TableCell(
-                            child: Container(
-                              padding: EdgeInsets.only(top: 8, bottom: 8,),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    (bTempAfter == null || bTempAfter == "")? "-" : bTempAfter + "°C",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: MediaQuery.of(context).size.width * 0.05,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),  
-                                  Container(
-                                    padding: EdgeInsets.only(top: 3),
-                                    child: Text(
-                                      "After 2 hours",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: MediaQuery.of(context).size.width * 0.033,
-                                        color: Colors.black.withOpacity(0.65),
-                                      ),
-                                    ),
-                                  ),
-                                ] 
-                              ),
-                            ),
-                          ),
-                        ]
-                      ), 
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(15, 5, 15, 5),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: FlatButton(
-                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0,),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      color: appThemeColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        if(bTempBefore != null){bTempBeforeController.text = bTempBefore;}
-                        if(bTempAfter != null){bTempAfterController.text = bTempAfter;}
-                        showModalBottomSheet(
-                        context: context,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                        ),
-                        isScrollControlled: true,
-                        builder: (context) => SingleChildScrollView(
-                          physics: ClampingScrollPhysics(),
-                              child: bodyTempModalBottomSheetWidget(context),
-                        ));
-                      },
-                      child: Text(
-                        (bTempBefore == null && bTempAfter == null)? "Add Body Temperature Reading" : "Edit Body Temperature Reading",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                        ),
-                      ), 
-                    ),
-                  ),
-                ),
+                (symptomsAndAllergies == false)
+                  ? symptomsAndAllergiesFalseWidget(context) : symptomsAndAllergiesTrueWidget(context),
               ],
-            ), 
+            ),
           ),
         ),
       ],
     );
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -1159,7 +1040,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
         title: Text(
-          "Add Medicine Record",
+          "Add Food Record",
           style: TextStyle(
             color: Colors.white,
              fontSize: MediaQuery.of(context).size.width * 0.045,
@@ -1170,66 +1051,84 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: <Widget>[
-            //Date
-            dateWidgetContent(context),
-            //Time
-            timeWidgetContent(context),
-            //Food
-            foodWidgetContent(context),
-            //Blood Sugar
-            bodyTempWidgetContent(context),
-            //Next Screen
-            Container(
-              margin: EdgeInsets.only(left: 13, right: 13, bottom: 20),
-              child: SizedBox(
-                width: double.infinity,
-                child: FlatButton(
-                  padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  ),
-                  color: appThemeColor,
-                  textColor: Colors.white,
-                  onPressed: () {
-                    //log(dateToPass); log(timeToPass); log(foodMap.toString()); log(bSugarBefore +" "+ bSugarAfter);
-                    if(medMap.isNotEmpty && bTempBefore != null &&  bTempBefore != ""){
-                      if(bTempAfter != null && bTempAfter != ""){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BabyMedTrackAddSummary(
-                            selectedDate: dateToPass, selectedTime: timeToPass, 
-                              selectedBabyID: widget.selectedBabyID, medsMap: medMap, bTempBefore: bTempBefore, bTempAfter: bTempAfter,
-                          )),
-                        );
-                      }else{
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BabyMedTrackAddSummary(
-                            selectedDate: dateToPass, selectedTime: timeToPass, 
-                              selectedBabyID: widget.selectedBabyID, medsMap: medMap, bTempBefore: bTempBefore, bTempAfter: null,
-                          )),
-                        );
-                      }
-                    }else{
-                      dialogBoxContent = "Looks like you left some section empty. " + 
-                        "Please make sure u entered all the required field.";
-                      _showDialogBox(context, dialogBoxContent);
-                    }
-                  },
-                  child: Text(
-                    "Review Medicine Record",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.width * 0.045,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Column(
+            children: <Widget>[
+              //Date
+              dateWidgetContent(context),
+              //Time
+              timeWidgetContent(context),
+              //Food
+              foodWidgetContent(context),
+              //Blood Sugar
+              afterMealBehaviorWidgetContent(context),
+              //Next Screen
+              Container(
+                margin: EdgeInsets.only(left: 13, right: 13, bottom: 20),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: FlatButton(
+                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                  ), 
+                    color: appThemeColor,
+                    textColor: Colors.white,
+                    onPressed: () {
+                      log("symptomp "+symptomsAndAllergies.toString()); log("record "+completeFoodRecord.toString());
+                      if(foodMap.isNotEmpty){
+                        if(completeFoodRecord == false && symptomsAndAllergies == true){
+                          if(symptomsAndAllergiesDescController.text.isNotEmpty){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => BabyFoodIntakeAddSummary(
+                                selectedDate: dateToPass, selectedTime: timeToPass, foodMap: foodMap, symptomsAndAllergies: symptomsAndAllergies,
+                                  completeFoodRecord: completeFoodRecord, selectedBabyID: widget.selectedBabyID, symptomsAndAllergiesDesc: symptomsAndAllergiesDesc,
+                              )),
+                            );
+                          }else{
+                            dialogBoxContent = "Looks like u didn't enter anyting into the symptomps or allergies section" +
+                              "To update your baby current food record, please make sure you enter the symptomps or " + 
+                              "allergies shown by your baby.";
+                            _showDialogBox(context, dialogBoxContent);
+                          }
+                        }else if(completeFoodRecord == true && symptomsAndAllergies == false){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => BabyFoodIntakeAddSummary(
+                              selectedDate: dateToPass, selectedTime: timeToPass, foodMap: foodMap, symptomsAndAllergies: symptomsAndAllergies,
+                                completeFoodRecord: completeFoodRecord, selectedBabyID: widget.selectedBabyID, symptomsAndAllergiesDesc: null,
+                            )),
+                          );
+                        }else if(completeFoodRecord == false && symptomsAndAllergies == false){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => BabyFoodIntakeAddSummary(
+                              selectedDate: dateToPass, selectedTime: timeToPass, foodMap: foodMap, symptomsAndAllergies: symptomsAndAllergies,
+                                completeFoodRecord: completeFoodRecord, selectedBabyID: widget.selectedBabyID, symptomsAndAllergiesDesc: null,
+                            )),
+                          );
+                        }
+                      }else{
+                        dialogBoxContent = "Looks like you left some section empty. " + 
+                          "Please make sure u entered all the required field.";
+                        _showDialogBox(context, dialogBoxContent);
+                      }
+                    },
+                    child: Text(
+                      "Review Food Record",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: MediaQuery.of(context).size.width * 0.045,
+                      ),
+                    ), 
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

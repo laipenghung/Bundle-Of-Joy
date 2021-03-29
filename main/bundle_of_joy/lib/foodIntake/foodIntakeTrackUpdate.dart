@@ -2,7 +2,7 @@ import 'package:bundle_of_joy/foodIntake/foodIntakeTrackAdd.dart';
 import 'package:bundle_of_joy/foodIntake/foodIntakeTrackFunction.dart';
 import 'package:bundle_of_joy/main.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
-import 'package:bundle_of_joy/widgets/recordListWidget.dart';
+import 'package:bundle_of_joy/widgets/recordFoodMedsWidget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -81,7 +81,7 @@ class _FoodIntakeTrackUpdateState extends State<FoodIntakeTrackUpdate> {
                   ),
                 ),
                 //Widget for display Consumed Food
-                RecordListWidget(
+                RecordFoodMedsWidget(
                   svgSrc: "assets/icons/healthy-food.svg",
                   title: motherRecordListTitle,
                   titleDesc: motherRecordListTitleDesc,
@@ -165,7 +165,7 @@ class RecordBloodSugarUpdate extends StatefulWidget {
 class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
   FoodIntakeTrackFunction foodIntakeTrackFunction = FoodIntakeTrackFunction();
   TextEditingController bSugarUpdateController = TextEditingController();
-  String bSugarUpdate, dialogBoxContent;
+  String bSugarUpdate, dialogBoxContent; 
   MyApp main = MyApp();
 
   void _showNotification() async {
@@ -187,8 +187,7 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
         return AlertDialog(
           title: Text("Opps!"),
           content: Text(
-            "Looks like u didn't enter anyting into 2 hours after meal section." +
-            "To update your current food record, please make sure you enter Blood Sugar reading 2 hours after meal.",
+            dialogBoxContent
           ),
           actions: <Widget>[
             FlatButton(
@@ -204,7 +203,7 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
 
   Widget bloodGlucoseModalBottomSheetWidget(BuildContext context){
     return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * 0.35,
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Column(
@@ -287,7 +286,7 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
                         ),
                       ],
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.035),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.005),
                     Column(
                       children: <Widget>[
                         SizedBox(
@@ -330,7 +329,7 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
                               }
                             },
                             child: Text(
-                              "Add",
+                              "Update",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,

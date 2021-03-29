@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:bundle_of_joy/careForBaby/careForBabyFunction.dart';
 import 'package:bundle_of_joy/widgets/recordBodyTempWidget.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
-import 'package:bundle_of_joy/widgets/recordListWidget.dart';
+import 'package:bundle_of_joy/widgets/recordFoodMedsWidget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -100,7 +100,7 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
               ),
             ),
             //Widget for display Consumed Food
-            RecordListWidget(
+            RecordFoodMedsWidget(
               svgSrc: "assets/icons/drugs.svg",
               title: babyMedsRecordListTitle,
               titleDesc: babyMedsRecordListTitleDesc,

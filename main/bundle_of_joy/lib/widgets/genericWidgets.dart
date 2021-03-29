@@ -276,6 +276,7 @@ class BabyFoodRecrodAddText extends StatelessWidget {
 
     return Container(
       width: double.infinity,
+      margin: EdgeInsets.only(top: 15),
       child: RichText(
           textAlign: TextAlign.left,
           text: TextSpan(style: normalTextStye, children: <TextSpan>[
@@ -317,6 +318,7 @@ class BabyFoodRecrodDoneText extends StatelessWidget {
 
     return Container(
       width: double.infinity,
+      //margin: EdgeInsets.only(top: 15),
       child: RichText(
           textAlign: TextAlign.left,
           text: TextSpan(style: normalTextStye, children: <TextSpan>[

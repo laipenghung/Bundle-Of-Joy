@@ -1,5 +1,9 @@
+import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeTrackAdd.dart';
 import 'package:bundle_of_joy/careForBaby/babyTemp/babyMedTrackAdd.dart';
+import 'package:bundle_of_joy/careForBaby/babyTemp/babyMedTrackRecordList.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
 
@@ -19,8 +23,14 @@ class CareForBabyMain extends StatefulWidget {
 }
 
 class _CareForBabyMainState extends State<CareForBabyMain> {
+  final User user = FirebaseAuth.instance.currentUser;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  
   @override
   Widget build(BuildContext context) {
+    CollectionReference colRefBabyMedsComplete = _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done");
+    CollectionReference colRefBabyMedsPending = _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Pending");
+    
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       body: CustomScrollView(
@@ -90,7 +100,9 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                     press: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BabyFoodIntakeAdd1(selectedBabyID: widget.selectedBabyID)),
+                        //MaterialPageRoute(builder: (context) => BabyFoodIntakeAdd1(selectedBabyID: widget.selectedBabyID)),
+                        MaterialPageRoute(builder: (context) => BabyFoodIntakeTrackAdd(selectedBabyID: widget.selectedBabyID)),
+
                       );
                     }
                   ),
@@ -126,7 +138,13 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                     press: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>BabyTempListDone(selectedBabyID: widget.selectedBabyID)),
+                        //MaterialPageRoute(builder: (context) =>BabyTempListDone(selectedBabyID: widget.selectedBabyID)),
+                        MaterialPageRoute(builder: (context) => BabyMedTrackRecordList(
+                          selectedBabyID: widget.selectedBabyID,
+                          svgSrc: "assets/icons/medsRecord.svg",
+                          completeRecord: true,
+                          collectionReference: colRefBabyMedsComplete,
+                        )),
                       );
                     }
                   ),
@@ -149,7 +167,13 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                     press: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BabyTempListPending(selectedBabyID: widget.selectedBabyID)),
+                        //MaterialPageRoute(builder: (context) => BabyTempListPending(selectedBabyID: widget.selectedBabyID)),
+                        MaterialPageRoute(builder: (context) => BabyMedTrackRecordList(
+                          selectedBabyID: widget.selectedBabyID,
+                          svgSrc: "assets/icons/medsRecord.svg",
+                          completeRecord: false,
+                          collectionReference: colRefBabyMedsPending,
+                        )),
                       );
                     }
                   ),
