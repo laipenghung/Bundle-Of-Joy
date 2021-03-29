@@ -1,6 +1,10 @@
 import 'package:bundle_of_joy/foodIntake/foodIntakeTrackAdd.dart';
+import 'package:bundle_of_joy/foodIntake/foodIntakeTrackRecordList.dart';
 import 'package:bundle_of_joy/foodIntake/foodIntakeTrackView.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
+import 'package:bundle_of_joy/widgets/recordListViewWidget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
 import 'foodIntake_add_1_dateTime.dart';
@@ -13,8 +17,14 @@ class FoodIntakeTrackMain extends StatefulWidget {
 }
 
 class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
+  final User user = FirebaseAuth.instance.currentUser;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  
   @override
   Widget build(BuildContext context) {
+    CollectionReference collectionReferenceComplete = _db.collection('mother').doc(user.uid).collection('foodIntake_Done');
+    CollectionReference collectionReferencePending = _db.collection('mother').doc(user.uid).collection('foodIntake_Pending');
+
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       body: CustomScrollView(
@@ -59,7 +69,12 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
                     press: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
+                        //MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
+                        MaterialPageRoute(builder: (context) => FoodIntakeTrackRecordList(
+                          svgSrc: "assets/icons/menu.svg",
+                          completeRecord: true,
+                          collectionReference: collectionReferenceComplete,
+                        )),
                       );
                     }
                   ),
@@ -83,7 +98,11 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
                     press: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => FoodIntakeListPending()),
+                        MaterialPageRoute(builder: (context) => FoodIntakeTrackRecordList(
+                          svgSrc: "assets/icons/menu.svg",
+                          completeRecord: false,
+                          collectionReference: collectionReferencePending,
+                        )),
                       );
                     }
                   ),

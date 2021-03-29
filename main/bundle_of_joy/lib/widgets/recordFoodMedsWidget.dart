@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:quiver/iterables.dart';
 
-class RecordListWidget extends StatelessWidget {
+class RecordFoodMedsWidget extends StatelessWidget {
   final String svgSrc, title, titleDesc;
   final List foodName,  foodQty;
 
   
-  const RecordListWidget({
+  const RecordFoodMedsWidget({
     Key key,
     this.svgSrc,
     this.title,

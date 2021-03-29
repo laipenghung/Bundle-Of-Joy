@@ -1,6 +1,6 @@
 import 'package:bundle_of_joy/widgets/recordBloodSugarWidget.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
-import 'package:bundle_of_joy/widgets/recordListWidget.dart';
+import 'package:bundle_of_joy/widgets/recordFoodMedsWidget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -91,7 +91,7 @@ class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
                       ),
                     ),
                     //Widget for display Consumed Food
-                    RecordListWidget(
+                    RecordFoodMedsWidget(
                       svgSrc: "assets/icons/healthy-food.svg",
                       title: motherRecordListTitle,
                       titleDesc: motherRecordListTitleDesc,

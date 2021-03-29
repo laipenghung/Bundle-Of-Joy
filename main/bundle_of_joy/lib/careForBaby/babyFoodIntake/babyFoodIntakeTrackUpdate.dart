@@ -1,6 +1,6 @@
 import 'package:bundle_of_joy/careForBaby/careForBabyFunction.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
-import 'package:bundle_of_joy/widgets/recordListWidget.dart';
+import 'package:bundle_of_joy/widgets/recordFoodMedsWidget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -78,7 +78,7 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
                     ),
                   ),
                   //Widget for display Consumed Food
-                  RecordListWidget(
+                  RecordFoodMedsWidget(
                     svgSrc: "assets/icons/healthy-food.svg",
                     title: babyFoodRecordListTitle,
                     titleDesc: babyFoodRecordListTitleDesc,
@@ -126,36 +126,20 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
     
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
-      body: CustomScrollView(
+      appBar: AppBar(
+        title: Text(
+          "Update Food Record",
+          style: TextStyle(
+            color: Colors.white,
+             fontSize: MediaQuery.of(context).size.width * 0.045,
+          ),
+        ),        
+        backgroundColor: appThemeColor,
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        slivers: <Widget>[
-          SliverAppBar(
-            floating: true,
-            pinned: true,
-            stretch: true,
-            backgroundColor: appThemeColor,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              collapseMode: CollapseMode.pin,
-              stretchModes: [
-                StretchMode.zoomBackground,
-              ],
-              title: Container(
-                child: Text(
-                  "Update Food Intake Record",
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SliverFillRemaining(
-            fillOverscroll: true,
-            hasScrollBody: false,
-            child: bodyContent, 
-          ),
-        ],
+        child: bodyContent,
       ),
     );
   }

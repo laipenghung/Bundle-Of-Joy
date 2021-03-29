@@ -1,6 +1,6 @@
 import 'package:bundle_of_joy/widgets/recordBodyTempWidget.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
-import 'package:bundle_of_joy/widgets/recordListWidget.dart';
+import 'package:bundle_of_joy/widgets/recordFoodMedsWidget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,7 +25,7 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
         title: Text(
-          "Summary",
+          "View Medicine Record",
           style: TextStyle(
             color: Colors.white,
              fontSize: MediaQuery.of(context).size.width * 0.045,
@@ -91,7 +91,7 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
                       ),
                     ),
                     //Widget for display Consumed Food
-                    RecordListWidget(
+                    RecordFoodMedsWidget(
                       svgSrc: "assets/icons/drugs.svg",
                       title: babyMedsRecordListTitle,
                       titleDesc: babyMedsRecordListTitleDesc,
