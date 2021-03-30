@@ -2,6 +2,7 @@ import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
 import 'package:flutter/material.dart';
 import 'appointmentMother_add_1_hospital.dart';
 import 'appointmentMother_recordList.dart';
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 
 class AppointmentMotherMain extends StatefulWidget {
   @override
@@ -13,65 +14,49 @@ class _AppointmentMotherMainState extends State<AppointmentMotherMain> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
-      body: CustomScrollView(
+      appBar: AppBar(
+        title: Text(
+          "Appointment Management",
+          style: TextStyle(
+            shadows: <Shadow>[
+              Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
+            ],
+            fontSize: MediaQuery.of(context).size.width * 0.045,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: appbar1,
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: MediaQuery.of(context).size.height * 0.4,
-            floating: true,
-            pinned: true,
-            stretch: true,
-            stretchTriggerOffset: 70.0,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              collapseMode: CollapseMode.parallax,
-              stretchModes: [
-                StretchMode.zoomBackground,
-              ],
-              title: Text(
-                "Appointment Management",
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.045,
-                ),
-              ),
-              background: Image.network(
-                "https://static.vecteezy.com/system/resources/previews/000/171/284/original/free-hand-drawn-vector-nightscape-illustration.jpg",
-                fit: BoxFit.cover,
-              ),
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(5),
+          child: Column(
+            children: [
+              HorizontalCardWidget(
+                  title: "View Appointments",
+                  description: "View and manage all of your appointments.",
+                  svgSrc: "assets/icons/schedule.svg",
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AppointmentMotherRecordList()),
+                    );
+                  }),
+              HorizontalCardWidget(
+                  title: "Book An Appoinment",
+                  description: "Book an appointment with the doctor.",
+                  svgSrc: "assets/icons/appointment.svg",
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AppointmentMotherAddHospital()),
+                    );
+                  }),
+            ],
           ),
-          SliverFillRemaining(
-            fillOverscroll: true,
-            hasScrollBody: false,
-            child: Padding(
-              padding: const EdgeInsets.all(5),
-              child: Column(
-                children: [
-                  HorizontalCardWidget(
-                      title: "View Appointments",
-                      description: "View and manage all of your appointments.",
-                      svgSrc: "assets/icons/Hamburger.svg",
-                      press: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => AppointmentMotherRecordList()),
-                        );
-                      }),
-                  HorizontalCardWidget(
-                      title: "Book An Appoinment",
-                      description: "Book an appointment with the doctor.",
-                      svgSrc: "assets/icons/Hamburger.svg",
-                      press: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => AppointmentMotherAddHospital()),
-                        );
-                      }),
-                ],
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

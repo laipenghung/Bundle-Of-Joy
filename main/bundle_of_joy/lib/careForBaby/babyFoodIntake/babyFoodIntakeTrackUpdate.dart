@@ -18,11 +18,16 @@ class BabyFoodIntakeTrackUpdate extends StatefulWidget {
   _BabyFoodIntakeTrackUpdateState createState() => _BabyFoodIntakeTrackUpdateState();
 }
 
-class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {  
+class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
   var bodyContent;
-  void initState(){
+  void initState() {
     super.initState();
-    CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Pending");
+    CollectionReference collectionReference = FirebaseFirestore.instance
+        .collection("mother")
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .collection("baby")
+        .doc(widget.selectedBabyID)
+        .collection("babyFoodIntake_Pending");
     bodyContent = FutureBuilder<DocumentSnapshot>(
       future: collectionReference.doc(widget.recordID).get(),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -30,7 +35,7 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
           DateTime parsedDate = DateTime.parse(snapshot.data.data()["selectedDate"]);
           String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
           DateTime parsedTime = DateTime.parse(snapshot.data.data()["selectedDate"] + " " + snapshot.data.data()["selectedTime"]);
-          String formattedTime =  DateFormat('h:mm a').format(parsedTime);
+          String formattedTime = DateFormat('h:mm a').format(parsedTime);
           Map food = snapshot.data.data()["foodMap"];
 
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -44,7 +49,10 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
                 children: [
                   Container(
                     width: double.infinity,
-                    margin: EdgeInsets.only(top: 18.0, left: 13.0,),
+                    margin: EdgeInsets.only(
+                      top: 18.0,
+                      left: 13.0,
+                    ),
                     child: Text(
                       "Date and Time",
                       textAlign: TextAlign.left,
@@ -57,16 +65,18 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
                   ),
                   //Widget for display Date and Time
                   RecordDateTimeWidget(
-                    svgSrcDate: "assets/icons/testAM.svg",
-                    svgSrcTime: "assets/icons/clock.svg",
-                    date: formattedDate,
-                    dateDesc: babyFoodDateDesc,
-                    time: formattedTime,
-                    timeDesc: babyFoodTimeDesc
-                  ),
+                      svgSrcDate: "assets/icons/testAM.svg",
+                      svgSrcTime: "assets/icons/clock.svg",
+                      date: formattedDate,
+                      dateDesc: babyFoodDateDesc,
+                      time: formattedTime,
+                      timeDesc: babyFoodTimeDesc),
                   Container(
                     width: double.infinity,
-                    margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                    margin: EdgeInsets.only(
+                      top: 13.0,
+                      left: 13.0,
+                    ),
                     child: Text(
                       "Conusmed Food",
                       textAlign: TextAlign.left,
@@ -87,7 +97,10 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
                   ),
                   Container(
                     width: double.infinity,
-                    margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                    margin: EdgeInsets.only(
+                      top: 13.0,
+                      left: 13.0,
+                    ),
                     child: Text(
                       "After Meal Behavior",
                       textAlign: TextAlign.left,
@@ -108,7 +121,6 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
                     foodMap: food,
                   ),
                   //Update data to database
-                  
                 ],
               ),
             );
@@ -123,7 +135,6 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
@@ -131,10 +142,10 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
           "Update Food Record",
           style: TextStyle(
             color: Colors.white,
-             fontSize: MediaQuery.of(context).size.width * 0.045,
+            fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
-        ),        
-        backgroundColor: appThemeColor,
+        ),
+        backgroundColor: appbar2,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -168,33 +179,39 @@ class _RecordSymptomsAndAllergiesUpdateState extends State<RecordSymptomsAndAlle
 
   Future<void> notification(notificationMessage) async {
     AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-      'Channel Id', 'Channel title', 'channel body', priority: Priority.high, importance: Importance.max, ticker: 'test', styleInformation: BigTextStyleInformation(''),
+      'Channel Id',
+      'Channel title',
+      'channel body',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+      styleInformation: BigTextStyleInformation(''),
     );
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
     await main.createState().flutterLocalNotificationsPlugin.show(0, 'Baby Medicine Intake Tracking', notificationMessage, notificationDetails);
   }
 
-  _showDialogBox(BuildContext context){
+  _showDialogBox(BuildContext context) {
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Opps!"),
-          content: Text(
-            "Looks like u didn't enter anyting into the symptomps or allergies section" +
-            "To update your baby current food record, please make sure you enter the symptomps or " + 
-            "allergies shown by your baby.",
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("Ok"),
-              onPressed: (){
-                Navigator.of(context).pop();  
-              },
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Opps!"),
+            content: Text(
+              "Looks like u didn't enter anyting into the symptomps or allergies section" +
+                  "To update your baby current food record, please make sure you enter the symptomps or " +
+                  "allergies shown by your baby.",
             ),
-          ],
-        );
-      });
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Ok"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 
   @override
@@ -216,14 +233,21 @@ class _RecordSymptomsAndAllergiesUpdateState extends State<RecordSymptomsAndAlle
                   spreadRadius: 15,
                   color: Color(0xFFE6E6E6),
                 ),
-              ],),
+              ],
+            ),
             child: Column(
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    SvgPicture.asset(widget.svgSrc, height: 23, width: 23,),
+                    SvgPicture.asset(
+                      widget.svgSrc,
+                      height: 23,
+                      width: 23,
+                    ),
                     Container(
-                      padding: EdgeInsets.only(left: 8.0,),
+                      padding: EdgeInsets.only(
+                        left: 8.0,
+                      ),
                       child: Text(
                         "Symptoms and Allergies",
                         style: TextStyle(
@@ -232,7 +256,9 @@ class _RecordSymptomsAndAllergiesUpdateState extends State<RecordSymptomsAndAlle
                         ),
                       ),
                     ),
-                    Spacer(flex: 3,),
+                    Spacer(
+                      flex: 3,
+                    ),
                     Container(
                       height: 20,
                       width: 60,
@@ -249,55 +275,55 @@ class _RecordSymptomsAndAllergiesUpdateState extends State<RecordSymptomsAndAlle
                   ],
                 ),
                 (symptomsAndAllergies == false)
-                ? UpdateSymptomsAndAllergiesFalse() 
-                : Column(
-                    children: <Widget>[
-                      Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.only(top: 10, bottom: 10),
-                        child: Text(
-                          "You can enter all the symptoms or allergies that shown on your baby in the textarea provided below.",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.035,
-                            color: Colors.black.withOpacity(0.65),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: TextFormField(
-                          maxLines: 7,
-                          controller: textFieldController,
-                          onChanged: (val) {
-                            setState(() => symptomsAndAllergiesDesc = val);
-                          },
-                          //textInputAction: TextInputAction.send,
-                          decoration: new InputDecoration(
-                            hintText: "Enter the description of the symptoms or allergies that found on your baby.",
-                            hintStyle: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.035,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(
+                    ? UpdateSymptomsAndAllergiesFalse()
+                    : Column(
+                        children: <Widget>[
+                          Container(
+                            width: double.infinity,
+                            margin: EdgeInsets.only(top: 10, bottom: 10),
+                            child: Text(
+                              "You can enter all the symptoms or allergies that shown on your baby in the textarea provided below.",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: MediaQuery.of(context).size.width * 0.035,
                                 color: Colors.black.withOpacity(0.65),
-                                //width: 1,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                                //width: 1,
                               ),
                             ),
                           ),
-                        ),
+                          Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: TextFormField(
+                              maxLines: 7,
+                              controller: textFieldController,
+                              onChanged: (val) {
+                                setState(() => symptomsAndAllergiesDesc = val);
+                              },
+                              //textInputAction: TextInputAction.send,
+                              decoration: new InputDecoration(
+                                hintText: "Enter the description of the symptoms or allergies that found on your baby.",
+                                hintStyle: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.width * 0.035,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide: BorderSide(
+                                    color: Colors.black.withOpacity(0.65),
+                                    //width: 1,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide: BorderSide(
+                                    color: Colors.red,
+                                    //width: 1,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          BabyFoodRecrodDoneText(),
+                        ],
                       ),
-                      BabyFoodRecrodDoneText(),
-                    ],
-                  ),
               ],
             ),
           ),
@@ -307,24 +333,29 @@ class _RecordSymptomsAndAllergiesUpdateState extends State<RecordSymptomsAndAlle
           child: SizedBox(
             width: double.infinity,
             child: FlatButton(
-              padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
+              padding: EdgeInsets.only(
+                top: 10.0,
+                bottom: 10.0,
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
-              color: appThemeColor,
+              color: appbar2,
               textColor: Colors.white,
               onPressed: () {
-                if(textFieldController.text.isNotEmpty && symptomsAndAllergies == true){
+                if (textFieldController.text.isNotEmpty && symptomsAndAllergies == true) {
                   notificationMessage = "Baby food record successfully updated.";
-                  careForBabyFunction.updateBabyFoodRecordPending(
-                    widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, symptomsAndAllergies, symptomsAndAllergiesDesc, widget.recordID, context
-                  ).then((value) => _showNotification(notificationMessage));
-                }else if(symptomsAndAllergies == false){
-                    notificationMessage = "Baby food record successfully updated.";
-                    careForBabyFunction.updateBabyFoodRecordPending(
-                      widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, symptomsAndAllergies, null, widget.recordID, context
-                    ).then((value) => _showNotification(notificationMessage));
-                }else if(textFieldController.text.isEmpty && symptomsAndAllergies == true){
+                  careForBabyFunction
+                      .updateBabyFoodRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, symptomsAndAllergies,
+                          symptomsAndAllergiesDesc, widget.recordID, context)
+                      .then((value) => _showNotification(notificationMessage));
+                } else if (symptomsAndAllergies == false) {
+                  notificationMessage = "Baby food record successfully updated.";
+                  careForBabyFunction
+                      .updateBabyFoodRecordPending(
+                          widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, symptomsAndAllergies, null, widget.recordID, context)
+                      .then((value) => _showNotification(notificationMessage));
+                } else if (textFieldController.text.isEmpty && symptomsAndAllergies == true) {
                   _showDialogBox(context);
                 }
               },
@@ -335,7 +366,7 @@ class _RecordSymptomsAndAllergiesUpdateState extends State<RecordSymptomsAndAlle
                   fontWeight: FontWeight.bold,
                   fontSize: MediaQuery.of(context).size.width * 0.045,
                 ),
-              ), 
+              ),
             ),
           ),
         ),
@@ -353,8 +384,8 @@ class UpdateSymptomsAndAllergiesFalse extends StatelessWidget {
           width: double.infinity,
           margin: EdgeInsets.only(top: 10, bottom: 10),
           child: Text(
-            "If your baby does not show any sign of symptoms and allergies you can straight tap on the update record button to " + 
-            "update this record. Else, you can toggle the switch one the top right corner and enter all the details.",
+            "If your baby does not show any sign of symptoms and allergies you can straight tap on the update record button to " +
+                "update this record. Else, you can toggle the switch one the top right corner and enter all the details.",
             textAlign: TextAlign.left,
             style: TextStyle(
               fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -374,7 +405,11 @@ class UpdateSymptomsAndAllergiesFalse extends StatelessWidget {
             children: <Widget>[
               Container(
                 margin: EdgeInsets.only(top: 10, bottom: 8),
-                child: SvgPicture.asset("assets/icons/warning.svg", height: 25, width: 25,),
+                child: SvgPicture.asset(
+                  "assets/icons/warning.svg",
+                  height: 25,
+                  width: 25,
+                ),
               ),
               Container(
                 margin: EdgeInsets.only(bottom: 10),

@@ -13,9 +13,10 @@ class BabyFoodIntakeAddSummary extends StatefulWidget {
   final String selectedBabyID, selectedDate, selectedTime, symptomsAndAllergiesDesc;
   final bool symptomsAndAllergies, completeFoodRecord;
   final Map foodMap;
-  BabyFoodIntakeAddSummary({Key key, this.selectedBabyID, this.selectedDate, this.selectedTime, 
-    this.foodMap, this.completeFoodRecord, this.symptomsAndAllergies, this.symptomsAndAllergiesDesc}) : super(key: key);
-  
+  BabyFoodIntakeAddSummary(
+      {Key key, this.selectedBabyID, this.selectedDate, this.selectedTime, this.foodMap, this.completeFoodRecord, this.symptomsAndAllergies, this.symptomsAndAllergiesDesc})
+      : super(key: key);
+
   @override
   _BabyFoodIntakeAddSummaryState createState() => _BabyFoodIntakeAddSummaryState();
 }
@@ -25,14 +26,20 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
   String notificationMessage;
 
   MyApp main = MyApp();
-  
+
   void showNotification(String notificationMessage) async {
     await notification(notificationMessage);
   }
 
   Future<void> notification(notificationMessage) async {
     AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-      'Channel Id', 'Channel title', 'channel body', priority: Priority.high, importance: Importance.max, ticker: 'test', styleInformation: BigTextStyleInformation(''),
+      'Channel Id',
+      'Channel title',
+      'channel body',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+      styleInformation: BigTextStyleInformation(''),
     );
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
     await main.createState().flutterLocalNotificationsPlugin.show(0, 'Baby Medicine Intake Tracking', notificationMessage, notificationDetails);
@@ -47,10 +54,10 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
           "Summary",
           style: TextStyle(
             color: Colors.white,
-             fontSize: MediaQuery.of(context).size.width * 0.045,
+            fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
-        ),        
-        backgroundColor: appThemeColor,
+        ),
+        backgroundColor: appbar2,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -61,7 +68,10 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
             children: [
               Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 18.0, left: 13.0,),
+                margin: EdgeInsets.only(
+                  top: 18.0,
+                  left: 13.0,
+                ),
                 child: Text(
                   "Date and Time",
                   textAlign: TextAlign.left,
@@ -74,16 +84,18 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
               ),
               //Widget for display Date and Time
               RecordDateTimeWidget(
-                svgSrcDate: "assets/icons/testAM.svg",
-                svgSrcTime: "assets/icons/clock.svg",
-                date: widget.selectedDate,
-                dateDesc: babyFoodDateDesc,
-                time: widget.selectedTime,
-                timeDesc: babyFoodTimeDesc
-              ),
+                  svgSrcDate: "assets/icons/testAM.svg",
+                  svgSrcTime: "assets/icons/clock.svg",
+                  date: widget.selectedDate,
+                  dateDesc: babyFoodDateDesc,
+                  time: widget.selectedTime,
+                  timeDesc: babyFoodTimeDesc),
               Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                margin: EdgeInsets.only(
+                  top: 13.0,
+                  left: 13.0,
+                ),
                 child: Text(
                   "Conusmed Food",
                   textAlign: TextAlign.left,
@@ -104,7 +116,10 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
               ),
               Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                margin: EdgeInsets.only(
+                  top: 13.0,
+                  left: 13.0,
+                ),
                 child: Text(
                   "After Meal Behavior",
                   textAlign: TextAlign.left,
@@ -127,30 +142,48 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
                 child: SizedBox(
                   width: double.infinity,
                   child: FlatButton(
-                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
+                    padding: EdgeInsets.only(
+                      top: 10.0,
+                      bottom: 10.0,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    color: appThemeColor,
+                    color: appbar2,
                     textColor: Colors.white,
                     onPressed: () {
-                      if(widget.completeFoodRecord == true && widget.symptomsAndAllergies == false){
+                      if (widget.completeFoodRecord == true && widget.symptomsAndAllergies == false) {
                         notificationMessage = "Baby food record upload successfully.";
-                        careForBabyFunction.uploadBabyFoodRecordDone(
-                          widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, widget.symptomsAndAllergies, null, context,
-                        ).then((value) => showNotification(notificationMessage));
-                      }else if(widget.completeFoodRecord == false && widget.symptomsAndAllergies == true){
+                        careForBabyFunction
+                            .uploadBabyFoodRecordDone(
+                              widget.selectedBabyID,
+                              widget.selectedDate,
+                              widget.selectedTime,
+                              widget.foodMap,
+                              widget.symptomsAndAllergies,
+                              null,
+                              context,
+                            )
+                            .then((value) => showNotification(notificationMessage));
+                      } else if (widget.completeFoodRecord == false && widget.symptomsAndAllergies == true) {
                         notificationMessage = "Baby food record upload successfully.";
-                        careForBabyFunction.uploadBabyFoodRecordDone(
-                          widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, widget.symptomsAndAllergies, widget.symptomsAndAllergiesDesc, context,
-                        ).then((value) => showNotification(notificationMessage));
-                      }else if(widget.completeFoodRecord == false && widget.symptomsAndAllergies == false){
+                        careForBabyFunction
+                            .uploadBabyFoodRecordDone(
+                              widget.selectedBabyID,
+                              widget.selectedDate,
+                              widget.selectedTime,
+                              widget.foodMap,
+                              widget.symptomsAndAllergies,
+                              widget.symptomsAndAllergiesDesc,
+                              context,
+                            )
+                            .then((value) => showNotification(notificationMessage));
+                      } else if (widget.completeFoodRecord == false && widget.symptomsAndAllergies == false) {
                         notificationMessage = "Remember to update your baby's food record after 2 hours.";
-                        careForBabyFunction.uploadBabyFoodRecordPending(
-                          widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, context
-                        ).then((value) => showNotification(notificationMessage));
+                        careForBabyFunction
+                            .uploadBabyFoodRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, context)
+                            .then((value) => showNotification(notificationMessage));
                       }
-                      
                     },
                     child: Text(
                       "Upload Record",
@@ -159,7 +192,7 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
                         fontWeight: FontWeight.bold,
                         fontSize: MediaQuery.of(context).size.width * 0.045,
                       ),
-                    ), 
+                    ),
                   ),
                 ),
               ),

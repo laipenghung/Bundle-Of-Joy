@@ -21,26 +21,32 @@ class FoodIntakeTrackAddSummary extends StatefulWidget {
 class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
   MyApp main = MyApp();
   String notificationMessage;
-  
+
   void _showNotification(notificationMessage) async {
     await notification(notificationMessage);
   }
 
   Future<void> notification(notificationMessage) async {
     AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-      'Channel Id', 'Channel title', 'channel body', priority: Priority.high, importance: Importance.max, ticker: 'test', styleInformation: BigTextStyleInformation(''),
+      'Channel Id',
+      'Channel title',
+      'channel body',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+      styleInformation: BigTextStyleInformation(''),
     );
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
     await main.createState().flutterLocalNotificationsPlugin.show(0, 'Food Intake Tracking', notificationMessage, notificationDetails);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     FoodIntakeTrackFunction foodIntakeTrackFunction = FoodIntakeTrackFunction();
     DateTime parsedDate = DateTime.parse(widget.selectedDate);
     String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
     DateTime parsedTime = DateTime.parse(widget.selectedDate + " " + widget.selectedTime);
-    String formattedTime =  DateFormat('h:mm a').format(parsedTime);
+    String formattedTime = DateFormat('h:mm a').format(parsedTime);
     Map food = widget.foodMap;
     double bSugarBefore = double.parse(widget.bSugarBefore);
     //double bSugarAfter = double.parse(widget.bSugarAfter);
@@ -54,8 +60,8 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
-        ),        
-        backgroundColor: appThemeColor,
+        ),
+        backgroundColor: appbar1,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -64,7 +70,10 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
           children: <Widget>[
             Container(
               width: double.infinity,
-              margin: EdgeInsets.only(top: 18.0, left: 13.0,),
+              margin: EdgeInsets.only(
+                top: 18.0,
+                left: 13.0,
+              ),
               child: Text(
                 "Date and Time",
                 textAlign: TextAlign.left,
@@ -86,7 +95,10 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
             ),
             Container(
               width: double.infinity,
-              margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+              margin: EdgeInsets.only(
+                top: 13.0,
+                left: 13.0,
+              ),
               child: Text(
                 "Conusmed Food",
                 textAlign: TextAlign.left,
@@ -107,7 +119,10 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
             ),
             Container(
               width: double.infinity,
-              margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+              margin: EdgeInsets.only(
+                top: 13.0,
+                left: 13.0,
+              ),
               child: Text(
                 "Blood Sugar",
                 textAlign: TextAlign.left,
@@ -122,7 +137,7 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
             RecordBloodSugarDoneWidget(
               svgSrc: "assets/icons/blood-donation.svg",
               bSugarBefore: bSugarBefore,
-              bSugarAfter: (widget.bSugarAfter == null)? null : double.parse(widget.bSugarAfter),
+              bSugarAfter: (widget.bSugarAfter == null) ? null : double.parse(widget.bSugarAfter),
               showAnalyzer: false,
             ),
             Container(
@@ -130,23 +145,40 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
               child: SizedBox(
                 width: double.infinity,
                 child: FlatButton(
-                  padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
+                  padding: EdgeInsets.only(
+                    top: 10.0,
+                    bottom: 10.0,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
-                  color: appThemeColor,
+                  color: appbar1,
                   textColor: Colors.white,
                   onPressed: () {
-                    if(widget.bSugarAfter != null){
+                    if (widget.bSugarAfter != null) {
                       notificationMessage = "Food Record upload successfully.";
-                      foodIntakeTrackFunction.uploadFoodRecordDone(
-                        widget.selectedDate, widget.selectedTime, widget.bSugarBefore, widget.bSugarAfter, widget.foodMap, context,
-                      ).then((value) => _showNotification(notificationMessage));
-                    }else{
+                      foodIntakeTrackFunction
+                          .uploadFoodRecordDone(
+                            widget.selectedDate,
+                            widget.selectedTime,
+                            widget.bSugarBefore,
+                            widget.bSugarAfter,
+                            widget.foodMap,
+                            context,
+                          )
+                          .then((value) => _showNotification(notificationMessage));
+                    } else {
                       notificationMessage = "Remember to update your food record after 2 hours.";
-                      foodIntakeTrackFunction.uploadFoodRecordPending(
-                        widget.selectedDate, widget.selectedTime, widget.bSugarBefore, widget.bSugarAfter, widget.foodMap, context,
-                      ).then((value) => _showNotification(notificationMessage));
+                      foodIntakeTrackFunction
+                          .uploadFoodRecordPending(
+                            widget.selectedDate,
+                            widget.selectedTime,
+                            widget.bSugarBefore,
+                            widget.bSugarAfter,
+                            widget.foodMap,
+                            context,
+                          )
+                          .then((value) => _showNotification(notificationMessage));
                     }
                   },
                   child: Text(
@@ -156,13 +188,13 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                       fontWeight: FontWeight.bold,
                       fontSize: MediaQuery.of(context).size.width * 0.045,
                     ),
-                  ), 
+                  ),
                 ),
               ),
             ),
           ],
         ),
       ),
-    ); 
+    );
   }
 }

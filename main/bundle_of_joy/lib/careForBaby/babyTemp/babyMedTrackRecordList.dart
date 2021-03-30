@@ -11,9 +11,8 @@ class BabyMedTrackRecordList extends StatefulWidget {
   final bool completeRecord;
   final CollectionReference collectionReference;
   final String svgSrc, selectedBabyID;
-  BabyMedTrackRecordList({Key key, @required this.completeRecord, @required this.collectionReference, 
-    @required this.svgSrc, @required this.selectedBabyID}) : super(key: key);
-  
+  BabyMedTrackRecordList({Key key, @required this.completeRecord, @required this.collectionReference, @required this.svgSrc, @required this.selectedBabyID}) : super(key: key);
+
   @override
   _BabyMedTrackRecordListState createState() => _BabyMedTrackRecordListState();
 }
@@ -35,18 +34,16 @@ class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
-        ),        
-        backgroundColor: appThemeColor,
+        ),
+        backgroundColor: appbar2,
         centerTitle: true,
         actions: <Widget>[
           IconButton(
-            icon: Icon(
-              Icons.sort_rounded, 
-              color: Colors.white,
-            ), 
-            onPressed: () {
-              
-            })
+              icon: Icon(
+                Icons.sort_rounded,
+                color: Colors.white,
+              ),
+              onPressed: () {})
         ],
       ),
       body: SingleChildScrollView(
@@ -82,6 +79,7 @@ class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
                 return Container(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: ListView.builder(
+
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: snapshot.data.documents.length,

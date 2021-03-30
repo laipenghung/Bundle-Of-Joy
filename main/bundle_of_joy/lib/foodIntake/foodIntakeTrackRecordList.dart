@@ -24,7 +24,7 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final User user = FirebaseAuth.instance.currentUser;
   String databaseTable;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,21 +33,22 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
         title: Text(
           "Select Food Record",
           style: TextStyle(
+            shadows: <Shadow>[
+              Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
+            ],
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
-        ),        
-        backgroundColor: appThemeColor,
+        ),
+        backgroundColor: appbar1,
         centerTitle: true,
         actions: <Widget>[
           IconButton(
-            icon: Icon(
-              Icons.sort_rounded, 
-              color: Colors.white,
-            ), 
-            onPressed: () {
-              
-            })
+              icon: Icon(
+                Icons.sort_rounded,
+                color: Colors.white,
+              ),
+              onPressed: () {})
         ],
       ),
       body: SingleChildScrollView(
@@ -56,7 +57,6 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
           stream: widget.collectionReference.orderBy('selectedDate', descending: descendingDate).orderBy('selectedTime', descending: descendingTime).snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: SizedBox(
@@ -84,6 +84,7 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
                 return Container(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: ListView.builder(
+
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: snapshot.data.documents.length,

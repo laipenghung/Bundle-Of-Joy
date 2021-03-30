@@ -22,9 +22,14 @@ class BabyMedTrackUpadte extends StatefulWidget {
 class _BabyMedTrackUpadteState extends State<BabyMedTrackUpadte> {
   var bodyWidget;
 
-  void initState(){
+  void initState() {
     super.initState();
-    CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Pending");
+    CollectionReference collectionReference = FirebaseFirestore.instance
+        .collection("mother")
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .collection("baby")
+        .doc(widget.selectedBabyID)
+        .collection("tempRecord_Pending");
     bodyWidget = FutureBuilder<DocumentSnapshot>(
       future: collectionReference.doc(widget.babyTempRecordID).get(),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -32,7 +37,7 @@ class _BabyMedTrackUpadteState extends State<BabyMedTrackUpadte> {
           DateTime parsedDate = DateTime.parse(snapshot.data.data()["selectedDate"]);
           String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
           DateTime parsedTime = DateTime.parse(snapshot.data.data()["selectedDate"] + " " + snapshot.data.data()["selectedTime"]);
-          String formattedTime =  DateFormat('h:mm a').format(parsedTime);
+          String formattedTime = DateFormat('h:mm a').format(parsedTime);
           Map medicine = snapshot.data.data()["medsMap"];
           double tempBeforeMeds = double.parse(snapshot.data.data()["bTempBefore"]);
           //double tempAfterMeds = double.parse(snapshot.data.data()["bTempAfter"]);
@@ -46,7 +51,10 @@ class _BabyMedTrackUpadteState extends State<BabyMedTrackUpadte> {
               children: [
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.only(top: 18.0, left: 13.0,),
+                  margin: EdgeInsets.only(
+                    top: 18.0,
+                    left: 13.0,
+                  ),
                   child: Text(
                     "Date and Time",
                     textAlign: TextAlign.left,
@@ -68,7 +76,10 @@ class _BabyMedTrackUpadteState extends State<BabyMedTrackUpadte> {
                 ),
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                  margin: EdgeInsets.only(
+                    top: 13.0,
+                    left: 13.0,
+                  ),
                   child: Text(
                     "Conusmed Medicine",
                     textAlign: TextAlign.left,
@@ -89,7 +100,10 @@ class _BabyMedTrackUpadteState extends State<BabyMedTrackUpadte> {
                 ),
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                  margin: EdgeInsets.only(
+                    top: 13.0,
+                    left: 13.0,
+                  ),
                   child: Text(
                     "Body Temperature",
                     textAlign: TextAlign.left,
@@ -132,8 +146,8 @@ class _BabyMedTrackUpadteState extends State<BabyMedTrackUpadte> {
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
-        ),        
-        backgroundColor: appThemeColor,
+        ),
+        backgroundColor: appbar2,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -148,9 +162,7 @@ class RecordBodyTempUpdate extends StatefulWidget {
   final String svgSrc, selectedDate, selectedTime, recordID, babyID;
   final double tempBeforeMeds;
   final Map medsMap;
-  const RecordBodyTempUpdate({
-    Key key, this.svgSrc, this.tempBeforeMeds, this.selectedDate, this.selectedTime, this.medsMap, this.recordID, this.babyID
-  }) : super(key: key);
+  const RecordBodyTempUpdate({Key key, this.svgSrc, this.tempBeforeMeds, this.selectedDate, this.selectedTime, this.medsMap, this.recordID, this.babyID}) : super(key: key);
 
   @override
   _RecordBodyTempUpdateState createState() => _RecordBodyTempUpdateState();
@@ -168,34 +180,38 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
 
   Future<void> notification() async {
     AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-      'Channel Id', 'Channel title', 'channel body', priority: Priority.high, importance: Importance.max, ticker: 'test', styleInformation: BigTextStyleInformation(''),
+      'Channel Id',
+      'Channel title',
+      'channel body',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+      styleInformation: BigTextStyleInformation(''),
     );
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
     await main.createState().flutterLocalNotificationsPlugin.show(0, 'Baby Medicine Intake Tracking', 'Baby medicine record updated successfully.', notificationDetails);
   }
 
-  _showDialogBox(BuildContext context, dialogBoxContent){
+  _showDialogBox(BuildContext context, dialogBoxContent) {
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Opps!"),
-          content: Text(
-            dialogBoxContent
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("Ok"),
-              onPressed: (){
-                Navigator.of(context).pop();  
-              },
-            ),
-          ],
-        );
-      });
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Opps!"),
+            content: Text(dialogBoxContent),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Ok"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 
-  Widget babyTempModalBottomSheetWidget(BuildContext context){
+  Widget babyTempModalBottomSheetWidget(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.35,
       child: GestureDetector(
@@ -205,14 +221,23 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
             Container(
               padding: EdgeInsets.only(top: 3, bottom: 3),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft:Radius.circular(10.0), topRight:Radius.circular(10.0)),
-                color: appThemeColor,
-                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.65), blurRadius: 2.0, spreadRadius: 0.0, offset: Offset(2.0, 0),)],
-              ),   
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
+                color: appbar2,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.65),
+                    blurRadius: 2.0,
+                    spreadRadius: 0.0,
+                    offset: Offset(2.0, 0),
+                  )
+                ],
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Spacer(flex: 2,),
+                  Spacer(
+                    flex: 2,
+                  ),
                   Flexible(
                     flex: 4,
                     child: Container(
@@ -233,116 +258,125 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                     child: Container(
                       width: double.infinity,
                       child: Align(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          icon: Icon(Icons.close, color: Colors.white,), 
-                          onPressed: () => Navigator.of(context).pop(),
-                        )
-                      ),
+                          alignment: Alignment.centerRight,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.close,
+                              color: Colors.white,
+                            ),
+                            onPressed: () => Navigator.of(context).pop(),
+                          )),
                     ),
                   )
                 ],
               ),
             ),
             Container(
-                width: double.infinity,
-                margin: EdgeInsets.all(13),
-                child: Column(
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        ModalSheetText(
-                          title: "Body Temperature Reading",
-                          desc: "Body temperature reading 2 hour after medication.",
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5, bottom: 15),
-                          height: MediaQuery.of(context).size.width * 0.09,
-                          child: TextFormField(
-                            controller: bTempUpdateController,
-                            onChanged: (val) => setState(() => bTempUpdate = val),
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              hintText: "Body Temperature Reading",
-                              contentPadding: EdgeInsets.all(5),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(color: Colors.black.withOpacity(0.4), width: 0.8,),
+              width: double.infinity,
+              margin: EdgeInsets.all(13),
+              child: Column(
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      ModalSheetText(
+                        title: "Body Temperature Reading",
+                        desc: "Body temperature reading 2 hour after medication.",
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 5, bottom: 15),
+                        height: MediaQuery.of(context).size.width * 0.09,
+                        child: TextFormField(
+                          controller: bTempUpdateController,
+                          onChanged: (val) => setState(() => bTempUpdate = val),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: "Body Temperature Reading",
+                            contentPadding: EdgeInsets.all(5),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.black.withOpacity(0.4),
+                                width: 0.8,
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(
-                                  color: Colors.red, width: 0.8,
-                                ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                                width: 0.8,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.005),
-                    Column(
-                      children: <Widget>[
-                        SizedBox(
-                          width: double.infinity,
-                          child: FlatButton(
-                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
-                            textColor: Colors.black.withOpacity(0.65),
-                            onPressed: () {
-                              bTempUpdateController.clear();
-                            },
-                            child: Text(
-                              "Reset",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.width * 0.045,
-                              ),
-                            ), 
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.005),
+                  Column(children: <Widget>[
+                    SizedBox(
+                      width: double.infinity,
+                      child: FlatButton(
+                        padding: EdgeInsets.only(
+                          top: 10.0,
+                          bottom: 10.0,
+                        ),
+                        textColor: Colors.black.withOpacity(0.65),
+                        onPressed: () {
+                          bTempUpdateController.clear();
+                        },
+                        child: Text(
+                          "Reset",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.width * 0.045,
                           ),
                         ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: FlatButton(
-                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            color: appThemeColor,
-                            textColor: Colors.white,
-                            onPressed: () {
-                              if(bTempUpdateController.text.isNotEmpty){
-                                setState(() {
-                                  //bSugarUpdateController.clear();
-                                  Navigator.of(context).pop();
-                                });
-                              }else{
-                                dialogBoxContent = "Please make sure you entered your baby's body temperature reading into the " + 
-                                  "2 hours after medication section.";
-                                _showDialogBox(context, dialogBoxContent);
-                              }
-                            },
-                            child: Text(
-                              "Update",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.width * 0.045,
-                              ),
-                            ), 
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FlatButton(
+                        padding: EdgeInsets.only(
+                          top: 10.0,
+                          bottom: 10.0,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        ),
+                        color: appbar2,
+                        textColor: Colors.white,
+                        onPressed: () {
+                          if (bTempUpdateController.text.isNotEmpty) {
+                            setState(() {
+                              //bSugarUpdateController.clear();
+                              Navigator.of(context).pop();
+                            });
+                          } else {
+                            dialogBoxContent = "Please make sure you entered your baby's body temperature reading into the " + "2 hours after medication section.";
+                            _showDialogBox(context, dialogBoxContent);
+                          }
+                        },
+                        child: Text(
+                          "Update",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.width * 0.045,
                           ),
                         ),
-                      ]
+                      ),
                     ),
-                  ],
-                ),
+                  ]),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
       ),
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -368,9 +402,15 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    SvgPicture.asset(widget.svgSrc, height: 23, width: 23,),
+                    SvgPicture.asset(
+                      widget.svgSrc,
+                      height: 23,
+                      width: 23,
+                    ),
                     Container(
-                      padding: EdgeInsets.only(left: 10.0,),
+                      padding: EdgeInsets.only(
+                        left: 10.0,
+                      ),
                       child: Text(
                         "Body Temperature Reading",
                         style: TextStyle(
@@ -383,7 +423,9 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                 ),
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.only(top: 8.0,),
+                  margin: EdgeInsets.only(
+                    top: 8.0,
+                  ),
                   child: Text(
                     "This section display your baby's body temperature before and 2 hours after taking the medicine.",
                     textAlign: TextAlign.left,
@@ -395,78 +437,80 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                 ),
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.only(top: 15.0, bottom: 5.0,),
+                  margin: EdgeInsets.only(
+                    top: 15.0,
+                    bottom: 5.0,
+                  ),
                   child: Table(
                     //border: TableBorder.all(color: Colors.black),
                     children: [
-                      TableRow(
-                        children: [
-                          TableCell(
-                            child: Container(
-                              padding: EdgeInsets.only(top: 8, bottom: 8,),
-                              decoration: BoxDecoration(
+                      TableRow(children: [
+                        TableCell(
+                          child: Container(
+                            padding: EdgeInsets.only(
+                              top: 8,
+                              bottom: 8,
+                            ),
+                            decoration: BoxDecoration(
                                 border: Border(
-                                  right: BorderSide(
-                                    width: 0.5, 
+                              right: BorderSide(
+                                width: 0.5,
+                                color: Colors.black.withOpacity(0.65),
+                              ),
+                            )),
+                            child: Column(children: [
+                              Text(
+                                widget.tempBeforeMeds.toString() + " °C",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.width * 0.05,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(top: 3),
+                                child: Text(
+                                  "Before taking meds",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * 0.033,
                                     color: Colors.black.withOpacity(0.65),
                                   ),
-                                )
+                                ),
                               ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    widget.tempBeforeMeds.toString() + " °C",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: MediaQuery.of(context).size.width * 0.05,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(top: 3),
-                                    child: Text(
-                                      "Before taking meds",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: MediaQuery.of(context).size.width * 0.033,
-                                        color: Colors.black.withOpacity(0.65),
-                                      ),
-                                    ),
-                                  ),
-                                ] 
-                              ),
-                            ),
+                            ]),
                           ),
-                          TableCell(
-                            child: Container(
-                              padding: EdgeInsets.only(top: 8, bottom: 8,),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    (bTempUpdate == null || bTempUpdate == "")? "-" : bTempUpdate + "°C",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: MediaQuery.of(context).size.width * 0.05,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),  
-                                  Container(
-                                    padding: EdgeInsets.only(top: 3),
-                                    child: Text(
-                                      "After 2 hours",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: MediaQuery.of(context).size.width * 0.033,
-                                        color: Colors.black.withOpacity(0.65),
-                                      ),
-                                    ),
-                                  ),
-                                ] 
-                              ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: EdgeInsets.only(
+                              top: 8,
+                              bottom: 8,
                             ),
+                            child: Column(children: [
+                              Text(
+                                (bTempUpdate == null || bTempUpdate == "") ? "-" : bTempUpdate + "°C",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.width * 0.05,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(top: 3),
+                                child: Text(
+                                  "After 2 hours",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * 0.033,
+                                    color: Colors.black.withOpacity(0.65),
+                                  ),
+                                ),
+                              ),
+                            ]),
                           ),
-                        ]
-                      ), 
+                        ),
+                      ]),
                     ],
                   ),
                 ),
@@ -475,24 +519,29 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                   child: SizedBox(
                     width: double.infinity,
                     child: FlatButton(
-                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0,),
+                      padding: EdgeInsets.only(
+                        top: 8.0,
+                        bottom: 8.0,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
-                      color: appThemeColor,
+                      color: appbar2,
                       textColor: Colors.white,
                       onPressed: () {
-                        if(bTempUpdate != null){bTempUpdateController.text = bTempUpdate;}
+                        if (bTempUpdate != null) {
+                          bTempUpdateController.text = bTempUpdate;
+                        }
                         showModalBottomSheet(
-                        context: context,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                        ),
-                        isScrollControlled: true,
-                        builder: (context) => SingleChildScrollView(
-                          physics: ClampingScrollPhysics(),
-                              child: babyTempModalBottomSheetWidget(context),
-                        ));
+                            context: context,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                            ),
+                            isScrollControlled: true,
+                            builder: (context) => SingleChildScrollView(
+                                  physics: ClampingScrollPhysics(),
+                                  child: babyTempModalBottomSheetWidget(context),
+                                ));
                       },
                       child: Text(
                         "Update Blood Sugar Reading",
@@ -501,13 +550,13 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                         ),
-                      ), 
+                      ),
                     ),
                   ),
                 ),
                 BloodSugarUpdateText(),
               ],
-            ), 
+            ),
           ),
         ),
         Container(
@@ -515,22 +564,26 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
           child: SizedBox(
             width: double.infinity,
             child: FlatButton(
-              padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
+              padding: EdgeInsets.only(
+                top: 10.0,
+                bottom: 10.0,
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
-              color: appThemeColor,
+              color: appbar2,
               textColor: Colors.white,
               onPressed: () {
-                if(bTempUpdateController.text.isEmpty){
+                if (bTempUpdateController.text.isEmpty) {
                   dialogBoxContent = "Looks like u didn't enter anyting into 2 hours after taking medicine section." +
-                    "To update your baby current medicine record, please make sure you enter you baby's " + 
-                    "body temperature reading 2 hours after taking medicine.";
+                      "To update your baby current medicine record, please make sure you enter you baby's " +
+                      "body temperature reading 2 hours after taking medicine.";
                   _showDialogBox(context, dialogBoxContent);
-                }else{
-                  careForBabyFunction.updateBabyMedsRecordPending(
-                    widget.babyID, widget.selectedDate, widget.selectedTime, widget.tempBeforeMeds.toString(), bTempUpdate, widget.medsMap, widget.recordID, context
-                  ).then((value) => _showNotification());
+                } else {
+                  careForBabyFunction
+                      .updateBabyMedsRecordPending(
+                          widget.babyID, widget.selectedDate, widget.selectedTime, widget.tempBeforeMeds.toString(), bTempUpdate, widget.medsMap, widget.recordID, context)
+                      .then((value) => _showNotification());
                 }
               },
               child: Text(
@@ -540,7 +593,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                   fontWeight: FontWeight.bold,
                   fontSize: MediaQuery.of(context).size.width * 0.045,
                 ),
-              ), 
+              ),
             ),
           ),
         ),

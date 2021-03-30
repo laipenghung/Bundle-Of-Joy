@@ -26,7 +26,7 @@ class _VaccinationGrowthMainState extends State<VaccinationGrowthMain> {
             floating: true,
             pinned: true,
             stretch: true,
-            backgroundColor: appThemeColor,
+            backgroundColor: appbar2,
             stretchTriggerOffset: 100.0,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
@@ -35,11 +35,11 @@ class _VaccinationGrowthMainState extends State<VaccinationGrowthMain> {
                 StretchMode.zoomBackground,
               ],
               title: Text(
-                  "Vaccination & Growth",
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                  ),
+                "Vaccination & Growth",
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.045,
                 ),
+              ),
               background: Image.network(
                 "https://static.vecteezy.com/system/resources/previews/000/171/284/original/free-hand-drawn-vector-nightscape-illustration.jpg",
                 fit: BoxFit.cover,
@@ -62,22 +62,21 @@ class _VaccinationGrowthMainState extends State<VaccinationGrowthMain> {
                       "Baby Vaccination Tracking",
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width *0.055,
+                        fontSize: MediaQuery.of(context).size.width * 0.055,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   HorizontalCardWidget(
-                    title: "Baby Vaccination Records",
-                    description: "View all vaccines that that took by your baby.",
-                    svgSrc: "assets/icons/records.svg",
-                    press: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Vaccination(selectedBabyID: widget.selectedBabyID)),
-                      );
-                    }
-                  ),
+                      title: "Baby Vaccination Records",
+                      description: "View all vaccines that that took by your baby.",
+                      svgSrc: "assets/icons/records.svg",
+                      press: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Vaccination(selectedBabyID: widget.selectedBabyID)),
+                        );
+                      }),
                   //Baby Growth Tracking
                   Container(
                     width: MediaQuery.of(context).size.width * 1,
@@ -87,33 +86,31 @@ class _VaccinationGrowthMainState extends State<VaccinationGrowthMain> {
                       "Baby Growth Tracking",
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width *0.055,
+                        fontSize: MediaQuery.of(context).size.width * 0.055,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   HorizontalCardWidget(
-                    title: "Baby Height Tracking",
-                    description: "View your baby height record.",
-                    svgSrc: "assets/icons/height.svg",
-                    press: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) =>GrowthHeight(selectedBabyID: widget.selectedBabyID)),
-                      );
-                    }
-                  ),
+                      title: "Baby Height Tracking",
+                      description: "View your baby height record.",
+                      svgSrc: "assets/icons/height.svg",
+                      press: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => GrowthHeight(selectedBabyID: widget.selectedBabyID)),
+                        );
+                      }),
                   HorizontalCardWidget(
-                    title: "Baby Weight Tracking",
-                    description: "View your baby weight record.",
-                    svgSrc: "assets/icons/weight.svg",
-                    press: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => GrowthWeight(selectedBabyID: widget.selectedBabyID)),
-                      );
-                    }
-                  ),
+                      title: "Baby Weight Tracking",
+                      description: "View your baby weight record.",
+                      svgSrc: "assets/icons/weight.svg",
+                      press: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => GrowthWeight(selectedBabyID: widget.selectedBabyID)),
+                        );
+                      }),
                 ],
               ),
             ),

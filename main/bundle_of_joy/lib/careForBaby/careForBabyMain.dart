@@ -26,14 +26,16 @@ class CareForBabyMain extends StatefulWidget {
 class _CareForBabyMainState extends State<CareForBabyMain> {
   final User user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  
+
   @override
   Widget build(BuildContext context) {
     CollectionReference colRefBabyMedsComplete = _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done");
     CollectionReference colRefBabyMedsPending = _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Pending");
+
     CollectionReference colRefBabyFoodComplete = _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Done");
     CollectionReference colRefBabyFoodPending = _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Pending");
     
+
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       body: CustomScrollView(
@@ -44,7 +46,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
             floating: true,
             pinned: true,
             stretch: true,
-            backgroundColor: appThemeColor,
+            backgroundColor: appbar2,
             stretchTriggerOffset: 100.0,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
@@ -53,11 +55,11 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                 StretchMode.zoomBackground,
               ],
               title: Text(
-                  "Care For Baby",
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                  ),
+                "Care For Baby",
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.045,
                 ),
+              ),
               background: Image.network(
                 "https://image.freepik.com/free-vector/psychedelic-groovy-background-with-eaves_23-2148837578.jpg",
                 fit: BoxFit.cover,
@@ -80,12 +82,13 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                       "Baby Food Tracking",
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width *0.055,
+                        fontSize: MediaQuery.of(context).size.width * 0.055,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   HorizontalCardWidget(
+
                     title: "Baby Food Intake Record",
                     description: "View all of your baby's food record.",
                     svgSrc: "assets/icons/verify.svg",
@@ -103,20 +106,20 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                       );
                     }
                   ),
-                  HorizontalCardWidget(
-                    title: "Create New Baby Food Record",
-                    description: "Create a new food record for your baby.",
-                    svgSrc: "assets/icons/add.svg",
-                    press: (){
-                      Navigator.push(
-                        context,
-                        //MaterialPageRoute(builder: (context) => BabyFoodIntakeAdd1(selectedBabyID: widget.selectedBabyID)),
-                        MaterialPageRoute(builder: (context) => BabyFoodIntakeTrackAdd(selectedBabyID: widget.selectedBabyID)),
 
-                      );
-                    }
-                  ),
                   HorizontalCardWidget(
+                      title: "Create New Baby Food Record",
+                      description: "Create a new food record for your baby.",
+                      svgSrc: "assets/icons/add.svg",
+                      press: () {
+                        Navigator.push(
+                          context,
+                          //MaterialPageRoute(builder: (context) => BabyFoodIntakeAdd1(selectedBabyID: widget.selectedBabyID)),
+                          MaterialPageRoute(builder: (context) => BabyFoodIntakeTrackAdd(selectedBabyID: widget.selectedBabyID)),
+                        );
+                      }),
+                  HorizontalCardWidget(
+
                     title: "Update Pending Baby Food Record",
                     description: "Update your baby's existing food record.",
                     svgSrc: "assets/icons/edit.svg",
@@ -134,6 +137,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                       );
                     }
                   ),
+
                   //Baby Medicine Tracking
                   Container(
                     width: MediaQuery.of(context).size.width * 1,
@@ -143,57 +147,56 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                       "Baby Medicine Tracking",
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width *0.055,
+                        fontSize: MediaQuery.of(context).size.width * 0.055,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   HorizontalCardWidget(
-                    title: "Medicine Intake Record",
-                    description: "View all of your baby's medicine record.",
-                    svgSrc: "assets/icons/verify.svg",
-                    press: (){
-                      Navigator.push(
-                        context,
-                        //MaterialPageRoute(builder: (context) =>BabyTempListDone(selectedBabyID: widget.selectedBabyID)),
-                        MaterialPageRoute(builder: (context) => BabyMedTrackRecordList(
-                          selectedBabyID: widget.selectedBabyID,
-                          svgSrc: "assets/icons/medsRecord.svg",
-                          completeRecord: true,
-                          collectionReference: colRefBabyMedsComplete,
-                        )),
-                      );
-                    }
-                  ),
+                      title: "Medicine Intake Record",
+                      description: "View all of your baby's medicine record.",
+                      svgSrc: "assets/icons/verify.svg",
+                      press: () {
+                        Navigator.push(
+                          context,
+                          //MaterialPageRoute(builder: (context) =>BabyTempListDone(selectedBabyID: widget.selectedBabyID)),
+                          MaterialPageRoute(
+                              builder: (context) => BabyMedTrackRecordList(
+                                    selectedBabyID: widget.selectedBabyID,
+                                    svgSrc: "assets/icons/medsRecord.svg",
+                                    completeRecord: true,
+                                    collectionReference: colRefBabyMedsComplete,
+                                  )),
+                        );
+                      }),
                   HorizontalCardWidget(
-                    title: "Create New Medicine Record",
-                    description: "Create a new medicine record for your baby.",
-                    svgSrc: "assets/icons/add.svg",
-                    press: (){
-                      Navigator.push(
-                        context,
-                        //MaterialPageRoute(builder: (context) => BabyTempAdd1(selectedBabyID: widget.selectedBabyID)),
-                        MaterialPageRoute(builder: (context) => BabyMedTrackAdd(selectedBabyID: widget.selectedBabyID)),
-                      );
-                    }
-                  ),
+                      title: "Create New Medicine Record",
+                      description: "Create a new medicine record for your baby.",
+                      svgSrc: "assets/icons/add.svg",
+                      press: () {
+                        Navigator.push(
+                          context,
+                          //MaterialPageRoute(builder: (context) => BabyTempAdd1(selectedBabyID: widget.selectedBabyID)),
+                          MaterialPageRoute(builder: (context) => BabyMedTrackAdd(selectedBabyID: widget.selectedBabyID)),
+                        );
+                      }),
                   HorizontalCardWidget(
-                    title: "Update Pending Medicine Record",
-                    description: "Update your baby's existing medicine record.",
-                    svgSrc: "assets/icons/edit.svg",
-                    press: (){
-                      Navigator.push(
-                        context,
-                        //MaterialPageRoute(builder: (context) => BabyTempListPending(selectedBabyID: widget.selectedBabyID)),
-                        MaterialPageRoute(builder: (context) => BabyMedTrackRecordList(
-                          selectedBabyID: widget.selectedBabyID,
-                          svgSrc: "assets/icons/medsRecord.svg",
-                          completeRecord: false,
-                          collectionReference: colRefBabyMedsPending,
-                        )),
-                      );
-                    }
-                  ),
+                      title: "Update Pending Medicine Record",
+                      description: "Update your baby's existing medicine record.",
+                      svgSrc: "assets/icons/edit.svg",
+                      press: () {
+                        Navigator.push(
+                          context,
+                          //MaterialPageRoute(builder: (context) => BabyTempListPending(selectedBabyID: widget.selectedBabyID)),
+                          MaterialPageRoute(
+                              builder: (context) => BabyMedTrackRecordList(
+                                    selectedBabyID: widget.selectedBabyID,
+                                    svgSrc: "assets/icons/medsRecord.svg",
+                                    completeRecord: false,
+                                    collectionReference: colRefBabyMedsPending,
+                                  )),
+                        );
+                      }),
                 ],
               ),
             ),

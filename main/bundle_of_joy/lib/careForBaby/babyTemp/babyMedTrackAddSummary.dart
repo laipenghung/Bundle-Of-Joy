@@ -23,30 +23,36 @@ class BabyMedTrackAddSummary extends StatefulWidget {
 class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
   MyApp main = MyApp();
   String notificationMessage;
-  
+
   void _showNotification(notificationMessage) async {
     await notification(notificationMessage);
   }
 
   Future<void> notification(notificationMessage) async {
     AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-      'Channel Id', 'Channel title', 'channel body', priority: Priority.high, importance: Importance.max, ticker: 'test', styleInformation: BigTextStyleInformation(''),
+      'Channel Id',
+      'Channel title',
+      'channel body',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+      styleInformation: BigTextStyleInformation(''),
     );
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
     await main.createState().flutterLocalNotificationsPlugin.show(0, 'Baby Medicine Intake Tracking', notificationMessage, notificationDetails);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     CareForBabyFunction careForBabyFunction = CareForBabyFunction();
     DateTime parsedDate = DateTime.parse(widget.selectedDate);
     String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
-    DateTime parsedTime = DateTime.parse(widget.selectedDate+ " " + widget.selectedTime);
-    String formattedTime =  DateFormat('h:mm a').format(parsedTime);
+    DateTime parsedTime = DateTime.parse(widget.selectedDate + " " + widget.selectedTime);
+    String formattedTime = DateFormat('h:mm a').format(parsedTime);
     Map medicine = widget.medsMap;
     double tempBeforeMeds = double.parse(widget.bTempBefore);
     //double tempAfterMeds = double.parse(widget.bTempAfter);
-    
+
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
@@ -54,10 +60,10 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
           "Summary",
           style: TextStyle(
             color: Colors.white,
-             fontSize: MediaQuery.of(context).size.width * 0.045,
+            fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
-        ),        
-        backgroundColor: appThemeColor,
+        ),
+        backgroundColor: appbar2,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -66,7 +72,10 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
           children: [
             Container(
               width: double.infinity,
-              margin: EdgeInsets.only(top: 18.0, left: 13.0,),
+              margin: EdgeInsets.only(
+                top: 18.0,
+                left: 13.0,
+              ),
               child: Text(
                 "Date and Time",
                 textAlign: TextAlign.left,
@@ -88,7 +97,10 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
             ),
             Container(
               width: double.infinity,
-              margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+              margin: EdgeInsets.only(
+                top: 13.0,
+                left: 13.0,
+              ),
               child: Text(
                 "Conusmed Medicine",
                 textAlign: TextAlign.left,
@@ -109,7 +121,10 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
             ),
             Container(
               width: double.infinity,
-              margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+              margin: EdgeInsets.only(
+                top: 13.0,
+                left: 13.0,
+              ),
               child: Text(
                 "Body Temperature",
                 textAlign: TextAlign.left,
@@ -124,30 +139,35 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
             RecordBodyTempWidget(
               svgSrc: "assets/icons/thermometer.svg",
               tempBeforeMeds: tempBeforeMeds,
-              tempAferMeds: (widget.bTempAfter == null)? null : double.parse(widget.bTempAfter),
+              tempAferMeds: (widget.bTempAfter == null) ? null : double.parse(widget.bTempAfter),
             ),
             Container(
               margin: EdgeInsets.only(left: 13, right: 13, bottom: 25),
               child: SizedBox(
                 width: double.infinity,
                 child: FlatButton(
-                  padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
+                  padding: EdgeInsets.only(
+                    top: 10.0,
+                    bottom: 10.0,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
-                  color: appThemeColor,
+                  color: appbar2,
                   textColor: Colors.white,
                   onPressed: () {
-                    if(widget.bTempAfter != null){
+                    if (widget.bTempAfter != null) {
                       notificationMessage = "Baby Medicine Record upload successfully.";
-                      careForBabyFunction.uploadBabyMedsRecordDone(
-                        widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.bTempBefore, widget.bTempAfter, widget.medsMap, context
-                      ).then((value) => _showNotification(notificationMessage));
-                    }else{
+                      careForBabyFunction
+                          .uploadBabyMedsRecordDone(
+                              widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.bTempBefore, widget.bTempAfter, widget.medsMap, context)
+                          .then((value) => _showNotification(notificationMessage));
+                    } else {
                       notificationMessage = "Remember to update your baby's body temperature reading after 2 hours.";
-                      careForBabyFunction.uploadBabyMedsRecordPending(
-                        widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.bTempBefore, widget.bTempAfter, widget.medsMap, context
-                      ).then((value) => _showNotification(notificationMessage));
+                      careForBabyFunction
+                          .uploadBabyMedsRecordPending(
+                              widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.bTempBefore, widget.bTempAfter, widget.medsMap, context)
+                          .then((value) => _showNotification(notificationMessage));
                     }
                   },
                   child: Text(
@@ -157,12 +177,12 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
                       fontWeight: FontWeight.bold,
                       fontSize: MediaQuery.of(context).size.width * 0.045,
                     ),
-                  ), 
+                  ),
                 ),
               ),
             ),
           ],
-        ),        
+        ),
       ),
     );
   }
