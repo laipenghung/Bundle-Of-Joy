@@ -1,4 +1,5 @@
 import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeTrackAdd.dart';
+import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeTrackRecordList.dart';
 import 'package:bundle_of_joy/careForBaby/babyTemp/babyMedTrackAdd.dart';
 import 'package:bundle_of_joy/careForBaby/babyTemp/babyMedTrackRecordList.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
@@ -30,6 +31,10 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
   Widget build(BuildContext context) {
     CollectionReference colRefBabyMedsComplete = _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done");
     CollectionReference colRefBabyMedsPending = _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Pending");
+
+    CollectionReference colRefBabyFoodComplete = _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Done");
+    CollectionReference colRefBabyFoodPending = _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Pending");
+    
 
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
@@ -83,15 +88,25 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                     ),
                   ),
                   HorizontalCardWidget(
-                      title: "Baby Food Intake Record",
-                      description: "View all of your baby's food record.",
-                      svgSrc: "assets/icons/verify.svg",
-                      press: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BabyFoodIntakeListDone(selectedBabyID: widget.selectedBabyID)),
-                        );
-                      }),
+
+                    title: "Baby Food Intake Record",
+                    description: "View all of your baby's food record.",
+                    svgSrc: "assets/icons/verify.svg",
+                    press: (){
+                      Navigator.push(
+                        context,
+                        //MaterialPageRoute(builder: (context) => BabyFoodIntakeListDone(selectedBabyID: widget.selectedBabyID)),
+                        MaterialPageRoute(builder: (context) => BabyFoodIntakeTrackRecordList(
+                          selectedBabyID: widget.selectedBabyID, 
+                          collectionReference: colRefBabyFoodComplete,
+                          completeBabyFoodRecord: true,
+                          completeRecord: true,
+                          svgSrc: "assets/icons/recipe.svg",
+                        )),
+                      );
+                    }
+                  ),
+
                   HorizontalCardWidget(
                       title: "Create New Baby Food Record",
                       description: "Create a new food record for your baby.",
@@ -104,15 +119,25 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                         );
                       }),
                   HorizontalCardWidget(
-                      title: "Update Pending Baby Food Record",
-                      description: "Update your baby's existing food record.",
-                      svgSrc: "assets/icons/edit.svg",
-                      press: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BabyFoodIntakeListPending(selectedBabyID: widget.selectedBabyID)),
-                        );
-                      }),
+
+                    title: "Update Pending Baby Food Record",
+                    description: "Update your baby's existing food record.",
+                    svgSrc: "assets/icons/edit.svg",
+                    press: (){
+                      Navigator.push(
+                        context,
+                        //MaterialPageRoute(builder: (context) => BabyFoodIntakeListPending(selectedBabyID: widget.selectedBabyID)),
+                        MaterialPageRoute(builder: (context) => BabyFoodIntakeTrackRecordList(
+                          selectedBabyID: widget.selectedBabyID, 
+                          collectionReference: colRefBabyFoodPending,
+                          completeBabyFoodRecord: false,
+                          completeRecord: false,
+                          svgSrc: "assets/icons/recipe.svg",
+                        )),
+                      );
+                    }
+                  ),
+
                   //Baby Medicine Tracking
                   Container(
                     width: MediaQuery.of(context).size.width * 1,

@@ -79,55 +79,52 @@ class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
                 return Container(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: snapshot.data.documents.length,
-                      itemBuilder: (_, index) {
-                        return Container(
-                          child: RecordListViewWidget(
-                            svgSrc: widget.svgSrc,
-                            recordDate: DateFormat('d MMM yyyy').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'])),
-                            recordTime: DateFormat('h:mm a')
-                                .format(DateTime.parse(snapshot.data.documents[index]['selectedDate'] + " " + snapshot.data.documents[index]['selectedTime'])),
-                            delete: () {
-                              if (widget.completeRecord == true) {
-                                setState(() => databaseTable = "tempRecord_Done");
-                              } else {
-                                setState(() => databaseTable = "tempRecord_Pending");
-                              }
-                              _db
-                                  .collection("mother")
-                                  .doc(user.uid)
-                                  .collection("baby")
-                                  .doc(widget.selectedBabyID)
-                                  .collection(databaseTable)
-                                  .doc(snapshot.data.documents[index]['recordID'])
-                                  .delete();
-                            },
-                            press: () {
-                              if (widget.completeRecord == true) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => BabyMedTrackView(
-                                            babyTempRecordID: snapshot.data.documents[index]["recordID"],
-                                            selectedBabyID: widget.selectedBabyID,
-                                          )),
-                                );
-                              } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => BabyMedTrackUpadte(
-                                            babyTempRecordID: snapshot.data.documents[index]["recordID"],
-                                            selectedBabyID: widget.selectedBabyID,
-                                          )),
-                                );
-                              }
-                            },
-                          ),
-                        );
-                      }),
+
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data.documents.length,
+                    itemBuilder: (_, index){
+                      return Container(
+                        child: RecordListViewWidget(
+                          svgSrc: widget.svgSrc,
+                          recordDate: DateFormat('d MMM yyyy').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'])),
+                          recordTime: DateFormat('h:mm a').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'] + " " + snapshot.data.documents[index]['selectedTime'])),
+                          babyFoodRecord: false,
+                          longPress: (){
+                            
+                          },
+                          delete: (){
+                            if(widget.completeRecord == true){
+                              setState(() => databaseTable = "tempRecord_Done");
+                            }else{
+                              setState(() => databaseTable = "tempRecord_Pending");
+                            }
+                            _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID)
+                              .collection(databaseTable).doc(snapshot.data.documents[index]['recordID']).delete();
+                          },
+                          press: (){
+                            if(widget.completeRecord == true){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => BabyMedTrackView(
+                                  babyTempRecordID: snapshot.data.documents[index]["recordID"],
+                                  selectedBabyID: widget.selectedBabyID,
+                                )),
+                              );
+                            }else{
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => BabyMedTrackUpadte(
+                                  babyTempRecordID: snapshot.data.documents[index]["recordID"],
+                                  selectedBabyID: widget.selectedBabyID,
+                                )),
+                              );
+                            } 
+                          },
+                        ),
+                      );
+                    }
+                  ),
                 );
               }
             } else if (snapshot.hasError) {

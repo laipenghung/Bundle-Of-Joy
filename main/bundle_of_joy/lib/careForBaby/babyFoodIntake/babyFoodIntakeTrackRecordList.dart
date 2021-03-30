@@ -1,7 +1,4 @@
-import 'dart:developer';
-
-import 'package:bundle_of_joy/foodIntake/foodIntakeTrackUpdate.dart';
-import 'package:bundle_of_joy/foodIntake/foodIntakeTrackView.dart';
+import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeTrackView.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:bundle_of_joy/widgets/recordListViewWidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,22 +6,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class FoodIntakeTrackRecordList extends StatefulWidget {
-  final bool completeRecord;
+class BabyFoodIntakeTrackRecordList extends StatefulWidget {
+  final bool completeRecord, completeBabyFoodRecord;
   final CollectionReference collectionReference;
-  final String svgSrc;
-  FoodIntakeTrackRecordList({Key key, @required this.completeRecord, @required this.collectionReference, @required this.svgSrc}) : super(key: key);
-
+  final String svgSrc, selectedBabyID;
+  BabyFoodIntakeTrackRecordList({Key key, @required this.completeRecord, @required this.collectionReference, 
+    @required this.svgSrc, @required this.selectedBabyID, this.completeBabyFoodRecord}) : super(key: key);
   @override
-  _FoodIntakeTrackRecordListState createState() => _FoodIntakeTrackRecordListState();
+  _BabyFoodIntakeTrackRecordListState createState() => _BabyFoodIntakeTrackRecordListState();
 }
 
-class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
+class _BabyFoodIntakeTrackRecordListState extends State<BabyFoodIntakeTrackRecordList> {
   bool descendingDate = true, descendingTime = true;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final User user = FirebaseAuth.instance.currentUser;
   String databaseTable;
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,22 +30,21 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
         title: Text(
           "Select Food Record",
           style: TextStyle(
-            shadows: <Shadow>[
-              Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
-            ],
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
-        ),
-        backgroundColor: appbar1,
+        ),        
+        backgroundColor: appThemeColor,
         centerTitle: true,
         actions: <Widget>[
           IconButton(
-              icon: Icon(
-                Icons.sort_rounded,
-                color: Colors.white,
-              ),
-              onPressed: () {})
+            icon: Icon(
+              Icons.sort_rounded, 
+              color: Colors.white,
+            ), 
+            onPressed: () {
+              
+            })
         ],
       ),
       body: SingleChildScrollView(
@@ -84,7 +80,6 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
                 return Container(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: ListView.builder(
-
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: snapshot.data.documents.length,
@@ -94,28 +89,36 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
                           svgSrc: widget.svgSrc,
                           recordDate: DateFormat('d MMM yyyy').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'])),
                           recordTime: DateFormat('h:mm a').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'] + " " + snapshot.data.documents[index]['selectedTime'])),
-                          babyFoodRecord: false,
+                          babyFoodRecord: true,
+                          completeBabyFoodRecord: widget.completeBabyFoodRecord,
+                          symptomsAllergies: (widget.completeRecord == true)
+                            ? snapshot.data.documents[index]["symptomsAndAllergies"] : null,
                           longPress: (){
-                            log("message");
+                            
                           },
                           delete: (){
                             if(widget.completeRecord == true){
-                              setState(() => databaseTable = "foodIntake_Done");
+                              setState(() => databaseTable = "babyFoodIntake_Done");
                             }else{
-                              setState(() => databaseTable = "foodIntake_Pending");
+                              setState(() => databaseTable = "babyFoodIntake_Pending");
                             }
-                            _db.collection("mother").doc(user.uid).collection(databaseTable).doc(snapshot.data.documents[index]['recordID']).delete();
+                            _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection(databaseTable)
+                              .doc(snapshot.data.documents[index]['recordID']).delete();
                           },
                           press: (){
                             if(widget.completeRecord == true){
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => FoodIntakeTrackView(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
+                                MaterialPageRoute(builder: (context) => BabyFoodIntakeTrackView(
+                                  recordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID,
+                                )),
                               );
                             }else{
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => FoodIntakeTrackUpdate(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
+                                MaterialPageRoute(builder: (context) => BabyFoodIntakeTrackView(
+                                  recordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID,
+                                )),
                               );
                             } 
                           },
