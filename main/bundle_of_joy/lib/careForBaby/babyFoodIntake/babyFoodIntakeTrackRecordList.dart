@@ -1,5 +1,4 @@
-import 'package:bundle_of_joy/careForBaby/babyTemp/babyMedTrackUpdate.dart';
-import 'package:bundle_of_joy/careForBaby/babyTemp/babyMedTrackView.dart';
+import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeTrackView.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:bundle_of_joy/widgets/recordListViewWidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,30 +6,29 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class BabyMedTrackRecordList extends StatefulWidget {
-  final bool completeRecord;
+class BabyFoodIntakeTrackRecordList extends StatefulWidget {
+  final bool completeRecord, completeBabyFoodRecord;
   final CollectionReference collectionReference;
   final String svgSrc, selectedBabyID;
-  BabyMedTrackRecordList({Key key, @required this.completeRecord, @required this.collectionReference, 
-    @required this.svgSrc, @required this.selectedBabyID}) : super(key: key);
-  
+  BabyFoodIntakeTrackRecordList({Key key, @required this.completeRecord, @required this.collectionReference, 
+    @required this.svgSrc, @required this.selectedBabyID, this.completeBabyFoodRecord}) : super(key: key);
   @override
-  _BabyMedTrackRecordListState createState() => _BabyMedTrackRecordListState();
+  _BabyFoodIntakeTrackRecordListState createState() => _BabyFoodIntakeTrackRecordListState();
 }
 
-class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
+class _BabyFoodIntakeTrackRecordListState extends State<BabyFoodIntakeTrackRecordList> {
   bool descendingDate = true, descendingTime = true;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final User user = FirebaseAuth.instance.currentUser;
   String databaseTable;
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
         title: Text(
-          "Select Medicine Record",
+          "Select Food Record",
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
@@ -91,34 +89,35 @@ class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
                           svgSrc: widget.svgSrc,
                           recordDate: DateFormat('d MMM yyyy').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'])),
                           recordTime: DateFormat('h:mm a').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'] + " " + snapshot.data.documents[index]['selectedTime'])),
-                          babyFoodRecord: false,
+                          babyFoodRecord: true,
+                          completeBabyFoodRecord: widget.completeBabyFoodRecord,
+                          symptomsAllergies: (widget.completeRecord == true)
+                            ? snapshot.data.documents[index]["symptomsAndAllergies"] : null,
                           longPress: (){
                             
                           },
                           delete: (){
                             if(widget.completeRecord == true){
-                              setState(() => databaseTable = "tempRecord_Done");
+                              setState(() => databaseTable = "babyFoodIntake_Done");
                             }else{
-                              setState(() => databaseTable = "tempRecord_Pending");
+                              setState(() => databaseTable = "babyFoodIntake_Pending");
                             }
-                            _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID)
-                              .collection(databaseTable).doc(snapshot.data.documents[index]['recordID']).delete();
+                            _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection(databaseTable)
+                              .doc(snapshot.data.documents[index]['recordID']).delete();
                           },
                           press: (){
                             if(widget.completeRecord == true){
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => BabyMedTrackView(
-                                  babyTempRecordID: snapshot.data.documents[index]["recordID"],
-                                  selectedBabyID: widget.selectedBabyID,
+                                MaterialPageRoute(builder: (context) => BabyFoodIntakeTrackView(
+                                  recordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID,
                                 )),
                               );
                             }else{
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => BabyMedTrackUpadte(
-                                  babyTempRecordID: snapshot.data.documents[index]["recordID"],
-                                  selectedBabyID: widget.selectedBabyID,
+                                MaterialPageRoute(builder: (context) => BabyFoodIntakeTrackView(
+                                  recordID: snapshot.data.documents[index]["recordID"], selectedBabyID: widget.selectedBabyID,
                                 )),
                               );
                             } 
