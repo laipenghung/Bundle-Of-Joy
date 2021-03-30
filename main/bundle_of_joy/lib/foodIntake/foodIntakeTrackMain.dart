@@ -71,7 +71,7 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
                         context,
                         //MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
                         MaterialPageRoute(builder: (context) => FoodIntakeTrackRecordList(
-                          svgSrc: "assets/icons/menu.svg",
+                          svgSrc: "assets/icons/recipe.svg",
                           completeRecord: true,
                           collectionReference: collectionReferenceComplete,
                         )),
@@ -99,7 +99,7 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => FoodIntakeTrackRecordList(
-                          svgSrc: "assets/icons/menu.svg",
+                          svgSrc: "assets/icons/recipe.svg",
                           completeRecord: false,
                           collectionReference: collectionReferencePending,
                         )),

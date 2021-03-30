@@ -1,4 +1,5 @@
 import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeTrackAdd.dart';
+import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeTrackRecordList.dart';
 import 'package:bundle_of_joy/careForBaby/babyTemp/babyMedTrackAdd.dart';
 import 'package:bundle_of_joy/careForBaby/babyTemp/babyMedTrackRecordList.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
@@ -30,6 +31,8 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
   Widget build(BuildContext context) {
     CollectionReference colRefBabyMedsComplete = _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done");
     CollectionReference colRefBabyMedsPending = _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Pending");
+    CollectionReference colRefBabyFoodComplete = _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Done");
+    CollectionReference colRefBabyFoodPending = _db.collection('mother').doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Pending");
     
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
@@ -89,7 +92,14 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                     press: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BabyFoodIntakeListDone(selectedBabyID: widget.selectedBabyID)),
+                        //MaterialPageRoute(builder: (context) => BabyFoodIntakeListDone(selectedBabyID: widget.selectedBabyID)),
+                        MaterialPageRoute(builder: (context) => BabyFoodIntakeTrackRecordList(
+                          selectedBabyID: widget.selectedBabyID, 
+                          collectionReference: colRefBabyFoodComplete,
+                          completeBabyFoodRecord: true,
+                          completeRecord: true,
+                          svgSrc: "assets/icons/recipe.svg",
+                        )),
                       );
                     }
                   ),
@@ -113,7 +123,14 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                     press: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BabyFoodIntakeListPending(selectedBabyID: widget.selectedBabyID)),
+                        //MaterialPageRoute(builder: (context) => BabyFoodIntakeListPending(selectedBabyID: widget.selectedBabyID)),
+                        MaterialPageRoute(builder: (context) => BabyFoodIntakeTrackRecordList(
+                          selectedBabyID: widget.selectedBabyID, 
+                          collectionReference: colRefBabyFoodPending,
+                          completeBabyFoodRecord: false,
+                          completeRecord: false,
+                          svgSrc: "assets/icons/recipe.svg",
+                        )),
                       );
                     }
                   ),

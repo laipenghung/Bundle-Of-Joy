@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bundle_of_joy/foodIntake/foodIntakeTrackUpdate.dart';
 import 'package:bundle_of_joy/foodIntake/foodIntakeTrackView.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
@@ -91,6 +93,10 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
                           svgSrc: widget.svgSrc,
                           recordDate: DateFormat('d MMM yyyy').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'])),
                           recordTime: DateFormat('h:mm a').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'] + " " + snapshot.data.documents[index]['selectedTime'])),
+                          babyFoodRecord: false,
+                          longPress: (){
+                            log("message");
+                          },
                           delete: (){
                             if(widget.completeRecord == true){
                               setState(() => databaseTable = "foodIntake_Done");
