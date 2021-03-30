@@ -6,12 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
-enum UploadMethod {uploadPending, uploadComplete}
+enum UploadMethod { uploadPending, uploadComplete }
 
 class BabyFoodIntakeTrackAdd extends StatefulWidget {
   final String selectedBabyID;
-  BabyFoodIntakeTrackAdd({Key key, this.selectedBabyID,}) : super(key: key);
-  
+  BabyFoodIntakeTrackAdd({
+    Key key,
+    this.selectedBabyID,
+  }) : super(key: key);
+
   @override
   _BabyFoodIntakeTrackAddState createState() => _BabyFoodIntakeTrackAddState();
 }
@@ -23,7 +26,6 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
   TextEditingController foodNameController = TextEditingController();
   TextEditingController foodQuantityController = TextEditingController();
   TextEditingController quantityMearsurementController = TextEditingController();
-  
 
   //Used for date section only
   DateTime pickedDate;
@@ -46,44 +48,43 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
   String uploadPendingText = "Upload as pending record.";
   String uploadCompleteText = "Upload as complete record.";
 
-  void initState(){
+  void initState() {
     super.initState();
     pickedDate = DateTime.now();
-    (pickedDate.day < 10)? day = "0${pickedDate.day}" : day = "${pickedDate.day}";
-    (pickedDate.month < 10)? month = "0${pickedDate.month}" : month = "${pickedDate.month}";
+    (pickedDate.day < 10) ? day = "0${pickedDate.day}" : day = "${pickedDate.day}";
+    (pickedDate.month < 10) ? month = "0${pickedDate.month}" : month = "${pickedDate.month}";
     year = "${pickedDate.year}";
     dateToPass = year + "-" + month + "-" + day;
     formattedDate = DateFormat('dd MMM yyyy').format(pickedDate);
 
     time = TimeOfDay.now();
-    (time.hour < 10)? hour = "0${time.hour}" : hour = "${time.hour}";
-    (time.minute < 10)? min = "0${time.minute}" : min = "${time.minute}";
+    (time.hour < 10) ? hour = "0${time.hour}" : hour = "${time.hour}";
+    (time.minute < 10) ? min = "0${time.minute}" : min = "${time.minute}";
     timeToPass = hour + ":" + min;
     DateTime parsedTime = DateTime.parse(dateToPass + " " + timeToPass);
-    formattedTime =  DateFormat('h:mm a').format(parsedTime);
+    formattedTime = DateFormat('h:mm a').format(parsedTime);
   }
 
-  _showDialogBox(BuildContext context, dialogBoxContent){
+  _showDialogBox(BuildContext context, dialogBoxContent) {
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Opps!"),
-          content: Text(
-            dialogBoxContent,
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("Ok"),
-              onPressed: (){
-                Navigator.of(context).pop();  
-              },
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Opps!"),
+            content: Text(
+              dialogBoxContent,
             ),
-          ],
-        );
-      });
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Ok"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
-
 
   //Date Section Widget
   _pickDate() async {
@@ -96,7 +97,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.dark(
-              surface: appThemeColor,
+              surface: appbar2,
               onSurface: Colors.black,
             ),
           ),
@@ -108,8 +109,8 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
     if (date != null) {
       setState(() {
         pickedDate = date;
-        (pickedDate.day < 10)? day = "0${pickedDate.day}" : day = "${pickedDate.day}";
-        (pickedDate.month < 10)? month = "0${pickedDate.month}" : month = "${pickedDate.month}";
+        (pickedDate.day < 10) ? day = "0${pickedDate.day}" : day = "${pickedDate.day}";
+        (pickedDate.month < 10) ? month = "0${pickedDate.month}" : month = "${pickedDate.month}";
         year = "${pickedDate.year}";
         dateToPass = year + "-" + month + "-" + day;
         DateTime parsedDate = DateTime.parse(dateToPass);
@@ -118,7 +119,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
     }
   }
 
-  Widget dateWidgetContent(BuildContext context){
+  Widget dateWidgetContent(BuildContext context) {
     return Column(
       children: <Widget>[
         WidgetTitle(
@@ -145,9 +146,15 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    SvgPicture.asset("assets/icons/testAM.svg", height: 23, width: 23,),
+                    SvgPicture.asset(
+                      "assets/icons/testAM.svg",
+                      height: 23,
+                      width: 23,
+                    ),
                     Container(
-                      padding: EdgeInsets.only(left: 8.0,),
+                      padding: EdgeInsets.only(
+                        left: 8.0,
+                      ),
                       child: Text(
                         "Date",
                         style: TextStyle(
@@ -160,7 +167,9 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                 ),
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.only(top: 8.0,),
+                  margin: EdgeInsets.only(
+                    top: 8.0,
+                  ),
                   child: Text(
                     "Please select a date for this food record.",
                     textAlign: TextAlign.left,
@@ -187,14 +196,17 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                   child: SizedBox(
                     width: double.infinity,
                     child: FlatButton(
-                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0,),
+                      padding: EdgeInsets.only(
+                        top: 8.0,
+                        bottom: 8.0,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
-                      color: appThemeColor,
+                      color: appbar2,
                       textColor: Colors.white,
                       onPressed: () {
-                        _pickDate(); 
+                        _pickDate();
                       },
                       child: Text(
                         "Pick A Date",
@@ -203,18 +215,17 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                         ),
-                      ), 
+                      ),
                     ),
                   ),
                 ),
               ],
-            ), 
+            ),
           ),
         ),
       ],
     );
   }
-
 
   //Time Section Widget
   _pickTime() async {
@@ -237,16 +248,16 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
     if (t != null) {
       setState(() {
         time = t;
-        (time.hour < 10)? hour = "0${time.hour}" : hour = "${time.hour}";
-        (time.minute < 10)? min = "0${time.minute}" : min = "${time.minute}";
+        (time.hour < 10) ? hour = "0${time.hour}" : hour = "${time.hour}";
+        (time.minute < 10) ? min = "0${time.minute}" : min = "${time.minute}";
         timeToPass = hour + ":" + min;
         DateTime parsedTime = DateTime.parse(dateToPass + " " + timeToPass);
-        formattedTime =  DateFormat('h:mm a').format(parsedTime);
+        formattedTime = DateFormat('h:mm a').format(parsedTime);
       });
     }
   }
 
-  Widget timeWidgetContent(BuildContext context){
+  Widget timeWidgetContent(BuildContext context) {
     return Column(
       children: <Widget>[
         WidgetTitle(
@@ -273,9 +284,15 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    SvgPicture.asset("assets/icons/clock.svg", height: 23, width: 23,),
+                    SvgPicture.asset(
+                      "assets/icons/clock.svg",
+                      height: 23,
+                      width: 23,
+                    ),
                     Container(
-                      padding: EdgeInsets.only(left: 8.0,),
+                      padding: EdgeInsets.only(
+                        left: 8.0,
+                      ),
                       child: Text(
                         "Time",
                         style: TextStyle(
@@ -288,7 +305,9 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                 ),
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.only(top: 8.0,),
+                  margin: EdgeInsets.only(
+                    top: 8.0,
+                  ),
                   child: Text(
                     "Please select a time for this food record.",
                     textAlign: TextAlign.left,
@@ -315,11 +334,14 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                   child: SizedBox(
                     width: double.infinity,
                     child: FlatButton(
-                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0,),
+                      padding: EdgeInsets.only(
+                        top: 8.0,
+                        bottom: 8.0,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
-                      color: appThemeColor,
+                      color: appbar2,
                       textColor: Colors.white,
                       onPressed: () {
                         _pickTime();
@@ -331,21 +353,20 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                         ),
-                      ), 
+                      ),
                     ),
                   ),
                 ),
               ],
-            ), 
+            ),
           ),
         ),
       ],
     );
   }
 
-
   //Food Section Widget
-  Widget foodModalBottomSheetWidget(BuildContext context){
+  Widget foodModalBottomSheetWidget(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.6,
       child: GestureDetector(
@@ -355,14 +376,23 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
             Container(
               padding: EdgeInsets.only(top: 3, bottom: 3),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft:Radius.circular(10.0), topRight:Radius.circular(10.0)),
-                  color: appThemeColor,
-                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.65), blurRadius: 2.0, spreadRadius: 0.0, offset: Offset(2.0, 0),)],
-              ),   
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
+                color: appbar2,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.65),
+                    blurRadius: 2.0,
+                    spreadRadius: 0.0,
+                    offset: Offset(2.0, 0),
+                  )
+                ],
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Spacer(flex: 2,),
+                  Spacer(
+                    flex: 2,
+                  ),
                   Flexible(
                     flex: 4,
                     child: Container(
@@ -383,254 +413,281 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                     child: Container(
                       width: double.infinity,
                       child: Align(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          icon: Icon(Icons.close, color: Colors.white,), 
-                          onPressed: () => Navigator.of(context).pop(),
-                        )
-                      ),
+                          alignment: Alignment.centerRight,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.close,
+                              color: Colors.white,
+                            ),
+                            onPressed: () => Navigator.of(context).pop(),
+                          )),
                     ),
                   )
                 ],
               ),
             ),
             Container(
-                width: double.infinity,
-                margin: EdgeInsets.all(13),
-                child: Column(
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        ModalSheetText(
-                          title: "Food Name",
-                          desc: "Enter the name of the food you want to add to the record.",
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5, bottom: 10),
-                          height: MediaQuery.of(context).size.width * 0.09,
-                          child: TextFormField(
-                            controller: foodNameController,
-                            onChanged: (val) => setState(() => foodName = val),
-                            decoration: InputDecoration(
-                              hintText: "Enter your food name.",
-                              contentPadding: EdgeInsets.all(5),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(color: Colors.black.withOpacity(0.4), width: 0.8,),
+              width: double.infinity,
+              margin: EdgeInsets.all(13),
+              child: Column(
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      ModalSheetText(
+                        title: "Food Name",
+                        desc: "Enter the name of the food you want to add to the record.",
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 5, bottom: 10),
+                        height: MediaQuery.of(context).size.width * 0.09,
+                        child: TextFormField(
+                          controller: foodNameController,
+                          onChanged: (val) => setState(() => foodName = val),
+                          decoration: InputDecoration(
+                            hintText: "Enter your food name.",
+                            contentPadding: EdgeInsets.all(5),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.black.withOpacity(0.4),
+                                width: 0.8,
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(
-                                  color: Colors.red, width: 0.8,
-                                ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                                width: 0.8,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-
-                    Column(
-                      children: <Widget>[
-                        ModalSheetText(
-                          title: "Food Quantity",
-                          desc: "Enter the quantity of the food you want to add to the record.",
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5, bottom: 15),
-                          height: MediaQuery.of(context).size.width * 0.09,
-                          child: TextFormField(
-                            controller: foodQuantityController,
-                            onChanged: (val) => setState(() => foodQuantity = val),
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              hintText: "Enter your food quantity.",
-                              contentPadding: EdgeInsets.all(5),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(color: Colors.black.withOpacity(0.4), width: 0.8,),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      ModalSheetText(
+                        title: "Food Quantity",
+                        desc: "Enter the quantity of the food you want to add to the record.",
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 5, bottom: 15),
+                        height: MediaQuery.of(context).size.width * 0.09,
+                        child: TextFormField(
+                          controller: foodQuantityController,
+                          onChanged: (val) => setState(() => foodQuantity = val),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: "Enter your food quantity.",
+                            contentPadding: EdgeInsets.all(5),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.black.withOpacity(0.4),
+                                width: 0.8,
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(
-                                  color: Colors.red, width: 0.8,
-                                ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                                width: 0.8,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        ModalSheetText(
-                          title: "Food Quantity Measurement",
-                          desc: "Enter the quantity measurement of the food.",
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5, bottom: 15),
-                          height: MediaQuery.of(context).size.width * 0.09,
-                          child: TextFormField(
-                            controller: quantityMearsurementController,
-                            onChanged: (val) => setState(() => foodQuantityMeasurement = val),
-                            decoration: InputDecoration(
-                              hintText: "Enter your food quantity measurement. (Optional)",
-                              contentPadding: EdgeInsets.all(2),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(
-                                  color: Colors.black.withOpacity(0.4), width: 0.8,),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      ModalSheetText(
+                        title: "Food Quantity Measurement",
+                        desc: "Enter the quantity measurement of the food.",
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 5, bottom: 15),
+                        height: MediaQuery.of(context).size.width * 0.09,
+                        child: TextFormField(
+                          controller: quantityMearsurementController,
+                          onChanged: (val) => setState(() => foodQuantityMeasurement = val),
+                          decoration: InputDecoration(
+                            hintText: "Enter your food quantity measurement. (Optional)",
+                            contentPadding: EdgeInsets.all(2),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.black.withOpacity(0.4),
+                                width: 0.8,
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(
-                                  color: Colors.red, width: 0.8,
-                                ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                                width: 0.8,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                    Column(
-                      children: <Widget>[
-                        SizedBox(
-                          width: double.infinity,
-                          child: FlatButton(
-                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
-                            textColor: Colors.black.withOpacity(0.65),
-                            onPressed: () {
-                              foodNameController.clear(); foodQuantityController.clear(); quantityMearsurementController.clear();
-                            },
-                            child: Text(
-                              "Reset",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.width * 0.045,
-                              ),
-                            ), 
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                  Column(children: <Widget>[
+                    SizedBox(
+                      width: double.infinity,
+                      child: FlatButton(
+                        padding: EdgeInsets.only(
+                          top: 10.0,
+                          bottom: 10.0,
+                        ),
+                        textColor: Colors.black.withOpacity(0.65),
+                        onPressed: () {
+                          foodNameController.clear();
+                          foodQuantityController.clear();
+                          quantityMearsurementController.clear();
+                        },
+                        child: Text(
+                          "Reset",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.width * 0.045,
                           ),
                         ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: FlatButton(
-                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            color: appThemeColor,
-                            textColor: Colors.white,
-                            onPressed: () {
-                              if(editFood == false){
-                                if(foodNameController.text.isNotEmpty && foodQuantityController.text.isNotEmpty 
-                                  && quantityMearsurementController.text.isNotEmpty){
-                                  setState(() {
-                                    foodMap[foodName] = foodQuantity + " " + foodQuantityMeasurement; 
-                                    foodNameList.add(foodName); 
-                                    foodQuantityList.add(foodQuantity);
-                                    foodQuantityMeasurementList.add(foodQuantityMeasurement);
-                                    log(foodMap.toString());
-                                  });
-                                  foodNameController.clear(); foodQuantityController.clear(); quantityMearsurementController.clear();
-                                  Navigator.of(context).pop();
-                                }else{
-                                  dialogBoxContent = "Please make sure you entered all of the field." + 
-                                    " All of the field cannot be left empty.";
-                                  _showDialogBox(context, dialogBoxContent);
-                                }
-                              }else{
-                                if(foodNameController.text.isNotEmpty && foodQuantityController.text.isNotEmpty 
-                                  && quantityMearsurementController.text.isNotEmpty){
-                                  setState(() {
-                                    foodMap.remove(foodMapKey);
-                                    foodMap[foodName] = foodQuantity + " " + foodQuantityMeasurement; 
-                                    foodNameList[listIndex] = foodName;
-                                    foodQuantityList[listIndex] = foodQuantity;
-                                    foodQuantityMeasurementList[listIndex] = foodQuantityMeasurement;
-                                    foodNameController.clear(); foodQuantityController.clear(); quantityMearsurementController.clear();
-                                    foodWidgetTitle = "Consumed Food"; editFood = false; listIndex = null; foodMapKey = null;
-                                    log(foodMap.toString());
-                                    Navigator.of(context).pop();
-                                  });
-                                }
-                              }
-                            },
-                            child: Text(
-                              (editFood == false)? "Add" : "Update",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.width * 0.045,
-                              ),
-                            ), 
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FlatButton(
+                        padding: EdgeInsets.only(
+                          top: 10.0,
+                          bottom: 10.0,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        ),
+                        color: appbar2,
+                        textColor: Colors.white,
+                        onPressed: () {
+                          if (editFood == false) {
+                            if (foodNameController.text.isNotEmpty && foodQuantityController.text.isNotEmpty && quantityMearsurementController.text.isNotEmpty) {
+                              setState(() {
+                                foodMap[foodName] = foodQuantity + " " + foodQuantityMeasurement;
+                                foodNameList.add(foodName);
+                                foodQuantityList.add(foodQuantity);
+                                foodQuantityMeasurementList.add(foodQuantityMeasurement);
+                                log(foodMap.toString());
+                              });
+                              foodNameController.clear();
+                              foodQuantityController.clear();
+                              quantityMearsurementController.clear();
+                              Navigator.of(context).pop();
+                            } else {
+                              dialogBoxContent = "Please make sure you entered all of the field." + " All of the field cannot be left empty.";
+                              _showDialogBox(context, dialogBoxContent);
+                            }
+                          } else {
+                            if (foodNameController.text.isNotEmpty && foodQuantityController.text.isNotEmpty && quantityMearsurementController.text.isNotEmpty) {
+                              setState(() {
+                                foodMap.remove(foodMapKey);
+                                foodMap[foodName] = foodQuantity + " " + foodQuantityMeasurement;
+                                foodNameList[listIndex] = foodName;
+                                foodQuantityList[listIndex] = foodQuantity;
+                                foodQuantityMeasurementList[listIndex] = foodQuantityMeasurement;
+                                foodNameController.clear();
+                                foodQuantityController.clear();
+                                quantityMearsurementController.clear();
+                                foodWidgetTitle = "Consumed Food";
+                                editFood = false;
+                                listIndex = null;
+                                foodMapKey = null;
+                                log(foodMap.toString());
+                                Navigator.of(context).pop();
+                              });
+                            }
+                          }
+                        },
+                        child: Text(
+                          (editFood == false) ? "Add" : "Update",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.width * 0.045,
                           ),
                         ),
-                      ]
+                      ),
                     ),
-                  ],
-                ),
+                  ]),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget addEditFoodWidget(){
+  Widget addEditFoodWidget() {
     return Container(
-      margin: EdgeInsets.only(top: 10.0,),
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: foodNameList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Flexible(
-                        flex: 7,
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              width: double.infinity,
-                              child: Text(
-                                foodNameList[index],
-                                textAlign: TextAlign.left,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                softWrap: true,
-                                style: TextStyle(
-                                  fontSize: MediaQuery.of(context).size.width * 0.05,
-                                  fontWeight: FontWeight.bold,
-                                ),
+        margin: EdgeInsets.only(
+          top: 10.0,
+        ),
+        child: ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: foodNameList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Flexible(
+                      flex: 7,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            width: double.infinity,
+                            child: Text(
+                              foodNameList[index],
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              softWrap: true,
+                              style: TextStyle(
+                                fontSize: MediaQuery.of(context).size.width * 0.05,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Container(
-                              width: double.infinity,
-                              child: Text(
-                                "x " + foodQuantityList[index] + " " + foodQuantityMeasurementList[index],
-                                textAlign: TextAlign.left,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                softWrap: true,
-                                style: TextStyle(
-                                  fontSize: MediaQuery.of(context).size.width * 0.04,
+                          ),
+                          Container(
+                            width: double.infinity,
+                            child: Text(
+                              "x " + foodQuantityList[index] + " " + foodQuantityMeasurementList[index],
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              softWrap: true,
+                              style: TextStyle(
+                                fontSize: MediaQuery.of(context).size.width * 0.04,
+                                color: Colors.black.withOpacity(0.65),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        child: Center(
+                            child: IconButton(
+                                icon: Icon(
+                                  Icons.edit,
                                   color: Colors.black.withOpacity(0.65),
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Flexible(
-                        flex: 1,
-                        child: Container(
-                          child: Center(
-                            child: IconButton(
-                                icon: Icon(Icons.edit, color: Colors.black.withOpacity(0.65),), 
                                 onPressed: () {
                                   foodWidgetTitle = "Edit Food";
                                   editFood = true;
@@ -640,48 +697,48 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                                   foodQuantityController.text = foodQuantityList[index].toString();
                                   quantityMearsurementController.text = foodQuantityMeasurementList[index].toString();
                                   showModalBottomSheet(
-                                  context: context,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                                  ),
-                                  isScrollControlled: true,
-                                  builder: (context) => SingleChildScrollView(
-                                    physics: ClampingScrollPhysics(),
-                                        child: foodModalBottomSheetWidget(context),
-                                  ));
-                                }
-                              )
-                            ),
-                          ),
+                                      context: context,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                                      ),
+                                      isScrollControlled: true,
+                                      builder: (context) => SingleChildScrollView(
+                                            physics: ClampingScrollPhysics(),
+                                            child: foodModalBottomSheetWidget(context),
+                                          ));
+                                })),
                       ),
-                      Flexible(
-                        flex: 1,
-                        child: Container(
-                          child: Center(
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        child: Center(
                             child: IconButton(
-                                icon: Icon(Icons.delete, color: Colors.red,), 
-                                onPressed: (){
-                                  setState(() {
-                                    foodMap.remove(foodNameList[index]);
-                                    foodNameList.removeAt(index);
-                                    foodQuantityList.removeAt(index);
-                                    foodQuantityMeasurementList.removeAt(index);
-                                    print(foodNameList); print(foodQuantityList); print(foodMap);
-                                  });
-                                },
-                              )
-                            ),
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
                           ),
+                          onPressed: () {
+                            setState(() {
+                              foodMap.remove(foodNameList[index]);
+                              foodNameList.removeAt(index);
+                              foodQuantityList.removeAt(index);
+                              foodQuantityMeasurementList.removeAt(index);
+                              print(foodNameList);
+                              print(foodQuantityList);
+                              print(foodMap);
+                            });
+                          },
+                        )),
                       ),
-                    ],
-                  ),
-          );
-        }
-      )
-    );
+                    ),
+                  ],
+                ),
+              );
+            }));
   }
 
-  Widget noFoodWidget(){
+  Widget noFoodWidget() {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(top: 10),
@@ -698,7 +755,11 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
             children: <Widget>[
               Container(
                 margin: EdgeInsets.only(top: 10, bottom: 8),
-                child: SvgPicture.asset("assets/icons/warning.svg", height: 25, width: 25,),
+                child: SvgPicture.asset(
+                  "assets/icons/warning.svg",
+                  height: 25,
+                  width: 25,
+                ),
               ),
               Container(
                 margin: EdgeInsets.only(bottom: 10),
@@ -717,7 +778,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
     );
   }
 
-  Widget foodWidgetContent(BuildContext context){
+  Widget foodWidgetContent(BuildContext context) {
     return Column(
       children: <Widget>[
         WidgetTitle(
@@ -738,14 +799,21 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                   spreadRadius: 15,
                   color: Color(0xFFE6E6E6),
                 ),
-              ],),
+              ],
+            ),
             child: Column(
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    SvgPicture.asset("assets/icons/healthy-food.svg", height: 23, width: 23,),
+                    SvgPicture.asset(
+                      "assets/icons/healthy-food.svg",
+                      height: 23,
+                      width: 23,
+                    ),
                     Container(
-                      padding: EdgeInsets.only(left: 8.0,),
+                      padding: EdgeInsets.only(
+                        left: 8.0,
+                      ),
                       child: Text(
                         "Food",
                         style: TextStyle(
@@ -758,7 +826,9 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                 ),
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.only(top: 8.0,),
+                  margin: EdgeInsets.only(
+                    top: 8.0,
+                  ),
                   child: Text(
                     "Please enter the food that your baby consumed.",
                     textAlign: TextAlign.left,
@@ -768,38 +838,41 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                     ),
                   ),
                 ),
-                (foodNameList.length != 0)? addEditFoodWidget() : noFoodWidget(),
+                (foodNameList.length != 0) ? addEditFoodWidget() : noFoodWidget(),
                 Container(
                   margin: EdgeInsets.fromLTRB(15, 10, 15, 5),
                   child: SizedBox(
                     width: double.infinity,
                     child: FlatButton(
-                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0,),
+                      padding: EdgeInsets.only(
+                        top: 8.0,
+                        bottom: 8.0,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
-                      color: appThemeColor,
+                      color: appbar2,
                       textColor: Colors.white,
                       onPressed: () {
                         showModalBottomSheet(
-                        context: context,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                        ),
-                        isScrollControlled: true,
-                        builder: (context) => SingleChildScrollView(
-                          physics: ClampingScrollPhysics(),
-                              child: foodModalBottomSheetWidget(context),
-                        ));
+                            context: context,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                            ),
+                            isScrollControlled: true,
+                            builder: (context) => SingleChildScrollView(
+                                  physics: ClampingScrollPhysics(),
+                                  child: foodModalBottomSheetWidget(context),
+                                ));
                       },
                       child: Text(
-                        (foodNameList.length == 0)? "Add Food" : "Add More Food",
+                        (foodNameList.length == 0) ? "Add Food" : "Add More Food",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                         ),
-                      ), 
+                      ),
                     ),
                   ),
                 ),
@@ -811,17 +884,16 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
     );
   }
 
-
   //After Meal Behavior Section Widget
-  Widget symptomsAndAllergiesFalseWidget(BuildContext context){
+  Widget symptomsAndAllergiesFalseWidget(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
           width: double.infinity,
           margin: EdgeInsets.only(top: 10, bottom: 5),
           child: Text(
-            "If you want to update the after meal behavior, you can toogle switch one the top right corner. " + 
-            "You can upload the current food record as the complete record or upload it as pending record.",
+            "If you want to update the after meal behavior, you can toogle switch one the top right corner. " +
+                "You can upload the current food record as the complete record or upload it as pending record.",
             textAlign: TextAlign.left,
             style: TextStyle(
               fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -830,63 +902,59 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
           ),
         ),
         Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(top: 5, bottom: 5, ),
-          child: Center(
-            child: Column(
+            width: double.infinity,
+            margin: EdgeInsets.only(
+              top: 5,
+              bottom: 5,
+            ),
+            child: Center(
+                child: Column(
               children: <Widget>[
                 SizedBox(
-                    //height: 20,
-                    width: double.infinity,
-                    child: RadioListTile<UploadMethod>(
-                      dense: true,
-                      title: Text(
-                        uploadPendingText,
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      activeColor: appThemeColor,
-                      value: UploadMethod.uploadPending,
-                      groupValue: uploadMethod,
-                      onChanged: (UploadMethod value) {
-                        setState(() {
-                          uploadMethod = value; completeFoodRecord = false;
-                        });
-                      },
+                  //height: 20,
+                  width: double.infinity,
+                  child: RadioListTile<UploadMethod>(
+                    dense: true,
+                    title: Text(
+                      uploadPendingText,
+                      style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04, fontWeight: FontWeight.bold),
                     ),
+                    activeColor: appbar2,
+                    value: UploadMethod.uploadPending,
+                    groupValue: uploadMethod,
+                    onChanged: (UploadMethod value) {
+                      setState(() {
+                        uploadMethod = value;
+                        completeFoodRecord = false;
+                      });
+                    },
                   ),
-                
-                
-                  SizedBox(
-                    width: double.infinity,
-                    child: RadioListTile<UploadMethod>(
-                      dense: true,
-                      title: Text(
-                        uploadCompleteText,
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      activeColor: appThemeColor,
-                      value: UploadMethod.uploadComplete,
-                      groupValue: uploadMethod,
-                      onChanged: (UploadMethod value) {
-                        setState(() {
-                          uploadMethod = value; completeFoodRecord = true;
-                        });
-                      },
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: RadioListTile<UploadMethod>(
+                    dense: true,
+                    title: Text(
+                      uploadCompleteText,
+                      style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04, fontWeight: FontWeight.bold),
                     ),
+                    activeColor: appbar2,
+                    value: UploadMethod.uploadComplete,
+                    groupValue: uploadMethod,
+                    onChanged: (UploadMethod value) {
+                      setState(() {
+                        uploadMethod = value;
+                        completeFoodRecord = true;
+                      });
+                    },
                   ),
-                
+                ),
               ],
-            )
-          )
-        ),
+            ))),
         Container(
-          margin: EdgeInsets.only(top: 10,),
+          margin: EdgeInsets.only(
+            top: 10,
+          ),
           padding: EdgeInsets.all(5.0),
           decoration: BoxDecoration(
             color: Color(0xFFf5f5f5),
@@ -897,12 +965,16 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
             children: <Widget>[
               Container(
                 margin: EdgeInsets.only(top: 10, bottom: 8),
-                child: SvgPicture.asset("assets/icons/warning.svg", height: 25, width: 25,),
+                child: SvgPicture.asset(
+                  "assets/icons/warning.svg",
+                  height: 25,
+                  width: 25,
+                ),
               ),
               Container(
                 margin: EdgeInsets.only(bottom: 10),
                 child: Text(
-                  (completeFoodRecord == false)? warningPending : warningComplete,
+                  (completeFoodRecord == false) ? warningPending : warningComplete,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -917,7 +989,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
     );
   }
 
-  Widget symptomsAndAllergiesTrueWidget(BuildContext context){
+  Widget symptomsAndAllergiesTrueWidget(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
@@ -968,7 +1040,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
     );
   }
 
-  Widget afterMealBehaviorWidgetContent(BuildContext context){
+  Widget afterMealBehaviorWidgetContent(BuildContext context) {
     return Column(
       children: <Widget>[
         SizedBox(
@@ -986,14 +1058,21 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                   spreadRadius: 15,
                   color: Color(0xFFE6E6E6),
                 ),
-              ],),
+              ],
+            ),
             child: Column(
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    SvgPicture.asset("assets/icons/face-swelling.svg", height: 23, width: 23,),
+                    SvgPicture.asset(
+                      "assets/icons/face-swelling.svg",
+                      height: 23,
+                      width: 23,
+                    ),
                     Container(
-                      padding: EdgeInsets.only(left: 8.0,),
+                      padding: EdgeInsets.only(
+                        left: 8.0,
+                      ),
                       child: Text(
                         "Symptoms and Allergies",
                         style: TextStyle(
@@ -1002,17 +1081,19 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                         ),
                       ),
                     ),
-                    Spacer(flex: 3,),
+                    Spacer(
+                      flex: 3,
+                    ),
                     Container(
                       height: 20,
                       width: 60,
                       child: Switch(
                         value: symptomsAndAllergies,
-                        activeColor: appThemeColor,
+                        activeColor: appbar2,
                         onChanged: (value) {
                           setState(() {
                             symptomsAndAllergies = value;
-                            if(symptomsAndAllergies == true){
+                            if (symptomsAndAllergies == true) {
                               completeFoodRecord = false;
                               uploadMethod = UploadMethod.uploadPending;
                             }
@@ -1022,8 +1103,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                     )
                   ],
                 ),
-                (symptomsAndAllergies == false)
-                  ? symptomsAndAllergiesFalseWidget(context) : symptomsAndAllergiesTrueWidget(context),
+                (symptomsAndAllergies == false) ? symptomsAndAllergiesFalseWidget(context) : symptomsAndAllergiesTrueWidget(context),
               ],
             ),
           ),
@@ -1031,8 +1111,6 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
       ],
     );
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -1043,10 +1121,10 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
           "Add Food Record",
           style: TextStyle(
             color: Colors.white,
-             fontSize: MediaQuery.of(context).size.width * 0.045,
+            fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
-        ),        
-        backgroundColor: appThemeColor,
+        ),
+        backgroundColor: appbar2,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -1069,50 +1147,71 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                 child: SizedBox(
                   width: double.infinity,
                   child: FlatButton(
-                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0,),
+                    padding: EdgeInsets.only(
+                      top: 10.0,
+                      bottom: 10.0,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    color: appThemeColor,
+                    color: appbar2,
                     textColor: Colors.white,
                     onPressed: () {
-                      log("symptomp "+symptomsAndAllergies.toString()); log("record "+completeFoodRecord.toString());
-                      if(foodMap.isNotEmpty){
-                        if(completeFoodRecord == false && symptomsAndAllergies == true){
-                          if(symptomsAndAllergiesDescController.text.isNotEmpty){
+                      log("symptomp " + symptomsAndAllergies.toString());
+                      log("record " + completeFoodRecord.toString());
+                      if (foodMap.isNotEmpty) {
+                        if (completeFoodRecord == false && symptomsAndAllergies == true) {
+                          if (symptomsAndAllergiesDescController.text.isNotEmpty) {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => BabyFoodIntakeAddSummary(
-                                selectedDate: dateToPass, selectedTime: timeToPass, foodMap: foodMap, symptomsAndAllergies: symptomsAndAllergies,
-                                  completeFoodRecord: completeFoodRecord, selectedBabyID: widget.selectedBabyID, symptomsAndAllergiesDesc: symptomsAndAllergiesDesc,
-                              )),
+                              MaterialPageRoute(
+                                  builder: (context) => BabyFoodIntakeAddSummary(
+                                        selectedDate: dateToPass,
+                                        selectedTime: timeToPass,
+                                        foodMap: foodMap,
+                                        symptomsAndAllergies: symptomsAndAllergies,
+                                        completeFoodRecord: completeFoodRecord,
+                                        selectedBabyID: widget.selectedBabyID,
+                                        symptomsAndAllergiesDesc: symptomsAndAllergiesDesc,
+                                      )),
                             );
-                          }else{
+                          } else {
                             dialogBoxContent = "Looks like u didn't enter anyting into the symptomps or allergies section" +
-                              "To update your baby current food record, please make sure you enter the symptomps or " + 
-                              "allergies shown by your baby.";
+                                "To update your baby current food record, please make sure you enter the symptomps or " +
+                                "allergies shown by your baby.";
                             _showDialogBox(context, dialogBoxContent);
                           }
-                        }else if(completeFoodRecord == true && symptomsAndAllergies == false){
+                        } else if (completeFoodRecord == true && symptomsAndAllergies == false) {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => BabyFoodIntakeAddSummary(
-                              selectedDate: dateToPass, selectedTime: timeToPass, foodMap: foodMap, symptomsAndAllergies: symptomsAndAllergies,
-                                completeFoodRecord: completeFoodRecord, selectedBabyID: widget.selectedBabyID, symptomsAndAllergiesDesc: null,
-                            )),
+                            MaterialPageRoute(
+                                builder: (context) => BabyFoodIntakeAddSummary(
+                                      selectedDate: dateToPass,
+                                      selectedTime: timeToPass,
+                                      foodMap: foodMap,
+                                      symptomsAndAllergies: symptomsAndAllergies,
+                                      completeFoodRecord: completeFoodRecord,
+                                      selectedBabyID: widget.selectedBabyID,
+                                      symptomsAndAllergiesDesc: null,
+                                    )),
                           );
-                        }else if(completeFoodRecord == false && symptomsAndAllergies == false){
+                        } else if (completeFoodRecord == false && symptomsAndAllergies == false) {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => BabyFoodIntakeAddSummary(
-                              selectedDate: dateToPass, selectedTime: timeToPass, foodMap: foodMap, symptomsAndAllergies: symptomsAndAllergies,
-                                completeFoodRecord: completeFoodRecord, selectedBabyID: widget.selectedBabyID, symptomsAndAllergiesDesc: null,
-                            )),
+                            MaterialPageRoute(
+                                builder: (context) => BabyFoodIntakeAddSummary(
+                                      selectedDate: dateToPass,
+                                      selectedTime: timeToPass,
+                                      foodMap: foodMap,
+                                      symptomsAndAllergies: symptomsAndAllergies,
+                                      completeFoodRecord: completeFoodRecord,
+                                      selectedBabyID: widget.selectedBabyID,
+                                      symptomsAndAllergiesDesc: null,
+                                    )),
                           );
                         }
-                      }else{
-                        dialogBoxContent = "Looks like you left some section empty. " + 
-                          "Please make sure u entered all the required field.";
+                      } else {
+                        dialogBoxContent = "Looks like you left some section empty. " + "Please make sure u entered all the required field.";
                         _showDialogBox(context, dialogBoxContent);
                       }
                     },
@@ -1123,7 +1222,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                         fontWeight: FontWeight.bold,
                         fontSize: MediaQuery.of(context).size.width * 0.045,
                       ),
-                    ), 
+                    ),
                   ),
                 ),
               ),

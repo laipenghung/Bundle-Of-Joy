@@ -22,7 +22,7 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final User user = FirebaseAuth.instance.currentUser;
   String databaseTable;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,21 +31,22 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
         title: Text(
           "Select Food Record",
           style: TextStyle(
+            shadows: <Shadow>[
+              Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
+            ],
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
-        ),        
-        backgroundColor: appThemeColor,
+        ),
+        backgroundColor: appbar1,
         centerTitle: true,
         actions: <Widget>[
           IconButton(
-            icon: Icon(
-              Icons.sort_rounded, 
-              color: Colors.white,
-            ), 
-            onPressed: () {
-              
-            })
+              icon: Icon(
+                Icons.sort_rounded,
+                color: Colors.white,
+              ),
+              onPressed: () {})
         ],
       ),
       body: SingleChildScrollView(
@@ -54,7 +55,6 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
           stream: widget.collectionReference.orderBy('selectedDate', descending: descendingDate).orderBy('selectedTime', descending: descendingTime).snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: SizedBox(
@@ -82,40 +82,40 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
                 return Container(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data.documents.length,
-                    itemBuilder: (_, index){
-                      return Container(
-                        child: RecordListViewWidget(
-                          svgSrc: widget.svgSrc,
-                          recordDate: DateFormat('d MMM yyyy').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'])),
-                          recordTime: DateFormat('h:mm a').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'] + " " + snapshot.data.documents[index]['selectedTime'])),
-                          delete: (){
-                            if(widget.completeRecord == true){
-                              setState(() => databaseTable = "foodIntake_Done");
-                            }else{
-                              setState(() => databaseTable = "foodIntake_Pending");
-                            }
-                            _db.collection("mother").doc(user.uid).collection(databaseTable).doc(snapshot.data.documents[index]['recordID']).delete();
-                          },
-                          press: (){
-                            if(widget.completeRecord == true){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => FoodIntakeTrackView(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
-                              );
-                            }else{
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => FoodIntakeTrackUpdate(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
-                              );
-                            } 
-                          },
-                        ),
-                      );
-                    }
-                  ),
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (_, index) {
+                        return Container(
+                          child: RecordListViewWidget(
+                            svgSrc: widget.svgSrc,
+                            recordDate: DateFormat('d MMM yyyy').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'])),
+                            recordTime: DateFormat('h:mm a')
+                                .format(DateTime.parse(snapshot.data.documents[index]['selectedDate'] + " " + snapshot.data.documents[index]['selectedTime'])),
+                            delete: () {
+                              if (widget.completeRecord == true) {
+                                setState(() => databaseTable = "foodIntake_Done");
+                              } else {
+                                setState(() => databaseTable = "foodIntake_Pending");
+                              }
+                              _db.collection("mother").doc(user.uid).collection(databaseTable).doc(snapshot.data.documents[index]['recordID']).delete();
+                            },
+                            press: () {
+                              if (widget.completeRecord == true) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => FoodIntakeTrackView(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
+                                );
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => FoodIntakeTrackUpdate(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
+                                );
+                              }
+                            },
+                          ),
+                        );
+                      }),
                 );
               }
             } else if (snapshot.hasError) {

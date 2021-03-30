@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:bundle_of_joy/auth/auth.dart';
 import 'package:bundle_of_joy/sign_up.dart';
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'baby/babyProfile.dart';
@@ -76,7 +77,7 @@ class _UserProfileState extends State<UserProfile> {
             // Here the height of the container is 45% of our total height
             height: MediaQuery.of(context).size.height * .40,
             decoration: BoxDecoration(
-              color: Color(0xFFF5CEB8),
+              color: background3,
               image: DecorationImage(
                 alignment: Alignment.centerLeft,
                 image: AssetImage("assets/images/undraw_pilates_gpdb.png"),
@@ -96,7 +97,7 @@ class _UserProfileState extends State<UserProfile> {
                       height: 52,
                       width: 52,
                       decoration: BoxDecoration(
-                        color: Color(0xFFF2BEA1),
+                        color: background3,
                         shape: BoxShape.circle,
                       ),
                       //child: SvgPicture.asset("assets/icons/menu.svg"),
@@ -106,12 +107,14 @@ class _UserProfileState extends State<UserProfile> {
                   Text(
                     "Profile",
                     style: TextStyle(
+                      shadows: <Shadow>[
+                        Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
+                      ],
                       fontSize: MediaQuery.of(context).size.width * 0.08,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black.withOpacity(0.65),
-                    )
+                      color: Colors.white,
+                    ),
                   ),
-                  
                   SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                   Expanded(
                     child: GridView.count(
@@ -125,16 +128,15 @@ class _UserProfileState extends State<UserProfile> {
                           svgSrc: "assets/icons/woman.svg",
                           press: () {
                             showModalBottomSheet(
-                              context: context, 
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                              ),
-                              isScrollControlled: true,
-                              builder: (context) => SingleChildScrollView(
-                                physics: ClampingScrollPhysics(),
-                                child: MotherProfile(),
-                              )
-                            );
+                                context: context,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                                ),
+                                isScrollControlled: true,
+                                builder: (context) => SingleChildScrollView(
+                                      physics: ClampingScrollPhysics(),
+                                      child: MotherProfile(),
+                                    ));
                           },
                         ),
                         CardWidget(
@@ -143,7 +145,7 @@ class _UserProfileState extends State<UserProfile> {
                           press: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => BabyProfile()), 
+                              MaterialPageRoute(builder: (context) => BabyProfile()),
                             );
                           },
                         ),

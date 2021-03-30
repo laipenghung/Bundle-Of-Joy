@@ -1,11 +1,9 @@
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:path/path.dart';
 import 'appointmentMother/appointmentMother_verify.dart';
 import 'foodIntake/foodIntakeTrackMain.dart';
 import 'widgets/cardWidget.dart';
 import "package:bundle_of_joy/appointmentMother/appointmentMother_verify.dart";
-import "foodIntake/foodIntake_main.dart";
 import "emergencyContact/emergencyContactTab.dart";
 import "MotherHealthTracking/healthTrackingMother.dart";
 
@@ -28,7 +26,7 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
             // Here the height of the container is 45% of our total height
             height: MediaQuery.of(context).size.height * .40,
             decoration: BoxDecoration(
-              color: Color(0xFFF5CEB8),
+              color: appbar1,
               image: DecorationImage(
                 alignment: Alignment.centerLeft,
                 image: AssetImage("assets/images/undraw_pilates_gpdb.png"),
@@ -48,19 +46,23 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                       height: 52,
                       width: 52,
                       decoration: BoxDecoration(
-                        color: Color(0xFFF2BEA1),
+                        color: appbar1.withOpacity(0.5), // Background Circle Colour
                         shape: BoxShape.circle,
                       ),
-                      //child: SvgPicture.asset("assets/icons/menu.svg"),
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                  Text("Mother to Be",
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.08,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black.withOpacity(0.65),
-                      )),
+                  Text(
+                    "Mother to Be",
+                    style: TextStyle(
+                      shadows: <Shadow>[
+                        Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
+                      ],
+                      fontSize: MediaQuery.of(context).size.width * 0.08,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                   Expanded(
                     child: GridView.count(

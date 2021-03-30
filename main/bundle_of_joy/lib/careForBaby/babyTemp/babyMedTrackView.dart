@@ -18,9 +18,9 @@ class BabyMedTrackView extends StatefulWidget {
 class _BabyMedTrackViewState extends State<BabyMedTrackView> {
   @override
   Widget build(BuildContext context) {
-    CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid)
-                                              .collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done");
-                                              
+    CollectionReference collectionReference =
+        FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done");
+
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
@@ -28,10 +28,10 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
           "View Medicine Record",
           style: TextStyle(
             color: Colors.white,
-             fontSize: MediaQuery.of(context).size.width * 0.045,
+            fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
-        ),        
-        backgroundColor: appThemeColor,
+        ),
+        backgroundColor: appbar2,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -43,7 +43,7 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
               DateTime parsedDate = DateTime.parse(snapshot.data.data()["selectedDate"]);
               String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
               DateTime parsedTime = DateTime.parse(snapshot.data.data()["selectedDate"] + " " + snapshot.data.data()["selectedTime"]);
-              String formattedTime =  DateFormat('h:mm a').format(parsedTime);
+              String formattedTime = DateFormat('h:mm a').format(parsedTime);
               Map medicine = snapshot.data.data()["medsMap"];
               double tempBeforeMeds = double.parse(snapshot.data.data()["bTempBefore"]);
               double tempAfterMeds = double.parse(snapshot.data.data()["bTempAfter"]);
@@ -57,7 +57,10 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
                   children: [
                     Container(
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 18.0, left: 13.0,),
+                      margin: EdgeInsets.only(
+                        top: 18.0,
+                        left: 13.0,
+                      ),
                       child: Text(
                         "Date and Time",
                         textAlign: TextAlign.left,
@@ -79,7 +82,10 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
                     ),
                     Container(
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                      margin: EdgeInsets.only(
+                        top: 13.0,
+                        left: 13.0,
+                      ),
                       child: Text(
                         "Conusmed Medicine",
                         textAlign: TextAlign.left,
@@ -100,7 +106,10 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
                     ),
                     Container(
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                      margin: EdgeInsets.only(
+                        top: 13.0,
+                        left: 13.0,
+                      ),
                       child: Text(
                         "Body Temperature",
                         textAlign: TextAlign.left,

@@ -18,8 +18,13 @@ class BabyFoodIntakeTrackView extends StatefulWidget {
 class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
   @override
   Widget build(BuildContext context) {
-    CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Done");
-    
+    CollectionReference collectionReference = FirebaseFirestore.instance
+        .collection("mother")
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .collection("baby")
+        .doc(widget.selectedBabyID)
+        .collection("babyFoodIntake_Done");
+
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
@@ -27,10 +32,10 @@ class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
           "View Food Record",
           style: TextStyle(
             color: Colors.white,
-             fontSize: MediaQuery.of(context).size.width * 0.045,
+            fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
-        ),        
-        backgroundColor: appThemeColor,
+        ),
+        backgroundColor: appbar2,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -42,7 +47,7 @@ class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
               DateTime parsedDate = DateTime.parse(snapshot.data.data()["selectedDate"]);
               String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
               DateTime parsedTime = DateTime.parse(snapshot.data.data()["selectedDate"] + " " + snapshot.data.data()["selectedTime"]);
-              String formattedTime =  DateFormat('h:mm a').format(parsedTime);
+              String formattedTime = DateFormat('h:mm a').format(parsedTime);
               Map food = snapshot.data.data()["foodMap"];
               String babySymptoms = snapshot.data.data()["babysymptoms"];
               bool sympAndAlle = snapshot.data.data()["symptomsAndAllergies"];
@@ -56,7 +61,10 @@ class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
                   children: [
                     Container(
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 18.0, left: 13.0,),
+                      margin: EdgeInsets.only(
+                        top: 18.0,
+                        left: 13.0,
+                      ),
                       child: Text(
                         "Date and Time",
                         textAlign: TextAlign.left,
@@ -69,16 +77,18 @@ class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
                     ),
                     //Widget for display Date and Time
                     RecordDateTimeWidget(
-                      svgSrcDate: "assets/icons/testAM.svg",
-                      svgSrcTime: "assets/icons/clock.svg",
-                      date: formattedDate,
-                      dateDesc: babyFoodDateDesc,
-                      time: formattedTime,
-                      timeDesc: babyFoodTimeDesc
-                    ),
+                        svgSrcDate: "assets/icons/testAM.svg",
+                        svgSrcTime: "assets/icons/clock.svg",
+                        date: formattedDate,
+                        dateDesc: babyFoodDateDesc,
+                        time: formattedTime,
+                        timeDesc: babyFoodTimeDesc),
                     Container(
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                      margin: EdgeInsets.only(
+                        top: 13.0,
+                        left: 13.0,
+                      ),
                       child: Text(
                         "Conusmed Food",
                         textAlign: TextAlign.left,
@@ -99,7 +109,10 @@ class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
                     ),
                     Container(
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                      margin: EdgeInsets.only(
+                        top: 13.0,
+                        left: 13.0,
+                      ),
                       child: Text(
                         "After Meal Behavior",
                         textAlign: TextAlign.left,

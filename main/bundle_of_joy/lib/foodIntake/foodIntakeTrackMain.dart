@@ -19,7 +19,7 @@ class FoodIntakeTrackMain extends StatefulWidget {
 class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
   final User user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  
+
   @override
   Widget build(BuildContext context) {
     CollectionReference collectionReferenceComplete = _db.collection('mother').doc(user.uid).collection('foodIntake_Done');
@@ -36,7 +36,7 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
             pinned: true,
             stretch: true,
             stretchTriggerOffset: 70.0,
-            backgroundColor: appThemeColor,
+            backgroundColor: appbar1,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               collapseMode: CollapseMode.parallax,
@@ -63,49 +63,48 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
               child: Column(
                 children: [
                   HorizontalCardWidget(
-                    title: "Food Intake Record",
-                    description: "View all of your food record.",
-                    svgSrc: "assets/icons/verify.svg",
-                    press: (){
-                      Navigator.push(
-                        context,
-                        //MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
-                        MaterialPageRoute(builder: (context) => FoodIntakeTrackRecordList(
-                          svgSrc: "assets/icons/menu.svg",
-                          completeRecord: true,
-                          collectionReference: collectionReferenceComplete,
-                        )),
-                      );
-                    }
-                  ),
+                      title: "Food Intake Record",
+                      description: "View all of your food record.",
+                      svgSrc: "assets/icons/verify.svg",
+                      press: () {
+                        Navigator.push(
+                          context,
+                          //MaterialPageRoute(builder: (context) => FoodIntakeListDone()),
+                          MaterialPageRoute(
+                              builder: (context) => FoodIntakeTrackRecordList(
+                                    svgSrc: "assets/icons/menu.svg",
+                                    completeRecord: true,
+                                    collectionReference: collectionReferenceComplete,
+                                  )),
+                        );
+                      }),
                   HorizontalCardWidget(
-                    title: "Create New Food Record",
-                    description: "Create a new food record.",
-                    svgSrc: "assets/icons/add.svg",
-                    press: (){
-                      Navigator.push(
-                        context,
-                        //MaterialPageRoute(builder: (context) => FoodIntakeAdd1()),
-                        MaterialPageRoute(builder: (context) => FoodIntakeTrackAdd()),
-                        //MaterialPageRoute(builder: (context) => FoodIntakeAddTest()),
-                      );
-                    }
-                  ),
+                      title: "Create New Food Record",
+                      description: "Create a new food record.",
+                      svgSrc: "assets/icons/add.svg",
+                      press: () {
+                        Navigator.push(
+                          context,
+                          //MaterialPageRoute(builder: (context) => FoodIntakeAdd1()),
+                          MaterialPageRoute(builder: (context) => FoodIntakeTrackAdd()),
+                          //MaterialPageRoute(builder: (context) => FoodIntakeAddTest()),
+                        );
+                      }),
                   HorizontalCardWidget(
-                    title: "Update Pending Food Record",
-                    description: "Update your existing food record.",
-                    svgSrc: "assets/icons/edit.svg",
-                    press: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => FoodIntakeTrackRecordList(
-                          svgSrc: "assets/icons/menu.svg",
-                          completeRecord: false,
-                          collectionReference: collectionReferencePending,
-                        )),
-                      );
-                    }
-                  ),
+                      title: "Update Pending Food Record",
+                      description: "Update your existing food record.",
+                      svgSrc: "assets/icons/edit.svg",
+                      press: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FoodIntakeTrackRecordList(
+                                    svgSrc: "assets/icons/menu.svg",
+                                    completeRecord: false,
+                                    collectionReference: collectionReferencePending,
+                                  )),
+                        );
+                      }),
                 ],
               ),
             ),

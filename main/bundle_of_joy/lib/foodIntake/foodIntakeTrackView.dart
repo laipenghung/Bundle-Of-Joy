@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
 class FoodIntakeTrackView extends StatefulWidget {
   final String foodIntakeRecordID;
   FoodIntakeTrackView({Key key, @required this.foodIntakeRecordID}) : super(key: key);
@@ -18,7 +17,7 @@ class FoodIntakeTrackView extends StatefulWidget {
 
 class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
   CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("foodIntake_Done");
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,8 +29,8 @@ class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
-        ),        
-        backgroundColor: appThemeColor,
+        ),
+        backgroundColor: appbar1,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -43,7 +42,7 @@ class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
               DateTime parsedDate = DateTime.parse(snapshot.data.data()["selectedDate"]);
               String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
               DateTime parsedTime = DateTime.parse(snapshot.data.data()["selectedDate"] + " " + snapshot.data.data()["selectedTime"]);
-              String formattedTime =  DateFormat('h:mm a').format(parsedTime);
+              String formattedTime = DateFormat('h:mm a').format(parsedTime);
               Map food = snapshot.data.data()["foodMap"];
               double bSugarBefore = double.parse(snapshot.data.data()["bsBefore"]);
               double bSugarAfter = double.parse(snapshot.data.data()["bsAfter"]);
@@ -57,7 +56,10 @@ class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
                   children: [
                     Container(
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 18.0, left: 13.0,),
+                      margin: EdgeInsets.only(
+                        top: 18.0,
+                        left: 13.0,
+                      ),
                       child: Text(
                         "Date and Time",
                         textAlign: TextAlign.left,
@@ -79,7 +81,10 @@ class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
                     ),
                     Container(
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                      margin: EdgeInsets.only(
+                        top: 13.0,
+                        left: 13.0,
+                      ),
                       child: Text(
                         "Conusmed Food",
                         textAlign: TextAlign.left,
@@ -100,7 +105,10 @@ class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
                     ),
                     Container(
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 13.0, left: 13.0,),
+                      margin: EdgeInsets.only(
+                        top: 13.0,
+                        left: 13.0,
+                      ),
                       child: Text(
                         "Blood Sugar",
                         textAlign: TextAlign.left,

@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'vaccinationSchedule/vaccinationSchedule.dart';
 import 'widgets/cardWidget.dart';
+import 'widgets/genericWidgets.dart';
 
 class MotherForBabyHome extends StatefulWidget {
   @override
@@ -138,19 +139,16 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
     }
   }
 
-  Widget hasData(AsyncSnapshot<QuerySnapshot> collection){
+  Widget hasData(AsyncSnapshot<QuerySnapshot> collection) {
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     if (collection.data.docs.isNotEmpty) {
       return Stack(
         children: <Widget>[
           Container(
             // Here the height of the container is 45% of our total height
-            height: MediaQuery
-                .of(context)
-                .size
-                .height * .40,
+            height: MediaQuery.of(context).size.height * .40,
             decoration: BoxDecoration(
-              color: Color(0xFFF5CEB8),
+              color: background2,
               image: DecorationImage(
                 alignment: Alignment.centerLeft,
                 image: AssetImage("assets/images/undraw_pilates_gpdb.png"),
@@ -170,26 +168,23 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                       height: 52,
                       width: 52,
                       decoration: BoxDecoration(
-                        color: Color(0xFFF2BEA1),
+                        color: background2,
                         shape: BoxShape.circle,
                       ),
                       //child: SvgPicture.asset("assets/icons/menu.svg"),
                     ),
                   ),
-                  SizedBox(height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.05),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                   Text(
-                      "Mother for Baby",
-                      style: TextStyle(
-                        fontSize: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.08,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black.withOpacity(0.65),
-                      )
+                    "Mother for Baby",
+                    style: TextStyle(
+                      shadows: <Shadow>[
+                        Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
+                      ],
+                      fontSize: MediaQuery.of(context).size.width * 0.08,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                   //SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   Row(
@@ -197,8 +192,7 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                     children: [
                       Container(
                         margin: EdgeInsets.symmetric(vertical: 20),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 5),
+                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -219,20 +213,17 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                           title: "Appointment Management",
                           svgSrc: "assets/icons/testAM.svg",
                           press: () {
-                            showModalBottomSheet( //New UI
+                            showModalBottomSheet(
+                                //New UI
                                 context: context,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20.0),
-                                      topRight: Radius.circular(20.0)),
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
                                 ),
                                 isScrollControlled: true,
-                                builder: (context) =>
-                                    SingleChildScrollView(
+                                builder: (context) => SingleChildScrollView(
                                       physics: ClampingScrollPhysics(),
                                       child: AppointmentBabyVerification(),
-                                    )
-                            );
+                                    ));
                           },
                         ),
                         CardWidget(
@@ -241,9 +232,10 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                           press: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) =>
-                                  VaccinationSchedule(
-                                    selectedBabyID: selectedBabyID,)),
+                              MaterialPageRoute(
+                                  builder: (context) => VaccinationSchedule(
+                                        selectedBabyID: selectedBabyID,
+                                      )),
                             );
                           },
                         ),
@@ -253,9 +245,10 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                           press: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) =>
-                                  VaccinationGrowthMain(
-                                    selectedBabyID: selectedBabyID,)),
+                              MaterialPageRoute(
+                                  builder: (context) => VaccinationGrowthMain(
+                                        selectedBabyID: selectedBabyID,
+                                      )),
                             );
                           },
                         ),
@@ -265,9 +258,10 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                           press: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) =>
-                                  CareForBabyMain(
-                                    selectedBabyID: selectedBabyID,)),
+                              MaterialPageRoute(
+                                  builder: (context) => CareForBabyMain(
+                                        selectedBabyID: selectedBabyID,
+                                      )),
                             );
                           },
                         ),
@@ -292,9 +286,9 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                 height: 110,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage("assets/icons/baby_color.png"),
-                    )),
+                  fit: BoxFit.cover,
+                  image: AssetImage("assets/icons/baby_color.png"),
+                )),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               Padding(

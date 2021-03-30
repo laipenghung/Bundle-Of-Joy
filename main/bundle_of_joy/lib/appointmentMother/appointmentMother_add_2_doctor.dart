@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import "package:flutter/material.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 
@@ -20,20 +21,21 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
     return Scaffold(
       // APPBAR
       appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
           "Appointment Management",
           style: TextStyle(
-            fontFamily: 'Comfortaa',
-            fontWeight: FontWeight.bold,
-            fontSize: MediaQuery.of(context).size.width * 0.05,
-            color: Colors.black,
+            shadows: <Shadow>[
+              Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
+            ],
+            fontSize: MediaQuery.of(context).size.width * 0.045,
+            color: Colors.white,
           ),
         ),
         iconTheme: IconThemeData(
-          color: Colors.black,
+          color: Colors.white,
         ),
-        backgroundColor: Color(0xFFFCFFD5),
+        backgroundColor: appbar1,
+        centerTitle: true,
       ),
 
       // BODY
@@ -127,7 +129,8 @@ class _AppointmentMotherAddDoctorState extends State<AppointmentMotherAddDoctor>
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.62,
+            //color: Colors.blue,
+            height: MediaQuery.of(context).size.height * 0.65,
             padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02),
             child: StreamBuilder(
               stream: FirebaseFirestore.instance.collection('doctor').where("role", isEqualTo: "doctor").snapshots(),

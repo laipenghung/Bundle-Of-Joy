@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 
-const Color appThemeColor = Color(0xFFff713a);
-//const Color appThemeColor = Color(0xFFD44B87); //test color
+const Color background1 = Color(0xFFf4c2c2);
+const Color background2 = Color(0xFF89cff0);
+const Color background3 = Color(0xFFF5CEB8);
+const Color appbar1 = Color(0xFFf5bab8);
+const Color appbar2 = Color(0xFFf5bab8);
+const Color appbar3 = Color(0xFFf5bab8);
 
-//const Color appThemeColor = Color(0xFFf5ceb8);
 const Color titleColor = Color(0xFF56453d);
+
+//const Color appThemeColor = Color(0xFF89cff0);
+//const Color appThemeColor = Color(0xFF55cbcd);
+//const Color appThemeColor = Color(0xFF9ec4c5);
+//const Color appThemeColor = Color(0xFFD44B87);
+//const Color appThemeColor = Color(0xFFf5ceb8);
 
 const String motherRecordDateDesc = "The date you record this intake.";
 const String motherRecordTimeDesc = "The time you record this intake.";
@@ -28,6 +37,7 @@ class BloodSugarAddDoneText extends StatelessWidget {
       color: Colors.black.withOpacity(0.65),
       fontSize: MediaQuery.of(context).size.width * 0.033,
     );
+
     TextStyle highlightedTextStyle = TextStyle(
       color: Colors.black.withOpacity(0.8),
       fontWeight: FontWeight.bold,
@@ -347,13 +357,18 @@ class BabyFoodRecrodDoneText extends StatelessWidget {
 class WidgetTitle extends StatelessWidget {
   final String title;
   const WidgetTitle({
-    Key key,this.title,}) : super(key: key);
+    Key key,
+    this.title,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(top: 18.0, left: 13.0,),
+      margin: EdgeInsets.only(
+        top: 18.0,
+        left: 13.0,
+      ),
       child: Text(
         title,
         textAlign: TextAlign.left,
@@ -369,8 +384,7 @@ class WidgetTitle extends StatelessWidget {
 
 class ModalSheetText extends StatelessWidget {
   final String title, desc;
-  const ModalSheetText({
-    Key key,this.title, this.desc}) : super(key: key);
+  const ModalSheetText({Key key, this.title, this.desc}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -393,14 +407,10 @@ class ModalSheetText extends StatelessWidget {
           child: Text(
             desc,
             textAlign: TextAlign.left,
-            style: TextStyle(
-              fontSize: MediaQuery.of(context).size.width * 0.035,
-              color: Colors.black.withOpacity(0.65)
-            ),
+            style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.035, color: Colors.black.withOpacity(0.65)),
           ),
         ),
       ],
     );
   }
 }
-
