@@ -568,8 +568,14 @@ class _AppointmentMotherAddTimeState extends State<AppointmentMotherAddTime> {
                                       });
                                 } else {
                                   uploadAppointment(
-                                      snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'], snapshot.data.documents[0]['s_id']);
-                                  _showNotification();
+                                    hospitalName,
+                                    doctorName,
+                                    snapshot.data.documents[0]['date_string'],
+                                    selectedSession,
+                                    snapshot.data.documents[0]['d_id'],
+                                    snapshot.data.documents[0]['h_id'],
+                                    snapshot.data.documents[0]['s_id'],
+                                  );
                                 }
                               } else if (selectedSession == "Afternoon") {
                                 if (snapshot.data.documents[0]['s_available_Afternoon'] == 0) {
@@ -589,8 +595,14 @@ class _AppointmentMotherAddTimeState extends State<AppointmentMotherAddTime> {
                                       });
                                 } else {
                                   uploadAppointment(
-                                      snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'], snapshot.data.documents[0]['s_id']);
-                                  _showNotification();
+                                    hospitalName,
+                                    doctorName,
+                                    snapshot.data.documents[0]['date_string'],
+                                    selectedSession,
+                                    snapshot.data.documents[0]['d_id'],
+                                    snapshot.data.documents[0]['h_id'],
+                                    snapshot.data.documents[0]['s_id'],
+                                  );
                                 }
                               } else if (selectedSession == "Evening") {
                                 if (snapshot.data.documents[0]['s_available_Evening'] == 0) {
@@ -610,7 +622,14 @@ class _AppointmentMotherAddTimeState extends State<AppointmentMotherAddTime> {
                                       });
                                 } else {
                                   uploadAppointment(
-                                      snapshot.data.documents[0]['date_string'], selectedSession, snapshot.data.documents[0]['d_id'], snapshot.data.documents[0]['s_id']);
+                                    hospitalName,
+                                    doctorName,
+                                    snapshot.data.documents[0]['date_string'],
+                                    selectedSession,
+                                    snapshot.data.documents[0]['d_id'],
+                                    snapshot.data.documents[0]['h_id'],
+                                    snapshot.data.documents[0]['s_id'],
+                                  );
                                   _showNotification();
                                 }
                               } else {
@@ -713,7 +732,7 @@ class _AppointmentMotherAddTimeState extends State<AppointmentMotherAddTime> {
     );
   }
 
-  Future<void> uploadAppointment(appointmentDate, appointmentSession, doctorID, slotID) {
+  Future<void> uploadAppointment(hospitalName, doctorName, appointmentDate, appointmentSession, hospitalID, doctorID, slotID) {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     final User user = FirebaseAuth.instance.currentUser;
 
@@ -721,8 +740,11 @@ class _AppointmentMotherAddTimeState extends State<AppointmentMotherAddTime> {
     CollectionReference slotRecord = _db.collection("appointment_slot");
 
     return appointmentRecord.add({
+      "h_name": hospitalName,
+      "d_name": doctorName,
       "a_date": appointmentDate,
       "a_session": appointmentSession,
+      "h_id": hospitalID,
       "d_id": doctorID,
       "s_id": slotID,
       "m_id": user.uid,

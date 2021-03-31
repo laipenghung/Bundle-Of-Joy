@@ -1,5 +1,6 @@
 import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
 import 'package:flutter/material.dart';
+import 'appointmentMother_add.dart';
 import 'appointmentMother_add_1_hospital.dart';
 import 'appointmentMother_recordList.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
@@ -51,7 +52,7 @@ class _AppointmentMotherMainState extends State<AppointmentMotherMain> {
                   press: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AppointmentMotherAddHospital()),
+                      MaterialPageRoute(builder: (context) => AppointmentMotherAdd()),
                     );
                   }),
             ],
