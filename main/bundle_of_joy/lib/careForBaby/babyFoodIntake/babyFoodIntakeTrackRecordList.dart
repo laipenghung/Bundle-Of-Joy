@@ -34,7 +34,7 @@ class _BabyFoodIntakeTrackRecordListState extends State<BabyFoodIntakeTrackRecor
             fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
         ),        
-        backgroundColor: appThemeColor,
+        backgroundColor: appbar2,
         centerTitle: true,
         actions: <Widget>[
           IconButton(

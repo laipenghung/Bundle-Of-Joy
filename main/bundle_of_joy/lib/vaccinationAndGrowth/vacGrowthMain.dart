@@ -1,5 +1,9 @@
+import 'package:bundle_of_joy/vaccinationAndGrowth/growth/growthTrackHeightView.dart';
+import 'package:bundle_of_joy/vaccinationAndGrowth/growth/growthTrackWeightView.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'growth/growthHeight.dart';
 import 'growth/growthWeight.dart';
@@ -14,8 +18,13 @@ class VaccinationGrowthMain extends StatefulWidget {
 }
 
 class _VaccinationGrowthMainState extends State<VaccinationGrowthMain> {
+  final User user = FirebaseAuth.instance.currentUser;
+  
   @override
   Widget build(BuildContext context) {
+    CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(user.uid)
+      .collection("baby").doc(widget.selectedBabyID).collection("baby_growth");
+      
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       body: CustomScrollView(
@@ -98,7 +107,11 @@ class _VaccinationGrowthMainState extends State<VaccinationGrowthMain> {
                       press: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => GrowthHeight(selectedBabyID: widget.selectedBabyID)),
+                          //MaterialPageRoute(builder: (context) => GrowthHeight(selectedBabyID: widget.selectedBabyID)),
+                          MaterialPageRoute(builder: (context) => GrowthTrackHeightView(
+                            selectedBabyID: widget.selectedBabyID,
+                            collectionReference: collectionReference,
+                          )),
                         );
                       }),
                   HorizontalCardWidget(
@@ -108,7 +121,11 @@ class _VaccinationGrowthMainState extends State<VaccinationGrowthMain> {
                       press: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => GrowthWeight(selectedBabyID: widget.selectedBabyID)),
+                          //MaterialPageRoute(builder: (context) => GrowthWeight(selectedBabyID: widget.selectedBabyID)),
+                          MaterialPageRoute(builder: (context) => GrowthTrackWeightView(
+                            selectedBabyID: widget.selectedBabyID,
+                            collectionReference: collectionReference,
+                          )),
                         );
                       }),
                 ],
