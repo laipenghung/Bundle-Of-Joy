@@ -165,7 +165,7 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                     alignment: Alignment.topRight,
                     child: Container(
                       alignment: Alignment.center,
-                      height: 52,
+                      height: 40,
                       width: 52,
                       decoration: BoxDecoration(
                         color: background2,
