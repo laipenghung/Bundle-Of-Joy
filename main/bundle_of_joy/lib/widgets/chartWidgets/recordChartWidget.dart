@@ -1,4 +1,3 @@
-import 'package:bundle_of_joy/widgets/recordChart/recordChartData.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -39,6 +38,18 @@ class RecordChartWidget extends StatelessWidget {
       )
     );
   }
+}
+
+class RecordChartData{
+  final String period;
+  final double bsReading;
+  final charts.Color barColour;
+
+  RecordChartData(
+    {@required this.period,
+    @required this.bsReading,
+    @required  this.barColour,}
+  );
 }
 
 

@@ -1,9 +1,8 @@
 import 'package:bundle_of_joy/foodIntake/foodIntakeBloodSugarTips.dart';
-import 'package:bundle_of_joy/widgets/recordChart/recordChartData.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'recordChart/recordChartWidget.dart';
+import 'chartWidgets/recordChartWidget.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class BloodSugarAnalyzerWidget extends StatelessWidget {

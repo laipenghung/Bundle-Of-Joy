@@ -354,6 +354,94 @@ class BabyFoodRecrodDoneText extends StatelessWidget {
   }
 }
 
+class BabyGrowthHeightText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    TextStyle normalTextStye = TextStyle(
+      color: Colors.black.withOpacity(0.65),
+      fontSize: MediaQuery.of(context).size.width * 0.033,
+    );
+    TextStyle highlightedTextStyle = TextStyle(
+      color: Colors.black.withOpacity(0.8),
+      fontWeight: FontWeight.bold,
+      fontSize: MediaQuery.of(context).size.width * 0.033,
+    );
+
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(top: 15),
+      child: RichText(
+          textAlign: TextAlign.justify,
+          text: TextSpan(style: normalTextStye, children: <TextSpan>[
+            TextSpan(
+              text: "Your baby's height record will automatically added to your account once the doctor update your baby's growth record. ",
+            ),
+            TextSpan(
+              text: "If the record still not show up after doctor update the record. We recommend you to refresh this page by pressing ",
+            ),
+            TextSpan(
+              text: "Back",
+              style: highlightedTextStyle,
+            ),
+            TextSpan(
+              text: " then open ",
+            ),
+            TextSpan(
+              text: "Baby Height Tracking",
+              style: highlightedTextStyle,
+            ),
+            TextSpan(
+              text: " again to refresh it.",
+            ),
+          ])),
+    );
+  }
+}
+
+class BabyGrowthWeightText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    TextStyle normalTextStye = TextStyle(
+      color: Colors.black.withOpacity(0.65),
+      fontSize: MediaQuery.of(context).size.width * 0.033,
+    );
+    TextStyle highlightedTextStyle = TextStyle(
+      color: Colors.black.withOpacity(0.8),
+      fontWeight: FontWeight.bold,
+      fontSize: MediaQuery.of(context).size.width * 0.033,
+    );
+
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(top: 15),
+      child: RichText(
+          textAlign: TextAlign.justify,
+          text: TextSpan(style: normalTextStye, children: <TextSpan>[
+            TextSpan(
+              text: "Your baby's weight record will automatically added to your account once the doctor update your baby's growth record. ",
+            ),
+            TextSpan(
+              text: "If the record still not show up after doctor update the record. We recommend you to refresh this page by pressing ",
+            ),
+            TextSpan(
+              text: "Back",
+              style: highlightedTextStyle,
+            ),
+            TextSpan(
+              text: " then open ",
+            ),
+            TextSpan(
+              text: "Baby Weight Tracking",
+              style: highlightedTextStyle,
+            ),
+            TextSpan(
+              text: " again to refresh it.",
+            ),
+          ])),
+    );
+  }
+}
+
 class WidgetTitle extends StatelessWidget {
   final String title;
   const WidgetTitle({
