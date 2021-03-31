@@ -79,7 +79,7 @@ class _AppointmentMotherAddDateState extends State<AppointmentMotherAddDate> {
 
       height: 250,
       daysHaveCircularBorder: false, // RECTANGLE BORDER = FALSE // CIRCLE BORDER = TRUE
-      showOnlyCurrentMonthDate: false,
+      showOnlyCurrentMonthDate: true,
 
       weekendTextStyle: TextStyle(color: Colors.black),
 
@@ -159,189 +159,50 @@ class _AppointmentMotherAddDateState extends State<AppointmentMotherAddDate> {
       body: Column(
         children: <Widget>[
           Container(
-              //color: Colors.lightBlue,
-              //height: MediaQuery.of(context).size.height * 0.7,
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.1,
-                          child: Expanded(
-                            child: Divider(
-                              indent: MediaQuery.of(context).size.width * 0.0,
-                              endIndent: MediaQuery.of(context).size.width * 0.0,
-                              color: Colors.black,
-                              thickness: MediaQuery.of(context).size.height * 0.0015,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02, right: MediaQuery.of(context).size.width * 0.02),
-                          child: Text(
-                            "Hospital Selected",
-                            style: TextStyle(
-                              fontFamily: 'Comfortaa',
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.height * 0.018,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            color: Colors.black,
-                            thickness: MediaQuery.of(context).size.height * 0.0015,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
-                    child: Container(
-                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02, right: MediaQuery.of(context).size.width * 0.02),
-                      child: Text(
-                        hospitalName,
-                        style: TextStyle(
-                          fontFamily: 'Comfortaa',
-                          fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.height * 0.018,
-                          color: Colors.black,
-                        ),
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              children: [
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      FlatButton(
+                        child: Text('PREV'),
+                        onPressed: () {
+                          setState(() {
+                            _targetDateTime = DateTime(_targetDateTime.year, _targetDateTime.month - 1);
+                            _currentMonth = DateFormat.yMMM().format(_targetDateTime);
+                          });
+                        },
                       ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.1,
-                          child: Expanded(
-                            child: Divider(
-                              indent: MediaQuery.of(context).size.width * 0.0,
-                              endIndent: MediaQuery.of(context).size.width * 0.0,
-                              color: Colors.black,
-                              thickness: MediaQuery.of(context).size.height * 0.0015,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02, right: MediaQuery.of(context).size.width * 0.02),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.3,
                           child: Text(
-                            "Doctor Selected",
+                            _currentMonth,
                             style: TextStyle(
-                              fontFamily: 'Comfortaa',
                               fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.height * 0.018,
-                              color: Colors.black,
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            color: Colors.black,
-                            thickness: MediaQuery.of(context).size.height * 0.0015,
-                          ),
-                        ),
-                      ],
-                    ),
+                            textAlign: TextAlign.center,
+                          )),
+                      FlatButton(
+                        child: Text('NEXT'),
+                        onPressed: () {
+                          setState(() {
+                            _targetDateTime = DateTime(_targetDateTime.year, _targetDateTime.month + 1);
+                            _currentMonth = DateFormat.yMMM().format(_targetDateTime);
+                          });
+                        },
+                      )
+                    ],
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
-                    child: Container(
-                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02, right: MediaQuery.of(context).size.width * 0.02),
-                      child: Text(
-                        doctorName,
-                        style: TextStyle(
-                          fontFamily: 'Comfortaa',
-                          fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.height * 0.018,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.1,
-                          child: Expanded(
-                            child: Divider(
-                              indent: MediaQuery.of(context).size.width * 0.0,
-                              endIndent: MediaQuery.of(context).size.width * 0.0,
-                              color: Colors.black,
-                              thickness: MediaQuery.of(context).size.height * 0.0015,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02, right: MediaQuery.of(context).size.width * 0.02),
-                          child: Text(
-                            "Select a date",
-                            style: TextStyle(
-                              fontFamily: 'Comfortaa',
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.height * 0.018,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            color: Colors.black,
-                            thickness: MediaQuery.of(context).size.height * 0.0015,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        FlatButton(
-                          child: Text('PREV'),
-                          onPressed: () {
-                            setState(() {
-                              _targetDateTime = DateTime(_targetDateTime.year, _targetDateTime.month - 1);
-                              _currentMonth = DateFormat.yMMM().format(_targetDateTime);
-                            });
-                          },
-                        ),
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            child: Text(
-                              _currentMonth,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            )),
-                        FlatButton(
-                          child: Text('NEXT'),
-                          onPressed: () {
-                            setState(() {
-                              _targetDateTime = DateTime(_targetDateTime.year, _targetDateTime.month + 1);
-                              _currentMonth = DateFormat.yMMM().format(_targetDateTime);
-                            });
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 65.0),
-                    child: _calendarCarouselNoHeader,
-                  ),
-                ],
-              )),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 65.0),
+                  child: _calendarCarouselNoHeader,
+                ),
+              ],
+            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
