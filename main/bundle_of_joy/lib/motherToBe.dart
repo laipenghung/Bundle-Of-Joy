@@ -1,4 +1,7 @@
+import 'package:bundle_of_joy/MotherHealthTracking/healthTrackRecordList.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'appointmentMother/appointmentMother_verify.dart';
 import 'foodIntake/foodIntakeTrackMain.dart';
@@ -14,9 +17,13 @@ class MotherToBeHome extends StatefulWidget {
 
 class _MotherToBeHomeState extends State<MotherToBeHome> {
   final kShadowColor = Color(0xFFE6E6E6);
+  final User user = FirebaseAuth.instance.currentUser;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   //Card view Widget
   Widget build(BuildContext context) {
+    CollectionReference collectionReferenceHealthRecord = _db.collection('mother').doc(user.uid).collection('health_record');
+
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       //resizeToAvoidBottomInset: false,
@@ -108,7 +115,11 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                           press: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => HealthTrackingMother()),
+                              //MaterialPageRoute(builder: (context) => HealthTrackingMother()),
+                              MaterialPageRoute(builder: (context) => HealthTrackRecordList(
+                                collectionReference: collectionReferenceHealthRecord,
+                                svgSrc: "assets/icons/recipe.svg",
+                              )),
                             );
                           },
                         ),

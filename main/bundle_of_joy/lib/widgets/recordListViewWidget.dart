@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class RecordListViewWidget extends StatelessWidget {
-  final String svgSrc;
-  final String recordDate, recordTime;
-  final bool babyFoodRecord, symptomsAllergies, completeBabyFoodRecord;
+  final String svgSrc, recordPrimaryTitle, recordPrimaryDesc, recordSecondaryTitle, recordSecondaryDesc;
+  //final String recordDate, recordTime;
+  final bool babyFoodRecord, symptomsAllergies, completeBabyFoodRecord, motherHealthRecord;
   final Function press, delete, longPress;
   const RecordListViewWidget({
     Key key,
-    @required this.svgSrc, @required this.recordDate, @required this.recordTime, @required this.press, @required this.longPress,
-       @required this.delete, @required this.babyFoodRecord, this.symptomsAllergies, this.completeBabyFoodRecord,
+    @required this.svgSrc, @required this.recordPrimaryDesc, @required this.recordSecondaryDesc, @required this.press, @required this.longPress,
+       @required this.delete, @required this.babyFoodRecord, this.symptomsAllergies, this.completeBabyFoodRecord, @required this.motherHealthRecord,
+       @required this.recordPrimaryTitle, @required this.recordSecondaryTitle,
   }) : super(key: key);
 
   Widget babyFoodRecordTrueWidget(BuildContext context){
@@ -24,7 +25,7 @@ class RecordListViewWidget extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   child: Text(
-                    "Record Time",
+                    recordSecondaryTitle,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.036,
@@ -35,7 +36,7 @@ class RecordListViewWidget extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   child: Text(
-                    recordTime,
+                    recordSecondaryDesc,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.043,
@@ -85,7 +86,7 @@ class RecordListViewWidget extends StatelessWidget {
           Container(
             width: double.infinity,
             child: Text(
-              "Record Time",
+              recordSecondaryTitle,
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: MediaQuery.of(context).size.width * 0.036,
@@ -96,7 +97,7 @@ class RecordListViewWidget extends StatelessWidget {
           Container(
             width: double.infinity,
             child: Text(
-              recordTime,
+              recordSecondaryDesc,
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: MediaQuery.of(context).size.width * 0.043,
@@ -158,7 +159,7 @@ class RecordListViewWidget extends StatelessWidget {
                             Container(
                               width: double.infinity,
                               child: Text(
-                                "Record Date",
+                                recordPrimaryTitle,
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontSize: MediaQuery.of(context).size.width * 0.036,
@@ -169,7 +170,7 @@ class RecordListViewWidget extends StatelessWidget {
                             Container(
                               width: double.infinity,
                               child: Text(
-                                recordDate,
+                                recordPrimaryDesc,
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontSize: MediaQuery.of(context).size.width * 0.043,
@@ -193,14 +194,16 @@ class RecordListViewWidget extends StatelessWidget {
             ),
             Flexible(
               flex: 1,
-              child: Container(
-                child: Center(
-                  child: IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red,), 
-                    onPressed: delete,
-                  )
-                ),
-              ),
+              child: (motherHealthRecord == false)
+                ?Container(
+                  child: Center(
+                    child: IconButton(
+                      icon: Icon(Icons.delete, color: Colors.red,), 
+                      onPressed: delete,
+                    )
+                  ),
+                )
+                :Container(),
             ),
           ],
         ),

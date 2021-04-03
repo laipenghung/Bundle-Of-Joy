@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeTrackUpdate.dart';
 import 'package:bundle_of_joy/careForBaby/babyFoodIntake/babyFoodIntakeTrackView.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:bundle_of_joy/widgets/recordListViewWidget.dart';
@@ -86,10 +87,13 @@ class _BabyFoodIntakeTrackRecordListState extends State<BabyFoodIntakeTrackRecor
                         return Container(
                           child: RecordListViewWidget(
                             svgSrc: widget.svgSrc,
-                            recordDate: DateFormat('d MMM yyyy').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'])),
-                            recordTime: DateFormat('h:mm a')
+                            recordPrimaryTitle: "Record Date",
+                            recordSecondaryTitle: "Record Time",
+                            recordPrimaryDesc: DateFormat('d MMM yyyy').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'])),
+                            recordSecondaryDesc: DateFormat('h:mm a')
                                 .format(DateTime.parse(snapshot.data.documents[index]['selectedDate'] + " " + snapshot.data.documents[index]['selectedTime'])),
                             babyFoodRecord: true,
+                            motherHealthRecord: false,
                             completeBabyFoodRecord: widget.completeBabyFoodRecord,
                             symptomsAllergies: (widget.completeRecord == true) ? snapshot.data.documents[index]["symptomsAndAllergies"] : null,
                             longPress: () {},
@@ -122,7 +126,7 @@ class _BabyFoodIntakeTrackRecordListState extends State<BabyFoodIntakeTrackRecor
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => BabyFoodIntakeTrackView(
+                                      builder: (context) => BabyFoodIntakeTrackUpdate(
                                             recordID: snapshot.data.documents[index]["recordID"],
                                             selectedBabyID: widget.selectedBabyID,
                                           )),
