@@ -164,7 +164,7 @@ class _MotherInfo extends State<MotherInfo> {
   Future uploadPic(BuildContext context) async{
     Mother mother = new Mother();
     String fileName = basename(_image.path);
-    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(pid+"/profile_picture/"+fileName);
+    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child("MOTHERS/"+pid+"/profile_picture/"+fileName);
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(File(_image.path));
     StorageTaskSnapshot taskSnapshot=await uploadTask.onComplete;
     setState(() {
@@ -174,7 +174,7 @@ class _MotherInfo extends State<MotherInfo> {
   }
 
   Future loadImageFromStorage(String photoURL) async {
-    String downloadURL = await FirebaseStorage.instance.ref().child(pid+"/profile_picture/"+photoURL).getDownloadURL();
+    String downloadURL = await FirebaseStorage.instance.ref().child("MOTHERS/"+pid+"/profile_picture/"+photoURL).getDownloadURL();
 
     setState(() {
       _downloadURL = downloadURL;
