@@ -6,7 +6,7 @@ import "package:bundle_of_joy/mother-for-baby.dart";
 import "package:fluttertoast/fluttertoast.dart";
 
 class Baby {
-  String b_id, m_id, b_registered_id, b_name, b_place_of_birth, b_gender, b_age, b_bloodType, b_mode_of_delivery;
+  String b_id, m_id, b_ic, b_name, b_place_of_birth, b_gender, b_age, b_bloodType, b_mode_of_delivery;
   double b_weight_at_birth, b_length_at_birth, b_head_circumference;
   int b_order;
   Timestamp b_dob;
@@ -17,7 +17,7 @@ class Baby {
   Baby(
       this.b_id,
       this.m_id,
-      this.b_registered_id,
+      this.b_ic,
       this.b_name,
       this.b_dob,
       this.b_place_of_birth,
@@ -78,5 +78,15 @@ class Baby {
     }).then((value){
       print("Baby age updated");
     }).catchError((e) => print("Failed to update baby age: $e"));
+  }
+
+  void updateProfilePicture(String photoURL, String motherID, String babyID) async{
+    DocumentReference baby = FirebaseFirestore.instance.collection("mother").doc(motherID).collection("baby").doc(babyID);
+
+    baby.update({
+      "photoURL": photoURL.toString()
+    }).then((value){
+      print("photoURL updated");
+    }).catchError((e) => print("Failed to update photoURL: $e"));
   }
 }

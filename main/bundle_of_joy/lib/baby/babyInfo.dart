@@ -1,7 +1,12 @@
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import "baby.dart";
 
 class BabyInfo extends StatefulWidget {
@@ -14,15 +19,53 @@ class BabyInfo extends StatefulWidget {
 
 class _BabyInfo extends State<BabyInfo> {
   final Baby baby;
-  _BabyInfo(this.baby);
-  String input;
+  final String motherID = FirebaseAuth.instance.currentUser.uid;
 
-  ListView _listView(AsyncSnapshot<DocumentSnapshot> document) {
+  _BabyInfo(this.baby);
+
+  String input;
+  PickedFile _image;
+  String _downloadURL;
+
+  Future getImage(BuildContext context, List babyInfo) async {
+    final image = await ImagePicker().getImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = image;
+      uploadPic(context, babyInfo);
+    });
+  }
+
+  Future uploadPic(BuildContext context, List babyInfo) async {
+    Baby baby = new Baby.empty();
+    String fileName = basename(_image.path);
+    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(
+        "BABY/" + motherID+ "/" + babyInfo[1]  + "/profile_picture/" + fileName);
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(
+        File(_image.path));
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    setState(() {
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text('Profile Picture Uploaded')));
+    });
+    baby.updateProfilePicture(fileName, motherID, babyInfo.last);
+  }
+
+  Future loadImageFromStorage(String photoURL, List babyInfo) async {
+    String downloadURL = await FirebaseStorage.instance.ref().child(
+        "BABY/" + motherID + "/" + babyInfo[1] +"/profile_picture/" + photoURL).getDownloadURL();
+
+    setState(() {
+      _downloadURL = downloadURL;
+    });
+  }
+
+  Widget _listView(AsyncSnapshot<DocumentSnapshot> document, BuildContext context) {
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
 
     final _listItems = [
-      "Registered ID",
+      "Baby IC",
       "Name",
       "Date of Birth",
       "Time of Birth",
@@ -38,7 +81,7 @@ class _BabyInfo extends State<BabyInfo> {
     ];
 
     final _listInfo = [
-      baby.b_registered_id,
+      baby.b_ic.toString(),
       baby.b_name,
       baby.b_dob.toDate().toString().substring(0, 10),
       baby.b_dob.toDate().toString().substring(11, 16),
@@ -50,32 +93,108 @@ class _BabyInfo extends State<BabyInfo> {
       baby.b_weight_at_birth.toString(),
       baby.b_length_at_birth.toString(),
       baby.b_head_circumference.toString(),
-      baby.b_order.toString()
+      baby.b_order.toString(),
+      baby.b_id
     ];
+    var photoURL = document.data.data()["photoURL"].toString();
+    if (photoURL != null) {
+      loadImageFromStorage(photoURL, _listInfo);
+    }
 
-    return ListView.separated(
-      itemCount: _listItems.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(
-            _listItems[index],
+    return SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Container(
+          padding: EdgeInsets.only(left: 25, right: 25, top: 25),
+          child: Column(
+            children: [
+              Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundColor: Colors.black,
+                      child: CircleAvatar(
+                        radius: 58,
+                        backgroundImage: (_downloadURL != null) ? (
+                            NetworkImage(_downloadURL)
+                        ) : AssetImage("assets/icons/default_user.png"),
+                      ),
+                    ),
+                    Positioned(
+                      top: 80,
+                      left: 80,
+                      child: IconButton(
+                        icon: Icon(
+                          FontAwesomeIcons.camera,
+                          size: 30.0,
+                        ),
+                        onPressed: () {
+                          getImage(context, _listInfo);
+                        },
+                      ),
+                    ),
+                  ]
+              ),
+              ListView.separated(
+                padding: EdgeInsets.only(top: 25),
+                shrinkWrap: true,
+                itemCount: _listItems.length,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                      _listItems[index],
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "Comfortaa",
+                        fontWeight: FontWeight.bold,
+                        fontSize: fontSizeText,
+                      ),
+                    ),
+                    trailing: Text(
+                      _listInfo[index],
+                      style: TextStyle(
+                        fontFamily: "Comfortaa",
+                        fontSize: fontSizeText,
+                      ),
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) => Divider(),
+              ),
+            ],
+          ),
+        ),
+      );
+  }
+
+  Widget loading(BuildContext context){
+    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.width * 0.15,
+            width: MediaQuery.of(context).size.width * 0.15,
+            child: CircularProgressIndicator(
+              strokeWidth: 5,
+              backgroundColor: Colors.black,
+              valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.05,
+          ),
+          Text(
+            "Loading...",
             style: TextStyle(
+              fontFamily: "Comfortaa",
+              fontSize: fontSizeText,
               color: Colors.black,
-              fontFamily: "Comfortaa",
-              fontWeight: FontWeight.bold,
-              fontSize: fontSizeText,
             ),
           ),
-          trailing: Text(
-            _listInfo[index],
-            style: TextStyle(
-              fontFamily: "Comfortaa",
-              fontSize: fontSizeText,
-            ),
-          ),
-        );
-      },
-      separatorBuilder: (context, index) => Divider(),
+        ],
+      ),
     );
   }
 
@@ -83,12 +202,18 @@ class _BabyInfo extends State<BabyInfo> {
   Widget build(BuildContext context) {
     final User user = FirebaseAuth.instance.currentUser;
     DocumentReference babyDoc = FirebaseFirestore.instance.collection("mother").doc(user.uid).collection("baby").doc(baby.b_id);
-    double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
+    double fontSizeTitle = MediaQuery
+        .of(context)
+        .size
+        .width * 0.05;
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height * 0.1, //APP BAR HEIGHT
-
+        toolbarHeight: MediaQuery
+            .of(context)
+            .size
+            .height * 0.1,
+        //APP BAR HEIGHT
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
@@ -104,14 +229,14 @@ class _BabyInfo extends State<BabyInfo> {
         backgroundColor: Color(0xFFFCFFD5),
         centerTitle: true,
       ),
-      body: Container(
-        color: Colors.white,
-        child: StreamBuilder(
-            stream: babyDoc.snapshots(),
-            builder: (context, document) {
-              return _listView(document);
-            }),
-      ),
+      body: StreamBuilder(
+          stream: babyDoc.snapshots(),
+          builder: (context, document) {
+            if(document.hasData)
+              return _listView(document, context);
+            else
+              return loading(context);
+          }),
     );
   }
 }
