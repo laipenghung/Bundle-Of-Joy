@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 const Color background1 = Color(0xFFf4c2c2);
 const Color background2 = Color(0xFF89cff0);
@@ -499,6 +500,91 @@ class ModalSheetText extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class InsightWidgetsTitle extends StatelessWidget {
+  final String svgSrc, title, desc;
+  InsightWidgetsTitle({
+    @required this.svgSrc, @required this.title, @required this.desc,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            SvgPicture.asset(svgSrc, height: 23, width: 23,),
+            Container(
+              padding: EdgeInsets.only(left: 10.0,),
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.045,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(top: 8.0,),
+          child: Text(
+            desc,
+            textAlign: TextAlign.justify,
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.035,
+              color: Colors.black.withOpacity(0.65),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class InsightNotEnoughRecord extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(top: 10),
+      child: Center(
+        child: Container(
+          margin: EdgeInsets.only(top: 5, bottom: 5),
+          padding: EdgeInsets.all(5.0),
+          decoration: BoxDecoration(
+            color: Color(0xFFf5f5f5),
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            border: Border.all(color: Colors.red.withOpacity(0.4)),
+          ),
+          child: Column(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(top: 10, bottom: 8),
+                child: SvgPicture.asset(
+                  "assets/icons/warning.svg",
+                  height: 25,
+                  width: 25,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                child: Text(
+                  "Looks like you don't have enough records. BoJ Insight™ requried at least 2 record to works.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.035,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -92,9 +92,12 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
                       return Container(
                         child: RecordListViewWidget(
                           svgSrc: widget.svgSrc,
-                          recordDate: DateFormat('d MMM yyyy').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'])),
-                          recordTime: DateFormat('h:mm a').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'] + " " + snapshot.data.documents[index]['selectedTime'])),
+                          recordPrimaryTitle: "Record Date",
+                          recordSecondaryTitle: "Record Time",
+                          recordPrimaryDesc: DateFormat('d MMM yyyy').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'])),
+                          recordSecondaryDesc: DateFormat('h:mm a').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'] + " " + snapshot.data.documents[index]['selectedTime'])),
                           babyFoodRecord: false,
+                          motherHealthRecord: false,
                           longPress: (){
                             log("message");
                           },
