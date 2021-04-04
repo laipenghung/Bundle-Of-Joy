@@ -1,4 +1,5 @@
-import 'package:bundle_of_joy/foodIntake/foodIntakeBloodSugarTips.dart';
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
+import 'package:bundle_of_joy/widgets/tipsScreens/foodIntakeBloodSugarTips.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -16,24 +17,29 @@ class HealthRecordBloodSugarAnalyzer extends StatelessWidget {
   Widget build(BuildContext context) {
     TextStyle normalTextStye = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.035,);
     TextStyle linkTextStyle = TextStyle(color: Colors.blue, fontSize: MediaQuery.of(context).size.width * 0.035,);
-    String bsCond, bsCondAfter, bsCondFeedBefore, bsCondFeedAfter;
+    String bsCond, bsCondFeed;
     Color bsCondColor;
 
-    if(bSugarReading < 5.1){
+    if(bSugarReading < 4){
       bsCondColor = Colors.red;
       bsCond = "Too Low";
-    }else if(bSugarReading < 7.1){
+      bsCondFeed = lowBloodSugar;
+    }else if(bSugarReading < 6.1){
       bsCondColor = Colors.green;
       bsCond = "Excellent";
-    }else if(bSugarReading < 10.1){
+      bsCondFeed = excellentBloodSugar;
+    }else if(bSugarReading < 8.1){
       bsCondColor = Colors.lime;
       bsCond = "Good";
-    }else if(bSugarReading < 13.1){
+      bsCondFeed = goodBloodSugar;
+    }else if(bSugarReading < 10){
       bsCondColor = Colors.orange;
       bsCond = "Acceptable";
+      bsCondFeed = acceptableBloodSugar;
     }else{
       bsCondColor = Colors.red;
       bsCond = "Poor";
+      bsCondFeed = poorBloodSugar;
     }
 
     List<HealthRecordBloodSugarChartData> chartData = [
@@ -136,7 +142,8 @@ class HealthRecordBloodSugarAnalyzer extends StatelessWidget {
                     border: Border.all(color: bsCondColor.withOpacity(0.65)),
                   ),
                   child: Text(
-                    "test test test test test test test test test test test test test test test test test test test test test test ",
+                    bsCondFeed,
+                    textAlign: TextAlign.justify,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.035,
                     ),
@@ -165,7 +172,13 @@ class HealthRecordBloodSugarAnalyzer extends StatelessWidget {
                                 borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
                               ),
                               isScrollControlled: true,
-                              builder: (context) => FoodIntakeBloodSugarTips()
+                              builder: (context) => Container(
+                                height: MediaQuery.of(context).size.height * 0.8,
+                                child: SingleChildScrollView(
+                                  physics: ClampingScrollPhysics(),
+                                  child: FoodIntakeBloodSugarTips(),
+                                ),
+                              )
                             );
                           }
                         ),

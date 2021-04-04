@@ -31,6 +31,40 @@ const String babyMedsTimeDesc = "Time you record your baby medicine intake.";
 const String babyMedsRecordListTitle = "Medicine";
 const String babyMedsRecordListTitleDesc = "Medicine consumed by your baby.";
 
+const String lowBloodSugar = "A reading in the “Too Low” range indicates that your blood glucose level is too low. We strongly advise you consume something that has about 15 grams(g) of carbohydrates(sugar). " +
+  "Remember to wait about 15 minutes before eating any more. Be careful not to eat too much. This can cause high blood sugar and weight gain. Then, Check your blood sugar again and if you do not feel better " + 
+  "in 15 minutes and your blood sugar is still lower than 3.9 mmol/L, eat another snack with 15 grams(g) of carbohydrates(sugar).";
+const String excellentBloodSugar = "A reading in the “Excellent” range indicates that your blood glucose is at normal level. We still recommend you to drink lots of " +
+  "water and get active by doing regular exercise to control your blood glucose.";
+const String goodBloodSugar = "A reading in the “Good” range indicates that your blood glucose is at normal level. We still recommend you to drink lots of water and " +
+  "get active by doing regular exercise to control your blood glucose.";
+const String acceptableBloodSugar = "A reading in the “Acceptable” range indicates that your blood glucose level is quite high. We advise you to drink lots of water, cut down on carbohydrates(sugar) " + 
+  "until your blood glucose level comes down (fasting is no recommended) and get active by doing regular exercise to control your blood glucose (Do not exercise when you have ketones as it can worsen the condition).";
+const String poorBloodSugar = "A reading in the “Poor” range indicates that your blood glucose level is too high. We strongly advise you to drink lots of water, cut down on carbohydrates(sugar) " + 
+  "until your blood glucose level comes down (fasting is no recommended), get active by doing regular exercise to control your blood glucose (Do not exercise when you have ketones as it can worsen the condition), " +
+  "and continue taking your medications but consult your doctor to adjust them if the readings remain high. Ask your doctor if you need an extra dose of fast-acting insulin to help " +
+  "temporarily correct high blood glucose; and how often you need it.";
+
+const String sysNormalBloodPressure = "It seems like your blood pressure in systolic category is below 120. Your blood is at normal level. You're doing a great job, keep it up.";
+const String sysEleBloodPressure = "It seems like your blood pressure in systolic category is between 120-129. We strongly suggest you to change your lifestyle and monitoring your " + 
+  "blood pressure from time to time. Consult to doctor also is recommended since you can know more about your blood pressure condition.";
+const String sysHyperS1BloodPressure = "It seems like your blood pressure in systolic category is between 130 to 139. We strongly suggest you pay visit to hospital or clinic and consult doctor. " + 
+  "Then the doctor will recommend lifestyle changes and will consider whether you also need medication.";
+const String sysHyperS2BloodPressure = "It seems like your blood pressure in systolic category is higher than 139. We advised you pay visit to hospital or clinic and consult doctor. " +
+  "Then the doctor will recommend lifestyle changes and will consider starting you on medication to lower your blood pressure.";
+const String sysHyperCrisisBloodPressure = "It seems like your blood pressure in systolic category is 180 or higher. If you suffered from symptoms such as hest pain, shortness of breath, " + 
+  "numbness/weakness, and trouble with vision or with speaking. This is an emergency, ou must go to the hospital immediately if it's " + 
+  "possible or call the emergency line and wait for help.";
+
+const String diaNorEleBloodPressure = "It seems like your blood pressure in diastolic category is below 80. We strongly suggest you to change your lifestyle and monitoring your " + 
+  "blood pressure from time to time. Consult to doctor also is recommended since you can know more about your blood pressure condition.";
+const String diaHyperS1BloodPressure = "It seems like your blood pressure in diastolic category is between 80 to 89. We strongly suggest you pay visit to hospital or clinic and consult doctor. " + 
+  "Then the doctor will recommend lifestyle changes and will consider whether you also need medication.";
+const String diaHyperS2BloodPressure = "It seems like your blood pressure in diastolic category is higher than 89. We advised you pay visit to hospital or clinic and consult doctor." + 
+  "Then the doctor will recommend lifestyle changes and will consider starting you on medication to lower your blood pressure.";
+const String diaHyperCrisisBloodPressure = "It seems like your blood pressure in diastolic category is 120 or higher. If you suffered from symptoms such as hest pain, " + 
+  "shortness of breath, numbness/weakness, and trouble with vision or with speaking. This is an emergency, you must go to the hospital immediately if it's possible or call the emergency line and wait for help.";
+
 class BloodSugarAddDoneText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

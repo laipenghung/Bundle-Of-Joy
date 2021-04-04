@@ -357,266 +357,263 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
 
   //Food Section Widget
   Widget medicineModalBottomSheetWidget(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.6,
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(top: 3, bottom: 3),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
-                color: appbar2,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.65),
-                    blurRadius: 2.0,
-                    spreadRadius: 0.0,
-                    offset: Offset(2.0, 0),
-                  )
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Spacer(
-                    flex: 2,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(top: 3, bottom: 3),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
+              color: appbar2,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.65),
+                  blurRadius: 2.0,
+                  spreadRadius: 0.0,
+                  offset: Offset(2.0, 0),
+                )
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Spacer(
+                  flex: 2,
+                ),
+                Flexible(
+                  flex: 4,
+                  child: Container(
+                    width: double.infinity,
+                    child: Text(
+                      foodWidgetTitle,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.045,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                  Flexible(
-                    flex: 4,
-                    child: Container(
-                      width: double.infinity,
+                ),
+                Flexible(
+                  flex: 2,
+                  child: Container(
+                    width: double.infinity,
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            color: Colors.white,
+                          ),
+                          onPressed: () => Navigator.of(context).pop(),
+                        )),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.all(13),
+            child: Column(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    ModalSheetText(
+                      title: "Medicine Name",
+                      desc: "Enter the name of the medicine.",
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5, bottom: 10),
+                      height: MediaQuery.of(context).size.width * 0.09,
+                      child: TextFormField(
+                        controller: medNameController,
+                        onChanged: (val) => setState(() => medName = val),
+                        decoration: InputDecoration(
+                          hintText: "Enter your food name.",
+                          contentPadding: EdgeInsets.all(5),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.black.withOpacity(0.4),
+                              width: 0.8,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 0.8,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                Column(
+                  children: <Widget>[
+                    ModalSheetText(
+                      title: "Medicine Quantity",
+                      desc: "Enter the quantity of the medicine.",
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5, bottom: 15),
+                      height: MediaQuery.of(context).size.width * 0.09,
+                      child: TextFormField(
+                        controller: medQuantityController,
+                        onChanged: (val) => setState(() => medQuantity = val),
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: "Enter your medicine quantity.",
+                          contentPadding: EdgeInsets.all(5),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.black.withOpacity(0.4),
+                              width: 0.8,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 0.8,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: <Widget>[
+                    ModalSheetText(
+                      title: "Medicine Quantity Measurement",
+                      desc: "Enter the quantity measurement of the medicine.",
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5, bottom: 15),
+                      height: MediaQuery.of(context).size.width * 0.09,
+                      child: TextFormField(
+                        controller: quantityMearsurementController,
+                        onChanged: (val) => setState(() => medQuantityMeasurement = val),
+                        decoration: InputDecoration(
+                          hintText: "Enter your food quantity measurement. (Optional)",
+                          contentPadding: EdgeInsets.all(2),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.black.withOpacity(0.4),
+                              width: 0.8,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 0.8,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                //SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                Column(children: <Widget>[
+                  SizedBox(
+                    width: double.infinity,
+                    child: FlatButton(
+                      padding: EdgeInsets.only(
+                        top: 10.0,
+                        bottom: 10.0,
+                      ),
+                      textColor: Colors.black.withOpacity(0.65),
+                      onPressed: () {
+                        medNameController.clear();
+                        medQuantityController.clear();
+                        quantityMearsurementController.clear();
+                      },
                       child: Text(
-                        foodWidgetTitle,
+                        "Reset",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.045,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          fontSize: MediaQuery.of(context).size.width * 0.045,
                         ),
                       ),
                     ),
                   ),
-                  Flexible(
-                    flex: 2,
-                    child: Container(
-                      width: double.infinity,
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.close,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => Navigator.of(context).pop(),
-                          )),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.all(13),
-              child: Column(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      ModalSheetText(
-                        title: "Medicine Name",
-                        desc: "Enter the name of the medicine.",
+                  SizedBox(
+                    width: double.infinity,
+                    child: FlatButton(
+                      padding: EdgeInsets.only(
+                        top: 10.0,
+                        bottom: 10.0,
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 10),
-                        height: MediaQuery.of(context).size.width * 0.09,
-                        child: TextFormField(
-                          controller: medNameController,
-                          onChanged: (val) => setState(() => medName = val),
-                          decoration: InputDecoration(
-                            hintText: "Enter your food name.",
-                            contentPadding: EdgeInsets.all(5),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.4),
-                                width: 0.8,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                                width: 0.8,
-                              ),
-                            ),
-                          ),
-                        ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
-                    ],
-                  ),
-
-                  Column(
-                    children: <Widget>[
-                      ModalSheetText(
-                        title: "Medicine Quantity",
-                        desc: "Enter the quantity of the medicine.",
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 15),
-                        height: MediaQuery.of(context).size.width * 0.09,
-                        child: TextFormField(
-                          controller: medQuantityController,
-                          onChanged: (val) => setState(() => medQuantity = val),
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "Enter your medicine quantity.",
-                            contentPadding: EdgeInsets.all(5),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.4),
-                                width: 0.8,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                                width: 0.8,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      ModalSheetText(
-                        title: "Medicine Quantity Measurement",
-                        desc: "Enter the quantity measurement of the medicine.",
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 15),
-                        height: MediaQuery.of(context).size.width * 0.09,
-                        child: TextFormField(
-                          controller: quantityMearsurementController,
-                          onChanged: (val) => setState(() => medQuantityMeasurement = val),
-                          decoration: InputDecoration(
-                            hintText: "Enter your food quantity measurement. (Optional)",
-                            contentPadding: EdgeInsets.all(2),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.4),
-                                width: 0.8,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                                width: 0.8,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  //SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                  Column(children: <Widget>[
-                    SizedBox(
-                      width: double.infinity,
-                      child: FlatButton(
-                        padding: EdgeInsets.only(
-                          top: 10.0,
-                          bottom: 10.0,
-                        ),
-                        textColor: Colors.black.withOpacity(0.65),
-                        onPressed: () {
-                          medNameController.clear();
-                          medQuantityController.clear();
-                          quantityMearsurementController.clear();
-                        },
-                        child: Text(
-                          "Reset",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.width * 0.045,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FlatButton(
-                        padding: EdgeInsets.only(
-                          top: 10.0,
-                          bottom: 10.0,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        ),
-                        color: appbar2,
-                        textColor: Colors.white,
-                        onPressed: () {
-                          if (editMed == false) {
-                            if (medNameController.text.isNotEmpty && medQuantityController.text.isNotEmpty && quantityMearsurementController.text.isNotEmpty) {
-                              setState(() {
-                                medMap[medName] = medQuantity + " " + medQuantityMeasurement;
-                                medNameList.add(medName);
-                                medQuantityList.add(medQuantity);
-                                medQuantityMeasurementList.add(medQuantityMeasurement);
-                                log(medMap.toString());
-                              });
+                      color: appbar2,
+                      textColor: Colors.white,
+                      onPressed: () {
+                        if (editMed == false) {
+                          if (medNameController.text.isNotEmpty && medQuantityController.text.isNotEmpty && quantityMearsurementController.text.isNotEmpty) {
+                            setState(() {
+                              medMap[medName] = medQuantity + " " + medQuantityMeasurement;
+                              medNameList.add(medName);
+                              medQuantityList.add(medQuantity);
+                              medQuantityMeasurementList.add(medQuantityMeasurement);
+                              log(medMap.toString());
+                            });
+                            medNameController.clear();
+                            medQuantityController.clear();
+                            quantityMearsurementController.clear();
+                            Navigator.of(context).pop();
+                          } else {
+                            dialogBoxContent = "Please make sure you entered all of the field." + " All of the field cannot be left empty.";
+                            _showDialogBox(context, dialogBoxContent);
+                          }
+                        } else {
+                          if (medNameController.text.isNotEmpty && medQuantityController.text.isNotEmpty && quantityMearsurementController.text.isNotEmpty) {
+                            setState(() {
+                              medMap.remove(foodMapKey);
+                              medMap[medName] = medQuantity + " " + medQuantityMeasurement;
+                              medNameList[listIndex] = medName;
+                              medQuantityList[listIndex] = medQuantity;
+                              medQuantityMeasurementList[listIndex] = medQuantityMeasurement;
                               medNameController.clear();
                               medQuantityController.clear();
                               quantityMearsurementController.clear();
+                              foodWidgetTitle = "Consumed Food";
+                              editMed = false;
+                              listIndex = null;
+                              foodMapKey = null;
+                              log(medMap.toString());
                               Navigator.of(context).pop();
-                            } else {
-                              dialogBoxContent = "Please make sure you entered all of the field." + " All of the field cannot be left empty.";
-                              _showDialogBox(context, dialogBoxContent);
-                            }
-                          } else {
-                            if (medNameController.text.isNotEmpty && medQuantityController.text.isNotEmpty && quantityMearsurementController.text.isNotEmpty) {
-                              setState(() {
-                                medMap.remove(foodMapKey);
-                                medMap[medName] = medQuantity + " " + medQuantityMeasurement;
-                                medNameList[listIndex] = medName;
-                                medQuantityList[listIndex] = medQuantity;
-                                medQuantityMeasurementList[listIndex] = medQuantityMeasurement;
-                                medNameController.clear();
-                                medQuantityController.clear();
-                                quantityMearsurementController.clear();
-                                foodWidgetTitle = "Consumed Food";
-                                editMed = false;
-                                listIndex = null;
-                                foodMapKey = null;
-                                log(medMap.toString());
-                                Navigator.of(context).pop();
-                              });
-                            }
+                            });
                           }
-                        },
-                        child: Text(
-                          (editMed == false) ? "Add" : "Update",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.width * 0.045,
-                          ),
+                        }
+                      },
+                      child: Text(
+                        (editMed == false) ? "Add" : "Update",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.width * 0.045,
                         ),
                       ),
                     ),
-                  ]),
-                ],
-              ),
+                  ),
+                ]),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -851,10 +848,13 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
                             ),
                             isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                                  physics: ClampingScrollPhysics(),
-                                  child: medicineModalBottomSheetWidget(context),
-                                ));
+                            builder: (context) => Container(
+                              height: MediaQuery.of(context).size.height * 0.6,
+                              child: SingleChildScrollView(
+                                    physics: ClampingScrollPhysics(),
+                                    child: medicineModalBottomSheetWidget(context),
+                                  ),
+                            ));
                       },
                       child: Text(
                         (medNameList.length == 0) ? "Add Medicine" : "Add More Medicine",
@@ -877,203 +877,200 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
 
   //Blood Glucose Section Widget
   Widget bodyTempModalBottomSheetWidget(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(top: 3, bottom: 3),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
-                color: appbar2,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.65),
-                    blurRadius: 2.0,
-                    spreadRadius: 0.0,
-                    offset: Offset(2.0, 0),
-                  )
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Spacer(
-                    flex: 2,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(top: 3, bottom: 3),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
+              color: appbar2,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.65),
+                  blurRadius: 2.0,
+                  spreadRadius: 0.0,
+                  offset: Offset(2.0, 0),
+                )
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Spacer(
+                  flex: 2,
+                ),
+                Flexible(
+                  flex: 4,
+                  child: Container(
+                    width: double.infinity,
+                    child: Text(
+                      "Body Temperature",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.045,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                  Flexible(
-                    flex: 4,
-                    child: Container(
-                      width: double.infinity,
+                ),
+                Flexible(
+                  flex: 2,
+                  child: Container(
+                    width: double.infinity,
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            color: Colors.white,
+                          ),
+                          onPressed: () => Navigator.of(context).pop(),
+                        )),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.all(13),
+            child: Column(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    ModalSheetText(
+                      title: "Body Temperature Reading",
+                      desc: "Body Temperature reading before medication.",
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5, bottom: 10),
+                      height: MediaQuery.of(context).size.width * 0.09,
+                      child: TextFormField(
+                        controller: bTempBeforeController,
+                        onChanged: (val) => setState(() => bTempBefore = val),
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: "Body Temperature reading before medication.",
+                          contentPadding: EdgeInsets.all(5),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.black.withOpacity(0.4),
+                              width: 0.8,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 0.8,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: <Widget>[
+                    ModalSheetText(
+                      title: "Body Temperature Reading",
+                      desc: "Body Temperature reading reading 2 hour after medication.",
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5, bottom: 15),
+                      height: MediaQuery.of(context).size.width * 0.09,
+                      child: TextFormField(
+                        controller: bTempAfterController,
+                        onChanged: (val) => setState(() => bTempAfter = val),
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: "Body Temperature reading reading 2 hour after medication.",
+                          contentPadding: EdgeInsets.all(5),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.black.withOpacity(0.4),
+                              width: 0.8,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 0.8,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.035),
+                Column(children: <Widget>[
+                  SizedBox(
+                    width: double.infinity,
+                    child: FlatButton(
+                      padding: EdgeInsets.only(
+                        top: 10.0,
+                        bottom: 10.0,
+                      ),
+                      textColor: Colors.black.withOpacity(0.65),
+                      onPressed: () {
+                        bTempBeforeController.clear();
+                        bTempAfterController.clear();
+                      },
                       child: Text(
-                        "Body Temperature",
+                        "Reset",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.045,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          fontSize: MediaQuery.of(context).size.width * 0.045,
                         ),
                       ),
                     ),
                   ),
-                  Flexible(
-                    flex: 2,
-                    child: Container(
-                      width: double.infinity,
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.close,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => Navigator.of(context).pop(),
-                          )),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.all(13),
-              child: Column(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      ModalSheetText(
-                        title: "Body Temperature Reading",
-                        desc: "Body Temperature reading before medication.",
+                  SizedBox(
+                    width: double.infinity,
+                    child: FlatButton(
+                      padding: EdgeInsets.only(
+                        top: 10.0,
+                        bottom: 10.0,
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 10),
-                        height: MediaQuery.of(context).size.width * 0.09,
-                        child: TextFormField(
-                          controller: bTempBeforeController,
-                          onChanged: (val) => setState(() => bTempBefore = val),
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "Body Temperature reading before medication.",
-                            contentPadding: EdgeInsets.all(5),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.4),
-                                width: 0.8,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                                width: 0.8,
-                              ),
-                            ),
-                          ),
-                        ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      ModalSheetText(
-                        title: "Body Temperature Reading",
-                        desc: "Body Temperature reading reading 2 hour after medication.",
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 15),
-                        height: MediaQuery.of(context).size.width * 0.09,
-                        child: TextFormField(
-                          controller: bTempAfterController,
-                          onChanged: (val) => setState(() => bTempAfter = val),
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "Body Temperature reading reading 2 hour after medication.",
-                            contentPadding: EdgeInsets.all(5),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.4),
-                                width: 0.8,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                                width: 0.8,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.035),
-                  Column(children: <Widget>[
-                    SizedBox(
-                      width: double.infinity,
-                      child: FlatButton(
-                        padding: EdgeInsets.only(
-                          top: 10.0,
-                          bottom: 10.0,
-                        ),
-                        textColor: Colors.black.withOpacity(0.65),
-                        onPressed: () {
+                      color: appbar2,
+                      textColor: Colors.white,
+                      onPressed: () {
+                        if (bTempBeforeController.text.isNotEmpty) {
                           bTempBeforeController.clear();
                           bTempAfterController.clear();
-                        },
-                        child: Text(
-                          "Reset",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.width * 0.045,
-                          ),
+                          Navigator.of(context).pop();
+                        } else {
+                          dialogBoxContent = "Please make sure you entered your baby body temperature reading into the " +
+                              "before medication section. Only 2 hour after medication section can be left empty.";
+                          _showDialogBox(context, dialogBoxContent);
+                        }
+                      },
+                      child: Text(
+                        "Add",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.width * 0.045,
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FlatButton(
-                        padding: EdgeInsets.only(
-                          top: 10.0,
-                          bottom: 10.0,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        ),
-                        color: appbar2,
-                        textColor: Colors.white,
-                        onPressed: () {
-                          if (bTempBeforeController.text.isNotEmpty) {
-                            bTempBeforeController.clear();
-                            bTempAfterController.clear();
-                            Navigator.of(context).pop();
-                          } else {
-                            dialogBoxContent = "Please make sure you entered your baby body temperature reading into the " +
-                                "before medication section. Only 2 hour after medication section can be left empty.";
-                            _showDialogBox(context, dialogBoxContent);
-                          }
-                        },
-                        child: Text(
-                          "Add",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.width * 0.045,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ]),
-                ],
-              ),
+                  ),
+                ]),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -1245,10 +1242,13 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
                             ),
                             isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                                  physics: ClampingScrollPhysics(),
-                                  child: bodyTempModalBottomSheetWidget(context),
-                                ));
+                            builder: (context) => Container(
+                              height: MediaQuery.of(context).size.height * 0.5,
+                              child: SingleChildScrollView(
+                                    physics: ClampingScrollPhysics(),
+                                    child: bodyTempModalBottomSheetWidget(context),
+                                  ),
+                            ));
                       },
                       child: Text(
                         (bTempBefore == null && bTempAfter == null) ? "Add Body Temperature Reading" : "Edit Body Temperature Reading",

@@ -8,13 +8,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class HealthRecordPregnancyWidget extends StatelessWidget {
-  final String svgSrcDate;
+  final String svgSrcDate, svgSrcDatePreg;
   final int dayOfPregnancy;
   final DateTime recordDate;
   //final String svgSrcEstimatedDate;
   const HealthRecordPregnancyWidget({
     Key key,
-    @required this.svgSrcDate, @required this.dayOfPregnancy, @required this.recordDate,
+    @required this.svgSrcDate, @required this.dayOfPregnancy, @required this.recordDate, @required this.svgSrcDatePreg
     //this.svgSrcEstimatedDate
   }) : super(key: key);
 
@@ -91,7 +91,7 @@ class HealthRecordPregnancyWidget extends StatelessWidget {
               margin: EdgeInsets.only(top: 15),
               child: Row(
                 children: <Widget>[
-                  SvgPicture.asset(svgSrcDate, height: 23, width: 23,),
+                  SvgPicture.asset(svgSrcDatePreg, height: 23, width: 23,),
                   Container(
                     padding: EdgeInsets.only(left: 8.0,),
                     child: Text(
@@ -281,14 +281,14 @@ class HealthRecordBloodPressureWidget extends StatelessWidget {
               ),
             ),
             HealthRecordBloodPressureAnalyzer(
-              svgSrc: "assets/icons/testAM.svg",
+              svgSrc: "assets/icons/web-analytics.svg",
               bPressureSystolic: bPressureSystolic,
               bPressureDiastolic: bPressureDiastolic,
             ),
             Container(
               margin: EdgeInsets.only(top: 8),
               child: HealthRecordBloodPressureInsight(
-                svgSrc: "assets/icons/testAM.svg",
+                svgSrc: "assets/icons/insight.svg",
               ),
             )
           ],
@@ -365,13 +365,13 @@ class HealthRecordBloodSugarWidget extends StatelessWidget {
               ),
             ),
             HealthRecordBloodSugarAnalyzer(
-              svgSrc: "assets/icons/testAM.svg",
+              svgSrc: "assets/icons/web-analytics.svg",
               bSugarReading: bGlucoseReading,
             ),
             Container(
               margin: EdgeInsets.only(top: 8),
               child: HealthRecordBloodSugarInsight(
-                svgSrc: "assets/icons/testAM.svg",
+                svgSrc: "assets/icons/insight.svg",
               ),
             ),
           ],
@@ -519,7 +519,7 @@ class _HealthRecordBodyPhysiqueWidgetState extends State<HealthRecordBodyPhysiqu
               ),
             ),
             HealthRecordBodyPhysiqueInsight(
-              svgSrc: "assets/icons/testAM.svg",
+              svgSrc: "assets/icons/insight.svg",
             )
           ],
         ), 

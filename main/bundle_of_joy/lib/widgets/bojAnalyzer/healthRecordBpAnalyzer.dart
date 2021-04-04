@@ -1,4 +1,5 @@
-import 'package:bundle_of_joy/foodIntake/foodIntakeBloodSugarTips.dart';
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
+import 'package:bundle_of_joy/widgets/tipsScreens/bloodPressureTips.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -22,32 +23,41 @@ class HealthRecordBloodPressureAnalyzer extends StatelessWidget {
     if(bPressureSystolic < 120){
       bpCondColorSystolic = Colors.green;
       bpCondSystolic = "Normal";
+      bpCondFeedSys = sysNormalBloodPressure;
     }else if(bPressureSystolic < 130){
       bpCondColorSystolic = Colors.lime.shade700;
       bpCondSystolic = "Elevated";
+      bpCondFeedSys = sysEleBloodPressure;
     }else if(bPressureSystolic < 140){
       bpCondColorSystolic = Colors.yellow.shade800;
       bpCondSystolic = "Hypertension Stage 1";
+      bpCondFeedSys = sysHyperS1BloodPressure;
     }else if(bPressureSystolic < 180){
       bpCondColorSystolic = Colors.yellow.shade900;
       bpCondSystolic = "Hypertension Stage 2";
+      bpCondFeedSys = sysHyperS2BloodPressure;
     }else{
       bpCondColorSystolic = Colors.red;
       bpCondSystolic = "Hypertensive Crisis";
+      bpCondFeedSys = sysHyperCrisisBloodPressure;
     }
 
     if(bPressureDiastolic < 80){
       bpCondColorDiastolic = Colors.lime.shade800;
       bpCondDiastolic = "Normal Or Elevated";
+      bpCondFeedDia = diaNorEleBloodPressure;
     }else if(bPressureDiastolic < 90){
       bpCondColorDiastolic = Colors.yellow.shade800;
       bpCondDiastolic = "Hypertension Stage 1";
+      bpCondFeedDia = diaHyperS1BloodPressure;
     }else if(bPressureDiastolic < 120){
       bpCondColorDiastolic = Colors.yellow.shade900;
       bpCondDiastolic = "Hypertension Stage 2";
+      bpCondFeedDia = diaHyperS2BloodPressure;
     }else{
       bpCondColorDiastolic = Colors.red;
       bpCondDiastolic = "Hypertensive Crisis";
+      bpCondFeedDia = diaHyperCrisisBloodPressure;
     }
 
     List<HealthRecordBloodPressureChartData> chartData = [
@@ -153,7 +163,8 @@ class HealthRecordBloodPressureAnalyzer extends StatelessWidget {
                   border: Border.all(color: bpCondColorSystolic.withOpacity(0.65)),
                 ),
                 child: Text(
-                  "test test test test test test test test test test test test test test test test test test test test test test ",
+                  bpCondFeedSys,
+                  textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.035,
                   ),
@@ -215,7 +226,8 @@ class HealthRecordBloodPressureAnalyzer extends StatelessWidget {
                   border: Border.all(color: bpCondColorDiastolic.withOpacity(0.65)),
                 ),
                 child: Text(
-                  "test test test test test test test test test test test test test test test test test test test test test test ",
+                  bpCondFeedDia,
+                  textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.035,
                   ),
@@ -240,11 +252,15 @@ class HealthRecordBloodPressureAnalyzer extends StatelessWidget {
                         recognizer: TapGestureRecognizer() ..onTap = () {
                           showModalBottomSheet(
                             context: context, 
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                            ),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(20.0)),),
                             isScrollControlled: true,
-                            builder: (context) => FoodIntakeBloodSugarTips(),
+                            builder: (context) => Container(
+                              height: MediaQuery.of(context).size.height * 0.8,
+                              child: SingleChildScrollView(
+                                physics: ClampingScrollPhysics(),
+                                child: BloodPressureTips(),
+                              ),
+                            )
                           );
                         }
                       ),

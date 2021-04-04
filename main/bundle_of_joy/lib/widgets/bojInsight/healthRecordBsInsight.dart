@@ -1,4 +1,3 @@
-import 'package:bundle_of_joy/foodIntake/foodIntakeBloodSugarTips.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +21,7 @@ class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarIn
   CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("health_record");
   int totalRecordsCount = 0, excellentRecordsCount = 0, goodRecordsCount = 0, acceptableRecordsCount = 0, poorRecordsCount = 0, leftRecordsCount = 0;
   String listFirstElement;
-  List dayOfPregnancyListString = []; List<int> dayOfPregnancyListInt = []; List bloodSugarList = [];
+  List dayOfPregnancyListString = []; List<int> dayOfPregnancyListInt = []; List bloodSugarList = []; List recordCountList = [];
 
   Future getAllRecords() async{
     var u = await collectionReference.where("mh_bloodSugar", isLessThan: 4).get();
@@ -37,6 +36,12 @@ class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarIn
     y.docs.forEach((doc) {setState(() => poorRecordsCount++);});
     var z = await collectionReference.get();
     z.docs.forEach((doc) {setState(() => totalRecordsCount++);});
+
+    recordCountList.add(leftRecordsCount);
+    recordCountList.add(excellentRecordsCount);
+    recordCountList.add(goodRecordsCount);
+    recordCountList.add(acceptableRecordsCount);
+    recordCountList.add(poorRecordsCount);
   }
 
   void initState(){
@@ -46,8 +51,6 @@ class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarIn
 
   @override
   Widget build(BuildContext context) {
-    TextStyle normalTextStyle = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.035,);
-    TextStyle linkTextStyle = TextStyle(color: Colors.blue, fontSize: MediaQuery.of(context).size.width * 0.035,);
     TextStyle normalWidgetTextStyle = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.035,);
     TextStyle boldWidgetTextStyle = TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: MediaQuery.of(context).size.width * 0.035,);
     
@@ -69,14 +72,8 @@ class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarIn
                 dayOfPregnancy: x[0], 
                 measurement: x[1], 
                 barColor: charts.ColorUtil.fromDartColor(appbar1),
-                /*barColor: (x[1] < 5.1)? charts.ColorUtil.fromDartColor(Colors.red)
-                  : (x[1] < 7.1)? charts.ColorUtil.fromDartColor(Colors.green)
-                  : (x[1] < 10.1)? charts.ColorUtil.fromDartColor(Colors.lime)
-                  : (x[1] < 13.1)? charts.ColorUtil.fromDartColor(Colors.orange)
-                  : charts.ColorUtil.fromDartColor(Colors.red),*/
               ),
-            ];
-            
+            ];      
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(),
@@ -146,52 +143,19 @@ class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarIn
                               style: boldWidgetTextStyle,
                             ),
                             TextSpan(
-                              text: " health records saved on the database. All of the health records will be split into 4 blood glucose condition category.",
+                              text: " health records saved on the database. All of the health records will be split into 5 blood glucose condition category.",
                             ),
                           ])),
                       ),
-                      HealthRecordInsightTableWidget(
-                        excellentRecordsCount: excellentRecordsCount.toString(),
-                        goodRecordsCount: goodRecordsCount.toString(),
-                        accpetableRecordsCount: acceptableRecordsCount.toString(),
-                        poorRecordsCount: poorRecordsCount.toString(),
-                      )
-                      
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: HealthRecordInsightTableWidget(
+                          recordCountList: recordCountList,
+                        ),
+                      ),
                     ],
                   )
                   : InsightNotEnoughRecord(),
-                  //Learn more
-                  Container(
-                    margin: EdgeInsets.only(top: 20),
-                    width: double.infinity,
-                    child: RichText(
-                      textAlign: TextAlign.justify,
-                      text: TextSpan(
-                        style: normalTextStyle,
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: "If you wish to learn more on how BoJ Analyzer™ use your blood pressure reading saved on the database " +
-                                "to analyze your blood pressure condition. You can ",
-                          ),
-                          TextSpan(
-                            text: "tap here",
-                            style: linkTextStyle,
-                            recognizer: TapGestureRecognizer() ..onTap = () {
-                              showModalBottomSheet(
-                                context: context, 
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                                ),
-                                isScrollControlled: true,
-                                builder: (context) => FoodIntakeBloodSugarTips(),
-                              );
-                            }
-                          ),
-                          TextSpan(text: " for more info.",),
-                        ]
-                      )
-                    ), 
-                  ),
                 ],
               );
             }
@@ -206,180 +170,134 @@ class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarIn
 }
 
 class HealthRecordInsightTableWidget extends StatelessWidget {
-  final String excellentRecordsCount, goodRecordsCount, accpetableRecordsCount, poorRecordsCount;
+  final List recordCountList;
   HealthRecordInsightTableWidget({
-    this.excellentRecordsCount, this.goodRecordsCount, this.accpetableRecordsCount, this.poorRecordsCount,
+    this.recordCountList
   });
 
   @override
   Widget build(BuildContext context) {
+    List bloodSugarConditionList = ["Too Low", "Excellent", "Good", "Acceptable", "Poor"];
+
     return Container(
-      width: double.infinity,
-      margin: EdgeInsets.only(top: 10.0),
-      child: Table(
-        //border: TableBorder.all(color: Colors.black),
-        children: [
-          TableRow(
-            children: [
-              TableCell(
-                child: Container(
-                  padding: EdgeInsets.only(top: 8, bottom: 8,),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      right: BorderSide(
-                        width: 0.5, 
-                        color: Colors.black.withOpacity(0.65),
-                      ),
-                    )
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        excellentRecordsCount + " Records",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.043,
-                          color: Colors.black.withOpacity(0.75),
+      child: Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(top: 10.0),
+        child: Table(
+          columnWidths: {0: FlexColumnWidth(6), 1: FlexColumnWidth(4),},
+          children: [
+            TableRow(
+              children: [
+                TableCell(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      color: appbar2,
+                      border: Border(
+                        right: BorderSide(
+                          width: 0.25, 
+                          color: Colors.white,
                         ),
+                      )
+                    ),
+                    width: double.infinity,
+                    child: Text(
+                      "Blood Glucose Condition",
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.033,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 3,),
-                        padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          color: Colors.green,
-                        ),
-                        child: Text(
-                          "Excellent",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.04,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ] 
+                    ),
                   ),
                 ),
-              ),
-              TableCell(
-                child: Container(
-                  padding: EdgeInsets.only(top: 8, bottom: 8,),
-                  child: Column(
-                    children: [
-                      Text(
-                        goodRecordsCount + " Records",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.043,
-                          color: Colors.black.withOpacity(0.75),
-                        ),
+                TableCell(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      color: appbar2,
+                      border: Border(
+                        left: BorderSide(width: 0.25, color: Colors.white,),
+                        right: BorderSide(width: 0.25, color: Colors.white,),
+                      )
+                    ),
+                    width: double.infinity,
+                    child: Text(
+                      "Records Count",
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.033,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 3,),
-                        padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          color: Colors.lime,
-                        ),
-                        child: Text(
-                          "Good",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.04,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ] 
+                    ),
                   ),
                 ),
-              ),
-            ]
-          ), 
-          TableRow(
-            children: [
-              TableCell(
-                child: Container(
-                  padding: EdgeInsets.only(top: 8, bottom: 8,),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      right: BorderSide(
-                        width: 0.5, 
-                        color: Colors.black.withOpacity(0.65),
+              ]
+            ),
+            for (var x in zip([bloodSugarConditionList, recordCountList]))
+            TableRow(
+              children: [
+                TableCell(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.45),),
+                        right: BorderSide(width: 0.25, color: Colors.black.withOpacity(0.45),),
+                      )
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 4),
+                    width: double.infinity,
+                    child: Text(
+                      x[0],
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.033,
+                        color: Colors.black.withOpacity(0.7),
+                        fontWeight: FontWeight.bold,
                       ),
-                    )
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        accpetableRecordsCount + " Records",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.043,
-                          color: Colors.black.withOpacity(0.75),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 3,),
-                        padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          color: Colors.orange,
-                        ),
-                        child: Text(
-                          "Acceptable",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.04,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ] 
+                    ),
                   ),
                 ),
-              ),
-              TableCell(
-                child: Container(
-                  padding: EdgeInsets.only(top: 8, bottom: 8,),
-                  child: Column(
-                    children: [
-                      Text(
-                        poorRecordsCount + " Records",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.043,
-                          color: Colors.black.withOpacity(0.75),
-                        ),
+                TableCell(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 4),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.45),),
+                        left: BorderSide(width: 0.25, color: Colors.black.withOpacity(0.45),),
+                      )
+                    ),
+                    width: double.infinity,
+                    child: Text(
+                      (x[1] != 0)? x[1].toString() + " Record(s)" : "-",
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.033,
+                        color: Colors.black.withOpacity(0.75),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 3,),
-                        padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          color: Colors.red,
-                        ),
-                        child: Text(
-                          "Poor",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.04,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ] 
+                    ),
                   ),
                 ),
-              ),
-            ]
-          ), 
-        ],
+              ]
+            ), 
+          ],
+        ),
       ),
     );
   }
