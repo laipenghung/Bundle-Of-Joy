@@ -1,4 +1,3 @@
-import 'package:bundle_of_joy/foodIntake/foodIntakeBloodSugarTips.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,13 +22,9 @@ class _HealthRecordBloodPressureInsightState extends State<HealthRecordBloodPres
   List dayOfPregnancyListString = []; List<int> dayOfPregnancyListInt = []; List bloodPressureSystolicList = []; List bloodPressureDiastolicList = [];
   int totalRecordsCount = 0;
   String listFirstElement;
-
-  
   
   @override
   Widget build(BuildContext context) {
-    TextStyle normalTextStyle = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.035,);
-    TextStyle linkTextStyle = TextStyle(color: Colors.blue, fontSize: MediaQuery.of(context).size.width * 0.035,);
     TextStyle normalWidgetTextStyle = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.035,);
     TextStyle boldWidgetTextStyle = TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: MediaQuery.of(context).size.width * 0.035,);
     
@@ -39,10 +34,13 @@ class _HealthRecordBloodPressureInsightState extends State<HealthRecordBloodPres
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
             snapshot.data.docs.forEach((doc) {
+              int bloodPressureSys, bloodPressureDia;
               dayOfPregnancyListInt.add(int.parse(doc.data()["mh_day_of_pregnancy"].toString()));
               dayOfPregnancyListString.add(doc.data()["mh_day_of_pregnancy"].toString());
-              bloodPressureSystolicList.add(int.parse(doc.data()["mh_bloodPressure_sys"].toString()));
-              bloodPressureDiastolicList.add(int.parse(doc.data()["mh_bloodPressure_dia"].toString()));
+              bloodPressureSys = int.parse(doc.data()["mh_bloodPressure_sys"].toString());
+              bloodPressureSystolicList.add(bloodPressureSys);
+              bloodPressureDia = int.parse(doc.data()["mh_bloodPressure_dia"].toString());
+              bloodPressureDiastolicList.add(bloodPressureDia);
               totalRecordsCount++;
             });
 
@@ -57,7 +55,6 @@ class _HealthRecordBloodPressureInsightState extends State<HealthRecordBloodPres
                 barDiaColor: charts.ColorUtil.fromDartColor(background2),
               ),
             ];
-            
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(),
@@ -155,7 +152,7 @@ class _HealthRecordBloodPressureInsightState extends State<HealthRecordBloodPres
                       ),
                       Container(
                         width: double.infinity,
-                        margin: EdgeInsets.only(top: 10.0,),
+                        margin: EdgeInsets.only(top: 15.0, bottom: 10),
                         child: Column(
                           children: <Widget>[
                             Container(
@@ -176,38 +173,6 @@ class _HealthRecordBloodPressureInsightState extends State<HealthRecordBloodPres
                     ],
                   )
                   : InsightNotEnoughRecord(),
-                  //Learn more
-                  Container(
-                    margin: EdgeInsets.only(top: 20),
-                    width: double.infinity,
-                    child: RichText(
-                      textAlign: TextAlign.justify,
-                      text: TextSpan(
-                        style: normalTextStyle,
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: "If you wish to learn more on how BoJ Analyzer™ use your blood pressure reading saved on the database " +
-                                "to analyze your blood pressure condition. You can ",
-                          ),
-                          TextSpan(
-                            text: "tap here",
-                            style: linkTextStyle,
-                            recognizer: TapGestureRecognizer() ..onTap = () {
-                              showModalBottomSheet(
-                                context: context, 
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                                ),
-                                isScrollControlled: true,
-                                builder: (context) => FoodIntakeBloodSugarTips(),
-                              );
-                            }
-                          ),
-                          TextSpan(text: " for more info.",),
-                        ]
-                      )
-                    ), 
-                  ),
                 ],
               );
             }
@@ -229,16 +194,21 @@ class HealthRecordInsightDiastolicWidget extends StatefulWidget {
 class _HealthRecordInsightDiastolicWidgetState extends State<HealthRecordInsightDiastolicWidget> {
   CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("health_record");
   int normalEleDiaRecordsCount = 0, hyperStage1DiaCount = 0, hyperStage2DiaCount = 0, hyperCrisisDiaCount = 0; 
+  List bloodPressureDiastolicList = [];
   Future getAllRecords() async{
-    //Diastolic Reading
-    var a = await collectionReference.where("mh_bloodPressure_dia", isLessThan: 80).get();
-    a.docs.forEach((doc) {setState(() => normalEleDiaRecordsCount++);});
-    var b = await collectionReference.where("mh_bloodPressure_dia", isGreaterThan: 79).where("mh_bloodPressure_dia", isLessThan: 90).get();
-    b.docs.forEach((doc) {setState(() => hyperStage1DiaCount++);});
-    var c = await collectionReference.where("mh_bloodPressure_dia", isGreaterThan: 89).where("mh_bloodPressure_dia", isLessThan: 121).get();
-    c.docs.forEach((doc) {setState(() => hyperStage2DiaCount++);});
-    var d = await collectionReference.where("mh_bloodPressure_dia", isGreaterThan: 120).get();
-    d.docs.forEach((doc) {setState(() => hyperCrisisDiaCount++);});
+    var x = await collectionReference.orderBy("mh_day_of_pregnancy", descending: false).get();
+    x.docs.forEach((doc) {
+      int bloodPressureDia;
+      bloodPressureDia = int.parse(doc.data()["mh_bloodPressure_dia"].toString());
+      if(bloodPressureDia < 80){setState(() => normalEleDiaRecordsCount++);}
+      else if(bloodPressureDia > 79 && bloodPressureDia < 90){setState(() => hyperStage1DiaCount++);}
+      else if(bloodPressureDia > 89 &&  bloodPressureDia < 121){setState(() => hyperStage2DiaCount++);}
+      else{setState(() => hyperCrisisDiaCount++);}
+    });
+    bloodPressureDiastolicList.add(normalEleDiaRecordsCount);
+    bloodPressureDiastolicList.add(hyperStage1DiaCount);
+    bloodPressureDiastolicList.add(hyperStage2DiaCount);
+    bloodPressureDiastolicList.add(hyperCrisisDiaCount);
   }
 
   void initState(){
@@ -248,185 +218,157 @@ class _HealthRecordInsightDiastolicWidgetState extends State<HealthRecordInsight
 
   @override
   Widget build(BuildContext context) {
+    List bloodPressureConditionList = ["Normal or Elevated", "Hypertension Stage 1", "Hypertension Stage 2", "Hypertensive Crisis"];
+
     return Container(
-      width: double.infinity,
-      margin: EdgeInsets.only(top: 10.0),
-      child: Column(
-        children: <Widget>[
-          Table(
-            children: [
-              TableRow(
-                children: [
-                  TableCell(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 8, bottom: 8,),
-                      child: Column(
-                        children: [
-                          Text(
-                            normalEleDiaRecordsCount.toString() + " Records",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.043,
-                              color: Colors.black.withOpacity(0.75),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 3,),
-                            padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                              color: Colors.lime.shade800,
-                            ),
-                            child: Text(
-                              "Normal & Elevated",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.038,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ] 
+      child: Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(top: 5.0),
+        child: Table(
+          columnWidths: {0: FlexColumnWidth(6), 1: FlexColumnWidth(4),},
+          children: [
+            TableRow(
+              children: [
+                TableCell(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      color: appbar2,
+                      border: Border(
+                        right: BorderSide(
+                          width: 0.25, 
+                          color: Colors.white,
+                        ),
+                      )
+                    ),
+                    width: double.infinity,
+                    child: Text(
+                      "Blood Glucose Condition",
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.033,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
                       ),
                     ),
                   ),
-                  TableCell(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 8, bottom: 8,),
-                      child: Column(
-                        children: [
-                          Text(
-                            hyperStage1DiaCount.toString() + " Records",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.043,
-                              color: Colors.black.withOpacity(0.75),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 3,),
-                            padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                              color: Colors.yellow.shade800,
-                            ),
-                            child: Text(
-                              "Hypertension Stage 1",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.038,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ] 
+                ),
+                TableCell(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      color: appbar2,
+                      border: Border(
+                        left: BorderSide(width: 0.25, color: Colors.white,),
+                        right: BorderSide(width: 0.25, color: Colors.white,),
+                      )
+                    ),
+                    width: double.infinity,
+                    child: Text(
+                      "Records Count",
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.033,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
                       ),
                     ),
                   ),
-                ]
-              ), 
-              TableRow(
-                children: [
-                  TableCell(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 8, bottom: 8,),
-                      child: Column(
-                        children: [
-                          Text(
-                            hyperStage2DiaCount.toString() + " Records",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.043,
-                              color: Colors.black.withOpacity(0.75),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 3,),
-                            padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                              color: Colors.yellow.shade900,
-                            ),
-                            child: Text(
-                              "Hypertension Stage 2",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.038,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ] 
+                ),
+              ]
+            ),
+            for (var x in zip([bloodPressureConditionList, bloodPressureDiastolicList]))
+            TableRow(
+              children: [
+                TableCell(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.45),),
+                        right: BorderSide(width: 0.25, color: Colors.black.withOpacity(0.45),),
+                      )
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 4),
+                    width: double.infinity,
+                    child: Text(
+                      x[0],
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.033,
+                        color: Colors.black.withOpacity(0.7),
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  TableCell(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 8, bottom: 8,),
-                      child: Column(
-                        children: [
-                          Text(
-                            hyperCrisisDiaCount.toString() + " Records",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.043,
-                              color: Colors.black.withOpacity(0.75),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 3,),
-                            padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                              color: Colors.red,
-                            ),
-                            child: Text(
-                              "Hypertensive Crisis",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.038,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ] 
+                ),
+                TableCell(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 4),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.45),),
+                        left: BorderSide(width: 0.25, color: Colors.black.withOpacity(0.45),),
+                      )
+                    ),
+                    width: double.infinity,
+                    child: Text(
+                      (x[1] != 0)? x[1].toString() + " Record(s)" : "-",
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.033,
+                        color: Colors.black.withOpacity(0.75),
                       ),
                     ),
                   ),
-                ]
-              ), 
-            ],
-          ),
-        ],
-      )
+                ),
+              ]
+            ), 
+          ],
+        ),
+      ),
     );
   }
 }
 
 class HealthRecordInsightSystolicWidget extends StatefulWidget {
-  @override
-  _HealthRecordInsightSystolicWidgetState createState() => _HealthRecordInsightSystolicWidgetState();
-}
+   @override
+   _HealthRecordInsightSystolicWidgetState createState() => _HealthRecordInsightSystolicWidgetState();
+ }
 
-class _HealthRecordInsightSystolicWidgetState extends State<HealthRecordInsightSystolicWidget> {
+ class _HealthRecordInsightSystolicWidgetState extends State<HealthRecordInsightSystolicWidget> {
   CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("health_record");
   int normalSysRecordsCount = 0, elevatedSysRecordsCount = 0, hyperStage1SysCount = 0, hyperStage2SysCount = 0, hyperCrisisSysCount = 0;
+  List bloodPressureSystolicList = [];
   Future getAllRecords() async{
-    //Systolic Reading
-    var u = await collectionReference.where("mh_bloodPressure_sys", isLessThan: 120).get();
-    u.docs.forEach((doc) {setState(() => normalSysRecordsCount++);});
-    var v = await collectionReference.where("mh_bloodPressure_sys", isGreaterThan: 119).where("mh_bloodPressure_sys", isLessThan: 130).get();
-    v.docs.forEach((doc) {setState(() => elevatedSysRecordsCount++);});
-    var w = await collectionReference.where("mh_bloodPressure_sys", isGreaterThan: 129).where("mh_bloodPressure_sys", isLessThan: 140).get();
-    w.docs.forEach((doc) {setState(() => hyperStage1SysCount++);});
-    var x = await collectionReference.where("mh_bloodPressure_sys", isGreaterThan: 139).where("mh_bloodPressure_sys", isLessThan: 181).get();
-    x.docs.forEach((doc) {setState(() => hyperStage2SysCount++);});
-    var y = await collectionReference.where("mh_bloodPressure_sys", isGreaterThan: 180).get();
-    y.docs.forEach((doc) {setState(() => hyperCrisisSysCount++);});
+    var x = await collectionReference.orderBy("mh_day_of_pregnancy", descending: false).get();
+    x.docs.forEach((doc) {
+      int bloodPressureSys;
+      bloodPressureSys = int.parse(doc.data()["mh_bloodPressure_sys"].toString());
+      if(bloodPressureSys < 120){setState(() => normalSysRecordsCount++);}
+      else if(bloodPressureSys > 119 && bloodPressureSys < 130){setState(() => elevatedSysRecordsCount++);}
+      else if(bloodPressureSys > 129 &&  bloodPressureSys < 140){setState(() => hyperStage1SysCount++);}
+      else if(bloodPressureSys > 139 && bloodPressureSys < 181){setState(() => hyperStage2SysCount++);}
+      else{setState(() => hyperCrisisSysCount++);}
+    });
+    bloodPressureSystolicList.add(normalSysRecordsCount);
+    bloodPressureSystolicList.add(elevatedSysRecordsCount);
+    bloodPressureSystolicList.add(hyperStage1SysCount);
+    bloodPressureSystolicList.add(hyperStage2SysCount);
+    bloodPressureSystolicList.add(hyperCrisisSysCount);
   }
 
   void initState(){
@@ -436,203 +378,128 @@ class _HealthRecordInsightSystolicWidgetState extends State<HealthRecordInsightS
 
   @override
   Widget build(BuildContext context) {
+    List bloodPressureConditionList = ["Normal", "Elevated", "Hypertension Stage 1", "Hypertension Stage 2", "Hypertensive Crisis"];
+
     return Container(
-      width: double.infinity,
-      margin: EdgeInsets.only(top: 10.0),
-      child: Column(
-        children: <Widget>[
-          Table(
-            children: [
-              TableRow(
-                children: [
-                  TableCell(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 8, bottom: 8,),
-                      child: Column(
-                        children: [
-                          Text(
-                            normalSysRecordsCount.toString() + " Records",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.043,
-                              color: Colors.black.withOpacity(0.75),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 3,),
-                            padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                              color: Colors.green,
-                            ),
-                            child: Text(
-                              "Normal",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.038,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ] 
+      child: Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(top: 5.0),
+        child: Table(
+          columnWidths: {0: FlexColumnWidth(6), 1: FlexColumnWidth(4),},
+          children: [
+            TableRow(
+              children: [
+                TableCell(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      color: appbar2,
+                      border: Border(
+                        right: BorderSide(
+                          width: 0.25, 
+                          color: Colors.white,
+                        ),
+                      )
+                    ),
+                    width: double.infinity,
+                    child: Text(
+                      "Blood Glucose Condition",
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.033,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
                       ),
                     ),
                   ),
-                  TableCell(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 8, bottom: 8,),
-                      child: Column(
-                        children: [
-                          Text(
-                            elevatedSysRecordsCount.toString() + " Records",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.043,
-                              color: Colors.black.withOpacity(0.75),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 3,),
-                            padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                              color: Colors.lime.shade700,
-                            ),
-                            child: Text(
-                              "Elevated",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.038,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ] 
+                ),
+                TableCell(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      color: appbar2,
+                      border: Border(
+                        left: BorderSide(width: 0.25, color: Colors.white,),
+                        right: BorderSide(width: 0.25, color: Colors.white,),
+                      )
+                    ),
+                    width: double.infinity,
+                    child: Text(
+                      "Records Count",
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.033,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
                       ),
                     ),
                   ),
-                ]
-              ), 
-              TableRow(
-                children: [
-                  TableCell(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 8, bottom: 8,),
-                      child: Column(
-                        children: [
-                          Text(
-                            hyperStage1SysCount.toString() + " Records",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.043,
-                              color: Colors.black.withOpacity(0.75),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 3,),
-                            padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                              color: Colors.yellow.shade800,
-                            ),
-                            child: Text(
-                              "Hypertension Stage 1",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.038,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ] 
+                ),
+              ]
+            ),
+            for (var x in zip([bloodPressureConditionList, bloodPressureSystolicList]))
+            TableRow(
+              children: [
+                TableCell(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.45),),
+                        right: BorderSide(width: 0.25, color: Colors.black.withOpacity(0.45),),
+                      )
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 4),
+                    width: double.infinity,
+                    child: Text(
+                      x[0],
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.033,
+                        color: Colors.black.withOpacity(0.7),
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  TableCell(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 8, bottom: 8,),
-                      child: Column(
-                        children: [
-                          Text(
-                            hyperStage2SysCount.toString() + " Records",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.043,
-                              color: Colors.black.withOpacity(0.75),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 3,),
-                            padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                              color: Colors.yellow.shade900,
-                            ),
-                            child: Text(
-                              "Hypertension Stage 2",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.038,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ] 
+                ),
+                TableCell(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 4),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.45),),
+                        left: BorderSide(width: 0.25, color: Colors.black.withOpacity(0.45),),
+                      )
+                    ),
+                    width: double.infinity,
+                    child: Text(
+                      (x[1] != 0)? x[1].toString() + " Record(s)" : "-",
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.033,
+                        color: Colors.black.withOpacity(0.75),
                       ),
                     ),
                   ),
-                ]
-              ), 
-            ],
-          ),
-          Table(
-            children: [
-              TableRow(
-                children: [
-                  TableCell(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 8, bottom: 8,),
-                      child: Column(
-                        children: [
-                          Text(
-                            hyperCrisisSysCount.toString() + " Records",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.043,
-                              color: Colors.black.withOpacity(0.75),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 3,),
-                            padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                              color: Colors.red,
-                            ),
-                            child: Text(
-                              "Hypertensive Crisis",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.038,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ] 
-                      ),
-                    ),
-                  ),
-                ]
-              )
-            ],
-          )
-        ],
-      )
+                ),
+              ]
+            ), 
+          ],
+        ),
+      ),
     );
   }
 }

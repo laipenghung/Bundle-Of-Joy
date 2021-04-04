@@ -45,11 +45,6 @@ class _HealthTrackRecordViewState extends State<HealthTrackRecordView> {
               double bloodSugarReading = snapshot.data.data()["mh_bloodSugar"].toDouble();
               int weightReading = snapshot.data.data()["mh_weight"];
               int heightReading = snapshot.data.data()["mh_height"];
-              //DateTime parsedTime = DateTime.parse(snapshot.data.data()["mh_date"] + " " + snapshot.data.data()["mh_time"]);
-              //String formattedTime = DateFormat('h:mm a').format(parsedTime);
-              //Map food = snapshot.data.data()["foodMap"];
-              //double bloodSugarReading = double.parse(snapshot.data.data()["mh_bloodSugar"]);
-              //double bSugarAfter = double.parse(snapshot.data.data()["bsAfter"]);
 
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -101,7 +96,8 @@ class _HealthTrackRecordViewState extends State<HealthTrackRecordView> {
                       ),
                     ),
                     HealthRecordPregnancyWidget(
-                      svgSrcDate: "assets/icons/testAM.svg",
+                      svgSrcDate: "assets/icons/calendarPreg.svg",
+                      svgSrcDatePreg: "assets/icons/babyDate.svg",
                       dayOfPregnancy: int.parse(snapshot.data.data()["mh_day_of_pregnancy"].toString()),
                       recordDate: parsedDate,
                     ),
@@ -123,7 +119,7 @@ class _HealthTrackRecordViewState extends State<HealthTrackRecordView> {
                       ),
                     ),
                     HealthRecordBloodPressureWidget(
-                      svgSrc: "assets/icons/testAM.svg",
+                      svgSrc: "assets/icons/blood-pressure.svg",
                       bPressureSystolic: bPressureSystolic,
                       bPressureDiastolic: bPressureDiastolic,
                     ),
@@ -145,7 +141,7 @@ class _HealthTrackRecordViewState extends State<HealthTrackRecordView> {
                       ),
                     ),
                     HealthRecordBloodSugarWidget(
-                      svgSrc: "assets/icons/testAM.svg",
+                      svgSrc: "assets/icons/blood-donation.svg",
                       bGlucoseReading: bloodSugarReading,
                     ),
 
@@ -166,7 +162,7 @@ class _HealthTrackRecordViewState extends State<HealthTrackRecordView> {
                       ),
                     ),
                     HealthRecordBodyPhysiqueWidget(
-                      svgSrc: "assets/icons/testAM.svg",
+                      svgSrc: "assets/icons/body-mass-index.svg",
                       weightReading: weightReading,
                       heightReading: heightReading,
                     )

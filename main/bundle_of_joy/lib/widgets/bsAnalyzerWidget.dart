@@ -1,4 +1,4 @@
-import 'package:bundle_of_joy/foodIntake/foodIntakeBloodSugarTips.dart';
+import 'package:bundle_of_joy/widgets/tipsScreens/foodIntakeBloodSugarTips.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

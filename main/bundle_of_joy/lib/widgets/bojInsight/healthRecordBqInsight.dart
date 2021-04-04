@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:bundle_of_joy/foodIntake/foodIntakeBloodSugarTips.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,8 +21,7 @@ class HealthRecordBodyPhysiqueInsight extends StatefulWidget {
 }
 
 class _HealthRecordBodyPhysiqueInsightState extends State<HealthRecordBodyPhysiqueInsight> {
-  int tabCurrentSelection = 0, recordsCount = 0;
-
+  int recordsCount = 0;
   CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("health_record");
   String listFirstElement;
   List dayOfPregnancyListString = []; List<int> dayOfPregnancyListInt = []; List weightList = []; List heightList = [];
@@ -33,9 +29,6 @@ class _HealthRecordBodyPhysiqueInsightState extends State<HealthRecordBodyPhysiq
 
   @override
   Widget build(BuildContext context) {
-    TextStyle normalTextStye = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.035,);
-    TextStyle linkTextStyle = TextStyle(color: Colors.blue, fontSize: MediaQuery.of(context).size.width * 0.035,);
-    
     return SizedBox(
       child: FutureBuilder<QuerySnapshot>(
         future: collectionReference.orderBy("mh_day_of_pregnancy", descending: false).get(),
@@ -106,7 +99,7 @@ class _HealthRecordBodyPhysiqueInsightState extends State<HealthRecordBodyPhysiq
                     children: <Widget>[
                       Container(
                         width: double.infinity,
-                        margin: EdgeInsets.only(top: 10),
+                        margin: EdgeInsets.only(top: 10, bottom: 10),
                         child: Column(
                           children: <Widget>[
                             Container(
@@ -347,43 +340,6 @@ class _HealthRecordBodyPhysiqueInsightState extends State<HealthRecordBodyPhysiq
                     ],
                   )
                   : InsightNotEnoughRecord(),
-
-
-
-                  
-                  
-                  //Learn more
-                  Container(
-                    margin: EdgeInsets.only(top: 20),
-                    width: double.infinity,
-                    child: RichText(
-                      textAlign: TextAlign.justify,
-                      text: TextSpan(
-                        style: normalTextStye,
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: "If you wish to learn more on how BoJ Analyzer™ use your blood pressure reading saved on the database " +
-                                "to analyze your blood pressure condition. You can ",
-                          ),
-                          TextSpan(
-                            text: "tap here",
-                            style: linkTextStyle,
-                            recognizer: TapGestureRecognizer() ..onTap = () {
-                              showModalBottomSheet(
-                                context: context, 
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                                ),
-                                isScrollControlled: true,
-                                builder: (context) => FoodIntakeBloodSugarTips(),
-                              );
-                            }
-                          ),
-                          TextSpan(text: " for more info.",),
-                        ]
-                      )
-                    ), 
-                  ),
                 ],
               );
             }
@@ -402,11 +358,6 @@ class HealthRecordHeightChart extends StatelessWidget {
   final String firstList;
   HealthRecordHeightChart({this.chartData, this.firstList});
 
-  // @override
-  // _HealthRecordHeightChartState createState() => _HealthRecordHeightChartState();
-// }
-
-// class _HealthRecordHeightChartState extends State<HealthRecordHeightChart> {
   @override
   Widget build(BuildContext context) {
     List<charts.Series<HealthRecordBodyPhysiqueChartData, String>> series = [
@@ -454,7 +405,6 @@ class HealthRecordHeightChart extends StatelessWidget {
               barRendererDecorator: charts.BarLabelDecorator(
                 labelPosition: charts.BarLabelPosition.inside,
               ),
-              
               domainAxis: charts.OrdinalAxisSpec(
                 viewport: charts.OrdinalViewport(firstList, 4),
                 renderSpec: charts.NoneRenderSpec(),
@@ -472,11 +422,6 @@ class HealthRecordWeightChart extends StatelessWidget {
   final String firstList;
   HealthRecordWeightChart({this.chartData, this.firstList});
 
-  // @override
-  // _HealthRecordWeightChartState createState() => _HealthRecordWeightChartState();
-// }
-
-// class _HealthRecordWeightChartState extends State<HealthRecordWeightChart> {
   @override
   Widget build(BuildContext context) {
     List<charts.Series<HealthRecordBodyPhysiqueChartData, String>> series = [
@@ -488,7 +433,6 @@ class HealthRecordWeightChart extends StatelessWidget {
         colorFn: (HealthRecordBodyPhysiqueChartData series, _) => series.barColor,
         labelAccessorFn: (HealthRecordBodyPhysiqueChartData series, _) => "D ${series.dayOfPregnancy}\n" + series.measurement.toString() + " Kg",
         insideLabelStyleAccessorFn: (HealthRecordBodyPhysiqueChartData series, _) => charts.TextStyleSpec(
-          //color: charts.MaterialPalette.gray.shade800,
           color: charts.MaterialPalette.white,
           fontSize: 11, 
         )
@@ -496,7 +440,6 @@ class HealthRecordWeightChart extends StatelessWidget {
     ];
 
     return Container(
-      //margin: EdgeInsets.only(bottom: 5.0,),
       height: 250,
       width: double.infinity,
       child: Column(
@@ -524,7 +467,6 @@ class HealthRecordWeightChart extends StatelessWidget {
               barRendererDecorator: charts.BarLabelDecorator(
                 labelPosition: charts.BarLabelPosition.inside,
               ),
-              
               domainAxis: charts.OrdinalAxisSpec(
                 viewport: charts.OrdinalViewport(firstList, 4),
                 renderSpec: charts.NoneRenderSpec(),
