@@ -1,4 +1,5 @@
 import 'package:bundle_of_joy/MotherHealthTracking/healthTrackRecordList.dart';
+import 'package:bundle_of_joy/emergencyContact/emergencyContactMain.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -129,7 +130,8 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                           press: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => EmergencyContactTab()),
+                              //MaterialPageRoute(builder: (context) => EmergencyContactTab()),
+                              MaterialPageRoute(builder: (context) => EmergencyContactMain()),
                             );
                           },
                         ),
