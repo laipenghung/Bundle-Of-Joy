@@ -104,7 +104,7 @@ class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordLis
             } else if (snapshot.data.documents.isEmpty) {
               return Center(
                 child: Text(
-                  'There is currently no records',
+                  'You have no upcoming appointment.',
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.04,
                     color: Colors.black.withOpacity(0.65),
@@ -285,8 +285,7 @@ class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordLis
                                     ),
                                     onPressed: () {
                                       deleteSelected(snapshot.data.documents[index]["a_id"]);
-                                      updateSlotCount(
-                                          snapshot.data.documents[index]["s_id"], snapshot.data.documents[index]["a_session"], snapshot.data.documents[index]["a_date"]);
+                                      updateSlotCount(snapshot.data.documents[index]["s_id"], snapshot.data.documents[index]["a_session"], snapshot.data.documents[index]["a_date"]);
                                     },
                                   )),
                                 ),

@@ -4,8 +4,8 @@ const Color background1 = Color(0xFFf4c2c2);
 const Color background2 = Color(0xFF89cff0);
 const Color background3 = Color(0xFFF5CEB8);
 const Color appbar1 = Color(0xFFf5bab8);
-const Color appbar2 = Color(0xFFf5bab8);
-const Color appbar3 = Color(0xFFf5bab8);
+const Color appbar2 = Color(0xFF89cff0);
+const Color appbar3 = Color(0xFFF5CEB8);
 
 const Color titleColor = Color(0xFF56453d);
 
@@ -50,8 +50,7 @@ class BloodSugarAddDoneText extends StatelessWidget {
           textAlign: TextAlign.left,
           text: TextSpan(style: normalTextStye, children: <TextSpan>[
             TextSpan(
-              text: "If you wish to view your Blood Sugar condition in detailed mode with BoJ Blood Sugar Analyzer™." +
-                  " First, you will have to save the current food intake record. Then navigate to ",
+              text: "If you wish to view your Blood Sugar condition in detailed mode with BoJ Blood Sugar Analyzer™." + " First, you will have to save the current food intake record. Then navigate to ",
             ),
             TextSpan(
               text: "Food Intake Tracking",
@@ -91,8 +90,7 @@ class BloodSugarAddPendingText extends StatelessWidget {
           textAlign: TextAlign.left,
           text: TextSpan(style: normalTextStye, children: <TextSpan>[
             TextSpan(
-              text: "Once you upload the current food record, you will receive a notification after " +
-                  "2 hours to inform you to update the after meal Blood Sugar reading. To update it, navigate to ",
+              text: "Once you upload the current food record, you will receive a notification after " + "2 hours to inform you to update the after meal Blood Sugar reading. To update it, navigate to ",
             ),
             TextSpan(
               text: "Food Intake Tracking",
@@ -132,8 +130,7 @@ class BloodSugarUpdateText extends StatelessWidget {
           textAlign: TextAlign.left,
           text: TextSpan(style: normalTextStye, children: <TextSpan>[
             TextSpan(
-              text: "If you wish to view your Blood Sugar condition in detailed mode with BoJ Blood Sugar Analyzer™." +
-                  " First, you will have to update this pending food intake record. Then navigate to ",
+              text: "If you wish to view your Blood Sugar condition in detailed mode with BoJ Blood Sugar Analyzer™." + " First, you will have to update this pending food intake record. Then navigate to ",
             ),
             TextSpan(
               text: "Food Intake Tracking",

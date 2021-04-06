@@ -27,7 +27,7 @@ class EmergencyContactTab extends StatelessWidget {
     }
   }
 
-  Future _checkContactExist(context) async{
+  Future _checkContactExist(context) async {
     var x = await _db.collection('patient').where('m_id', isEqualTo: user.uid).get();
     if (x.docs[0].data()["m_emergencyContactNoSecondary"] == null) {
       patientID = x.docs[0].data()["patient_id"];
@@ -36,39 +36,41 @@ class EmergencyContactTab extends StatelessWidget {
       contactSecondary = true;
     }
 
-    if(contactPrimary == true && contactSecondary == true){
+    if (contactPrimary == true && contactSecondary == true) {
       message = "You already save both emergency contact in your account. You can always modify it in Profile.";
       title = "Opps!";
       _showDialogBox(context, message, title);
-    }else if(contactPrimary == true && contactSecondary == false){
-      Navigator.push(context, 
-        MaterialPageRoute(builder: (context) => EContactAddSecondary(patientID: patientID,))
-      );
+    } else if (contactPrimary == true && contactSecondary == false) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => EContactAddSecondary(
+                    patientID: patientID,
+                  )));
       //return EContactAddSecondary(patientID: patientID,);
-    }else if(contactPrimary == false && contactSecondary == false){
+    } else if (contactPrimary == false && contactSecondary == false) {
       message = "You must add your primary emergency contact before adding the second one.";
       title = "Opps!";
       _showDialogBox(context, message, title);
     }
   }
 
-  _showDialogBox(BuildContext context, message, title){
+  _showDialogBox(BuildContext context, message, title) {
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title),
-          content: Text(message),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("Ok"),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
-        );
-      });
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(message),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Ok"),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          );
+        });
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -89,13 +91,13 @@ class EmergencyContactTab extends StatelessWidget {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
-              Icons.add, //Icon image
-              color: Colors.black,
-            ), 
-            onPressed: () async{
-              _checkContactExist(context);
-            })
+              icon: Icon(
+                Icons.add, //Icon image
+                color: Colors.black,
+              ),
+              onPressed: () async {
+                _checkContactExist(context);
+              })
         ],
 
         //automaticallyImplyLeading: false, // CENTER THE TEXT
@@ -103,7 +105,7 @@ class EmergencyContactTab extends StatelessWidget {
         centerTitle: true,
       ),
       body: FutureBuilder(
-        future: _getContact(), 
+        future: _getContact(),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -112,10 +114,14 @@ class EmergencyContactTab extends StatelessWidget {
               );
             } else if (snapshot.data == true) {
               contactPrimary = true;
-              return EmerContactCall(patientID: patientID,);
+              return EmerContactCall(
+                patientID: patientID,
+              );
             } else {
               contactPrimary = false;
-              return AddEmerContactScreen(patientID: patientID,);
+              return AddEmerContactScreen(
+                patientID: patientID,
+              );
             }
           } else if (snapshot.hasError) {
             print("error");

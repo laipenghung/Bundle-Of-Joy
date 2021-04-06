@@ -1,148 +1,171 @@
-import "dart:async";
-//import "package:bundle_of_joy/appointmentBaby/appointmentBaby_main.dart"; //Old UI
-import "package:bundle_of_joy/appointmentBaby/appointmentBabyMain.dart"; //New UI
-import "package:flutter/cupertino.dart";
-import "package:flutter/material.dart";
-import "package:firebase_auth/firebase_auth.dart";
-import "package:cloud_firestore/cloud_firestore.dart";
-import "package:flutter/services.dart";
-import "package:pinput/pin_put/pin_put.dart";
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:pinput/pin_put/pin_put.dart';
+//import 'package:bundle_of_joy/appointmentBaby/appointmentBaby_main.dart';
+import 'package:bundle_of_joy/appointmentBaby/appointmentBaby_main.dart';
 
-class AppointmentBabyVerify extends StatefulWidget {
+class AppointmentBabyVerification extends StatefulWidget {
   final String babyID;
-  AppointmentBabyVerify({this.babyID});
+  AppointmentBabyVerification({Key key, this.babyID}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _AppointmentBabyVerify(babyID);
+  _AppointmentBabyVerificationState createState() => _AppointmentBabyVerificationState();
 }
 
-class _AppointmentBabyVerify extends State<AppointmentBabyVerify> {
-  final String selectedBabyID;
-  _AppointmentBabyVerify(this.selectedBabyID);
+class _AppointmentBabyVerificationState extends State<AppointmentBabyVerification> {
   String input;
   final TextEditingController _pinPutController = TextEditingController();
   final FocusNode _pinPutFocusNode = FocusNode();
 
-  Widget is_verify(AsyncSnapshot<DocumentSnapshot> mother, CollectionReference patient, String uid) {
-    double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
-    double paddingTop = MediaQuery.of(context).size.height * 0.03;
+  Widget accountVerification(AsyncSnapshot<DocumentSnapshot> mother, CollectionReference patient, String uid) {
     if (mother.data.data()["is_verify"] == false) {
       return Builder(
         builder: (context) {
           return Center(
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(top: paddingTop),
-                    child: Text(
-                      "Please enter your verification code given by hospital.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: "Comfortaa",
-                        fontWeight: FontWeight.bold,
-                        fontSize: fontSizeTitle,
-                        color: Colors.black,
+              child: InkWell(
+                splashColor: Colors.transparent,
+                onTap: () => _pinPutFocusNode.unfocus(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.03,
+                        bottom: MediaQuery.of(context).size.height * 0.033,
                       ),
-                    ),
-                  ),
-                  SizedBox(height: 30.0),
-                  Container(
-                    color: Colors.white,
-                    margin: EdgeInsets.all(20.0),
-                    padding: EdgeInsets.all(20.0),
-                    child: PinPut(
-                      keyboardType: TextInputType.text,
-                      fieldsCount: 6,
-                      onSubmit: (String pin) async {
-                        Future<QuerySnapshot> pin_code = patient.where("pin_code", isEqualTo: pin).get();
-
-                        pin_code.then((value) {
-                          if(value.size == 0){
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext alertContext) {
-                                return noRecordFound();
-                              },
-                            );
-                          } else {
-                            CollectionReference users = FirebaseFirestore.instance.collection("mother");
-                            users
-                                .doc(uid)
-                                .update({"pin_code": pin.toString(), "is_verify": true})
-                                .then((value) => print("Mother profile updated"))
-                                .catchError((e) => print("Failed to update mother profile: $e"));
-
-                            patient
-                                .doc(value.docs.first.data()["patient_id"])
-                                .update({"m_id": uid})
-                                .then((value) => print("Patient updated"))
-                                .catchError((e) => print("Failed to update patient: $e"));
-
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AppointmentBabyMain(babyID: selectedBabyID),
-                              ),
-                            );
-                          }
-                        });
-                      },
-                      focusNode: _pinPutFocusNode,
-                      controller: _pinPutController,
-                      submittedFieldDecoration: _pinPutDecoration.copyWith(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      selectedFieldDecoration: _pinPutDecoration,
-                      followingFieldDecoration: _pinPutDecoration.copyWith(
-                        borderRadius: BorderRadius.circular(5.0),
-                        border: Border.all(
-                          color: Colors.deepPurpleAccent.withOpacity(.5),
+                      child: Text(
+                        "This feature is currently inaccessible becasue your account is still not been verified. To verify your account," + " please enter the Verifaication Code that provided by the hospital.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.04,
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 30.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      RaisedButton(
-                        color: Color(0xFFFCFFD5),
-                        shape: buttonShape(),
-                        onPressed: () => _pinPutFocusNode.requestFocus(),
-                        child: Text("Focus",
-                            style: TextStyle(
-                              fontFamily: "Comfortaa",
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.height * 0.022,
-                            )),
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.045,
+                        bottom: MediaQuery.of(context).size.height * 0.045,
                       ),
-                      RaisedButton(
-                        color: Color(0xFFFCFFD5),
-                        shape: buttonShape(),
-                        onPressed: () => _pinPutFocusNode.unfocus(),
-                        child: Text("Unfocus",
-                            style: TextStyle(
-                              fontFamily: "Comfortaa",
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.height * 0.022,
-                            )),
+                      child: PinPut(
+                        keyboardType: TextInputType.text,
+                        fieldsCount: 6,
+                        eachFieldHeight: 50.0,
+                        eachFieldWidth: 50.0,
+                        onSubmit: (String pin) async {
+                          Future<QuerySnapshot> pinCode = patient.where("pin_code", isEqualTo: pin).get();
+
+                          pinCode.then((value) {
+                            if (value.size == 0) {
+                              _showDialogBox(context);
+                            } else {
+                              CollectionReference users = FirebaseFirestore.instance.collection("mother");
+                              users.doc(uid).update({"pin_code": pin.toString(), "is_verify": true}).then((value) => print("Mother profile updated")).catchError((e) => print("Failed to update mother profile: $e"));
+
+                              patient.doc(value.docs.first.data()["patient_id"]).update({"m_id": uid}).then((value) => print("Patient updated")).catchError((e) => print("Failed to update patient: $e"));
+
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AppointmentBabyMain(babyID: widget.babyID)));
+                            }
+                          });
+                        },
+                        focusNode: _pinPutFocusNode,
+                        controller: _pinPutController,
+                        submittedFieldDecoration: _pinPutDecoration.copyWith(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        selectedFieldDecoration: _pinPutDecoration,
+                        followingFieldDecoration: _pinPutDecoration.copyWith(
+                          borderRadius: BorderRadius.circular(10.0),
+                          border: Border.all(
+                            color: Colors.black.withOpacity(0.7),
+                          ),
+                        ),
                       ),
-                      RaisedButton(
-                        color: Color(0xFFFCFFD5),
-                        shape: buttonShape(),
-                        onPressed: () => _pinPutController.text = "",
-                        child: Text("Clear All",
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.035),
+                    Container(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: FlatButton(
+                          padding: EdgeInsets.only(
+                            top: 10.0,
+                            bottom: 10.0,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                          textColor: Colors.black.withOpacity(0.6),
+                          onPressed: () => _pinPutFocusNode.requestFocus(),
+                          child: Text(
+                            "Focus",
+                            textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontFamily: "Comfortaa",
                               fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.height * 0.022,
-                            )),
+                              fontSize: MediaQuery.of(context).size.width * 0.045,
+                            ),
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    Container(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: FlatButton(
+                          padding: EdgeInsets.only(
+                            top: 10.0,
+                            bottom: 10.0,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                          textColor: Colors.black.withOpacity(0.6),
+                          onPressed: () {
+                            _pinPutController.clear();
+                            //_pinPutFocusNode.unfocus();
+                          },
+                          child: Text(
+                            "Reset",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.width * 0.045,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: FlatButton(
+                          padding: EdgeInsets.only(
+                            top: 10.0,
+                            bottom: 10.0,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                          color: Colors.red,
+                          textColor: Colors.white,
+                          onPressed: () {
+                            _pinPutController.clear();
+                            Navigator.of(context).pop();
+                            //_pinPutFocusNode.unfocus();
+                          },
+                          child: Text(
+                            "Cancel",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.width * 0.045,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -151,87 +174,67 @@ class _AppointmentBabyVerify extends State<AppointmentBabyVerify> {
     } else {
       Future<QuerySnapshot> mother = patient.where("m_id", isEqualTo: uid).get();
       mother.then((value) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AppointmentBabyMain(babyID: selectedBabyID),
-          ),
-        );
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AppointmentBabyMain(babyID: widget.babyID)));
       });
-      return loading();
+      return loadingWidget();
     }
-  }
-
-  RoundedRectangleBorder buttonShape() {
-    return RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), side: BorderSide(width: 1.5, color: Colors.black));
   }
 
   BoxDecoration get _pinPutDecoration {
     return BoxDecoration(
-      border: Border.all(width: 2, color: Colors.black),
-      borderRadius: BorderRadius.circular(15.0),
+      border: Border.all(color: Colors.red.withOpacity(0.8)),
+      borderRadius: BorderRadius.circular(10.0),
     );
   }
 
-  AlertDialog noRecordFound() {
-    Widget closeButton = FlatButton(
-      child: Text("Close"),
-      onPressed: () {
-        Navigator.of(context, rootNavigator: true).pop();
-      },
-    );
-
-    AlertDialog alert = AlertDialog(
-      title: Text(
-        "Warning!",
-        style: TextStyle(
-          fontFamily: "Comfortaa",
-        ),
-        textAlign: TextAlign.center,
-      ),
-      content: Text(
-        "Sorry the verification code is invalid.\nPlease check again.",
-        style: TextStyle(
-          fontFamily: "Comfortaa",
-        ),
-        textAlign: TextAlign.center,
-      ),
-      actionsPadding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.28),
-      actions: [
-        Align(
-            alignment: Alignment.center,
-            child: closeButton
-        ),
-      ],
-      backgroundColor: Color(0xFFFCFFD5),
-    );
-
-    return alert;
+  _showDialogBox(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Opps!"),
+            content: Text(
+              "The Verification Code you entered is incorrect. Please enter the correct Verification Code next time. " +
+                  "If you still has trouble verify your account, try to contact the hospital that provide you Verification" +
+                  " Code for further assistant.",
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Ok"),
+                onPressed: () {
+                  setState(() {
+                    _pinPutController.clear();
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+            ],
+          );
+        });
   }
 
-  Widget loading(){
-    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
+  Widget loadingWidget() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.width * 0.15,
-            width: MediaQuery.of(context).size.width * 0.15,
-            child: CircularProgressIndicator(
-              strokeWidth: 5,
-              backgroundColor: Colors.black,
-              valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+          Container(
+            margin: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.38, bottom: 20.0),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.width * 0.18,
+              width: MediaQuery.of(context).size.width * 0.18,
+              child: CircularProgressIndicator(
+                strokeWidth: 5,
+                backgroundColor: Colors.black,
+                valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+              ),
             ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
-          ),
           Text(
-            "Loading...",
+            "Loading..",
+            textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: "Comfortaa",
-              fontSize: fontSizeText,
+              fontSize: MediaQuery.of(context).size.width * 0.035,
               color: Colors.black,
             ),
           ),
@@ -242,40 +245,35 @@ class _AppointmentBabyVerify extends State<AppointmentBabyVerify> {
 
   @override
   Widget build(BuildContext context) {
-    double fontSize = MediaQuery.of(context).size.width * 0.05;
     final User user = FirebaseAuth.instance.currentUser;
     DocumentReference users = FirebaseFirestore.instance.collection("mother").doc(user.uid);
     CollectionReference patient = FirebaseFirestore.instance.collection("patient");
 
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
-        iconTheme: IconThemeData(
-          color: Colors.black,
+    return Container(
+      child: Container(
+        padding: EdgeInsets.all(20.0),
+        height: MediaQuery.of(context).size.height * 0.6,
+        child: Column(
+          children: <Widget>[
+            Text(
+              "Account Verification",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width * 0.055,
+                fontWeight: FontWeight.bold,
+              ),
+            ), // Your desired title
+            StreamBuilder(
+                stream: users.snapshots(),
+                builder: (context, mother) {
+                  if (mother.hasData) {
+                    return accountVerification(mother, patient, user.uid.toString());
+                  } else {
+                    return loadingWidget();
+                  }
+                }),
+          ],
         ),
-        title: Text(
-          "Account Verification",
-          style: TextStyle(
-            fontFamily: "Comfortaa",
-            fontWeight: FontWeight.bold,
-            fontSize: fontSize,
-            color: Colors.black,
-          ),
-        ),
-        backgroundColor: Color(0xFFFCFFD5),
-        centerTitle: true,
-      ),
-      body: Container(
-        color: Colors.white,
-        child: StreamBuilder(
-            stream: users.snapshots(),
-            builder: (context, mother) {
-              if (mother.hasData) {
-                return is_verify(mother, patient, user.uid.toString());
-              } else {
-                return loading();
-              }
-            }),
       ),
     );
   }
