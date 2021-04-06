@@ -19,12 +19,14 @@ class GrowthTrackWeightView extends StatefulWidget {
 class _GrowthTrackWeightViewState extends State<GrowthTrackWeightView> {
   final User user = FirebaseAuth.instance.currentUser;
   String listFirstElement;
-  List ageListString = []; List growthValueList = []; List<int> ageListInt = [];
-  
+  List ageListString = [];
+  List growthValueList = [];
+  List<int> ageListInt = [];
+
   @override
   Widget build(BuildContext context) {
     //CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(user.uid)
-      //.collection("baby").doc(widget.selectedBabyID).collection("baby_growth");
+    //.collection("baby").doc(widget.selectedBabyID).collection("baby_growth");
 
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
@@ -36,7 +38,7 @@ class _GrowthTrackWeightViewState extends State<GrowthTrackWeightView> {
             fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
         ),
-        backgroundColor: appbar1,
+        backgroundColor: appbar2,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -50,14 +52,14 @@ class _GrowthTrackWeightViewState extends State<GrowthTrackWeightView> {
                 ageListString.add(doc.data()["bg_month"].toString());
                 growthValueList.add(double.parse(doc.data()["bg_weight"].toString()));
               });
-              listFirstElement =  ageListString[0];
+              listFirstElement = ageListString[0];
               List<GrowthChartData> chartData = [
                 for (var x in zip([ageListString, growthValueList]))
-                GrowthChartData(
-                  month: x[0], 
-                  growthValue: x[1], 
-                  barColor: charts.ColorUtil.fromDartColor(appbar2),
-                ),
+                  GrowthChartData(
+                    month: x[0],
+                    growthValue: x[1],
+                    barColor: charts.ColorUtil.fromDartColor(appbar2),
+                  ),
               ];
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -83,18 +85,16 @@ class _GrowthTrackWeightViewState extends State<GrowthTrackWeightView> {
                       ),
                     ),
                     BabyGrowthWidget(
-                      graphTitle: "Weight Record Graph", 
-                      graphDesc: "This section display the weight record of your baby. The record is presented to you in bar" +
-                        " chart to help you visualize baby's weight record in a compact and precise format.",
-                      tableTitle: "Weight Record Table", 
-                      tableDesc: "This section display the weight record of your baby and all of your baby's weight records " + 
-                        "are being presented to you in table form.", 
-                      svgSrcGraph: "assets/icons/graph.svg", 
-                      svgSrcTable: "assets/icons/table.svg", 
-                      chartData: chartData, 
-                      listFirstElement: listFirstElement, 
-                      ageListInt: ageListInt, 
-                      growthValueList: growthValueList, 
+                      graphTitle: "Weight Record Graph",
+                      graphDesc: "This section display the weight record of your baby. The record is presented to you in bar" + " chart to help you visualize baby's weight record in a compact and precise format.",
+                      tableTitle: "Weight Record Table",
+                      tableDesc: "This section display the weight record of your baby and all of your baby's weight records " + "are being presented to you in table form.",
+                      svgSrcGraph: "assets/icons/graph.svg",
+                      svgSrcTable: "assets/icons/table.svg",
+                      chartData: chartData,
+                      listFirstElement: listFirstElement,
+                      ageListInt: ageListInt,
+                      growthValueList: growthValueList,
                       xAxisLabel: "Months (M)",
                       yAxisLabel: "Weight (kg)",
                       measurement: "kg",

@@ -220,10 +220,7 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
                                 ),
                                 isScrollControlled: true,
-                                builder: (context) => SingleChildScrollView(
-                                      physics: ClampingScrollPhysics(),
-                                      child: AppointmentBabyVerification(babyID: selectedBabyID),
-                                    ));
+                                builder: (context) => SingleChildScrollView(physics: ClampingScrollPhysics(), child: AppointmentBabyVerification(babyID: selectedBabyID)));
                           },
                         ),
                         CardWidget(
@@ -232,10 +229,7 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                           press: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => VaccinationSchedule(
-                                        selectedBabyID: selectedBabyID,
-                                      )),
+                              MaterialPageRoute(builder: (context) => VaccinationSchedule(selectedBabyID: selectedBabyID)),
                             );
                           },
                         ),
@@ -245,10 +239,7 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                           press: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => VaccinationGrowthMain(
-                                        selectedBabyID: selectedBabyID,
-                                      )),
+                              MaterialPageRoute(builder: (context) => VaccinationGrowthMain(selectedBabyID: selectedBabyID)),
                             );
                           },
                         ),
@@ -258,10 +249,7 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                           press: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => CareForBabyMain(
-                                        selectedBabyID: selectedBabyID,
-                                      )),
+                              MaterialPageRoute(builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID)),
                             );
                           },
                         ),

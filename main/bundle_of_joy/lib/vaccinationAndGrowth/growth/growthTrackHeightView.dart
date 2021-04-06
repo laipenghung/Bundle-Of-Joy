@@ -20,13 +20,15 @@ class GrowthTrackHeightView extends StatefulWidget {
 class _GrowthTrackHeightViewState extends State<GrowthTrackHeightView> {
   final User user = FirebaseAuth.instance.currentUser;
   String listFirstElement;
-  List ageListString = []; List growthValueList = []; List<int> ageListInt = [];
-  
+  List ageListString = [];
+  List growthValueList = [];
+  List<int> ageListInt = [];
+
   @override
   Widget build(BuildContext context) {
     //CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(user.uid)
-      //.collection("baby").doc(widget.selectedBabyID).collection("baby_growth");
-      
+    //.collection("baby").doc(widget.selectedBabyID).collection("baby_growth");
+
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
@@ -37,7 +39,7 @@ class _GrowthTrackHeightViewState extends State<GrowthTrackHeightView> {
             fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
         ),
-        backgroundColor: appbar1,
+        backgroundColor: appbar2,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -51,14 +53,14 @@ class _GrowthTrackHeightViewState extends State<GrowthTrackHeightView> {
                 ageListString.add(doc.data()["bg_month"].toString());
                 growthValueList.add(double.parse(doc.data()["bg_height"].toString()));
               });
-               listFirstElement =  ageListString[0];
+              listFirstElement = ageListString[0];
               List<GrowthChartData> chartData = [
                 for (var x in zip([ageListString, growthValueList]))
-                GrowthChartData(
-                  month: x[0], 
-                  growthValue: x[1], 
-                  barColor: charts.ColorUtil.fromDartColor(appbar2),
-                ),
+                  GrowthChartData(
+                    month: x[0],
+                    growthValue: x[1],
+                    barColor: charts.ColorUtil.fromDartColor(appbar2),
+                  ),
               ];
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -84,18 +86,16 @@ class _GrowthTrackHeightViewState extends State<GrowthTrackHeightView> {
                       ),
                     ),
                     BabyGrowthWidget(
-                      graphTitle: "Height Record Graph", 
-                      graphDesc: "This section display the height record of your baby. The record is presented to you in bar" +
-                        " chart to help you visualize baby's height record in a compact and precise format.",
-                      tableTitle: "Height Record Table", 
-                      tableDesc: "This section display the height record of your baby and all of your baby's height records " + 
-                        "are being presented to you in table form.", 
-                      svgSrcGraph: "assets/icons/graph.svg", 
-                      svgSrcTable: "assets/icons/table.svg", 
-                      chartData: chartData, 
-                      listFirstElement: listFirstElement, 
-                      ageListInt: ageListInt, 
-                      growthValueList: growthValueList, 
+                      graphTitle: "Height Record Graph",
+                      graphDesc: "This section display the height record of your baby. The record is presented to you in bar" + " chart to help you visualize baby's height record in a compact and precise format.",
+                      tableTitle: "Height Record Table",
+                      tableDesc: "This section display the height record of your baby and all of your baby's height records " + "are being presented to you in table form.",
+                      svgSrcGraph: "assets/icons/graph.svg",
+                      svgSrcTable: "assets/icons/table.svg",
+                      chartData: chartData,
+                      listFirstElement: listFirstElement,
+                      ageListInt: ageListInt,
+                      growthValueList: growthValueList,
                       xAxisLabel: "Months (M)",
                       yAxisLabel: "Height (cm)",
                       measurement: "cm",

@@ -128,15 +128,16 @@ class _UserProfileState extends State<UserProfile> {
                           svgSrc: "assets/icons/woman.svg",
                           press: () {
                             showModalBottomSheet(
-                                context: context,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                                ),
-                                isScrollControlled: true,
-                                builder: (context) => SingleChildScrollView(
-                                      physics: ClampingScrollPhysics(),
-                                      child: MotherProfile(),
-                                    ));
+                              context: context,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                              ),
+                              isScrollControlled: true,
+                              builder: (context) => SingleChildScrollView(
+                                physics: ClampingScrollPhysics(),
+                                child: MotherProfile(),
+                              ),
+                            );
                           },
                         ),
                         CardWidget(
