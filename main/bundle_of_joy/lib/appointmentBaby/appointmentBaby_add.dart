@@ -2,20 +2,25 @@ import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
-import 'package:bundle_of_joy/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'appointmentBaby_main.dart';
 
-import 'appointmentMother_main.dart';
+class AppointmentBabyAdd extends StatefulWidget {
+  final String babyID;
 
-class AppointmentMotherAdd extends StatefulWidget {
+  AppointmentBabyAdd({this.babyID});
+
   @override
-  _AppointmentMotherAddState createState() => _AppointmentMotherAddState();
+  _AppointmentBabyAddState createState() => _AppointmentBabyAddState(babyID);
 }
 
-class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
+class _AppointmentBabyAddState extends State<AppointmentBabyAdd> {
+  final String babyID;
+  _AppointmentBabyAddState(this.babyID);
+
   // User
   final User user = FirebaseAuth.instance.currentUser;
   // Hospital & Doctor
@@ -541,7 +546,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.dark(
-              surface: appbar1,
+              surface: appbar2,
               onSurface: Colors.black,
             ),
           ),
@@ -591,7 +596,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
         iconTheme: IconThemeData(
           color: Colors.white,
         ),
-        backgroundColor: appbar1,
+        backgroundColor: appbar2,
         centerTitle: true,
       ),
 
@@ -657,7 +662,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                         child: FlatButton(
                           padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                          color: appbar1,
+                          color: appbar2,
                           textColor: Colors.white,
                           onPressed: () {
                             showModalBottomSheet(
@@ -753,7 +758,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                         child: FlatButton(
                           padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                          color: appbar1,
+                          color: appbar2,
                           textColor: Colors.white,
                           onPressed: () {
                             showModalBottomSheet(
@@ -849,7 +854,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                         child: FlatButton(
                           padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                          color: appbar1,
+                          color: appbar2,
                           textColor: Colors.white,
                           onPressed: () {
                             _pickDate();
@@ -930,7 +935,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                         child: FlatButton(
                           padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                          color: appbar1,
+                          color: appbar2,
                           textColor: Colors.white,
                           child: Text(
                             "Select a session",
@@ -1291,7 +1296,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                 child: FlatButton(
                   padding: EdgeInsets.only(top: 15, bottom: 15),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  color: appbar1,
+                  color: appbar2,
                   textColor: Colors.white,
                   onPressed: () {
                     _checkAppointment();
@@ -1320,7 +1325,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
     final User user = FirebaseAuth.instance.currentUser;
     final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-    var x = await _db.collection('mother_appointment').where("m_id", isEqualTo: user.uid).where("a_date", isEqualTo: dateSelected).get();
+    var x = await _db.collection('baby_appointment').where("b_id", isEqualTo: user.uid).where("a_date", isEqualTo: dateSelected).get();
     var y = await _db.collection('appointment_slot').where('date_string', isEqualTo: dateSelected).get();
     var h = await _db.collection('hospital').where('h_name', isEqualTo: hospitalName).get();
     var d = await _db.collection('doctor').where('d_name', isEqualTo: doctorName).get();
@@ -1380,7 +1385,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
           },
         );
       } else {
-        uploadAppointment(hospitalName, doctorName, dateSelected, selectedSession, h.docs[0].data()["h_id"], d.docs[0].data()["d_id"], y.docs[0].data()["s_id"]);
+        uploadAppointment(hospitalName, doctorName, dateSelected, selectedSession, h.docs[0].data()["h_id"], d.docs[0].data()["d_id"], y.docs[0].data()["s_id"], babyID);
       }
     }
     // Afternoon
@@ -1402,7 +1407,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
           },
         );
       } else {
-        uploadAppointment(hospitalName, doctorName, dateSelected, selectedSession, h.docs[0].data()["h_id"], d.docs[0].data()["d_id"], y.docs[0].data()["s_id"]);
+        uploadAppointment(hospitalName, doctorName, dateSelected, selectedSession, h.docs[0].data()["h_id"], d.docs[0].data()["d_id"], y.docs[0].data()["s_id"], babyID);
       }
     }
     // Evening
@@ -1424,16 +1429,16 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
           },
         );
       } else {
-        uploadAppointment(hospitalName, doctorName, dateSelected, selectedSession, h.docs[0].data()["h_id"], d.docs[0].data()["d_id"], y.docs[0].data()["s_id"]);
+        uploadAppointment(hospitalName, doctorName, dateSelected, selectedSession, h.docs[0].data()["h_id"], d.docs[0].data()["d_id"], y.docs[0].data()["s_id"], babyID);
       }
     }
   }
 
-  Future<void> uploadAppointment(hospitalName, doctorName, appointmentDate, appointmentSession, hospitalID, doctorID, slotID) {
+  Future<void> uploadAppointment(hospitalName, doctorName, appointmentDate, appointmentSession, hospitalID, doctorID, slotID, bbID) {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     final User user = FirebaseAuth.instance.currentUser;
 
-    CollectionReference appointmentRecord = _db.collection("mother_appointment");
+    CollectionReference appointmentRecord = _db.collection("baby_appointment");
     CollectionReference slotRecord = _db.collection("appointment_slot");
     return appointmentRecord.add({
       "h_name": hospitalName,
@@ -1444,6 +1449,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
       "d_id": doctorID,
       "s_id": slotID,
       "m_id": user.uid,
+      "b_id": bbID,
       "a_status": "Pending",
     }).then((value) {
       appointmentRecord.doc(value.id).update({
@@ -1454,7 +1460,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
           if (appointmentSession == "Afternoon") "s_available_Afternoon": FieldValue.increment(-1),
           if (appointmentSession == "Evening") "s_available_Evening": FieldValue.increment(-1),
         }).then((value) {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AppointmentMotherMain()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AppointmentBabyMain(babyID: babyID)));
         });
       });
       print("Data uploaded");
@@ -1474,7 +1480,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
 
   BoxDecoration myBoxDecoration2() {
     return BoxDecoration(
-      color: appbar1,
+      color: appbar2,
       border: Border.all(
         color: Colors.black.withOpacity(0.65),
         width: 1.5,
@@ -1485,7 +1491,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
 
   BoxDecoration myBoxDecorationAM() {
     return BoxDecoration(
-      color: _amColor == "on" ? appbar1 : Colors.white,
+      color: _amColor == "on" ? appbar2 : Colors.white,
       border: Border.all(
         color: Colors.black.withOpacity(0.65),
         width: 1.5,
@@ -1496,7 +1502,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
 
   BoxDecoration myBoxDecorationPM() {
     return BoxDecoration(
-      color: _pmColor == "on" ? appbar1 : Colors.white,
+      color: _pmColor == "on" ? appbar2 : Colors.white,
       border: Border.all(
         color: Colors.black.withOpacity(0.65),
         width: 1.5,
@@ -1507,7 +1513,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
 
   BoxDecoration myBoxDecorationEVE() {
     return BoxDecoration(
-      color: _eveColor == "on" ? appbar1 : Colors.white,
+      color: _eveColor == "on" ? appbar2 : Colors.white,
       border: Border.all(
         color: Colors.black.withOpacity(0.65),
         width: 1.5,

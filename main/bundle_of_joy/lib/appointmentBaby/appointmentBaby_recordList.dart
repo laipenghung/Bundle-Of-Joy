@@ -1,11 +1,15 @@
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:bundle_of_joy/main.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:async';
+
+import 'package:flutter_svg/svg.dart';
 
 class AppointmentBabyRecordList extends StatefulWidget {
   final String babyID;
@@ -13,16 +17,17 @@ class AppointmentBabyRecordList extends StatefulWidget {
   AppointmentBabyRecordList({this.babyID});
 
   @override
-  _AppointmentBabyRecordListState createState() => _AppointmentBabyRecordListState(this.babyID);
+  _AppointmentBabyRecordListState createState() => _AppointmentBabyRecordListState(babyID);
 }
 
 class _AppointmentBabyRecordListState extends State<AppointmentBabyRecordList> {
-  MyApp main = MyApp();
+  final String babyID;
+  _AppointmentBabyRecordListState(this.babyID);
 
-  String babyID;
+  MyApp main = MyApp();
+  final User user = FirebaseAuth.instance.currentUser;
   DateTime today = DateTime.now();
   String d, m, y, completeDate;
-  final User user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -42,8 +47,6 @@ class _AppointmentBabyRecordListState extends State<AppointmentBabyRecordList> {
 
     completeDate = y + "-" + m + "-" + d;
   }
-
-  _AppointmentBabyRecordListState(this.babyID);
 
   Future<void> deleteSelected(appointmentID) {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -67,23 +70,20 @@ class _AppointmentBabyRecordListState extends State<AppointmentBabyRecordList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
-
         title: Text(
           "Appointment Management",
           style: TextStyle(
-            fontFamily: 'Comfortaa',
-            fontWeight: FontWeight.bold,
-            fontSize: MediaQuery.of(context).size.width * 0.05,
-            color: Colors.black,
+            shadows: <Shadow>[
+              Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
+            ],
+            fontSize: MediaQuery.of(context).size.width * 0.045,
+            color: Colors.white,
           ),
         ),
         iconTheme: IconThemeData(
-          color: Colors.black, //change your color here
+          color: Colors.white,
         ),
-
-        //automaticallyImplyLeading: false, // CENTER THE TEXT
-        backgroundColor: Color(0xFFFCFFD5),
+        backgroundColor: appbar2,
         centerTitle: true,
       ),
       body: StreamBuilder(
@@ -111,117 +111,203 @@ class _AppointmentBabyRecordListState extends State<AppointmentBabyRecordList> {
             } else if (snapshot.data.documents.isEmpty) {
               return Center(
                 child: Text(
-                  'There is currently no records',
+                  'You have no upcoming appointment.',
                   style: TextStyle(
-                    fontFamily: 'Comfortaa',
                     fontSize: MediaQuery.of(context).size.width * 0.04,
-                    color: Colors.black,
+                    color: Colors.black.withOpacity(0.65),
                   ),
                 ),
               );
             } else {
-              return Container(
-                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),
-                child: ListView.builder(
-                  itemCount: snapshot.data.documents.length,
-                  itemBuilder: (_, index) {
-                    return Column(
-                      children: [
-                        Slidable(
-                          actionPane: SlidableDrawerActionPane(),
-                          actionExtentRatio: 0.22,
-                          secondaryActions: <Widget>[
-                            IconSlideAction(
-                              caption: "Delete",
-                              color: Colors.red,
-                              icon: Icons.delete,
-                              onTap: () {
-                                deleteSelected(snapshot.data.documents[index]["a_id"]);
-                                updateSlotCount(snapshot.data.documents[index]["s_id"], snapshot.data.documents[index]["a_session"], snapshot.data.documents[index]["a_date"]);
-                              },
-                            )
+              return SingleChildScrollView(
+                child: Container(
+                  margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data.documents.length,
+                    itemBuilder: (_, index) {
+                      return Container(
+                        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(13),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(15, 15),
+                              blurRadius: 20,
+                              spreadRadius: 15,
+                              color: Color(0xFFE6E6E6),
+                            ),
                           ],
-                          child: Container(
-                            padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.height * 0.015,
-                                bottom: MediaQuery.of(context).size.height * 0.015,
-                                left: MediaQuery.of(context).size.width * 0.07),
-                            child: Row(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.1),
-                                  child: Image.asset(
-                                    "assets/icons/appointment.png",
-                                    height: MediaQuery.of(context).size.height * 0.06,
+                        ),
+                        child: InkWell(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Flexible(
+                                flex: 2,
+                                child: Container(
+                                  width: double.infinity,
+                                  child: Center(
+                                    child: SvgPicture.asset("assets/icons/schedule.svg", height: 40, width: 40),
                                   ),
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Date:",
-                                      style: TextStyle(
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                                        color: Colors.black,
+                              ),
+                              Flexible(
+                                flex: 7,
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Container(
+                                        child: Column(
+                                          children: <Widget>[
+                                            Container(
+                                              width: double.infinity,
+                                              child: Text(
+                                                "Hospital",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontSize: MediaQuery.of(context).size.width * 0.036,
+                                                  color: Colors.black.withOpacity(0.65),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: double.infinity,
+                                              child: Text(
+                                                snapshot.data.documents[index]["h_name"],
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontSize: MediaQuery.of(context).size.width * 0.043,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                                    Text(
-                                      "Session:",
-                                      style: TextStyle(
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                                        color: Colors.black,
+                                      Container(
+                                        child: Column(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.005),
+                                              width: double.infinity,
+                                              child: Text(
+                                                "Doctor",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontSize: MediaQuery.of(context).size.width * 0.036,
+                                                  color: Colors.black.withOpacity(0.65),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: double.infinity,
+                                              child: Text(
+                                                snapshot.data.documents[index]["d_name"],
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontSize: MediaQuery.of(context).size.width * 0.043,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      Container(
+                                        child: Column(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.005),
+                                              width: double.infinity,
+                                              child: Text(
+                                                "Date",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontSize: MediaQuery.of(context).size.width * 0.036,
+                                                  color: Colors.black.withOpacity(0.65),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: double.infinity,
+                                              child: Text(
+                                                snapshot.data.documents[index]["a_date"],
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontSize: MediaQuery.of(context).size.width * 0.043,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        child: Column(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.005),
+                                              width: double.infinity,
+                                              child: Text(
+                                                "Session",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontSize: MediaQuery.of(context).size.width * 0.036,
+                                                  color: Colors.black.withOpacity(0.65),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: double.infinity,
+                                              child: Text(
+                                                snapshot.data.documents[index]["a_session"],
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontSize: MediaQuery.of(context).size.width * 0.043,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                SizedBox(width: MediaQuery.of(context).size.width * 0.05),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      snapshot.data.documents[index]["a_date"],
-                                      style: TextStyle(
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                                        color: Colors.black,
-                                      ),
+                              ),
+                              Flexible(
+                                flex: 1,
+                                child: Container(
+                                  child: Center(
+                                      child: IconButton(
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
                                     ),
-                                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                                    Text(
-                                      snapshot.data.documents[index]["a_session"],
-                                      style: TextStyle(
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
+                                    onPressed: () {
+                                      deleteSelected(snapshot.data.documents[index]["a_id"]);
+                                      updateSlotCount(snapshot.data.documents[index]["s_id"], snapshot.data.documents[index]["a_session"], snapshot.data.documents[index]["a_date"]);
+                                    },
+                                  )),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                        Divider(
-                          indent: MediaQuery.of(context).size.width * 0.03,
-                          endIndent: MediaQuery.of(context).size.width * 0.03,
-                          color: Colors.black,
-                          thickness: MediaQuery.of(context).size.height * 0.001,
-                        ),
-                      ],
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               );
             }
           } else if (snapshot.hasError) {
-            print("Snapshot has some error");
+            print("error");
           }
           return Center(
             child: Column(

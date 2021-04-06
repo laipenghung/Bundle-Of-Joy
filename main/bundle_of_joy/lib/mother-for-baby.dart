@@ -6,7 +6,7 @@ import "package:bundle_of_joy/vaccinationAndGrowth/vacAndGrowthTab.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
-import 'appointmentBaby/appointmentBabyVerification.dart';
+import 'appointmentBaby/appointmentBaby_verify.dart';
 import "baby/baby.dart";
 import 'careForBaby/careForBabyMain.dart';
 import 'vaccinationAndGrowth/vacGrowthMain.dart';
@@ -55,15 +55,15 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
         String age_string = "";
         age = Age.dateDifference(fromDate: birthday, toDate: today, includeToDate: false);
 
-        if(age.years != 0){
+        if (age.years != 0) {
           age_string += age.years.toString() + " years ";
         }
 
-        if(age.months != 0){
+        if (age.months != 0) {
           age_string += age.months.toString() + " months ";
         }
 
-        if(age.days != 0){
+        if (age.days != 0) {
           age_string += age.days.toString() + " days ";
         }
 
@@ -190,28 +190,31 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
             case 0:
               {
                 //Navigator.push(
-                  //context,
-                  //MaterialPageRoute(
-                      //builder: (context) => AppointmentBabyVerify(babyID: selectedBabyID,)), // Old UI
-               //);
-                showModalBottomSheet( //New UI 
-                  context: context, 
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                  ),
-                  isScrollControlled: true,
-                  builder: (context) => SingleChildScrollView(
-                    physics: ClampingScrollPhysics(),
-                    child: AppointmentBabyVerification(),
-                  )
-                );
+                //context,
+                //MaterialPageRoute(
+                //builder: (context) => AppointmentBabyVerify(babyID: selectedBabyID,)), // Old UI
+                //);
+                showModalBottomSheet(
+                    //New UI
+                    context: context,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                    ),
+                    isScrollControlled: true,
+                    builder: (context) => SingleChildScrollView(
+                          physics: ClampingScrollPhysics(),
+                          child: AppointmentBabyVerification(),
+                        ));
               }
               break;
             case 1:
               {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => VaccinationSchedule(selectedBabyID: selectedBabyID,)),//Old UI
+                  MaterialPageRoute(
+                      builder: (context) => VaccinationSchedule(
+                            selectedBabyID: selectedBabyID,
+                          )), //Old UI
                   //MaterialPageRoute(builder: (context) => VaccinationSchedule(selectedBabyID: selectedBabyID,)),//New UI //In progress
                 );
               }
@@ -221,7 +224,10 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
                 Navigator.push(
                   context,
                   //MaterialPageRoute(builder: (context) => VacAndGrowthTab(selectedBabyID: selectedBabyID,)),//Old UI
-                  MaterialPageRoute(builder: (context) => VaccinationGrowthMain(selectedBabyID: selectedBabyID,)),//New UI
+                  MaterialPageRoute(
+                      builder: (context) => VaccinationGrowthMain(
+                            selectedBabyID: selectedBabyID,
+                          )), //New UI
                 );
               }
               break;
@@ -231,8 +237,10 @@ class _MotherForBabyTabState extends State<MotherForBabyTab> {
                   context,
                   MaterialPageRoute(
                       //builder: (context) => CareForBabyTab(selectedBabyID: selectedBabyID,)), //Old UI
-                      builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID,) //Updated UI
-                  ),
+                      builder: (context) => CareForBabyMain(
+                            selectedBabyID: selectedBabyID,
+                          ) //Updated UI
+                      ),
                 );
               }
               break;

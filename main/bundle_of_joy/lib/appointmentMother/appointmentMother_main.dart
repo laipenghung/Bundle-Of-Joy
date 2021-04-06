@@ -1,7 +1,6 @@
 import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
 import 'package:flutter/material.dart';
 import 'appointmentMother_add.dart';
-import 'appointmentMother_add_1_hospital.dart';
 import 'appointmentMother_recordList.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 
@@ -36,7 +35,7 @@ class _AppointmentMotherMainState extends State<AppointmentMotherMain> {
           child: Column(
             children: [
               HorizontalCardWidget(
-                  title: "View Appointments",
+                  title: "View Appointment",
                   description: "View and manage all of your appointments.",
                   svgSrc: "assets/icons/schedule.svg",
                   press: () {
@@ -46,7 +45,7 @@ class _AppointmentMotherMainState extends State<AppointmentMotherMain> {
                     );
                   }),
               HorizontalCardWidget(
-                  title: "Book An Appoinment",
+                  title: "Book An Appointment",
                   description: "Book an appointment with the doctor.",
                   svgSrc: "assets/icons/appointment.svg",
                   press: () {
