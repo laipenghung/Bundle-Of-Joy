@@ -119,7 +119,7 @@ class _MotherToBeHomeState extends State<MotherToBeHome> {
                               //MaterialPageRoute(builder: (context) => HealthTrackingMother()),
                               MaterialPageRoute(builder: (context) => HealthTrackRecordList(
                                 collectionReference: collectionReferenceHealthRecord,
-                                svgSrc: "assets/icons/recipe.svg",
+                                svgSrc: "assets/icons/medical-record.svg",
                               )),
                             );
                           },

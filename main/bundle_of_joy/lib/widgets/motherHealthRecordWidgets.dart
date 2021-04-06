@@ -279,7 +279,7 @@ class HealthRecordBloodPressureWidget extends StatelessWidget {
                   ), 
                 ],
               ),
-            ),
+            ),/* !!!!REMOVE COMMENT WHEN REVEAL THIS FEATURE
             HealthRecordBloodPressureAnalyzer(
               svgSrc: "assets/icons/web-analytics.svg",
               bPressureSystolic: bPressureSystolic,
@@ -290,7 +290,7 @@ class HealthRecordBloodPressureWidget extends StatelessWidget {
               child: HealthRecordBloodPressureInsight(
                 svgSrc: "assets/icons/insight.svg",
               ),
-            )
+            )*/
           ],
         ), 
       ),
@@ -364,7 +364,7 @@ class HealthRecordBloodSugarWidget extends StatelessWidget {
                 ),
               ),
             ),
-            HealthRecordBloodSugarAnalyzer(
+            /*HealthRecordBloodSugarAnalyzer( //!!!!REMOVE COMMENT WHEN REVEAL THIS FEATURE
               svgSrc: "assets/icons/web-analytics.svg",
               bSugarReading: bGlucoseReading,
             ),
@@ -373,7 +373,7 @@ class HealthRecordBloodSugarWidget extends StatelessWidget {
               child: HealthRecordBloodSugarInsight(
                 svgSrc: "assets/icons/insight.svg",
               ),
-            ),
+            ),*/
           ],
         ),
       ),
@@ -518,9 +518,9 @@ class _HealthRecordBodyPhysiqueWidgetState extends State<HealthRecordBodyPhysiqu
                 ],
               ),
             ),
-            HealthRecordBodyPhysiqueInsight(
+            /*HealthRecordBodyPhysiqueInsight(
               svgSrc: "assets/icons/insight.svg",
-            )
+            )*/
           ],
         ), 
       ),
