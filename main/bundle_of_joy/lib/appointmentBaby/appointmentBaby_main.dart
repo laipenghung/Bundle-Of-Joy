@@ -43,25 +43,27 @@ class _AppointmentBabyMainState extends State<AppointmentBabyMain> {
           child: Column(
             children: [
               HorizontalCardWidget(
-                  title: "View Appointment",
-                  description: "View and manage your baby's appointments.",
-                  svgSrc: "assets/icons/schedule.svg",
-                  press: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AppointmentBabyRecordList(babyID: babyID)),
-                    );
-                  }),
+                title: "View Appointment",
+                description: "View and manage your baby's appointments.",
+                svgSrc: "assets/icons/schedule.svg",
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AppointmentBabyRecordList(babyID: babyID)),
+                  );
+                },
+              ),
               HorizontalCardWidget(
-                  title: "Book An Appointment",
-                  description: "Book an appointment with the doctor for your baby.",
-                  svgSrc: "assets/icons/appointment.svg",
-                  press: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AppointmentBabyAdd(babyID: babyID)),
-                    );
-                  }),
+                title: "Book An Appointment",
+                description: "Book an appointment with the doctor for your baby.",
+                svgSrc: "assets/icons/appointment.svg",
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AppointmentBabyAdd(babyID: babyID)),
+                  );
+                },
+              ),
             ],
           ),
         ),

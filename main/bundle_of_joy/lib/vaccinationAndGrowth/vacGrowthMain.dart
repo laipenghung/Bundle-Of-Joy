@@ -19,120 +19,84 @@ class VaccinationGrowthMain extends StatefulWidget {
 
 class _VaccinationGrowthMainState extends State<VaccinationGrowthMain> {
   final User user = FirebaseAuth.instance.currentUser;
-  
+
   @override
   Widget build(BuildContext context) {
-    CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(user.uid)
-      .collection("baby").doc(widget.selectedBabyID).collection("baby_growth");
-      
+    CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("baby_growth");
+
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
-      body: CustomScrollView(
+      appBar: AppBar(
+        title: Text(
+          "Vaccination & Growth",
+          style: TextStyle(
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
+            fontSize: MediaQuery.of(context).size.width * 0.045,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: appbar2,
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: MediaQuery.of(context).size.height * 0.4,
-            floating: true,
-            pinned: true,
-            stretch: true,
-            backgroundColor: appbar2,
-            stretchTriggerOffset: 100.0,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              collapseMode: CollapseMode.parallax,
-              stretchModes: [
-                StretchMode.zoomBackground,
-              ],
-              title: Text(
-                "Vaccination & Growth",
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.045,
+        child: Padding(
+          padding: const EdgeInsets.all(5),
+          child: Column(
+            children: [
+              //Baby Vaccination Tracking
+              Container(
+                width: MediaQuery.of(context).size.width * 1,
+                margin: const EdgeInsets.fromLTRB(15, 20, 10, 5),
+                child: Text(
+                  "Baby Vaccination Tracking",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.055,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              background: Image.network(
-                "https://static.vecteezy.com/system/resources/previews/000/171/284/original/free-hand-drawn-vector-nightscape-illustration.jpg",
-                fit: BoxFit.cover,
+              HorizontalCardWidget(
+                title: "Baby Vaccination Records",
+                description: "View all vaccines that that took by your baby.",
+                svgSrc: "assets/icons/records.svg",
+                press: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Vaccination(selectedBabyID: widget.selectedBabyID)));
+                },
               ),
-            ),
-          ),
-          SliverFillRemaining(
-            fillOverscroll: true,
-            hasScrollBody: false,
-            child: Padding(
-              padding: const EdgeInsets.all(5),
-              child: Column(
-                children: [
-                  //Baby Vaccination Tracking
-                  Container(
-                    width: MediaQuery.of(context).size.width * 1,
-                    //padding: const EdgeInsets.all(5),
-                    margin: const EdgeInsets.fromLTRB(15, 20, 10, 5),
-                    child: Text(
-                      "Baby Vaccination Tracking",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.055,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+              //Baby Growth Tracking
+              Container(
+                width: MediaQuery.of(context).size.width * 1,
+                margin: const EdgeInsets.fromLTRB(15, 20, 10, 5),
+                child: Text(
+                  "Baby Growth Tracking",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.055,
+                    fontWeight: FontWeight.bold,
                   ),
-                  HorizontalCardWidget(
-                      title: "Baby Vaccination Records",
-                      description: "View all vaccines that that took by your baby.",
-                      svgSrc: "assets/icons/records.svg",
-                      press: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Vaccination(selectedBabyID: widget.selectedBabyID)),
-                        );
-                      }),
-                  //Baby Growth Tracking
-                  Container(
-                    width: MediaQuery.of(context).size.width * 1,
-                    //padding: const EdgeInsets.all(5),
-                    margin: const EdgeInsets.fromLTRB(15, 20, 10, 5),
-                    child: Text(
-                      "Baby Growth Tracking",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.055,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  HorizontalCardWidget(
-                      title: "Baby Height Tracking",
-                      description: "View your baby height record.",
-                      svgSrc: "assets/icons/height.svg",
-                      press: () {
-                        Navigator.push(
-                          context,
-                          //MaterialPageRoute(builder: (context) => GrowthHeight(selectedBabyID: widget.selectedBabyID)),
-                          MaterialPageRoute(builder: (context) => GrowthTrackHeightView(
-                            selectedBabyID: widget.selectedBabyID,
-                            collectionReference: collectionReference,
-                          )),
-                        );
-                      }),
-                  HorizontalCardWidget(
-                      title: "Baby Weight Tracking",
-                      description: "View your baby weight record.",
-                      svgSrc: "assets/icons/weight.svg",
-                      press: () {
-                        Navigator.push(
-                          context,
-                          //MaterialPageRoute(builder: (context) => GrowthWeight(selectedBabyID: widget.selectedBabyID)),
-                          MaterialPageRoute(builder: (context) => GrowthTrackWeightView(
-                            selectedBabyID: widget.selectedBabyID,
-                            collectionReference: collectionReference,
-                          )),
-                        );
-                      }),
-                ],
+                ),
               ),
-            ),
+              HorizontalCardWidget(
+                title: "Baby Height Tracking",
+                description: "View your baby height record.",
+                svgSrc: "assets/icons/height.svg",
+                press: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => GrowthTrackHeightView(selectedBabyID: widget.selectedBabyID, collectionReference: collectionReference)));
+                },
+              ),
+              HorizontalCardWidget(
+                title: "Baby Weight Tracking",
+                description: "View your baby weight record.",
+                svgSrc: "assets/icons/weight.svg",
+                press: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => GrowthTrackWeightView(selectedBabyID: widget.selectedBabyID, collectionReference: collectionReference)));
+                },
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

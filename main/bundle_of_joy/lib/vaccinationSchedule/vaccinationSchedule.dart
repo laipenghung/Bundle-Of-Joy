@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
@@ -29,7 +30,7 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
     var androidDetails = new AndroidNotificationDetails("vaccine", "Vaccination Schedule", "Baby Vaccination Schedule", importance: Importance.max);
     var generalNotificationDetails = new NotificationDetails(android: androidDetails);
 
-    flutterLocalNotificationsPlugin.show(1, "Upcoming Vaccination", "You have upcoming baby vaccination at "+age, generalNotificationDetails);
+    flutterLocalNotificationsPlugin.show(1, "Upcoming Vaccination", "You have upcoming baby vaccination at " + age, generalNotificationDetails);
   }
 
   List<TableRow> _tableList(AsyncSnapshot<QuerySnapshot> collection, String age) {
@@ -41,15 +42,14 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
     collection.data.docs.forEach((doc) {
       RegExp exp = new RegExp(r"\d+ \w+");
 
-      if(doc.data()[_listField[0]].toString() == exp.stringMatch(age).toString()) {
+      if (doc.data()[_listField[0]].toString() == exp.stringMatch(age).toString()) {
         _showNotification(age);
         rowColor = Colors.greenAccent;
       } else {
         rowColor = Colors.white;
       }
 
-      _row.add(
-        TableRow(
+      _row.add(TableRow(
           decoration: BoxDecoration(
             color: rowColor,
           ),
@@ -91,8 +91,7 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
                 ),
               ),
             ),
-          ]
-      ));
+          ]));
     });
     return _row;
   }
@@ -104,7 +103,7 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
     double heightSpacing = MediaQuery.of(context).size.height * 0.075;
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
-    if(collection.hasData && baby.hasData){
+    if (collection.hasData && baby.hasData) {
       if (collection.data.docs.isNotEmpty) {
         String age = baby.data["b_age"];
 
@@ -193,7 +192,7 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
     }
   }
 
-  Widget loading(){
+  Widget loading() {
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     return Center(
       child: Column(
@@ -228,14 +227,8 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
   @override
   Widget build(BuildContext context) {
     final User user = FirebaseAuth.instance.currentUser;
-    Query vaccination = FirebaseFirestore.instance
-        .collection("mother")
-        .doc(user.uid)
-        .collection("baby")
-        .doc(selectedBabyID)
-        .collection("baby_vaccination")
-        .where("bv_dateGiven", isNull: true)
-        .orderBy("bv_id", descending: false);
+    Query vaccination =
+        FirebaseFirestore.instance.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("baby_vaccination").where("bv_dateGiven", isNull: true).orderBy("bv_id", descending: false);
 
     DocumentReference baby = FirebaseFirestore.instance.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID);
 
@@ -243,33 +236,27 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
         stream: vaccination.snapshots(),
         builder: (context, collection) {
           return StreamBuilder(
-            stream: baby.snapshots(),
-            builder: (context, baby) {
-              return Scaffold(
-                appBar: AppBar(
-                  toolbarHeight: MediaQuery.of(context).size.height * 0.1,
-                  title: Text(
-                    "Vaccination Schedule",
-                    style: TextStyle(
-                      fontFamily: 'Comfortaa',
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.width * 0.05,
-                      color: Colors.black,
+              stream: baby.snapshots(),
+              builder: (context, baby) {
+                return Scaffold(
+                  appBar: AppBar(
+                    title: Text(
+                      "Vaccination Schedule",
+                      style: TextStyle(
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
+                        fontSize: MediaQuery.of(context).size.width * 0.045,
+                        color: Colors.white,
+                      ),
                     ),
+                    iconTheme: IconThemeData(
+                      color: Colors.white,
+                    ),
+                    backgroundColor: appbar2,
+                    centerTitle: true,
                   ),
-
-                  iconTheme: IconThemeData(
-                    color: Colors.black, //change your color here
-                  ),
-
-                  //automaticallyImplyLeading: false, // CENTER THE TEXT
-                  backgroundColor: Color(0xFFFCFFD5),
-                  centerTitle: true,
-                ),
-                body: hasData(collection, baby),
-              );
-            }
-          );
+                  body: hasData(collection, baby),
+                );
+              });
         });
   }
 }

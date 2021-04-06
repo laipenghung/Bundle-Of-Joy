@@ -23,8 +23,9 @@ class _HealthTrackRecordViewState extends State<HealthTrackRecordView> {
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
         title: Text(
-          "View Health Record",
+          "Health Record",
           style: TextStyle(
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
           ),

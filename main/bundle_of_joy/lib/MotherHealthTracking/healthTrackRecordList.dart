@@ -21,14 +21,14 @@ class _HealthTrackRecordListState extends State<HealthTrackRecordList> {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final User user = FirebaseAuth.instance.currentUser;
   String databaseTable;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
         title: Text(
-          "Select Health Record",
+          "Health Record",
           style: TextStyle(
             shadows: <Shadow>[
               Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
@@ -81,30 +81,29 @@ class _HealthTrackRecordListState extends State<HealthTrackRecordList> {
                 return Container(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: ListView.builder(
-
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data.documents.length,
-                    itemBuilder: (_, index){
-                      return Container(
-                        child: RecordListViewWidget(
-                          svgSrc: widget.svgSrc,
-                          recordPrimaryTitle: "Record Date",
-                          recordSecondaryTitle: "Day Of Pregnancy",
-                          recordPrimaryDesc: DateFormat('d MMM yyyy').format(DateTime.parse(snapshot.data.documents[index]['mh_date'])),
-                          recordSecondaryDesc: snapshot.data.documents[index]['mh_day_of_pregnancy'].toString(),
-                          babyFoodRecord: false,
-                          motherHealthRecord: true,
-                          longPress: (){
-                            log("message");
-                          },
-                          delete: (){},
-                          press: (){
-                            Navigator.push(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (_, index) {
+                        return Container(
+                          child: RecordListViewWidget(
+                            svgSrc: widget.svgSrc,
+                            recordPrimaryTitle: "Record Date",
+                            recordSecondaryTitle: "Day Of Pregnancy",
+                            recordPrimaryDesc: DateFormat('d MMM yyyy').format(DateTime.parse(snapshot.data.documents[index]['mh_date'])),
+                            recordSecondaryDesc: snapshot.data.documents[index]['mh_day_of_pregnancy'].toString(),
+                            babyFoodRecord: false,
+                            motherHealthRecord: true,
+                            longPress: () {
+                              log("message");
+                            },
+                            delete: () {},
+                            press: () {
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => HealthTrackRecordView(healthRecordID: snapshot.data.documents[index]["mh_id"])),
                               );
-                            /*
+                              /*
                             if(widget.completeRecord == true){
                               Navigator.push(
                                 context,
@@ -116,11 +115,10 @@ class _HealthTrackRecordListState extends State<HealthTrackRecordList> {
                                 MaterialPageRoute(builder: (context) => FoodIntakeTrackUpdate(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
                               );
                             } */
-                          },
-                        ),
-                      );
-                    }
-                  ),
+                            },
+                          ),
+                        );
+                      }),
                 );
               }
             } else if (snapshot.hasError) {

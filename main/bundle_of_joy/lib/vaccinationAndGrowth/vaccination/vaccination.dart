@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
@@ -226,21 +227,18 @@ class _Vaccination extends State<Vaccination> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text(
           "Baby Vaccination Records",
           style: TextStyle(
-            fontFamily: 'Comfortaa',
-            fontWeight: FontWeight.bold,
-            fontSize: MediaQuery.of(context).size.width * 0.05,
-            color: Colors.black,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
+            fontSize: MediaQuery.of(context).size.width * 0.045,
+            color: Colors.white,
           ),
         ),
         iconTheme: IconThemeData(
-          color: Colors.black, //change your color here
+          color: Colors.white,
         ),
-        //automaticallyImplyLeading: false, // CENTER THE TEXT
-        backgroundColor: Color(0xFFFCFFD5),
+        backgroundColor: appbar2,
         centerTitle: true,
       ),
       body: StreamBuilder(

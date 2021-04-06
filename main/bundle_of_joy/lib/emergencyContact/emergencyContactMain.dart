@@ -16,7 +16,8 @@ class EmergencyContactMain extends StatefulWidget {
 
 class _EmergencyContactMainState extends State<EmergencyContactMain> {
   CollectionReference collectionReference = FirebaseFirestore.instance.collection("patient");
-  List emergencyContactNameList = []; List emergencyContactNumberList = []; 
+  List emergencyContactNameList = [];
+  List emergencyContactNumberList = [];
   EmerContact emerContact = EmerContact();
 
   TextEditingController contactNameController = TextEditingController();
@@ -26,32 +27,31 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
   int listIndex, callListIndex = 0;
 
   String testID;
-  
 
   Future getEmergencyContact() async {
     var x = await collectionReference.where("m_id", isEqualTo: FirebaseAuth.instance.currentUser.uid).get();
-    if((x.docs[0].data()["m_emergencyContactNoPrimary"] != "" && x.docs[0].data()["m_emergencyContactNoPrimary"] != null) &&
-      (x.docs[0].data()["m_emergencyContactNamePrimary"] != "" && x.docs[0].data()["m_emergencyContactNamePrimary"] != null)){
-        setState(() {
-          emergencyContactNameList.add(x.docs[0].data()["m_emergencyContactNamePrimary"]);
-          emergencyContactNumberList.add(x.docs[0].data()["m_emergencyContactNoPrimary"]);
-        });
+    if ((x.docs[0].data()["m_emergencyContactNoPrimary"] != "" && x.docs[0].data()["m_emergencyContactNoPrimary"] != null) &&
+        (x.docs[0].data()["m_emergencyContactNamePrimary"] != "" && x.docs[0].data()["m_emergencyContactNamePrimary"] != null)) {
+      setState(() {
+        emergencyContactNameList.add(x.docs[0].data()["m_emergencyContactNamePrimary"]);
+        emergencyContactNumberList.add(x.docs[0].data()["m_emergencyContactNoPrimary"]);
+      });
     }
 
     var y = await collectionReference.where("m_id", isEqualTo: FirebaseAuth.instance.currentUser.uid).get();
-    if((y.docs[0].data()["m_emergencyContactNoSecondary"] != "" && y.docs[0].data()["m_emergencyContactNoSecondary"] != null) &&
-      (y.docs[0].data()["m_emergencyContactNameSecondary"] != "" && y.docs[0].data()["m_emergencyContactNameSecondary"] != null)){
-        setState(() {
-          emergencyContactNameList.add(x.docs[0].data()["m_emergencyContactNameSecondary"]);
-          emergencyContactNumberList.add(x.docs[0].data()["m_emergencyContactNoSecondary"]);
-        });
+    if ((y.docs[0].data()["m_emergencyContactNoSecondary"] != "" && y.docs[0].data()["m_emergencyContactNoSecondary"] != null) &&
+        (y.docs[0].data()["m_emergencyContactNameSecondary"] != "" && y.docs[0].data()["m_emergencyContactNameSecondary"] != null)) {
+      setState(() {
+        emergencyContactNameList.add(x.docs[0].data()["m_emergencyContactNameSecondary"]);
+        emergencyContactNumberList.add(x.docs[0].data()["m_emergencyContactNoSecondary"]);
+      });
     }
 
     var z = await collectionReference.where("m_id", isEqualTo: FirebaseAuth.instance.currentUser.uid).get();
     testID = z.docs[0].data()["patient_id"];
   }
 
-  void initState(){
+  void initState() {
     super.initState();
     getEmergencyContact();
   }
@@ -248,24 +248,30 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
                       onPressed: () {
                         if (editContact == false) {
                           if (contactNameController.text.isNotEmpty && contactNumberController.text.isNotEmpty) {
-                            if(emergencyContactNameList.length == 0){
+                            if (emergencyContactNameList.length == 0) {
                               emerContact.addEmerContactPrimary(contactNumber, contactName, testID).then((value) {
-                                log(contactNumber+contactNumber+testID); 
+                                log(contactNumber + contactNumber + testID);
                                 contactNameController.clear();
                                 contactNumberController.clear();
                                 Navigator.of(context).pop();
-                                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => MotherToBeHome()));
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => EmergencyContactMain()),);
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherToBeHome()));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => EmergencyContactMain()),
+                                );
                               });
-                            }else if(emergencyContactNameList.length == 1){
-                              emerContact.addEmerContactSecondary(contactNumber, contactName, testID).then((value){
+                            } else if (emergencyContactNameList.length == 1) {
+                              emerContact.addEmerContactSecondary(contactNumber, contactName, testID).then((value) {
                                 contactNameController.clear();
                                 contactNumberController.clear();
                                 Navigator.of(context).pop();
-                                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => MotherToBeHome()));
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => EmergencyContactMain()),);
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherToBeHome()));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => EmergencyContactMain()),
+                                );
                               });
-                            }else{
+                            } else {
                               dialogBoxContent = "You already added 2 emergency contact, If you wish to make changes to the contact please tap on the edit icon located at the right side.";
                               _showDialogBox(context, dialogBoxContent);
                             }
@@ -273,9 +279,9 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
                             dialogBoxContent = "Please make sure you entered all of the field." + " All of the field cannot be left empty.";
                             _showDialogBox(context, dialogBoxContent);
                           }
-                        }else{
-                          if (contactNameController.text.isNotEmpty && contactNumberController.text.isNotEmpty) {        
-                            if(listIndex == 0){
+                        } else {
+                          if (contactNameController.text.isNotEmpty && contactNumberController.text.isNotEmpty) {
+                            if (listIndex == 0) {
                               emerContact.addEmerContactPrimary(contactNumber, contactName, testID).then((value) {
                                 setState(() {
                                   foodWidgetTitle = "Add Emergency Contact";
@@ -285,11 +291,14 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
                                 contactNameController.clear();
                                 contactNumberController.clear();
                                 Navigator.of(context).pop();
-                                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => MotherToBeHome()));
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => EmergencyContactMain()),);
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherToBeHome()));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => EmergencyContactMain()),
+                                );
                               });
-                            }else if(listIndex == 1){
-                              emerContact.addEmerContactSecondary(contactNumber, contactName, testID).then((value){
+                            } else if (listIndex == 1) {
+                              emerContact.addEmerContactSecondary(contactNumber, contactName, testID).then((value) {
                                 setState(() {
                                   foodWidgetTitle = "Add Emergency Contact";
                                   editContact = false;
@@ -298,8 +307,11 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
                                 contactNameController.clear();
                                 contactNumberController.clear();
                                 Navigator.of(context).pop();
-                                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => MotherToBeHome()));
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => EmergencyContactMain()),);
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherToBeHome()));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => EmergencyContactMain()),
+                                );
                               });
                             }
                           }
@@ -349,7 +361,7 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
                                 Container(
                                   width: double.infinity,
                                   child: Text(
-                                    (index == 0)? "Primary Emergency Contact" : "Secondary Emergency Contact",
+                                    (index == 0) ? "Primary Emergency Contact" : "Secondary Emergency Contact",
                                     textAlign: TextAlign.left,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
@@ -420,12 +432,12 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
                                       ),
                                       isScrollControlled: true,
                                       builder: (context) => Container(
-                                        height: MediaQuery.of(context).size.height * 0.5,
-                                        child: SingleChildScrollView(
+                                            height: MediaQuery.of(context).size.height * 0.5,
+                                            child: SingleChildScrollView(
                                               physics: ClampingScrollPhysics(),
                                               child: emergencyContactModalBottomSheetWidget(context),
                                             ),
-                                      ));
+                                          ));
                                 })),
                       ),
                     ),
@@ -439,7 +451,7 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
                             color: Colors.red,
                           ),
                           onPressed: () {
-                            if(index == 0){
+                            if (index == 0) {
                               /*collectionReference.doc(testID).update({
                                 "m_emergencyContactNamePrimary": FieldValue.delete(),
                                 "m_emergencyContactNoPrimary": FieldValue.delete(),
@@ -452,7 +464,7 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
                               });*/
                               dialogBoxContent = "You cannot delete your primary emergency contact. You can only modify it by tapping the edit button located at the right";
                               _showDialogBox(context, dialogBoxContent);
-                            }else{
+                            } else {
                               collectionReference.doc(testID).update({
                                 "m_emergencyContactNameSecondary": FieldValue.delete(),
                                 "m_emergencyContactNoSecondary": FieldValue.delete(),
@@ -460,8 +472,8 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
                                 log("Date Deleted");
                                 Navigator.of(context).pop();
                               }).then((value) {
-                                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => MotherToBeHome()));
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => EmergencyContactMain()));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MotherToBeHome()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => EmergencyContactMain()));
                               });
                             }
                           },
@@ -500,7 +512,7 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
               Container(
                 margin: EdgeInsets.only(bottom: 10),
                 child: Text(
-                  "Looks like you haven't add any food. Tap on the buton below to add some food into the record.",
+                  "Looks like you don't have a emergency contact. Tap on the buton below to add a number as your emergency contact.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -560,20 +572,6 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
                     ),
                   ],
                 ),
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(
-                    top: 8.0,
-                  ),
-                  child: Text(
-                    "Section below display the emergency contacts you saved in your account.",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.035,
-                      color: Colors.black.withOpacity(0.65),
-                    ),
-                  ),
-                ),
                 (emergencyContactNameList.length != 0) ? emergencyContactListWidget() : noContactsWidget(),
                 Container(
                   margin: EdgeInsets.fromLTRB(15, 10, 15, 5),
@@ -590,10 +588,10 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
                       color: appbar1,
                       textColor: Colors.white,
                       onPressed: () {
-                        if(emergencyContactNameList.length == 2){
+                        if (emergencyContactNameList.length == 2) {
                           dialogBoxContent = "You already added 2 emergency contact, If you wish to make changes to the contact please tap on the edit icon located at the right side.";
                           _showDialogBox(context, dialogBoxContent);
-                        }else{
+                        } else {
                           foodWidgetTitle = "Add Emergency Contact";
                           editContact = false;
                           contactNameController.clear();
@@ -605,17 +603,20 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
                               ),
                               isScrollControlled: true,
                               builder: (context) => Container(
-                                height: MediaQuery.of(context).size.height * 0.5,
-                                child: SingleChildScrollView(
+                                    height: MediaQuery.of(context).size.height * 0.5,
+                                    child: SingleChildScrollView(
                                       physics: ClampingScrollPhysics(),
                                       child: emergencyContactModalBottomSheetWidget(context),
                                     ),
-                              ));
+                                  ));
                         }
                       },
                       child: Text(
-                        (emergencyContactNameList.length == 0)? "Add Primary contact" 
-                          :(emergencyContactNameList.length == 2)? "Emergency Contact List Full": "Add Secondary contact",
+                        (emergencyContactNameList.length == 0)
+                            ? "Add Primary contact"
+                            : (emergencyContactNameList.length == 2)
+                                ? "Emergency Contact List Full"
+                                : "Add Secondary contact",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           shadows: <Shadow>[
@@ -637,8 +638,15 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
   }
 
   Widget contactSelectionWidget(BuildContext context) {
-    TextStyle normalTextStyle = TextStyle(color: Colors.black.withOpacity(0.65),fontSize: MediaQuery.of(context).size.width * 0.033,);
-    TextStyle highlightedTextStyle = TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: MediaQuery.of(context).size.width * 0.045,);
+    TextStyle normalTextStyle = TextStyle(
+      color: Colors.black.withOpacity(0.65),
+      fontSize: MediaQuery.of(context).size.width * 0.033,
+    );
+    TextStyle highlightedTextStyle = TextStyle(
+      color: Colors.black,
+      fontWeight: FontWeight.bold,
+      fontSize: MediaQuery.of(context).size.width * 0.045,
+    );
 
     return Column(
       children: <Widget>[
@@ -646,8 +654,7 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
           width: double.infinity,
           margin: EdgeInsets.only(top: 10, bottom: 5),
           child: Text(
-            "If you have multiple emergency contacts saved in your account, you will have the choice to choose who to contact. " +
-                "You can tap the radio button to select which contact you want to call.",
+            "If you have multiple emergency contacts saved in your account, you will have the choice to choose who to contact. " + "You can tap the radio button to select which contact you want to call.",
             textAlign: TextAlign.justify,
             style: TextStyle(
               fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -659,46 +666,44 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
             width: double.infinity,
             margin: EdgeInsets.symmetric(vertical: 10),
             child: ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: emergencyContactNameList.length,
-              itemBuilder: (BuildContext context, int index){
-                return Center(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      //height: 20,
-                      width: double.infinity,
-                      child: RadioListTile(
-                        dense: true,
-                        title: RichText(
-                          textAlign: TextAlign.left,
-                          text: TextSpan(style: normalTextStyle, children: <TextSpan>[
-                            TextSpan(
-                              text: (index == 0)? "Primary Emergency Contact" : "Secondary Emergency Contact",
-                            ),
-                            TextSpan(
-                              text: "\n${emergencyContactNameList[index]}\n${emergencyContactNumberList[index]}",
-                              style: highlightedTextStyle,
-                            ),
-                          ])),  
-                        activeColor: appbar2,
-                        value: index,
-                        groupValue: callListIndex,
-                        onChanged: (index) {
-                          setState(() {
-                            callListIndex = index;
-                            log(callListIndex.toString());
-                          });
-                        },
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: emergencyContactNameList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Center(
+                      child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        //height: 20,
+                        width: double.infinity,
+                        child: RadioListTile(
+                          dense: true,
+                          title: RichText(
+                              textAlign: TextAlign.left,
+                              text: TextSpan(style: normalTextStyle, children: <TextSpan>[
+                                TextSpan(
+                                  text: (index == 0) ? "Primary Emergency Contact" : "Secondary Emergency Contact",
+                                ),
+                                TextSpan(
+                                  text: "\n${emergencyContactNameList[index]}\n${emergencyContactNumberList[index]}",
+                                  style: highlightedTextStyle,
+                                ),
+                              ])),
+                          activeColor: appbar1,
+                          value: index,
+                          groupValue: callListIndex,
+                          onChanged: (index) {
+                            setState(() {
+                              callListIndex = index;
+                              log(callListIndex.toString());
+                            });
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                ));
-              }
-            )
-          ),
-        
+                    ],
+                  ));
+                })),
+
         //(completeFoodRecord == false)? BabyFoodRecrodAddText() : BabyFoodRecrodDoneText(),
       ],
     );
@@ -760,7 +765,7 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
     );
   }
 
-  Widget contactNotEmpty(BuildContext context){
+  Widget contactNotEmpty(BuildContext context) {
     return Column(
       children: [
         emergencyContactWidgetContent(context),
@@ -778,13 +783,13 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
-              color: appbar2,
+              color: appbar1,
               textColor: Colors.white,
               onPressed: () {
                 FlutterPhoneDirectCaller.callNumber(emergencyContactNumberList[callListIndex]);
               },
               child: Text(
-                "Call Emergency Contact",
+                "Call ",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -806,11 +811,12 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
         title: Text(
           "Emergency Contact",
           style: TextStyle(
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
           ),
         ),
-        backgroundColor: appbar2,
+        backgroundColor: appbar1,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -825,7 +831,7 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
           },
           child: Column(
             children: <Widget>[
-              (emergencyContactNameList.length == 0)? emergencyContactWidgetContent(context) : contactNotEmpty(context),
+              (emergencyContactNameList.length == 0) ? emergencyContactWidgetContent(context) : contactNotEmpty(context),
             ],
           ),
         ),
