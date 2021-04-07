@@ -1,8 +1,9 @@
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
+import 'package:bundle_of_joy/widgets/loadingWidget.dart';
+import 'package:bundle_of_joy/widgets/vaccinationWidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class VaccinationSchedule extends StatefulWidget {
   final String selectedBabyID;
@@ -15,163 +16,35 @@ class VaccinationSchedule extends StatefulWidget {
 class _VaccinationSchedule extends State<VaccinationSchedule> {
   final String selectedBabyID;
   _VaccinationSchedule(this.selectedBabyID);
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-
-  @override
-  void initState() {
-    super.initState();
-    var androidInitialize = new AndroidInitializationSettings('app_icon');
-    var initializationSettings = new InitializationSettings(android: androidInitialize);
-    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-    flutterLocalNotificationsPlugin.initialize(initializationSettings);
-  }
-
-  Future _showNotification(String age) async {
-    var androidDetails = new AndroidNotificationDetails("vaccine", "Vaccination Schedule", "Baby Vaccination Schedule", importance: Importance.max);
-    var generalNotificationDetails = new NotificationDetails(android: androidDetails);
-
-    flutterLocalNotificationsPlugin.show(1, "Upcoming Vaccination", "You have upcoming baby vaccination at " + age, generalNotificationDetails);
-  }
-
-  List<TableRow> _tableList(AsyncSnapshot<QuerySnapshot> collection, String age) {
-    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
-    Color rowColor = Colors.white;
-    final _listField = ["bv_age", "bv_vaccinationName"];
-    List<TableRow> _row = [];
-
-    collection.data.docs.forEach((doc) {
-      RegExp exp = new RegExp(r"\d+ \w+");
-
-      if (doc.data()[_listField[0]].toString() == exp.stringMatch(age).toString()) {
-        _showNotification(age);
-        rowColor = Colors.greenAccent;
-      } else {
-        rowColor = Colors.white;
-      }
-
-      _row.add(TableRow(
-          decoration: BoxDecoration(
-            color: rowColor,
-          ),
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02),
-              child: Container(
-                child: Center(
-                  child: Text(
-                    doc.data()[_listField[0]].toString(),
-                    style: TextStyle(
-                      fontFamily: "Comfortaa",
-                      fontWeight: FontWeight.bold,
-                      fontSize: fontSizeText,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.02,
-                bottom: MediaQuery.of(context).size.height * 0.02,
-                left: MediaQuery.of(context).size.width * 0.04,
-                right: MediaQuery.of(context).size.width * 0.04,
-              ),
-              child: Container(
-                child: Center(
-                  child: Text(
-                    doc.data()[_listField[1]].toString(),
-                    style: TextStyle(
-                      fontFamily: "Comfortaa",
-                      fontSize: fontSizeText,
-                      color: Colors.black,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-          ]));
-    });
-    return _row;
-  }
 
   Widget hasData(AsyncSnapshot<QuerySnapshot> collection, AsyncSnapshot<dynamic> baby) {
-    double paddingLeftRight = MediaQuery.of(context).size.width * 0.05;
-    double paddingTopBottom = MediaQuery.of(context).size.height * 0.03;
-    double paddingTopBottomSmall = MediaQuery.of(context).size.height * 0.01;
-    double heightSpacing = MediaQuery.of(context).size.height * 0.075;
-    double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
     double fontSizeText = MediaQuery.of(context).size.width * 0.04;
+    List ageListString = [];
+    List vaccineNameList = [];
+
     if (collection.hasData && baby.hasData) {
       if (collection.data.docs.isNotEmpty) {
         String age = baby.data["b_age"];
 
+        collection.data.docs.forEach((doc) {
+          ageListString.add(doc.data()["bv_age"].toString());
+          vaccineNameList.add(doc.data()["bv_vaccinationName"].toString());
+        });
+
         return SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(paddingLeftRight, paddingTopBottom, paddingLeftRight, 0),
-                child: Container(
-                  color: Color(0xFFFCFFD5),
-                  child: Table(
-                    columnWidths: {
-                      0: FlexColumnWidth(4),
-                      1: FlexColumnWidth(6),
-                    },
-                    border: TableBorder.all(
-                      width: 1,
-                      color: Colors.black,
-                    ),
-                    children: [
-                      TableRow(children: [
-                        Container(
-                          height: heightSpacing,
-                          child: Center(
-                            child: Text(
-                              "Age",
-                              style: TextStyle(
-                                fontFamily: "Comfortaa",
-                                fontWeight: FontWeight.bold,
-                                fontSize: fontSizeTitle,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: heightSpacing,
-                          child: Center(
-                            child: Text(
-                              "Vaccine Name",
-                              style: TextStyle(
-                                fontFamily: "Comfortaa",
-                                fontWeight: FontWeight.bold,
-                                fontSize: fontSizeTitle,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ])
-                    ],
-                  ),
-                ),
+              VaccinationWidget(
+                tableTitle: "Vaccination Schedule Table",
+                tableDesc: "This section display the vaccination schedule record of your baby." +
+                "\nIf the table row is highlighted in green, you are recommended to make an appointment with a pediatrician for injection during that time.",
+                svgSrcTable: "assets/icons/table.svg",
+                ageListString: ageListString,
+                vaccineNameList: vaccineNameList,
+                tableMeasurement: "Vaccine Name",
+                vaccineTrack: true,
+                age: age,
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(paddingLeftRight, paddingTopBottomSmall, paddingLeftRight, paddingTopBottomSmall),
-                child: Table(
-                  columnWidths: {
-                    0: FlexColumnWidth(4),
-                    1: FlexColumnWidth(6),
-                  },
-                  border: TableBorder.all(
-                    width: 1,
-                    color: Colors.black,
-                  ),
-                  children: _tableList(collection, age),
-                ),
-              )
             ],
           ),
         );
@@ -188,39 +61,8 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
         );
       }
     } else {
-      return loading();
+      return LoadingWidget();
     }
-  }
-
-  Widget loading() {
-    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.width * 0.15,
-            width: MediaQuery.of(context).size.width * 0.15,
-            child: CircularProgressIndicator(
-              strokeWidth: 5,
-              backgroundColor: Colors.black,
-              valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
-          ),
-          Text(
-            "Loading...",
-            style: TextStyle(
-              fontFamily: "Comfortaa",
-              fontSize: fontSizeText,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   // BUILD THE WIDGET
