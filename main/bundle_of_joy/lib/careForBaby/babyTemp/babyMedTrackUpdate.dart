@@ -278,7 +278,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                   children: <Widget>[
                     ModalSheetText(
                       title: "Body Temperature Reading",
-                      desc: "Body temperature reading 2 hour after medication.",
+                      desc: "Body temperature reading 4 hour after medication.",
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 5, bottom: 15),
@@ -351,7 +351,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                             Navigator.of(context).pop();
                           });
                         } else {
-                          dialogBoxContent = "Please make sure you entered your baby's body temperature reading into the " + "2 hours after medication section.";
+                          dialogBoxContent = "Please make sure you entered your baby's body temperature reading into the " + "4 hours after medication section.";
                           _showDialogBox(context, dialogBoxContent);
                         }
                       },
@@ -424,7 +424,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                     top: 8.0,
                   ),
                   child: Text(
-                    "This section display your baby's body temperature before and 2 hours after taking the medicine.",
+                    "This section display your baby's body temperature before and 4 hours after taking the medicine.",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -496,7 +496,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                               Container(
                                 padding: EdgeInsets.only(top: 3),
                                 child: Text(
-                                  "After 2 hours",
+                                  "After 4 hours",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: MediaQuery.of(context).size.width * 0.033,
@@ -544,7 +544,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                             ));
                       },
                       child: Text(
-                        "Update Blood Sugar Reading",
+                        "Update Baby Body Temperature Reading",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
