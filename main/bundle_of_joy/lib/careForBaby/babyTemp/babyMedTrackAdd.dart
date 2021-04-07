@@ -978,7 +978,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                   children: <Widget>[
                     ModalSheetText(
                       title: "Body Temperature Reading",
-                      desc: "Body Temperature reading reading 2 hour after medication.",
+                      desc: "Body Temperature reading reading 4 hour after medication.",
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 5, bottom: 15),
@@ -988,7 +988,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         onChanged: (val) => setState(() => bTempAfter = val),
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          hintText: "Body Temperature reading reading 2 hour after medication.",
+                          hintText: "Body Temperature reading reading 4 hour after medication.",
                           contentPadding: EdgeInsets.all(5),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -1052,7 +1052,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                           Navigator.of(context).pop();
                         } else {
                           dialogBoxContent = "Please make sure you entered your baby body temperature reading into the " +
-                              "before medication section. Only 2 hour after medication section can be left empty.";
+                              "before medication section. Only 4 hour after medication section can be left empty.";
                           _showDialogBox(context, dialogBoxContent);
                         }
                       },
@@ -1127,8 +1127,8 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                     top: 8.0,
                   ),
                   child: Text(
-                    "Your baby body temperature reading before medication and 2 hours after medication. You " +
-                        "can leave the 2 hours after medication section empty if u wish to update it later.",
+                    "Your baby body temperature reading before medication and 4 hours after medication. You " +
+                        "can leave the 4 hours after medication section empty if u wish to update it later.",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -1200,7 +1200,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                               Container(
                                 padding: EdgeInsets.only(top: 3),
                                 child: Text(
-                                  "After 2 hours",
+                                  "After 4 hours",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: MediaQuery.of(context).size.width * 0.033,

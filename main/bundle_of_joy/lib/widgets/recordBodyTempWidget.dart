@@ -52,7 +52,7 @@ class RecordBodyTempWidget extends StatelessWidget {
               width: double.infinity,
               margin: EdgeInsets.only(top: 8.0,),
               child: Text(
-                "This section display your baby's body temperature before and 2 hours after taking the medicine.",
+                "This section display your baby's body temperature before and 4 hours after taking the medicine.",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -120,7 +120,7 @@ class RecordBodyTempWidget extends StatelessWidget {
                               Container(
                                 padding: EdgeInsets.only(top: 3),
                                 child: Text(
-                                  "After 2 hours",
+                                  "After 4 hours",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: MediaQuery.of(context).size.width * 0.033,

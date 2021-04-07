@@ -163,7 +163,7 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
                               widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.bTempBefore, widget.bTempAfter, widget.medsMap, context)
                           .then((value) => _showNotification(notificationMessage));
                     } else {
-                      notificationMessage = "Remember to update your baby's body temperature reading after 2 hours.";
+                      notificationMessage = "Remember to update your baby's body temperature reading after 4 hours.";
                       careForBabyFunction
                           .uploadBabyMedsRecordPending(
                               widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.bTempBefore, widget.bTempAfter, widget.medsMap, context)
