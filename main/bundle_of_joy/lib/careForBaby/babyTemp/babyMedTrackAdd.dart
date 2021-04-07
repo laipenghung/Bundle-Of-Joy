@@ -226,7 +226,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.dark(
-              surface: Color(int.parse("0xFFFCFFD5")),
+              surface: appbar2,
               onSurface: Colors.black,
             ),
           ),
