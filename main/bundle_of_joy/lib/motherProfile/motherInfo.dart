@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path/path.dart';
 import 'dart:io';
@@ -307,20 +308,15 @@ class _MotherInfo extends State<MotherInfo> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
         title: Text(
           "Mother's Profile",
           style: TextStyle(
-            fontFamily: "Comfortaa",
-            fontWeight: FontWeight.bold,
-            fontSize: fontSizeTitle,
-            color: Colors.black,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
+            fontSize: MediaQuery.of(context).size.width * 0.045,
+            color: Colors.white,
           ),
         ),
-        backgroundColor: Color(0xFFFCFFD5),
+        backgroundColor: appbar3,
         centerTitle: true,
       ),
       body: StreamBuilder(

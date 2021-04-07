@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -123,20 +124,15 @@ class _BabyProfile extends State<BabyProfile> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
         title: Text(
           "Baby's Profile",
           style: TextStyle(
-            fontFamily: "Comfortaa",
-            fontWeight: FontWeight.bold,
-            fontSize: fontSizeTitle,
-            color: Colors.black,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
+            fontSize: MediaQuery.of(context).size.width * 0.045,
+            color: Colors.white,
           ),
         ),
-        backgroundColor: Color(0xFFFCFFD5),
+        backgroundColor: appbar3,
         centerTitle: true,
       ),
       body: Container(

@@ -1,6 +1,7 @@
 import 'package:bundle_of_joy/widgets/babyGrwothWidget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:bundle_of_joy/widgets/chartWidgets/growthChartWidget.dart';
+import 'package:bundle_of_joy/widgets/loadingWidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _GrowthTrackWeightViewState extends State<GrowthTrackWeightView> {
   Widget build(BuildContext context) {
     //CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(user.uid)
     //.collection("baby").doc(widget.selectedBabyID).collection("baby_growth");
-
+    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
@@ -41,12 +42,11 @@ class _GrowthTrackWeightViewState extends State<GrowthTrackWeightView> {
         backgroundColor: appbar2,
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: FutureBuilder<QuerySnapshot>(
-          future: widget.collectionReference.orderBy("bg_month", descending: false).get(),
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasData) {
+      body: FutureBuilder<QuerySnapshot>(
+        future: widget.collectionReference.orderBy("bg_month", descending: false).get(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data.docs.isNotEmpty) {
               snapshot.data.docs.forEach((doc) {
                 ageListInt.add(int.parse(doc.data()["bg_month"].toString()));
                 ageListString.add(doc.data()["bg_month"].toString());
@@ -66,50 +66,69 @@ class _GrowthTrackWeightViewState extends State<GrowthTrackWeightView> {
                   child: CircularProgressIndicator(),
                 );
               } else {
-                return Column(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.only(
-                        top: 18.0,
-                        left: 13.0,
-                      ),
-                      child: Text(
-                        "Baby Weight",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.width * 0.05,
-                          color: Colors.black,
+                return SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(
+                          top: 18.0,
+                          left: 13.0,
+                        ),
+                        child: Text(
+                          "Baby Weight",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 0.05,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
-                    ),
-                    BabyGrowthWidget(
-                      graphTitle: "Weight Record Graph",
-                      graphDesc: "This section display the weight record of your baby. The record is presented to you in bar" + " chart to help you visualize baby's weight record in a compact and precise format.",
-                      tableTitle: "Weight Record Table",
-                      tableDesc: "This section display the weight record of your baby and all of your baby's weight records " + "are being presented to you in table form.",
-                      svgSrcGraph: "assets/icons/graph.svg",
-                      svgSrcTable: "assets/icons/table.svg",
-                      chartData: chartData,
-                      listFirstElement: listFirstElement,
-                      ageListInt: ageListInt,
-                      growthValueList: growthValueList,
-                      xAxisLabel: "Months (M)",
-                      yAxisLabel: "Weight (kg)",
-                      measurement: "kg",
-                      tableMeasurement: "Weight (kg)",
-                      growthTrack: true,
-                    ),
-                  ],
+                      BabyGrowthWidget(
+                        graphTitle: "Weight Record Graph",
+                        graphDesc: "This section display the weight record of your baby. The record is presented to you in bar" +
+                            " chart to help you visualize baby's weight record in a compact and precise format.",
+                        tableTitle: "Weight Record Table",
+                        tableDesc: "This section display the weight record of your baby and all of your baby's weight records " +
+                            "are being presented to you in table form.",
+                        svgSrcGraph: "assets/icons/graph.svg",
+                        svgSrcTable: "assets/icons/table.svg",
+                        chartData: chartData,
+                        listFirstElement: listFirstElement,
+                        ageListInt: ageListInt,
+                        growthValueList: growthValueList,
+                        xAxisLabel: "Months (M)",
+                        yAxisLabel: "Weight (kg)",
+                        measurement: "kg",
+                        tableMeasurement: "Weight (kg)",
+                        growthTrack: true,
+                      ),
+                    ],
+                  ),
                 );
               }
-            } else if (snapshot.hasError) {
-              print("error");
+            } else {
+              return Center(
+                child: Text(
+                  "There is currently no records",
+                  style: TextStyle(
+                    fontFamily: "Comfortaa",
+                    fontSize: fontSizeText,
+                    color: Colors.black,
+                  ),
+                ),
+              );
             }
-            return CircularProgressIndicator();
-          },
-        ),
+          } else if (snapshot.hasError) {
+            print("error");
+          }
+          return LoadingWidget();
+        },
       ),
     );
   }
