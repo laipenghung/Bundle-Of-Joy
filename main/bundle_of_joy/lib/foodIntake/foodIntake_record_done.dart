@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import "package:flutter/material.dart";
 import "foodIntake_main.dart";
 import "foodIntake_add_2_food.dart";
