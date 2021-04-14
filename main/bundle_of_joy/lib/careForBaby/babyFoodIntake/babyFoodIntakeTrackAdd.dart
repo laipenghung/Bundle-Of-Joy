@@ -1043,6 +1043,9 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
   Widget afterMealBehaviorWidgetContent(BuildContext context) {
     return Column(
       children: <Widget>[
+        WidgetTitle(
+          title: "After Meal Behavior",
+        ),
         SizedBox(
           width: double.infinity,
           child: Container(
