@@ -1,92 +1,45 @@
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter_svg/svg.dart';
 import 'package:quiver/iterables.dart';
 
-class HealthRecordBloodSugarInsight extends StatefulWidget {
-  final String svgSrc;
-  const HealthRecordBloodSugarInsight({
-    Key key, @required this.svgSrc, 
+class BabyFoodRecordInsight extends StatefulWidget {
+  final String svgSrc, selectedBabyID;
+  const BabyFoodRecordInsight({
+    Key key, @required this.svgSrc, @required this.selectedBabyID, 
   }) : super(key: key);
 
   @override
-  _HealthRecordBloodSugarInsightState createState() => _HealthRecordBloodSugarInsightState();
+  _BabyFoodRecordInsightState createState() => _BabyFoodRecordInsightState();
 }
 
-class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarInsight> {
-  CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("health_record");
-  int totalRecordsCount = 0, excellentRecordsCount = 0, goodRecordsCount = 0, acceptableRecordsCount = 0, poorRecordsCount = 0, leftRecordsCount = 0;
-  String listFirstElement;
-  List dayOfPregnancyListString = []; List<int> dayOfPregnancyListInt = []; List bloodSugarList = []; List recordCountList = [];
-
-  /*Future getAllRecords() async{
-    var u = await collectionReference.where("mh_bloodSugar", isLessThan: 4).get();
-    u.docs.forEach((doc) {setState(() => leftRecordsCount++);});
-    var v = await collectionReference.where("mh_bloodSugar", isGreaterThan: 3.9).where("mh_bloodSugar", isLessThan: 6.1).get();
-    v.docs.forEach((doc) {setState(() => excellentRecordsCount++);});
-    var w = await collectionReference.where("mh_bloodSugar", isGreaterThan: 6).where("mh_bloodSugar", isLessThan: 8.1).get();
-    w.docs.forEach((doc) {setState(() => goodRecordsCount++);});
-    var x = await collectionReference.where("mh_bloodSugar", isGreaterThan: 8).where("mh_bloodSugar", isLessThan: 10.1).get();
-    x.docs.forEach((doc) {setState(() => acceptableRecordsCount++);});
-    var y = await collectionReference.where("mh_bloodSugar", isGreaterThan: 10).get();
-    y.docs.forEach((doc) {setState(() => poorRecordsCount++);});
-    var z = await collectionReference.get();
-    z.docs.forEach((doc) {setState(() => totalRecordsCount++);});
-
-    recordCountList.add(leftRecordsCount);
-    recordCountList.add(excellentRecordsCount);
-    recordCountList.add(goodRecordsCount);
-    recordCountList.add(acceptableRecordsCount);
-    recordCountList.add(poorRecordsCount);
-  }
-
-  void initState(){
-    super.initState();
-    //getAllRecords();
-  }*/
-
+class _BabyFoodRecordInsightState extends State<BabyFoodRecordInsight> {
+  int totalRecordsCount = 0, symptomFoundRecordsCount = 0, symptomNotFoundRecordsCount = 0;
+  List recordCountList = [];
+  
   @override
   Widget build(BuildContext context) {
     TextStyle normalWidgetTextStyle = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.035,);
     TextStyle boldWidgetTextStyle = TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: MediaQuery.of(context).size.width * 0.035,);
+    CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("baby")
+    .doc(widget.selectedBabyID).collection("babyFoodIntake_Done");
     
     return SizedBox(
       child: FutureBuilder<QuerySnapshot>(
-        future: collectionReference.orderBy("mh_day_of_pregnancy", descending: false).get(),
+        future: collectionReference.orderBy('selectedDate', descending: true).orderBy('selectedTime', descending: true).get(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
             snapshot.data.docs.forEach((doc) {
-              dayOfPregnancyListInt.add(int.parse(doc.data()["mh_day_of_pregnancy"].toString()));
-              dayOfPregnancyListString.add(doc.data()["mh_day_of_pregnancy"].toString());
-              bloodSugarList.add(double.parse(doc.data()["mh_bloodSugar"].toString()));
               totalRecordsCount++;
-
-              if(doc.data()["mh_bloodSugar"] < 4){leftRecordsCount++;}
-              else if(doc.data()["mh_bloodSugar"] > 3.9 && doc.data()["mh_bloodSugar"] < 6.1){excellentRecordsCount++;}
-              else if(doc.data()["mh_bloodSugar"] > 6 && doc.data()["mh_bloodSugar"] < 8.1){goodRecordsCount++;}
-              else if(doc.data()["mh_bloodSugar"] > 8 && doc.data()["mh_bloodSugar"] < 10.1){acceptableRecordsCount++;}
-              else if(doc.data()["mh_bloodSugar"] > 10){poorRecordsCount++;}
+              if(doc.data()["symptomsAndAllergies"] == true){symptomFoundRecordsCount++;}
+              else{symptomNotFoundRecordsCount++;}
             });
 
-            recordCountList.add(leftRecordsCount);
-            recordCountList.add(excellentRecordsCount);
-            recordCountList.add(goodRecordsCount);
-            recordCountList.add(acceptableRecordsCount);
-            recordCountList.add(poorRecordsCount);
+            recordCountList.add(symptomFoundRecordsCount);
+            recordCountList.add(symptomNotFoundRecordsCount);
 
-            listFirstElement =  dayOfPregnancyListString[0];
-            List<HealthRecordBsInsightChartData> chartData = [
-              for (var x in zip([dayOfPregnancyListString, bloodSugarList]))
-              HealthRecordBsInsightChartData(
-                dayOfPregnancy: x[0], 
-                measurement: x[1], 
-                barColor: charts.ColorUtil.fromDartColor(appbar1),
-              ),
-            ];      
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(),
@@ -113,7 +66,7 @@ class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarIn
                     width: double.infinity,
                     margin: EdgeInsets.only(top: 3.0, ),
                     child: Text(
-                      "BoJ Insight™ will use your blood glucose records that stored on the database and structures the data into useful information" + 
+                      "BoJ Insight™ will use your baby's food records that stored on the database and structures the data into useful information" + 
                           " hence providing you insights in what BoJ Insight™ has derived out of the entire data.",
                       textAlign: TextAlign.justify,
                       style: TextStyle(
@@ -126,26 +79,13 @@ class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarIn
                   ?Column(
                     children: <Widget>[
                       Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.only(top: 8),
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              width: double.infinity,
-                              margin: EdgeInsets.only(top: 10.0,),
-                              child: Column(
-                                children: <Widget>[
-                                  HealthRecordBsInsightChart(
-                                    chartData: chartData, 
-                                    firstList: listFirstElement,
-                                  )
-                                ],
-                              )
-                            ),
-                          ],
+                        margin: EdgeInsets.only(top: 5),
+                        child: BabyFoodRecordInsightTableWidget(
+                          recordCountList: recordCountList,
                         ),
                       ),
                       Container(
+                        margin: EdgeInsets.only(top: 15),
                         width: double.infinity,
                         child: RichText(
                           textAlign: TextAlign.justify,
@@ -156,15 +96,9 @@ class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarIn
                               style: boldWidgetTextStyle,
                             ),
                             TextSpan(
-                              text: " health records saved on the database. All of the health records will be split into 5 blood glucose condition category.",
+                              text: " baby's food records saved on the database. All of your baby's food records will be split into 2 category.",
                             ),
                           ])),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: HealthRecordInsightTableWidget(
-                          recordCountList: recordCountList,
-                        ),
                       ),
                     ],
                   )
@@ -182,15 +116,15 @@ class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarIn
   }
 }
 
-class HealthRecordInsightTableWidget extends StatelessWidget {
+class BabyFoodRecordInsightTableWidget extends StatelessWidget {
   final List recordCountList;
-  HealthRecordInsightTableWidget({
+  BabyFoodRecordInsightTableWidget({
     this.recordCountList
   });
 
   @override
   Widget build(BuildContext context) {
-    List bloodSugarConditionList = ["Too Low", "Excellent", "Good", "Acceptable", "Poor"];
+    List babyAfterMealBehaviorConditionList = ["Found", "Not Found"];
 
     return Container(
       child: Container(
@@ -205,7 +139,7 @@ class HealthRecordInsightTableWidget extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 5),
                     decoration: BoxDecoration(
-                      color: appbar1,
+                      color: appbar2,
                       border: Border(
                         right: BorderSide(
                           width: 0.25, 
@@ -215,7 +149,7 @@ class HealthRecordInsightTableWidget extends StatelessWidget {
                     ),
                     width: double.infinity,
                     child: Text(
-                      "Blood Glucose Condition",
+                      "Symptoms and Allergies",
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
@@ -233,7 +167,7 @@ class HealthRecordInsightTableWidget extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 5),
                     decoration: BoxDecoration(
-                      color: appbar1,
+                      color: appbar2,
                       border: Border(
                         left: BorderSide(width: 0.25, color: Colors.white,),
                         right: BorderSide(width: 0.25, color: Colors.white,),
@@ -257,7 +191,7 @@ class HealthRecordInsightTableWidget extends StatelessWidget {
                 ),
               ]
             ),
-            for (var x in zip([bloodSugarConditionList, recordCountList]))
+            for (var x in zip([babyAfterMealBehaviorConditionList, recordCountList]))
             TableRow(
               children: [
                 TableCell(
@@ -314,75 +248,4 @@ class HealthRecordInsightTableWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-class HealthRecordBsInsightChart extends StatelessWidget {
-  final List<HealthRecordBsInsightChartData> chartData;
-  final String firstList;
-  HealthRecordBsInsightChart({this.chartData, this.firstList});
-
-  @override
-  Widget build(BuildContext context) {
-    List<charts.Series<HealthRecordBsInsightChartData, String>> series = [
-      charts.Series(
-        id: "bloodSugarInsightChart",
-        data: chartData,
-        domainFn: (HealthRecordBsInsightChartData series, _) => series.dayOfPregnancy,
-        measureFn: (HealthRecordBsInsightChartData series, _) => series.measurement,
-        colorFn: (HealthRecordBsInsightChartData series, _) => series.barColor,
-        labelAccessorFn: (HealthRecordBsInsightChartData series, _) => "D-${series.dayOfPregnancy}\n" + series.measurement.toString() + "\nmmol/L",
-        insideLabelStyleAccessorFn: (HealthRecordBsInsightChartData series, _) => charts.TextStyleSpec(
-          color: charts.MaterialPalette.white,
-          fontSize: 13, 
-        )
-      )
-    ];
-
-    return Container(
-      height: 300,
-      width: double.infinity,
-      child: Column(
-        children: <Widget>[
-          Expanded(child:charts.BarChart(
-              series,
-              animate: true,
-              vertical: true,
-              behaviors: [
-                charts.SlidingViewport(),
-                charts.PanAndZoomBehavior(),
-                charts.ChartTitle(
-                  "Blood Glucose Reading (mmol/L)",
-                  behaviorPosition: charts.BehaviorPosition.start,
-                  titleOutsideJustification: charts.OutsideJustification.middleDrawArea,
-                  titleStyleSpec: charts.TextStyleSpec(fontSize: 12),
-                ),
-                charts.ChartTitle(
-                  "Day Of Pregnancy (D)",
-                  behaviorPosition: charts.BehaviorPosition.bottom,
-                  titleOutsideJustification: charts.OutsideJustification.middleDrawArea,
-                  titleStyleSpec: charts.TextStyleSpec(fontSize: 12),
-                ),
-              ],
-              barRendererDecorator: charts.BarLabelDecorator(
-                labelPosition: charts.BarLabelPosition.inside,
-              ),
-              domainAxis: charts.OrdinalAxisSpec(
-                viewport: charts.OrdinalViewport(firstList, 4),
-                renderSpec: charts.NoneRenderSpec(),
-              ),
-            )
-          ,)
-        ],
-      )
-    );
-  }
-}
-
-class HealthRecordBsInsightChartData{
-  final String dayOfPregnancy;
-  final double measurement;
-  final charts.Color barColor;
-  HealthRecordBsInsightChartData({
-    @required this.dayOfPregnancy, @required this.measurement, @required this.barColor,
-  });
 }

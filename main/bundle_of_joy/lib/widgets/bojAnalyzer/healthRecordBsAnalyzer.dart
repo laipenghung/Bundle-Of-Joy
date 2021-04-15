@@ -29,11 +29,11 @@ class HealthRecordBloodSugarAnalyzer extends StatelessWidget {
       bsCond = "Excellent";
       bsCondFeed = excellentBloodSugar;
     }else if(bSugarReading < 8.1){
-      bsCondColor = Colors.lime;
+      bsCondColor = Colors.lime.shade800;
       bsCond = "Good";
       bsCondFeed = goodBloodSugar;
-    }else if(bSugarReading < 10){
-      bsCondColor = Colors.orange;
+    }else if(bSugarReading < 10.1){
+      bsCondColor = Colors.yellow.shade900;
       bsCond = "Acceptable";
       bsCondFeed = acceptableBloodSugar;
     }else{
@@ -72,11 +72,11 @@ class HealthRecordBloodSugarAnalyzer extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.only(top: 2.0, ),
+            //margin: EdgeInsets.only(top: 2.0, ),
             child: Text(
               "BoJ Analyzer™ will provide you feedback on condition of your Blood Glucose based on the your " + 
                 "Blood Glucose reading saved on our database.",
-              textAlign: TextAlign.left,
+              textAlign: TextAlign.justify,
               style: TextStyle(
                 fontSize: MediaQuery.of(context).size.width * 0.035,
                 color: Colors.black.withOpacity(0.65),

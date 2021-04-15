@@ -52,7 +52,7 @@ class _HealthRecordBloodPressureInsightState extends State<HealthRecordBloodPres
                 systolicReading: x[1], 
                 diastolicReading: x[2],
                 barSysColor: charts.ColorUtil.fromDartColor(appbar1),
-                barDiaColor: charts.ColorUtil.fromDartColor(background2),
+                barDiaColor: charts.ColorUtil.fromDartColor(appbar2),
               ),
             ];
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -195,7 +195,7 @@ class _HealthRecordInsightDiastolicWidgetState extends State<HealthRecordInsight
   CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("health_record");
   int normalEleDiaRecordsCount = 0, hyperStage1DiaCount = 0, hyperStage2DiaCount = 0, hyperCrisisDiaCount = 0; 
   List bloodPressureDiastolicList = [];
-  Future getAllRecords() async{
+  /*Future getAllRecords() async{
     var x = await collectionReference.orderBy("mh_day_of_pregnancy", descending: false).get();
     x.docs.forEach((doc) {
       int bloodPressureDia;
@@ -214,131 +214,165 @@ class _HealthRecordInsightDiastolicWidgetState extends State<HealthRecordInsight
   void initState(){
     super.initState();
     getAllRecords();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     List bloodPressureConditionList = ["Normal or Elevated", "Hypertension Stage 1", "Hypertension Stage 2", "Hypertensive Crisis"];
+    int bloodPressureDia;
 
     return Container(
-      child: Container(
-        width: double.infinity,
-        margin: EdgeInsets.only(top: 5.0),
-        child: Table(
-          columnWidths: {0: FlexColumnWidth(6), 1: FlexColumnWidth(4),},
-          children: [
-            TableRow(
-              children: [
-                TableCell(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    decoration: BoxDecoration(
-                      color: appbar2,
-                      border: Border(
-                        right: BorderSide(
-                          width: 0.25, 
-                          color: Colors.white,
+      child: FutureBuilder(
+        future: collectionReference.orderBy("mh_day_of_pregnancy", descending: false).get(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasData) {
+            snapshot.data.docs.forEach((doc) {
+              bloodPressureDia = int.parse(doc.data()["mh_bloodPressure_dia"].toString());
+              if(bloodPressureDia < 80){normalEleDiaRecordsCount++;}
+              else if(bloodPressureDia > 79 && bloodPressureDia < 90){hyperStage1DiaCount++;}
+              else if(bloodPressureDia > 89 && bloodPressureDia < 121){hyperStage2DiaCount++;}
+              else if(bloodPressureDia > 121 ){hyperCrisisDiaCount++;}
+            });
+
+            bloodPressureDiastolicList.add(normalEleDiaRecordsCount);
+            bloodPressureDiastolicList.add(hyperStage1DiaCount);
+            bloodPressureDiastolicList.add(hyperStage2DiaCount);
+            bloodPressureDiastolicList.add(hyperCrisisDiaCount);
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return Column(
+                children: <Widget>[
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.only(top: 5.0),
+                    child: Table(
+                      columnWidths: {0: FlexColumnWidth(6), 1: FlexColumnWidth(4),},
+                      children: [
+                        TableRow(
+                          children: [
+                            TableCell(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 5),
+                                decoration: BoxDecoration(
+                                  color: appbar2,
+                                  border: Border(
+                                    right: BorderSide(
+                                      width: 0.25, 
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ),
+                                width: double.infinity,
+                                child: Text(
+                                  "Blood Glucose Condition",
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * 0.033,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            TableCell(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 5),
+                                decoration: BoxDecoration(
+                                  color: appbar2,
+                                  border: Border(
+                                    left: BorderSide(width: 0.25, color: Colors.white,),
+                                    right: BorderSide(width: 0.25, color: Colors.white,),
+                                  )
+                                ),
+                                width: double.infinity,
+                                child: Text(
+                                  "Records Count",
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * 0.033,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ]
                         ),
-                      )
-                    ),
-                    width: double.infinity,
-                    child: Text(
-                      "Blood Glucose Condition",
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: true,
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.033,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
-                      ),
-                    ),
-                  ),
-                ),
-                TableCell(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    decoration: BoxDecoration(
-                      color: appbar2,
-                      border: Border(
-                        left: BorderSide(width: 0.25, color: Colors.white,),
-                        right: BorderSide(width: 0.25, color: Colors.white,),
-                      )
-                    ),
-                    width: double.infinity,
-                    child: Text(
-                      "Records Count",
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: true,
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.033,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
-                      ),
-                    ),
-                  ),
-                ),
-              ]
-            ),
-            for (var x in zip([bloodPressureConditionList, bloodPressureDiastolicList]))
-            TableRow(
-              children: [
-                TableCell(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.45),),
-                        right: BorderSide(width: 0.25, color: Colors.black.withOpacity(0.45),),
-                      )
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 4),
-                    width: double.infinity,
-                    child: Text(
-                      x[0],
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: true,
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.033,
-                        color: Colors.black.withOpacity(0.7),
-                        fontWeight: FontWeight.bold,
-                      ),
+                        for (var x in zip([bloodPressureConditionList, bloodPressureDiastolicList]))
+                        TableRow(
+                          children: [
+                            TableCell(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.45),),
+                                    right: BorderSide(width: 0.25, color: Colors.black.withOpacity(0.45),),
+                                  )
+                                ),
+                                padding: EdgeInsets.symmetric(vertical: 4),
+                                width: double.infinity,
+                                child: Text(
+                                  x[0],
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * 0.033,
+                                    color: Colors.black.withOpacity(0.7),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            TableCell(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 4),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.45),),
+                                    left: BorderSide(width: 0.25, color: Colors.black.withOpacity(0.45),),
+                                  )
+                                ),
+                                width: double.infinity,
+                                child: Text(
+                                  (x[1] != 0)? x[1].toString() + " Record(s)" : "-",
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * 0.033,
+                                    color: Colors.black.withOpacity(0.75),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ]
+                        ), 
+                      ],
                     ),
                   ),
-                ),
-                TableCell(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 4),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.45),),
-                        left: BorderSide(width: 0.25, color: Colors.black.withOpacity(0.45),),
-                      )
-                    ),
-                    width: double.infinity,
-                    child: Text(
-                      (x[1] != 0)? x[1].toString() + " Record(s)" : "-",
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: true,
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.033,
-                        color: Colors.black.withOpacity(0.75),
-                      ),
-                    ),
-                  ),
-                ),
-              ]
-            ), 
-          ],
-        ),
+                ],
+              );
+            }
+          } else if (snapshot.hasError) {
+            print("error");
+          }
+          return CircularProgressIndicator();
+        },
       ),
     );
   }
@@ -353,7 +387,7 @@ class HealthRecordInsightSystolicWidget extends StatefulWidget {
   CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("health_record");
   int normalSysRecordsCount = 0, elevatedSysRecordsCount = 0, hyperStage1SysCount = 0, hyperStage2SysCount = 0, hyperCrisisSysCount = 0;
   List bloodPressureSystolicList = [];
-  Future getAllRecords() async{
+  /*Future getAllRecords() async{
     var x = await collectionReference.orderBy("mh_day_of_pregnancy", descending: false).get();
     x.docs.forEach((doc) {
       int bloodPressureSys;
@@ -374,131 +408,167 @@ class HealthRecordInsightSystolicWidget extends StatefulWidget {
   void initState(){
     super.initState();
     getAllRecords();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     List bloodPressureConditionList = ["Normal", "Elevated", "Hypertension Stage 1", "Hypertension Stage 2", "Hypertensive Crisis"];
+    int bloodPressureSys;
 
     return Container(
-      child: Container(
-        width: double.infinity,
-        margin: EdgeInsets.only(top: 5.0),
-        child: Table(
-          columnWidths: {0: FlexColumnWidth(6), 1: FlexColumnWidth(4),},
-          children: [
-            TableRow(
-              children: [
-                TableCell(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    decoration: BoxDecoration(
-                      color: appbar2,
-                      border: Border(
-                        right: BorderSide(
-                          width: 0.25, 
-                          color: Colors.white,
+      child: FutureBuilder(
+        future: collectionReference.orderBy("mh_day_of_pregnancy", descending: false).get(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasData) {
+            snapshot.data.docs.forEach((doc) {
+              bloodPressureSys = int.parse(doc.data()["mh_bloodPressure_sys"].toString());
+              if(bloodPressureSys < 120){normalSysRecordsCount++;}
+              else if(bloodPressureSys > 119 && bloodPressureSys < 130){elevatedSysRecordsCount++;}
+              else if(bloodPressureSys > 129 && bloodPressureSys < 140){hyperStage1SysCount++;}
+              else if(bloodPressureSys > 139 && bloodPressureSys < 181){hyperStage2SysCount++;}
+              else if(bloodPressureSys > 180 ){hyperCrisisSysCount++;}
+            });
+
+            bloodPressureSystolicList.add(normalSysRecordsCount);
+            bloodPressureSystolicList.add(elevatedSysRecordsCount);
+            bloodPressureSystolicList.add(hyperStage1SysCount);
+            bloodPressureSystolicList.add(hyperStage2SysCount);
+            bloodPressureSystolicList.add(hyperCrisisSysCount);
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return Column(
+                children: <Widget>[
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.only(top: 5.0),
+                    child: Table(
+                      columnWidths: {0: FlexColumnWidth(6), 1: FlexColumnWidth(4),},
+                      children: [
+                        TableRow(
+                          children: [
+                            TableCell(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 5),
+                                decoration: BoxDecoration(
+                                  color: appbar1,
+                                  border: Border(
+                                    right: BorderSide(
+                                      width: 0.25, 
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ),
+                                width: double.infinity,
+                                child: Text(
+                                  "Blood Glucose Condition",
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * 0.033,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            TableCell(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 5),
+                                decoration: BoxDecoration(
+                                  color: appbar1,
+                                  border: Border(
+                                    left: BorderSide(width: 0.25, color: Colors.white,),
+                                    right: BorderSide(width: 0.25, color: Colors.white,),
+                                  )
+                                ),
+                                width: double.infinity,
+                                child: Text(
+                                  "Records Count",
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * 0.033,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ]
                         ),
-                      )
-                    ),
-                    width: double.infinity,
-                    child: Text(
-                      "Blood Glucose Condition",
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: true,
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.033,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
-                      ),
-                    ),
-                  ),
-                ),
-                TableCell(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    decoration: BoxDecoration(
-                      color: appbar2,
-                      border: Border(
-                        left: BorderSide(width: 0.25, color: Colors.white,),
-                        right: BorderSide(width: 0.25, color: Colors.white,),
-                      )
-                    ),
-                    width: double.infinity,
-                    child: Text(
-                      "Records Count",
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: true,
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.033,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
-                      ),
-                    ),
-                  ),
-                ),
-              ]
-            ),
-            for (var x in zip([bloodPressureConditionList, bloodPressureSystolicList]))
-            TableRow(
-              children: [
-                TableCell(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.45),),
-                        right: BorderSide(width: 0.25, color: Colors.black.withOpacity(0.45),),
-                      )
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 4),
-                    width: double.infinity,
-                    child: Text(
-                      x[0],
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: true,
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.033,
-                        color: Colors.black.withOpacity(0.7),
-                        fontWeight: FontWeight.bold,
-                      ),
+                        for (var x in zip([bloodPressureConditionList, bloodPressureSystolicList]))
+                        TableRow(
+                          children: [
+                            TableCell(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.45),),
+                                    right: BorderSide(width: 0.25, color: Colors.black.withOpacity(0.45),),
+                                  )
+                                ),
+                                padding: EdgeInsets.symmetric(vertical: 4),
+                                width: double.infinity,
+                                child: Text(
+                                  x[0],
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * 0.033,
+                                    color: Colors.black.withOpacity(0.7),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            TableCell(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 4),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.45),),
+                                    left: BorderSide(width: 0.25, color: Colors.black.withOpacity(0.45),),
+                                  )
+                                ),
+                                width: double.infinity,
+                                child: Text(
+                                  (x[1] != 0)? x[1].toString() + " Record(s)" : "-",
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * 0.033,
+                                    color: Colors.black.withOpacity(0.75),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ]
+                        ), 
+                      ],
                     ),
                   ),
-                ),
-                TableCell(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 4),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.45),),
-                        left: BorderSide(width: 0.25, color: Colors.black.withOpacity(0.45),),
-                      )
-                    ),
-                    width: double.infinity,
-                    child: Text(
-                      (x[1] != 0)? x[1].toString() + " Record(s)" : "-",
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: true,
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.033,
-                        color: Colors.black.withOpacity(0.75),
-                      ),
-                    ),
-                  ),
-                ),
-              ]
-            ), 
-          ],
-        ),
+                ],
+              );
+            }
+          } else if (snapshot.hasError) {
+            print("error");
+          }
+          return CircularProgressIndicator();
+        },
       ),
     );
   }
@@ -513,7 +583,7 @@ class HealthRecordBpInsightChart extends StatelessWidget {
   Widget build(BuildContext context) {
     List<charts.Series<HealthRecordBpInsightChartData, String>> series = [
       charts.Series(
-        id: "Systolic Category",
+        id: "Systolic",
         data: chartData,
         domainFn: (HealthRecordBpInsightChartData series, _) => series.dayOfPregnancy,
         measureFn: (HealthRecordBpInsightChartData series, _) => series.systolicReading,
@@ -521,11 +591,11 @@ class HealthRecordBpInsightChart extends StatelessWidget {
         labelAccessorFn: (HealthRecordBpInsightChartData series, _) => "D-${series.dayOfPregnancy}\n" + series.systolicReading.toString() + "\nmm/Hg",
         insideLabelStyleAccessorFn: (HealthRecordBpInsightChartData series, _) => charts.TextStyleSpec(
           color: charts.MaterialPalette.white,
-          fontSize: 13, 
+          fontSize: 12, 
         )
       ),
       charts.Series(
-        id: "Diastolic Category",
+        id: "Diastolic",
         data: chartData,
         domainFn: (HealthRecordBpInsightChartData series, _) => series.dayOfPregnancy,
         measureFn: (HealthRecordBpInsightChartData series, _) => series.diastolicReading,
@@ -533,7 +603,7 @@ class HealthRecordBpInsightChart extends StatelessWidget {
         labelAccessorFn: (HealthRecordBpInsightChartData series, _) => series.diastolicReading.toString() + "\nmm/Hg",
         insideLabelStyleAccessorFn: (HealthRecordBpInsightChartData series, _) => charts.TextStyleSpec(
           color: charts.MaterialPalette.white,
-          fontSize: 13, 
+          fontSize: 12, 
         )
       )
     ];

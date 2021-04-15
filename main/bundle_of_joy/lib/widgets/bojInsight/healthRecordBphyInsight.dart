@@ -48,7 +48,7 @@ class _HealthRecordBodyPhysiqueInsightState extends State<HealthRecordBodyPhysiq
               HealthRecordBodyPhysiqueChartData(
                 dayOfPregnancy: x[0], 
                 measurement: x[1], 
-                barColor: charts.ColorUtil.fromDartColor(appbar2),
+                barColor: charts.ColorUtil.fromDartColor(appbar1),
               ),
             ];
             List<HealthRecordBodyPhysiqueChartData> heightChartData = [
@@ -56,7 +56,7 @@ class _HealthRecordBodyPhysiqueInsightState extends State<HealthRecordBodyPhysiq
               HealthRecordBodyPhysiqueChartData(
                 dayOfPregnancy: x[0], 
                 measurement: x[1], 
-                barColor: charts.ColorUtil.fromDartColor(appbar2),
+                barColor: charts.ColorUtil.fromDartColor(appbar1),
               ),
             ];
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -176,7 +176,7 @@ class _HealthRecordBodyPhysiqueInsightState extends State<HealthRecordBodyPhysiq
                                           child: Container(
                                             padding: EdgeInsets.symmetric(vertical: 5),
                                             decoration: BoxDecoration(
-                                              color: appbar2,
+                                              color: appbar1,
                                               border: Border(
                                                 right: BorderSide(
                                                   width: 0.25, 
@@ -204,7 +204,7 @@ class _HealthRecordBodyPhysiqueInsightState extends State<HealthRecordBodyPhysiq
                                           child: Container(
                                             padding: EdgeInsets.symmetric(vertical: 5),
                                             decoration: BoxDecoration(
-                                              color: appbar2,
+                                              color: appbar1,
                                               border: Border(
                                                 left: BorderSide(width: 0.25, color: Colors.white,),
                                                 right: BorderSide(width: 0.25, color: Colors.white,),
@@ -230,7 +230,7 @@ class _HealthRecordBodyPhysiqueInsightState extends State<HealthRecordBodyPhysiq
                                           child: Container(
                                             padding: EdgeInsets.symmetric(vertical: 5),
                                             decoration: BoxDecoration(
-                                              color: appbar2,
+                                              color: appbar1,
                                               border: Border(
                                                 left: BorderSide(
                                                   width: 0.25, 

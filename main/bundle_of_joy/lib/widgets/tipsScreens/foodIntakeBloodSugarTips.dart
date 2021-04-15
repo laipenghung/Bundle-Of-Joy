@@ -17,7 +17,7 @@ class FoodIntakeBloodSugarTips extends StatelessWidget {
         Container(
           padding: EdgeInsets.only(top: 3, bottom: 3),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(10.0)),
             color: appbar1,
             boxShadow: [
               BoxShadow(
@@ -225,7 +225,7 @@ class FoodIntakeBloodSugarTips extends StatelessWidget {
                                 child: Container(
                                   padding: EdgeInsets.symmetric(vertical: 5),
                                   decoration: BoxDecoration(
-                                    color: appbar2,
+                                    color: appbar1,
                                     border: Border(
                                       right: BorderSide(
                                         width: 0.25, 
@@ -253,7 +253,7 @@ class FoodIntakeBloodSugarTips extends StatelessWidget {
                                 child: Container(
                                   padding: EdgeInsets.symmetric(vertical: 5),
                                   decoration: BoxDecoration(
-                                    color: appbar2,
+                                    color: appbar1,
                                     border: Border(
                                       left: BorderSide(width: 0.25, color: Colors.white,),
                                       right: BorderSide(width: 0.25, color: Colors.white,),
@@ -356,7 +356,7 @@ class FoodIntakeBloodSugarTips extends StatelessWidget {
                                 child: Container(
                                   padding: EdgeInsets.symmetric(vertical: 5),
                                   decoration: BoxDecoration(
-                                    color: appbar2,
+                                    color: appbar1,
                                     border: Border(
                                       right: BorderSide(
                                         width: 0.25, 
@@ -384,7 +384,7 @@ class FoodIntakeBloodSugarTips extends StatelessWidget {
                                 child: Container(
                                   padding: EdgeInsets.symmetric(vertical: 5),
                                   decoration: BoxDecoration(
-                                    color: appbar2,
+                                    color: appbar1,
                                     border: Border(
                                       left: BorderSide(width: 0.25, color: Colors.white,),
                                       right: BorderSide(width: 0.25, color: Colors.white,),

@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/widgets/bojInsight/foodRecordBsInsight.dart';
 import 'package:bundle_of_joy/widgets/bsAnalyzerWidget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/gestures.dart';
@@ -148,6 +149,12 @@ class RecordBloodSugarDoneWidget extends StatelessWidget {
             (showAnalyzer == true) ? BloodSugarAnalyzerWidget(
               svgSrc: "assets/icons/web-analytics.svg", bSugarBefore: bSugarBefore, bSugarAfter: bSugarAfter,
             ) : (bSugarAfter == null) ? BloodSugarAddPendingText() : BloodSugarAddDoneText(),
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              child: FoodRecordBloodSugarInsight(
+                svgSrc: "assets/icons/insight.svg",
+              ),
+            ),
           ],
         ), 
       ),
