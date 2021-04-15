@@ -1,7 +1,7 @@
 import 'package:bundle_of_joy/widgets/bojAnalyzer/healthRecordBpAnalyzer.dart';
 import 'package:bundle_of_joy/widgets/bojAnalyzer/healthRecordBsAnalyzer.dart';
-import 'package:bundle_of_joy/widgets/bojInsight/healthRecordBpInsight.dart';
-import 'package:bundle_of_joy/widgets/bojInsight/healthRecordBqInsight.dart';
+import 'package:bundle_of_joy/widgets/bojInsight/healthRecordBpreInsight.dart';
+import 'package:bundle_of_joy/widgets/bojInsight/healthRecordBphyInsight.dart';
 import 'package:bundle_of_joy/widgets/bojInsight/healthRecordbsInsight.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -279,7 +279,7 @@ class HealthRecordBloodPressureWidget extends StatelessWidget {
                   ), 
                 ],
               ),
-            ),/* //!!!!REMOVE COMMENT WHEN REVEAL THIS FEATURE
+            ),//!!!!REMOVE COMMENT WHEN REVEAL THIS FEATURE
             HealthRecordBloodPressureAnalyzer(
               svgSrc: "assets/icons/web-analytics.svg",
               bPressureSystolic: bPressureSystolic,
@@ -290,7 +290,7 @@ class HealthRecordBloodPressureWidget extends StatelessWidget {
               child: HealthRecordBloodPressureInsight(
                 svgSrc: "assets/icons/insight.svg",
               ),
-            )*/
+            )
           ],
         ), 
       ),
@@ -364,7 +364,7 @@ class HealthRecordBloodSugarWidget extends StatelessWidget {
                 ),
               ),
             ),
-            /*HealthRecordBloodSugarAnalyzer( //!!!!REMOVE COMMENT WHEN REVEAL THIS FEATURE
+            HealthRecordBloodSugarAnalyzer( //!!!!REMOVE COMMENT WHEN REVEAL THIS FEATURE
               svgSrc: "assets/icons/web-analytics.svg",
               bSugarReading: bGlucoseReading,
             ),
@@ -373,7 +373,7 @@ class HealthRecordBloodSugarWidget extends StatelessWidget {
               child: HealthRecordBloodSugarInsight(
                 svgSrc: "assets/icons/insight.svg",
               ),
-            ),*/
+            ),
           ],
         ),
       ),
@@ -518,9 +518,9 @@ class _HealthRecordBodyPhysiqueWidgetState extends State<HealthRecordBodyPhysiqu
                 ],
               ),
             ),
-            /*HealthRecordBodyPhysiqueInsight(
+            HealthRecordBodyPhysiqueInsight(
               svgSrc: "assets/icons/insight.svg",
-            )*/
+            )
           ],
         ), 
       ),

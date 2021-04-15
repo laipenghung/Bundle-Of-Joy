@@ -252,7 +252,7 @@ class HealthRecordBloodPressureAnalyzer extends StatelessWidget {
                         recognizer: TapGestureRecognizer() ..onTap = () {
                           showModalBottomSheet(
                             context: context, 
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(20.0)),),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),),
                             isScrollControlled: true,
                             builder: (context) => Container(
                               height: MediaQuery.of(context).size.height * 0.8,

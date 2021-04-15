@@ -1,9 +1,10 @@
+import 'package:bundle_of_joy/widgets/bojInsight/babyFoodRecordInsight.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class RecordBabyAfterMealWidget extends StatelessWidget {
-  final String svgSrc, symptomsAndAllergiesDesc;
+  final String svgSrc, symptomsAndAllergiesDesc, selectedBabyID;
   final bool symptomsAndAllergies;
   
   const RecordBabyAfterMealWidget({
@@ -11,6 +12,7 @@ class RecordBabyAfterMealWidget extends StatelessWidget {
     this.svgSrc,
     this.symptomsAndAllergiesDesc,
     this.symptomsAndAllergies,
+    this.selectedBabyID
   }) : super(key: key);
 
   @override
@@ -126,6 +128,13 @@ class RecordBabyAfterMealWidget extends StatelessWidget {
                     ),
                   ),
                   (symptomsAndAllergies == true)? SymptompAndAllergyFound(symptomsAndAllergiesDesc: symptomsAndAllergiesDesc,) : SymptompAndAllergyNotFound(),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: BabyFoodRecordInsight(
+                      svgSrc: "assets/icons/insight.svg",
+                      selectedBabyID: selectedBabyID,
+                    ),
+                  ),
                 ],
               )
             ),

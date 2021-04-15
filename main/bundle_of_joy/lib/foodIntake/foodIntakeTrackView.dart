@@ -124,7 +124,7 @@ class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
                       svgSrc: "assets/icons/blood-donation.svg",
                       bSugarBefore: bSugarBefore,
                       bSugarAfter: bSugarAfter,
-                      showAnalyzer: false,
+                      showAnalyzer: true,
                     )
                   ],
                 );

@@ -1,75 +1,55 @@
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:quiver/iterables.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
-class HealthRecordBloodSugarInsight extends StatefulWidget {
+class FoodRecordBloodSugarInsight extends StatefulWidget {
   final String svgSrc;
-  const HealthRecordBloodSugarInsight({
+  const FoodRecordBloodSugarInsight({
     Key key, @required this.svgSrc, 
   }) : super(key: key);
 
   @override
-  _HealthRecordBloodSugarInsightState createState() => _HealthRecordBloodSugarInsightState();
+  _FoodRecordBloodSugarInsightState createState() => _FoodRecordBloodSugarInsightState();
 }
 
-class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarInsight> {
-  CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("health_record");
+class _FoodRecordBloodSugarInsightState extends State<FoodRecordBloodSugarInsight> {
+  CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("foodIntake_Done");
   int totalRecordsCount = 0, excellentRecordsCount = 0, goodRecordsCount = 0, acceptableRecordsCount = 0, poorRecordsCount = 0, leftRecordsCount = 0;
   String listFirstElement;
-  List dayOfPregnancyListString = []; List<int> dayOfPregnancyListInt = []; List bloodSugarList = []; List recordCountList = [];
-
-  /*Future getAllRecords() async{
-    var u = await collectionReference.where("mh_bloodSugar", isLessThan: 4).get();
-    u.docs.forEach((doc) {setState(() => leftRecordsCount++);});
-    var v = await collectionReference.where("mh_bloodSugar", isGreaterThan: 3.9).where("mh_bloodSugar", isLessThan: 6.1).get();
-    v.docs.forEach((doc) {setState(() => excellentRecordsCount++);});
-    var w = await collectionReference.where("mh_bloodSugar", isGreaterThan: 6).where("mh_bloodSugar", isLessThan: 8.1).get();
-    w.docs.forEach((doc) {setState(() => goodRecordsCount++);});
-    var x = await collectionReference.where("mh_bloodSugar", isGreaterThan: 8).where("mh_bloodSugar", isLessThan: 10.1).get();
-    x.docs.forEach((doc) {setState(() => acceptableRecordsCount++);});
-    var y = await collectionReference.where("mh_bloodSugar", isGreaterThan: 10).get();
-    y.docs.forEach((doc) {setState(() => poorRecordsCount++);});
-    var z = await collectionReference.get();
-    z.docs.forEach((doc) {setState(() => totalRecordsCount++);});
-
-    recordCountList.add(leftRecordsCount);
-    recordCountList.add(excellentRecordsCount);
-    recordCountList.add(goodRecordsCount);
-    recordCountList.add(acceptableRecordsCount);
-    recordCountList.add(poorRecordsCount);
-  }
-
-  void initState(){
-    super.initState();
-    //getAllRecords();
-  }*/
+  List recordDateTimeListString = []; List bloodSugarList = []; List recordCountList = [];
+  double bloodSugarReading;
 
   @override
   Widget build(BuildContext context) {
     TextStyle normalWidgetTextStyle = TextStyle(color: Colors.black.withOpacity(0.65), fontSize: MediaQuery.of(context).size.width * 0.035,);
     TextStyle boldWidgetTextStyle = TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: MediaQuery.of(context).size.width * 0.035,);
-    
+
     return SizedBox(
       child: FutureBuilder<QuerySnapshot>(
-        future: collectionReference.orderBy("mh_day_of_pregnancy", descending: false).get(),
+        future: collectionReference.orderBy('selectedDate', descending: true).orderBy('selectedTime', descending: true).get(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
             snapshot.data.docs.forEach((doc) {
-              dayOfPregnancyListInt.add(int.parse(doc.data()["mh_day_of_pregnancy"].toString()));
-              dayOfPregnancyListString.add(doc.data()["mh_day_of_pregnancy"].toString());
-              bloodSugarList.add(double.parse(doc.data()["mh_bloodSugar"].toString()));
+              DateTime parsedDate = DateTime.parse(doc.data()["selectedDate"]);
+              String formattedDate = DateFormat('d MMM').format(parsedDate);
+              String formattedDateYear = DateFormat('yyyy').format(parsedDate);
+              DateTime parsedTime = DateTime.parse(doc.data()["selectedDate"] + " " + doc.data()["selectedTime"]);
+              String formattedTime = DateFormat('h:mm a').format(parsedTime);
+              recordDateTimeListString.add("$formattedDate\n$formattedDateYear\n$formattedTime");
+              bloodSugarList.add(double.parse(doc.data()["bsAfter"].toString()));
+              bloodSugarReading = double.parse(doc.data()["bsAfter"].toString());
               totalRecordsCount++;
 
-              if(doc.data()["mh_bloodSugar"] < 4){leftRecordsCount++;}
-              else if(doc.data()["mh_bloodSugar"] > 3.9 && doc.data()["mh_bloodSugar"] < 6.1){excellentRecordsCount++;}
-              else if(doc.data()["mh_bloodSugar"] > 6 && doc.data()["mh_bloodSugar"] < 8.1){goodRecordsCount++;}
-              else if(doc.data()["mh_bloodSugar"] > 8 && doc.data()["mh_bloodSugar"] < 10.1){acceptableRecordsCount++;}
-              else if(doc.data()["mh_bloodSugar"] > 10){poorRecordsCount++;}
+              if(bloodSugarReading < 5){leftRecordsCount++;}
+              else if(bloodSugarReading > 4.9 && bloodSugarReading < 7.1){excellentRecordsCount++;}
+              else if(bloodSugarReading > 7 && bloodSugarReading < 10.1){goodRecordsCount++;}
+              else if(bloodSugarReading > 10 && bloodSugarReading < 13.1){acceptableRecordsCount++;}
+              else if(bloodSugarReading > 13){poorRecordsCount++;}
             });
 
             recordCountList.add(leftRecordsCount);
@@ -78,10 +58,10 @@ class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarIn
             recordCountList.add(acceptableRecordsCount);
             recordCountList.add(poorRecordsCount);
 
-            listFirstElement =  dayOfPregnancyListString[0];
-            List<HealthRecordBsInsightChartData> chartData = [
-              for (var x in zip([dayOfPregnancyListString, bloodSugarList]))
-              HealthRecordBsInsightChartData(
+            listFirstElement =  recordDateTimeListString[0];
+            List<FoodRecordBsInsightChartData> chartData = [
+              for (var x in zip([recordDateTimeListString, bloodSugarList]))
+              FoodRecordBsInsightChartData(
                 dayOfPregnancy: x[0], 
                 measurement: x[1], 
                 barColor: charts.ColorUtil.fromDartColor(appbar1),
@@ -135,7 +115,7 @@ class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarIn
                               margin: EdgeInsets.only(top: 10.0,),
                               child: Column(
                                 children: <Widget>[
-                                  HealthRecordBsInsightChart(
+                                  FoodRecordBsInsightChart(
                                     chartData: chartData, 
                                     firstList: listFirstElement,
                                   )
@@ -162,7 +142,7 @@ class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarIn
                       ),
                       Container(
                         margin: EdgeInsets.only(bottom: 10),
-                        child: HealthRecordInsightTableWidget(
+                        child: FoodRecordInsightTableWidget(
                           recordCountList: recordCountList,
                         ),
                       ),
@@ -182,9 +162,9 @@ class _HealthRecordBloodSugarInsightState extends State<HealthRecordBloodSugarIn
   }
 }
 
-class HealthRecordInsightTableWidget extends StatelessWidget {
+class FoodRecordInsightTableWidget extends StatelessWidget {
   final List recordCountList;
-  HealthRecordInsightTableWidget({
+  FoodRecordInsightTableWidget({
     this.recordCountList
   });
 
@@ -316,24 +296,24 @@ class HealthRecordInsightTableWidget extends StatelessWidget {
   }
 }
 
-class HealthRecordBsInsightChart extends StatelessWidget {
-  final List<HealthRecordBsInsightChartData> chartData;
+class FoodRecordBsInsightChart extends StatelessWidget {
+  final List<FoodRecordBsInsightChartData> chartData;
   final String firstList;
-  HealthRecordBsInsightChart({this.chartData, this.firstList});
+  FoodRecordBsInsightChart({this.chartData, this.firstList});
 
   @override
   Widget build(BuildContext context) {
-    List<charts.Series<HealthRecordBsInsightChartData, String>> series = [
+    List<charts.Series<FoodRecordBsInsightChartData, String>> series = [
       charts.Series(
         id: "bloodSugarInsightChart",
         data: chartData,
-        domainFn: (HealthRecordBsInsightChartData series, _) => series.dayOfPregnancy,
-        measureFn: (HealthRecordBsInsightChartData series, _) => series.measurement,
-        colorFn: (HealthRecordBsInsightChartData series, _) => series.barColor,
-        labelAccessorFn: (HealthRecordBsInsightChartData series, _) => "D-${series.dayOfPregnancy}\n" + series.measurement.toString() + "\nmmol/L",
-        insideLabelStyleAccessorFn: (HealthRecordBsInsightChartData series, _) => charts.TextStyleSpec(
+        domainFn: (FoodRecordBsInsightChartData series, _) => series.dayOfPregnancy,
+        measureFn: (FoodRecordBsInsightChartData series, _) => series.measurement,
+        colorFn: (FoodRecordBsInsightChartData series, _) => series.barColor,
+        labelAccessorFn: (FoodRecordBsInsightChartData series, _) => "${series.dayOfPregnancy}\n\n" + series.measurement.toString() + "\nmmol/L",
+        insideLabelStyleAccessorFn: (FoodRecordBsInsightChartData series, _) => charts.TextStyleSpec(
           color: charts.MaterialPalette.white,
-          fontSize: 13, 
+          fontSize: 15, 
         )
       )
     ];
@@ -357,7 +337,7 @@ class HealthRecordBsInsightChart extends StatelessWidget {
                   titleStyleSpec: charts.TextStyleSpec(fontSize: 12),
                 ),
                 charts.ChartTitle(
-                  "Day Of Pregnancy (D)",
+                  "Record Date & Time",
                   behaviorPosition: charts.BehaviorPosition.bottom,
                   titleOutsideJustification: charts.OutsideJustification.middleDrawArea,
                   titleStyleSpec: charts.TextStyleSpec(fontSize: 12),
@@ -367,7 +347,7 @@ class HealthRecordBsInsightChart extends StatelessWidget {
                 labelPosition: charts.BarLabelPosition.inside,
               ),
               domainAxis: charts.OrdinalAxisSpec(
-                viewport: charts.OrdinalViewport(firstList, 4),
+                viewport: charts.OrdinalViewport(firstList, 2),
                 renderSpec: charts.NoneRenderSpec(),
               ),
             )
@@ -378,11 +358,11 @@ class HealthRecordBsInsightChart extends StatelessWidget {
   }
 }
 
-class HealthRecordBsInsightChartData{
+class FoodRecordBsInsightChartData{
   final String dayOfPregnancy;
   final double measurement;
   final charts.Color barColor;
-  HealthRecordBsInsightChartData({
+  FoodRecordBsInsightChartData({
     @required this.dayOfPregnancy, @required this.measurement, @required this.barColor,
   });
 }

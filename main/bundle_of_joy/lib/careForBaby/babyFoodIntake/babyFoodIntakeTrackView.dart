@@ -128,6 +128,7 @@ class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
                       svgSrc: "assets/icons/face-swelling.svg",
                       symptomsAndAllergies: sympAndAlle,
                       symptomsAndAllergiesDesc: babySymptoms,
+                      selectedBabyID: widget.selectedBabyID,
                     ),
                   ],
                 );
