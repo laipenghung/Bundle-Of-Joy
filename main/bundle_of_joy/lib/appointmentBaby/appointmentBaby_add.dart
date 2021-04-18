@@ -1323,7 +1323,7 @@ class _AppointmentBabyAddState extends State<AppointmentBabyAdd> {
     final User user = FirebaseAuth.instance.currentUser;
     final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-    var x = await _db.collection('baby_appointment').where("b_id", isEqualTo: user.uid).where("a_date", isEqualTo: dateSelected).get();
+    var x = await _db.collection('baby_appointment').where("b_id", isEqualTo: user.uid).where("a_date", isEqualTo: dateSelected).where("d_name", isEqualTo: doctorName).get();
     var y = await _db.collection('appointment_slot').where('date_string', isEqualTo: dateSelected).get();
     var h = await _db.collection('hospital').where('h_name', isEqualTo: hospitalName).get();
     var d = await _db.collection('doctor').where('d_name', isEqualTo: doctorName).get();

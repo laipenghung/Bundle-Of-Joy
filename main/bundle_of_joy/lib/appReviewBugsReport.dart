@@ -46,7 +46,7 @@ class _AppReviewBugsReportState extends State<AppReviewBugsReport> {
                 title: "Bugs And Errors Report",
                 description: "Report all bugs and errors you found while using the Bundle of Joy mobile app.",
                 svgSrc: "assets/icons/megaphone.svg",
-                onTap: () => launch("https://docs.google.com/forms/d/e/1FAIpQLScOZvmrSwHfEYdxxfvnsSckXp6SAp3N0fclYRG_qr_EZz_B1g/viewform?usp=sf_link"),
+                onTap: () => launch("https://docs.google.com/forms/d/e/1FAIpQLSe-fifvM29eEr7iXg4FwlEbxkBwVG3DUhw6mwMT6A5jpRTOlw/viewform?usp=sf_link"),
               ),
             ],
           ),

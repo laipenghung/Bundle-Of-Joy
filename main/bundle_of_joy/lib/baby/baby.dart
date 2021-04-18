@@ -2,7 +2,7 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-import "package:bundle_of_joy/mother-for-baby.dart";
+import 'package:bundle_of_joy/mother_for_baby.dart';
 import "package:fluttertoast/fluttertoast.dart";
 
 class Baby {
@@ -14,25 +14,12 @@ class Baby {
   final User user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Baby(
-      this.b_id,
-      this.m_id,
-      this.b_ic,
-      this.b_name,
-      this.b_dob,
-      this.b_place_of_birth,
-      this.b_gender,
-      this.b_age,
-      this.b_bloodType,
-      this.b_mode_of_delivery,
-      this.b_weight_at_birth,
-      this.b_length_at_birth,
-      this.b_head_circumference,
-      this.b_order);
+  Baby(this.b_id, this.m_id, this.b_ic, this.b_name, this.b_dob, this.b_place_of_birth, this.b_gender, this.b_age, this.b_bloodType, this.b_mode_of_delivery, this.b_weight_at_birth, this.b_length_at_birth,
+      this.b_head_circumference, this.b_order);
 
   Baby.empty();
 
-  Future<void> addBaby(String name, String registered_id, String age, String gender, DateTime dob, DateTime tob, String blood, BuildContext context) async{
+  Future<void> addBaby(String name, String registered_id, String age, String gender, DateTime dob, DateTime tob, String blood, BuildContext context) async {
     CollectionReference baby = _db.collection("mother").doc(user.uid).collection("baby");
     String combinedDate = dob.toString().substring(0, 10) + " " + tob.toString().substring(11, 19);
     Timestamp timestamp = Timestamp.fromDate(DateTime.parse(combinedDate));
@@ -51,21 +38,22 @@ class Baby {
       "b_mode_of_delivery": "Add delivery method",
       "b_order": 0
     }).then((value) {
-      baby.doc(value.id).update({
-        "b_id": value.id
-      });
+      baby.doc(value.id).update({"b_id": value.id});
       print("Baby Added");
+      /*
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (BuildContext context){
             return MotherForBabyTab();
           })
       );
+      */
+
       Fluttertoast.showToast(
         msg: "Baby Added",
         toastLength: Toast.LENGTH_LONG,
       );
-    }).catchError((onError){
+    }).catchError((onError) {
       print("Baby $onError");
     });
   }
@@ -73,19 +61,15 @@ class Baby {
   void updateAge(String age, String id) async {
     DocumentReference baby = _db.collection("mother").doc(user.uid).collection("baby").doc(id);
 
-    baby.update({
-      "b_age": age.toString()
-    }).then((value){
+    baby.update({"b_age": age.toString()}).then((value) {
       print("Baby age updated");
     }).catchError((e) => print("Failed to update baby age: $e"));
   }
 
-  void updateProfilePicture(String photoURL, String motherID, String babyID) async{
+  void updateProfilePicture(String photoURL, String motherID, String babyID) async {
     DocumentReference baby = FirebaseFirestore.instance.collection("mother").doc(motherID).collection("baby").doc(babyID);
 
-    baby.update({
-      "photoURL": photoURL.toString()
-    }).then((value){
+    baby.update({"photoURL": photoURL.toString()}).then((value) {
       print("photoURL updated");
     }).catchError((e) => print("Failed to update photoURL: $e"));
   }
