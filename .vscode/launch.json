@@ -9,6 +9,9 @@
             "cwd": "main\\bundle_of_joy",
             "request": "launch",
             "type": "dart"
+			"flutterMode": "release"
         }
+		
     ]
+	
 }
