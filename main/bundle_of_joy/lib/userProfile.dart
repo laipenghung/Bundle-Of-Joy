@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:bundle_of_joy/appReviewBugsReport.dart';
 import 'package:bundle_of_joy/auth/auth.dart';
 import 'package:bundle_of_joy/sign_up.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
@@ -154,8 +155,11 @@ class _UserProfileState extends State<UserProfile> {
                           title: "App Review & Bugs Report",
                           svgSrc: "assets/icons/loudspeaker.svg",
                           press: () {
-                            //For google form
-                            _launchURL();
+                            //For google form_launchURL();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => AppReviewBugsReport()),
+                            );
                           },
                         ),
                         CardWidget(

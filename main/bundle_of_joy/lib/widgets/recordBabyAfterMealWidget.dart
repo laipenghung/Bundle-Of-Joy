@@ -1,17 +1,13 @@
+import 'package:bundle_of_joy/widgets/bojInsight/baby_FoodRecord_Insight.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class RecordBabyAfterMealWidget extends StatelessWidget {
-  final String svgSrc, symptomsAndAllergiesDesc;
+  final String svgSrc, symptomsAndAllergiesDesc, selectedBabyID;
   final bool symptomsAndAllergies;
-  
-  const RecordBabyAfterMealWidget({
-    Key key,
-    this.svgSrc,
-    this.symptomsAndAllergiesDesc,
-    this.symptomsAndAllergies,
-  }) : super(key: key);
+
+  const RecordBabyAfterMealWidget({Key key, this.svgSrc, this.symptomsAndAllergiesDesc, this.symptomsAndAllergies, this.selectedBabyID}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +15,10 @@ class RecordBabyAfterMealWidget extends StatelessWidget {
     Color conditionColor;
     String conditionText;
 
-    if(symptomsAndAllergies == true){
+    if (symptomsAndAllergies == true) {
       conditionColor = Colors.red;
       conditionText = "Were found";
-    }else{
+    } else {
       conditionColor = Colors.green;
       conditionText = "Were not found";
     }
@@ -42,14 +38,21 @@ class RecordBabyAfterMealWidget extends StatelessWidget {
               spreadRadius: 15,
               color: Color(0xFFE6E6E6),
             ),
-          ],),
+          ],
+        ),
         child: Column(
           children: <Widget>[
             Row(
               children: <Widget>[
-                SvgPicture.asset(svgSrc, height: 23, width: 23,),
+                SvgPicture.asset(
+                  svgSrc,
+                  height: 23,
+                  width: 23,
+                ),
                 Container(
-                  padding: EdgeInsets.only(left: 8.0,),
+                  padding: EdgeInsets.only(
+                    left: 8.0,
+                  ),
                   child: Text(
                     "Symptoms and Allergies",
                     style: TextStyle(
@@ -62,7 +65,9 @@ class RecordBabyAfterMealWidget extends StatelessWidget {
             ),
             Container(
               width: double.infinity,
-              margin: EdgeInsets.only(top: 8.0,),
+              margin: EdgeInsets.only(
+                top: 8.0,
+              ),
               child: Text(
                 "This section display if your baby show any signs of symptoms or allergies 2 hours after the meal.",
                 textAlign: TextAlign.left,
@@ -73,63 +78,77 @@ class RecordBabyAfterMealWidget extends StatelessWidget {
               ),
             ),
             Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(top: 8.0, bottom: 8.0,),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.only(bottom: 3),
-                    child: Text(
-                      "Signs of symptoms and allergies",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.043,
-                        fontWeight: FontWeight.bold,
+                width: double.infinity,
+                margin: EdgeInsets.only(
+                  top: 8.0,
+                  bottom: 8.0,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.only(bottom: 3),
+                      child: Text(
+                        "Signs of symptoms and allergies",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.043,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    //padding: EdgeInsets.only(top: 8, bottom: 8),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(right: 5,),
-                          padding: EdgeInsets.fromLTRB(5, 1, 5, 1),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            color: conditionColor,
-                          ),
-                          child: Text(
-                            conditionText,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.035,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                    Container(
+                      width: double.infinity,
+                      //padding: EdgeInsets.only(top: 8, bottom: 8),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(
+                              right: 5,
+                            ),
+                            padding: EdgeInsets.fromLTRB(5, 1, 5, 1),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              color: conditionColor,
+                            ),
+                            child: Text(
+                              conditionText,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: MediaQuery.of(context).size.width * 0.035,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          child: Text(
-                            "2 hours after the meal.",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.035,
-                              fontWeight: FontWeight.bold,
-                              //color: Colors.black.withOpacity(0.65),
+                          Container(
+                            child: Text(
+                              "2 hours after the meal.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: MediaQuery.of(context).size.width * 0.035,
+                                fontWeight: FontWeight.bold,
+                                //color: Colors.black.withOpacity(0.65),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  (symptomsAndAllergies == true)? SymptompAndAllergyFound(symptomsAndAllergiesDesc: symptomsAndAllergiesDesc,) : SymptompAndAllergyNotFound(),
-                ],
-              )
-            ),
-            
+                    (symptomsAndAllergies == true)
+                        ? SymptompAndAllergyFound(
+                            symptomsAndAllergiesDesc: symptomsAndAllergiesDesc,
+                          )
+                        : SymptompAndAllergyNotFound(),
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: BabyFoodRecordInsight(
+                        svgSrc: "assets/icons/insight.svg",
+                        selectedBabyID: selectedBabyID,
+                      ),
+                    ),
+                  ],
+                )),
           ],
         ),
       ),
@@ -139,7 +158,7 @@ class RecordBabyAfterMealWidget extends StatelessWidget {
 
 class SymptompAndAllergyFound extends StatelessWidget {
   final String symptomsAndAllergiesDesc;
-  
+
   const SymptompAndAllergyFound({
     Key key,
     this.symptomsAndAllergiesDesc,
@@ -194,7 +213,9 @@ class SymptompAndAllergyNotFound extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(top: 15,),
+      margin: EdgeInsets.only(
+        top: 15,
+      ),
       child: Container(
         padding: EdgeInsets.all(5.0),
         decoration: BoxDecoration(
@@ -206,7 +227,11 @@ class SymptompAndAllergyNotFound extends StatelessWidget {
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(top: 10, bottom: 8),
-              child: SvgPicture.asset("assets/icons/tick.svg", height: 18, width: 18,),
+              child: SvgPicture.asset(
+                "assets/icons/tick.svg",
+                height: 18,
+                width: 18,
+              ),
             ),
             Container(
               margin: EdgeInsets.only(bottom: 10),
@@ -228,14 +253,8 @@ class SymptompAndAllergyNotFound extends StatelessWidget {
 class RecordBabyAfterMealSummaryWidget extends StatelessWidget {
   final String svgSrc, symptomsAndAllergiesDesc;
   final bool symptomsAndAllergies, completeFoodRecord;
-  
-  const RecordBabyAfterMealSummaryWidget({
-    Key key,
-    this.svgSrc,
-    this.symptomsAndAllergiesDesc,
-    this.symptomsAndAllergies,
-    this.completeFoodRecord
-  }) : super(key: key);
+
+  const RecordBabyAfterMealSummaryWidget({Key key, this.svgSrc, this.symptomsAndAllergiesDesc, this.symptomsAndAllergies, this.completeFoodRecord}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -243,10 +262,10 @@ class RecordBabyAfterMealSummaryWidget extends StatelessWidget {
     Color conditionColor;
     String conditionText;
 
-    if(symptomsAndAllergies == true){
+    if (symptomsAndAllergies == true) {
       conditionColor = Colors.red;
       conditionText = "Were found";
-    }else{
+    } else {
       conditionColor = Colors.green;
       conditionText = "Were not found";
     }
@@ -266,14 +285,21 @@ class RecordBabyAfterMealSummaryWidget extends StatelessWidget {
               spreadRadius: 15,
               color: Color(0xFFE6E6E6),
             ),
-          ],),
+          ],
+        ),
         child: Column(
           children: <Widget>[
             Row(
               children: <Widget>[
-                SvgPicture.asset(svgSrc, height: 23, width: 23,),
+                SvgPicture.asset(
+                  svgSrc,
+                  height: 23,
+                  width: 23,
+                ),
                 Container(
-                  padding: EdgeInsets.only(left: 8.0,),
+                  padding: EdgeInsets.only(
+                    left: 8.0,
+                  ),
                   child: Text(
                     "Symptoms and Allergies",
                     style: TextStyle(
@@ -285,115 +311,131 @@ class RecordBabyAfterMealSummaryWidget extends StatelessWidget {
               ],
             ),
             (completeFoodRecord == false && symptomsAndAllergies == false)
-            ?Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(top: 15,),
-              child: Container(
-                padding: EdgeInsets.all(5.0),
-                decoration: BoxDecoration(
-                  color: Color(0xFFf5f5f5),
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  border: Border.all(color: Colors.red.withOpacity(0.4)),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 10, bottom: 8),
-                      child: SvgPicture.asset("assets/icons/warning.svg", height: 18, width: 18,),
+                ? Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.only(
+                      top: 15,
                     ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      child: Text(
-                        "Your current selection is to upload the food record as pending record. You are required to update the food record after 2 hours.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.035,
-                        ),
+                    child: Container(
+                      padding: EdgeInsets.all(5.0),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFf5f5f5),
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        border: Border.all(color: Colors.red.withOpacity(0.4)),
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(top: 10, bottom: 8),
+                            child: SvgPicture.asset(
+                              "assets/icons/warning.svg",
+                              height: 18,
+                              width: 18,
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              "Your current selection is to upload the food record as pending record. You are required to update the food record after 2 hours.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: MediaQuery.of(context).size.width * 0.035,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            )
-            :Column(
-              children: <Widget>[
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(top: 8.0,),
-                  child: Text(
-                    "This section display if your baby show any signs of symptoms or allergies 2 hours after the meal.",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.035,
-                      color: Colors.black.withOpacity(0.65),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(top: 8.0, bottom: 8.0,),
-                  child: Column(
+                  )
+                : Column(
                     children: <Widget>[
                       Container(
                         width: double.infinity,
-                        padding: EdgeInsets.only(top: 8, bottom: 3),
+                        margin: EdgeInsets.only(
+                          top: 8.0,
+                        ),
                         child: Text(
-                          "Signs of symptoms and allergies",
+                          "This section display if your baby show any signs of symptoms or allergies 2 hours after the meal.",
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.043,
-                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
+                            color: Colors.black.withOpacity(0.65),
                           ),
                         ),
                       ),
                       Container(
-                        width: double.infinity,
-                        //padding: EdgeInsets.only(top: 8, bottom: 8),
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.only(right: 5,),
-                              padding: EdgeInsets.fromLTRB(5, 1, 5, 1),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                color: conditionColor,
-                              ),
-                              child: Text(
-                                conditionText,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: MediaQuery.of(context).size.width * 0.035,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                          width: double.infinity,
+                          margin: EdgeInsets.only(
+                            top: 8.0,
+                            bottom: 8.0,
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                width: double.infinity,
+                                padding: EdgeInsets.only(top: 8, bottom: 3),
+                                child: Text(
+                                  "Signs of symptoms and allergies",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * 0.043,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Container(
-                              child: Text(
-                                "2 hours after the meal.",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: MediaQuery.of(context).size.width * 0.035,
-                                  fontWeight: FontWeight.bold,
-                                  //color: Colors.black.withOpacity(0.65),
+                              Container(
+                                width: double.infinity,
+                                //padding: EdgeInsets.only(top: 8, bottom: 8),
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        right: 5,
+                                      ),
+                                      padding: EdgeInsets.fromLTRB(5, 1, 5, 1),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                        color: conditionColor,
+                                      ),
+                                      child: Text(
+                                        conditionText,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(context).size.width * 0.035,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Text(
+                                        "2 hours after the meal.",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(context).size.width * 0.035,
+                                          fontWeight: FontWeight.bold,
+                                          //color: Colors.black.withOpacity(0.65),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      (symptomsAndAllergies == true)? SymptompAndAllergyFoundSummary(symptomsAndAllergiesDesc: symptomsAndAllergiesDesc,) : SymptompAndAllergyNotFound(),
-                      
+                              (symptomsAndAllergies == true)
+                                  ? SymptompAndAllergyFoundSummary(
+                                      symptomsAndAllergiesDesc: symptomsAndAllergiesDesc,
+                                    )
+                                  : SymptompAndAllergyNotFound(),
+                            ],
+                          )),
                     ],
-                  ) 
-                ),
-              ],
-            ),
-            
+                  ),
             Container(
               child: (symptomsAndAllergies == true)
-                    ? BabyFoodRecrodDoneText() 
-                    : (completeFoodRecord == true)? BabyFoodRecrodDoneText() : BabyFoodRecrodAddText(),
+                  ? BabyFoodRecrodDoneText()
+                  : (completeFoodRecord == true)
+                      ? BabyFoodRecrodDoneText()
+                      : BabyFoodRecrodAddText(),
             ),
           ],
         ),
@@ -404,7 +446,7 @@ class RecordBabyAfterMealSummaryWidget extends StatelessWidget {
 
 class SymptompAndAllergyFoundSummary extends StatelessWidget {
   final String symptomsAndAllergiesDesc;
-  
+
   const SymptompAndAllergyFoundSummary({
     Key key,
     this.symptomsAndAllergiesDesc,
@@ -414,7 +456,9 @@ class SymptompAndAllergyFoundSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(top: 15,),
+      margin: EdgeInsets.only(
+        top: 15,
+      ),
       child: Column(
         children: <Widget>[
           Container(

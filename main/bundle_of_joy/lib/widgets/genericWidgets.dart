@@ -31,16 +31,16 @@ const String babyMedsTimeDesc = "Time you record your baby medicine intake.";
 const String babyMedsRecordListTitle = "Medicine";
 const String babyMedsRecordListTitleDesc = "Medicine consumed by your baby.";
 
-const String lowBloodSugar = "A reading in the “Too Low” range indicates that your blood glucose level is too low. We strongly advise you consume something that has about 15 grams(g) of carbohydrates(sugar). " +
+const String lowBloodSugar = "A reading in the “Too Low” range indicates that your blood glucose level is too low. We strongly advise you consume something that has about 15 grams (g) of carbohydrates (sugar). " +
   "Remember to wait about 15 minutes before eating any more. Be careful not to eat too much. This can cause high blood sugar and weight gain. Then, Check your blood sugar again and if you do not feel better " + 
-  "in 15 minutes and your blood sugar is still lower than 3.9 mmol/L, eat another snack with 15 grams(g) of carbohydrates(sugar).";
+  "in 15 minutes and your blood sugar is still lower than 3.9 mmol/L, eat another snack with 15 grams (g) of carbohydrates (sugar).";
 const String excellentBloodSugar = "A reading in the “Excellent” range indicates that your blood glucose is at normal level. We still recommend you to drink lots of " +
   "water and get active by doing regular exercise to control your blood glucose.";
 const String goodBloodSugar = "A reading in the “Good” range indicates that your blood glucose is at normal level. We still recommend you to drink lots of water and " +
   "get active by doing regular exercise to control your blood glucose.";
-const String acceptableBloodSugar = "A reading in the “Acceptable” range indicates that your blood glucose level is quite high. We advise you to drink lots of water, cut down on carbohydrates(sugar) " + 
+const String acceptableBloodSugar = "A reading in the “Acceptable” range indicates that your blood glucose level is quite high. We advise you to drink lots of water, cut down on carbohydrates (sugar) " + 
   "until your blood glucose level comes down (fasting is no recommended) and get active by doing regular exercise to control your blood glucose (Do not exercise when you have ketones as it can worsen the condition).";
-const String poorBloodSugar = "A reading in the “Poor” range indicates that your blood glucose level is too high. We strongly advise you to drink lots of water, cut down on carbohydrates(sugar) " + 
+const String poorBloodSugar = "A reading in the “Poor” range indicates that your blood glucose level is too high. We strongly advise you to drink lots of water, cut down on carbohydrates (sugar) " + 
   "until your blood glucose level comes down (fasting is no recommended), get active by doing regular exercise to control your blood glucose (Do not exercise when you have ketones as it can worsen the condition), " +
   "and continue taking your medications but consult your doctor to adjust them if the readings remain high. Ask your doctor if you need an extra dose of fast-acting insulin to help " +
   "temporarily correct high blood glucose; and how often you need it.";

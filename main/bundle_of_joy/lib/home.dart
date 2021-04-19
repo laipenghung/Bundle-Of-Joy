@@ -1,11 +1,8 @@
 import 'package:bundle_of_joy/userProfile.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import "package:flutter/material.dart";
-import 'motherForBaby.dart';
-import 'motherToBe.dart';
-import "profile.dart";
-import "mother-for-baby.dart";
-import "mother-to-be.dart";
+import 'mother_for_baby.dart';
+import 'mother_to_be.dart';
 import "package:persistent_bottom_nav_bar/persistent-tab-view.dart";
 import "package:flutter/services.dart";
 
