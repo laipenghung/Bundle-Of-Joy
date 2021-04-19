@@ -5,6 +5,8 @@ import 'package:bundle_of_joy/widgets/recordFoodMedsWidget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import 'package:intl/intl.dart';
 import '../main.dart';
 
@@ -38,6 +40,25 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
     );
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
     await main.createState().flutterLocalNotificationsPlugin.show(0, 'Food Intake Tracking', notificationMessage, notificationDetails);
+  }
+
+  void _showNotificationAfter2Hour(notificationMessage) async {
+    tz.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation("Asia/Kuching"));
+    var scheduledTime = tz.TZDateTime.now(tz.local).add(const Duration(hours: 2));
+
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'Schedule Id',
+      'Notification After 2 Hour',
+      'Notification After 2 Hour',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+      styleInformation: BigTextStyleInformation(''),
+    );
+    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(0, 'Food Intake Tracking', notificationMessage, scheduledTime, notificationDetails, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation:
+    UILocalNotificationDateInterpretation.absoluteTime);
   }
 
   @override
@@ -178,7 +199,7 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                             widget.foodMap,
                             context,
                           )
-                          .then((value) => _showNotification(notificationMessage));
+                          .then((value) => _showNotificationAfter2Hour(notificationMessage));
                     }
                   },
                   child: Text(

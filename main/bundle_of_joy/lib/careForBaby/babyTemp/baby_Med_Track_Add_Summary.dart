@@ -1,5 +1,6 @@
 import 'dart:developer';
-
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import 'package:bundle_of_joy/careForBaby/careForBaby_Function.dart';
 import 'package:bundle_of_joy/widgets/recordBodyTempWidget.dart';
 import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
@@ -40,6 +41,25 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
     );
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
     await main.createState().flutterLocalNotificationsPlugin.show(0, 'Baby Medicine Intake Tracking', notificationMessage, notificationDetails);
+  }
+
+  void _showNotificationAfter4Hour(notificationMessage) async {
+    tz.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation("Asia/Kuching"));
+    var scheduledTime = tz.TZDateTime.now(tz.local).add(const Duration(hours: 4));
+
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'Schedule Id',
+      'Notification After 4 Hour',
+      'Notification After 4 Hour',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+      styleInformation: BigTextStyleInformation(''),
+    );
+    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(0, 'Baby Medicine Intake Tracking', notificationMessage, scheduledTime, notificationDetails, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation:
+    UILocalNotificationDateInterpretation.absoluteTime);
   }
 
   @override
@@ -165,7 +185,7 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
                       notificationMessage = "Remember to update your baby's body temperature reading after 4 hours.";
                       careForBabyFunction
                           .uploadBabyMedsRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.bTempBefore, widget.bTempAfter, widget.medsMap, context)
-                          .then((value) => _showNotification(notificationMessage));
+                          .then((value) => _showNotificationAfter4Hour(notificationMessage));
                     }
                   },
                   child: Text(

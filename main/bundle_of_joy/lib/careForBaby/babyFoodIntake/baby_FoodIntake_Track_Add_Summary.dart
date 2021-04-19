@@ -5,6 +5,8 @@ import 'package:bundle_of_joy/widgets/recordFoodMedsWidget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import '../../main.dart';
 
 class BabyFoodIntakeAddSummary extends StatefulWidget {
@@ -38,7 +40,26 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
       styleInformation: BigTextStyleInformation(''),
     );
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await main.createState().flutterLocalNotificationsPlugin.show(0, 'Baby Medicine Intake Tracking', notificationMessage, notificationDetails);
+    await main.createState().flutterLocalNotificationsPlugin.show(0, 'Baby Food Intake Tracking', notificationMessage, notificationDetails);
+  }
+
+  void _showNotificationAfter2Hour(notificationMessage) async {
+    tz.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation("Asia/Kuching"));
+    var scheduledTime = tz.TZDateTime.now(tz.local).add(const Duration(hours: 2));
+
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'Schedule Id',
+      'Notification After 2 Hour',
+      'Notification After 2 Hour',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'test',
+      styleInformation: BigTextStyleInformation(''),
+    );
+    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(0, 'Baby Food Intake Tracking', notificationMessage, scheduledTime, notificationDetails, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation:
+    UILocalNotificationDateInterpretation.absoluteTime);
   }
 
   @override
@@ -173,7 +194,7 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
                         notificationMessage = "Remember to update your baby's food record after 2 hours.";
                         careForBabyFunction
                             .uploadBabyFoodRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, context)
-                            .then((value) => showNotification(notificationMessage));
+                            .then((value) => _showNotificationAfter2Hour(notificationMessage));
                       }
                     },
                     child: Text(
