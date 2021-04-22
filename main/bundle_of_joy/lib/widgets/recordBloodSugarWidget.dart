@@ -156,20 +156,25 @@ class RecordBloodSugarDoneWidget extends StatelessWidget {
               ),
             ),
             (showAnalyzer == true)
-                ? BloodSugarAnalyzerWidget(
+              ? Column(
+                children: <Widget>[
+                  BloodSugarAnalyzerWidget(
                     svgSrc: "assets/icons/web-analytics.svg",
                     bSugarBefore: bSugarBefore,
                     bSugarAfter: bSugarAfter,
-                  )
-                : (bSugarAfter == null)
-                    ? BloodSugarAddPendingText()
-                    : BloodSugarAddDoneText(),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              child: FoodRecordBloodSugarInsight(
-                svgSrc: "assets/icons/insight.svg",
-              ),
-            ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: FoodRecordBloodSugarInsight(
+                      svgSrc: "assets/icons/insight.svg",
+                    ),
+                  ),
+                ]
+              )
+              : (bSugarAfter == null)
+                  ? BloodSugarAddPendingText()
+                  : BloodSugarAddDoneText(),
+
           ],
         ),
       ),

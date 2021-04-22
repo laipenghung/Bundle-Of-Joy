@@ -583,6 +583,19 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                             foodQuantityController.clear();
                             quantityMearsurementController.clear();
                             Navigator.of(context).pop();
+                          } else if (foodNameController.text.isNotEmpty && foodQuantityController.text.isNotEmpty && quantityMearsurementController.text.isEmpty){
+                            setState(() {
+                              foodQuantityMeasurement = "";
+                              foodMap[foodName] = foodQuantity + " " + foodQuantityMeasurement;
+                              foodNameList.add(foodName);
+                              foodQuantityList.add(foodQuantity);
+                              foodQuantityMeasurementList.add(foodQuantityMeasurement);
+                              log(foodMap.toString());
+                            });
+                            foodNameController.clear();
+                            foodQuantityController.clear();
+                            quantityMearsurementController.clear();
+                            Navigator.of(context).pop();
                           } else {
                             dialogBoxContent = "Please make sure you entered all of the field." + " All of the field cannot be left empty.";
                             _showDialogBox(context, dialogBoxContent);
@@ -851,6 +864,11 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                       color: appbar2,
                       textColor: Colors.white,
                       onPressed: () {
+                        foodNameController.clear();
+                        foodQuantityController.clear();
+                        quantityMearsurementController.clear();
+                        foodWidgetTitle = "Consumed Food";
+                        editFood = false;
                         showModalBottomSheet(
                             context: context,
                             shape: RoundedRectangleBorder(
