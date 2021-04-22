@@ -34,7 +34,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
   TimeOfDay time;
   String hour, min, timeToPass, formattedTime;
   //Used for food section only
-  String foodMapKey, foodWidgetTitle = "Consumed Medicine";
+  String foodMapKey, medWidgetTitle = "Consumed Medicine";
   bool editMed = false;
   int listIndex;
 
@@ -386,7 +386,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                   child: Container(
                     width: double.infinity,
                     child: Text(
-                      foodWidgetTitle,
+                      medWidgetTitle,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width * 0.045,
@@ -574,6 +574,19 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                             medQuantityController.clear();
                             quantityMearsurementController.clear();
                             Navigator.of(context).pop();
+                          }  else if (medNameController.text.isNotEmpty && medQuantityController.text.isNotEmpty && quantityMearsurementController.text.isEmpty){
+                            setState(() {
+                              medQuantityMeasurement = "";
+                              medMap[medName] = medQuantity + " " + medQuantityMeasurement;
+                              medNameList.add(medName);
+                              medQuantityList.add(medQuantity);
+                              medQuantityMeasurementList.add(medQuantityMeasurement);
+                              log(medMap.toString());
+                            });
+                            medNameController.clear();
+                            medQuantityController.clear();
+                            quantityMearsurementController.clear();
+                            Navigator.of(context).pop();
                           } else {
                             dialogBoxContent = "Please make sure you entered all of the field." + " All of the field cannot be left empty.";
                             _showDialogBox(context, dialogBoxContent);
@@ -589,7 +602,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                               medNameController.clear();
                               medQuantityController.clear();
                               quantityMearsurementController.clear();
-                              foodWidgetTitle = "Consumed Food";
+                              medWidgetTitle = "Consumed Medicine";
                               editMed = false;
                               listIndex = null;
                               foodMapKey = null;
@@ -677,7 +690,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                                   color: Colors.black.withOpacity(0.65),
                                 ),
                                 onPressed: () {
-                                  foodWidgetTitle = "Edit Medicine";
+                                  medWidgetTitle = "Edit Medicine";
                                   editMed = true;
                                   listIndex = index;
                                   foodMapKey = medNameList[index].toString();
@@ -842,6 +855,11 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                       color: appbar2,
                       textColor: Colors.white,
                       onPressed: () {
+                        medNameController.clear();
+                        medQuantityController.clear();
+                        quantityMearsurementController.clear();
+                        medWidgetTitle = "Consumed Medicine";
+                        editMed = false;
                         showModalBottomSheet(
                             context: context,
                             shape: RoundedRectangleBorder(

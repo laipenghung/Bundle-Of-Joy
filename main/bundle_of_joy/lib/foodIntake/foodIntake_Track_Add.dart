@@ -1,4 +1,6 @@
+
 import 'dart:developer';
+
 import 'package:bundle_of_joy/foodIntake/foodIntake_Track_Add_Summary.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
@@ -572,6 +574,19 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                             foodQuantityController.clear();
                             quantityMearsurementController.clear();
                             Navigator.of(context).pop();
+                          } else if(foodNameController.text.isNotEmpty && foodQuantityController.text.isNotEmpty && quantityMearsurementController.text.isEmpty){
+                            setState(() {
+                              foodQuantityMeasurement = "";
+                              foodMap[foodName] = foodQuantity + " " + foodQuantityMeasurement;
+                              foodNameList.add(foodName);
+                              foodQuantityList.add(foodQuantity);
+                              foodQuantityMeasurementList.add(foodQuantityMeasurement);
+                              log(foodMap.toString());
+                            });
+                            foodNameController.clear();
+                            foodQuantityController.clear();
+                            quantityMearsurementController.clear();
+                            Navigator.of(context).pop();
                           } else {
                             dialogBoxContent = "Please make sure you entered all of the field." + " All of the field cannot be left empty.";
                             _showDialogBox(context, dialogBoxContent);
@@ -840,6 +855,11 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                       color: appbar1,
                       textColor: Colors.white,
                       onPressed: () {
+                        foodWidgetTitle = "Consumed Food";
+                        editFood = false;
+                        foodNameController.clear();
+                        foodQuantityController.clear();
+                        quantityMearsurementController.clear();
                         showModalBottomSheet(
                             context: context,
                             shape: RoundedRectangleBorder(
