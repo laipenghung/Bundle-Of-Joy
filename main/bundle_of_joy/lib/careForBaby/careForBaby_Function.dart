@@ -7,7 +7,7 @@ class CareForBabyFunction {
   final User user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<void> uploadBabyMedsRecordDone(selectedBabyID, selectedDate, selectedTime, bTempBefore, bTempAfter, medsMap, context) {
+  Future<void> uploadBabyMedsRecordDone(selectedBabyID, selectedDate, selectedTime, bTempBefore, bTempAfter, medsMap, babyAddMedSummaryContext, babyAddMedBuildContext) {
     CollectionReference babyTempRecord = _db.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("tempRecord_Done");
     return babyTempRecord.add({
       "motherID": user.uid,
@@ -22,11 +22,13 @@ class CareForBabyFunction {
         "recordID": value.id,
       });
       print("Data uploaded");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID)));
+      Navigator.of(babyAddMedBuildContext).pop();
+      Navigator.of(babyAddMedSummaryContext).pop();
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID)));
     }).catchError((error) => print(error));
   }
 
-  Future<void> uploadBabyMedsRecordPending(selectedBabyID, selectedDate, selectedTime, bTempBefore, bTempAfter, medsMap, context) {
+  Future<void> uploadBabyMedsRecordPending(selectedBabyID, selectedDate, selectedTime, bTempBefore, bTempAfter, medsMap, babyAddMedSummaryContext, babyAddMedBuildContext) {
     CollectionReference babyTempRecord = _db.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("tempRecord_Pending");
     return babyTempRecord.add({
       "motherID": user.uid,
@@ -41,11 +43,13 @@ class CareForBabyFunction {
         "recordID": value.id,
       });
       print("Data uploaded");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID)));
+      Navigator.of(babyAddMedBuildContext).pop();
+      Navigator.of(babyAddMedSummaryContext).pop();
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID)));
     }).catchError((error) => print(error));
   }
 
-  Future<void> updateBabyMedsRecordPending(selectedBabyID, selectedDate, selectedTime, bTempBefore, bTempAfter, medsMap, recordID, context) {
+  Future<void> updateBabyMedsRecordPending(selectedBabyID, selectedDate, selectedTime, bTempBefore, bTempAfter, medsMap, recordID, babyUpdateMedContext, babyMedRecordListContext) {
     CollectionReference babyTempRecord = _db.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("tempRecord_Done");
     return babyTempRecord.add({
       "motherID": user.uid,
@@ -61,11 +65,13 @@ class CareForBabyFunction {
       });
       _db.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("tempRecord_Pending").doc(recordID).delete();
       print("Data uploaded & deleted");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID)));
+      Navigator.of(babyMedRecordListContext).pop();
+      Navigator.of(babyUpdateMedContext).pop();
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID)));
     }).catchError((error) => print(error));
   }
 
-  Future<void> uploadBabyFoodRecordDone(selectedBabyID, selectedDate, selectedTime, foodMap, symptomsAndAllergies, symptomsAndAllergiesDesc, context) {
+  Future<void> uploadBabyFoodRecordDone(selectedBabyID, selectedDate, selectedTime, foodMap, symptomsAndAllergies, symptomsAndAllergiesDesc, babyAddFoodSummaryContext, babyAddFoodBuildContext) {
     CollectionReference foodIntakeRecord = _db.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("babyFoodIntake_Done");
     return foodIntakeRecord.add({
       "motherID": user.uid,
@@ -79,11 +85,13 @@ class CareForBabyFunction {
         "recordID": value.id,
       });
       print("Data uploaded");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID)));
+      Navigator.of(babyAddFoodBuildContext).pop();
+      Navigator.of(babyAddFoodSummaryContext).pop();
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID)));
     }).catchError((error) => print("wrong"));
   }
 
-  Future<void> uploadBabyFoodRecordPending(selectedBabyID, selectedDate, selectedTime, foodMap, context) {
+  Future<void> uploadBabyFoodRecordPending(selectedBabyID, selectedDate, selectedTime, foodMap, babyAddFoodSummaryContext, babyAddFoodBuildContext) {
     CollectionReference foodIntakeRecord = _db.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("babyFoodIntake_Pending");
     return foodIntakeRecord.add({
       "motherID": user.uid,
@@ -95,11 +103,13 @@ class CareForBabyFunction {
         "recordID": value.id,
       });
       print("Data uploaded");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID)));
+      Navigator.of(babyAddFoodBuildContext).pop();
+      Navigator.of(babyAddFoodSummaryContext).pop();
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID)));
     }).catchError((error) => print("wrong"));
   }
 
-  Future<void> updateBabyFoodRecordPending(selectedBabyID, selectedDate, selectedTime, foodMap, symptomsAndAllergies, symptomsAndAllergiesDesc, recordID, context) {
+  Future<void> updateBabyFoodRecordPending(selectedBabyID, selectedDate, selectedTime, foodMap, symptomsAndAllergies, symptomsAndAllergiesDesc, recordID, babyUpdateFoodContext, babyFoodRecordListContext) {
     CollectionReference foodIntakeRecord = _db.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("babyFoodIntake_Done");
     return foodIntakeRecord.add({
       "motherID": user.uid,
@@ -114,7 +124,9 @@ class CareForBabyFunction {
       });
       _db.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("babyFoodIntake_Pending").doc(recordID).delete();
       print("Data uploaded & deleted");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID)));
+      Navigator.of(babyFoodRecordListContext).pop();
+      Navigator.of(babyUpdateFoodContext).pop();
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CareForBabyMain(selectedBabyID: selectedBabyID)));
     }).catchError((error) => print("wrong"));
   }
 }

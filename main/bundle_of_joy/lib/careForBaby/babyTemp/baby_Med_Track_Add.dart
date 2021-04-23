@@ -1341,6 +1341,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                                     medsMap: medMap,
                                     bTempBefore: bTempBefore,
                                     bTempAfter: bTempAfter,
+                                    babyAddMedBuildContext: context,
                                   )),
                         );
                       } else {
@@ -1354,6 +1355,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                                     medsMap: medMap,
                                     bTempBefore: bTempBefore,
                                     bTempAfter: null,
+                                    babyAddMedBuildContext: context,
                                   )),
                         );
                       }

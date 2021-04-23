@@ -119,6 +119,7 @@ class _BabyFoodIntakeTrackRecordListState extends State<BabyFoodIntakeTrackRecor
                                       builder: (context) => BabyFoodIntakeTrackUpdate(
                                             recordID: snapshot.data.documents[index]["recordID"],
                                             selectedBabyID: widget.selectedBabyID,
+                                            babyFoodRecordListContext: context,
                                           )),
                                 );
                               }

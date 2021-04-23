@@ -13,7 +13,8 @@ import '../../main.dart';
 
 class BabyMedTrackUpadte extends StatefulWidget {
   final String babyTempRecordID, selectedBabyID;
-  BabyMedTrackUpadte({Key key, this.babyTempRecordID, this.selectedBabyID}) : super(key: key);
+  final BuildContext babyMedRecordListContext;
+  BabyMedTrackUpadte({Key key, this.babyTempRecordID, this.selectedBabyID, @required this.babyMedRecordListContext}) : super(key: key);
 
   @override
   _BabyMedTrackUpadteState createState() => _BabyMedTrackUpadteState();
@@ -119,6 +120,7 @@ class _BabyMedTrackUpadteState extends State<BabyMedTrackUpadte> {
                   babyID: widget.selectedBabyID,
                   tempBeforeMeds: tempBeforeMeds,
                   medsMap: medicine,
+                  babyMedRecordListContext: widget.babyMedRecordListContext,
                 ),
               ],
             );
@@ -158,7 +160,10 @@ class RecordBodyTempUpdate extends StatefulWidget {
   final String svgSrc, selectedDate, selectedTime, recordID, babyID;
   final double tempBeforeMeds;
   final Map medsMap;
-  const RecordBodyTempUpdate({Key key, this.svgSrc, this.tempBeforeMeds, this.selectedDate, this.selectedTime, this.medsMap, this.recordID, this.babyID}) : super(key: key);
+  final BuildContext babyMedRecordListContext;
+  const RecordBodyTempUpdate({Key key, this.svgSrc, this.tempBeforeMeds, this.selectedDate, this.selectedTime, 
+    this.medsMap, this.recordID, this.babyID, this.babyMedRecordListContext
+  }) : super(key: key);
 
   @override
   _RecordBodyTempUpdateState createState() => _RecordBodyTempUpdateState();
@@ -577,7 +582,8 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                   _showDialogBox(context, dialogBoxContent);
                 } else {
                   careForBabyFunction
-                      .updateBabyMedsRecordPending(widget.babyID, widget.selectedDate, widget.selectedTime, widget.tempBeforeMeds.toString(), bTempUpdate, widget.medsMap, widget.recordID, context)
+                      .updateBabyMedsRecordPending(widget.babyID, widget.selectedDate, widget.selectedTime, widget.tempBeforeMeds.toString(), 
+                        bTempUpdate, widget.medsMap, widget.recordID, context, widget.babyMedRecordListContext)
                       .then((value) => _showNotification());
                 }
               },

@@ -7,7 +7,7 @@ class FoodIntakeTrackFunction {
   final User user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<void> uploadFoodRecordDone(selectedDate, selectedTime, bSugarBefore, bSugarAfter, foodMap, context) {
+  Future<void> uploadFoodRecordDone(selectedDate, selectedTime, bSugarBefore, bSugarAfter, foodMap, addFoodSummaryBuildContext, addFoodScreenBuildContext) {
     CollectionReference foodIntakeRecord = _db.collection("mother").doc(user.uid).collection("foodIntake_Done");
     return foodIntakeRecord.add({
       "motherID": user.uid,
@@ -21,11 +21,13 @@ class FoodIntakeTrackFunction {
         "recordID": value.id,
       });
       print("Data uploaded");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeTrackMain()));
+      Navigator.of(addFoodScreenBuildContext).pop();
+      Navigator.of(addFoodSummaryBuildContext).pop();
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeTrackMain()));
     }).catchError((error) => print("wrong"));
   }
 
-  Future<void> uploadFoodRecordPending(selectedDate, selectedTime, bSugarBefore, bSugarAfter, foodMap, context) {
+  Future<void> uploadFoodRecordPending(selectedDate, selectedTime, bSugarBefore, bSugarAfter, foodMap, addFoodSummaryBuildContext, addFoodScreenBuildContext) {
     final User user = FirebaseAuth.instance.currentUser;
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     CollectionReference foodIntakeRecord = _db.collection("mother").doc(user.uid).collection("foodIntake_Pending");
@@ -41,11 +43,13 @@ class FoodIntakeTrackFunction {
         "recordID": value.id,
       });
       print("Data uploaded");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeTrackMain()));
+      Navigator.of(addFoodScreenBuildContext).pop();
+      Navigator.of(addFoodSummaryBuildContext).pop();
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeTrackMain()));
     }).catchError((error) => print("wrong"));
   }
 
-  Future<void> updateFoodRecordPending(selectedDate, selectedTime, bSugarBefore, bSugarAfter, foodMap, context, recordID) {
+  Future<void> updateFoodRecordPending(selectedDate, selectedTime, bSugarBefore, bSugarAfter, foodMap, updateFoodBuildContext, recordID, pendingRecordsListScreenBuildContext) {
     final User user = FirebaseAuth.instance.currentUser;
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     CollectionReference foodIntakeRecord = _db.collection("mother").doc(user.uid).collection("foodIntake_Done");
@@ -62,7 +66,9 @@ class FoodIntakeTrackFunction {
       });
       _db.collection("mother").doc(user.uid).collection("foodIntake_Pending").doc(recordID).delete();
       print("Data uploaded & deleted");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeTrackMain()));
+      Navigator.of(pendingRecordsListScreenBuildContext).pop();
+      Navigator.of(updateFoodBuildContext).pop();
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FoodIntakeTrackMain()));
     }).catchError((error) => print("wrong"));
   }
 }

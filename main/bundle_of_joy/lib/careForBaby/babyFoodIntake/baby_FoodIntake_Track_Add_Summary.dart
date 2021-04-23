@@ -13,7 +13,10 @@ class BabyFoodIntakeAddSummary extends StatefulWidget {
   final String selectedBabyID, selectedDate, selectedTime, symptomsAndAllergiesDesc;
   final bool symptomsAndAllergies, completeFoodRecord;
   final Map foodMap;
-  BabyFoodIntakeAddSummary({Key key, this.selectedBabyID, this.selectedDate, this.selectedTime, this.foodMap, this.completeFoodRecord, this.symptomsAndAllergies, this.symptomsAndAllergiesDesc}) : super(key: key);
+  final BuildContext babyAddFoodBuildContext;
+  BabyFoodIntakeAddSummary({Key key, this.selectedBabyID, this.selectedDate, this.selectedTime, this.foodMap, this.completeFoodRecord, 
+    this.symptomsAndAllergies, this.symptomsAndAllergiesDesc, @required this.babyAddFoodBuildContext
+  }) : super(key: key);
 
   @override
   _BabyFoodIntakeAddSummaryState createState() => _BabyFoodIntakeAddSummaryState();
@@ -21,7 +24,7 @@ class BabyFoodIntakeAddSummary extends StatefulWidget {
 
 class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
   CareForBabyFunction careForBabyFunction = CareForBabyFunction();
-  String notificationMessage;
+  String notificationMessage, notificationMessageAfter;
 
   MyApp main = MyApp();
 
@@ -43,7 +46,7 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
     await main.createState().flutterLocalNotificationsPlugin.show(0, 'Baby Food Intake Tracking', notificationMessage, notificationDetails);
   }
 
-  void _showNotificationAfter2Hour(notificationMessage) async {
+  void _showNotificationAfter2Hour(notificationMessageAfter) async {
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation("Asia/Kuching"));
     var scheduledTime = tz.TZDateTime.now(tz.local).add(const Duration(hours: 2));
@@ -58,7 +61,7 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
       styleInformation: BigTextStyleInformation(''),
     );
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(0, 'Baby Food Intake Tracking', notificationMessage, scheduledTime, notificationDetails, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation:
+    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(0, 'Baby Food Intake Tracking', notificationMessageAfter, scheduledTime, notificationDetails, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation:
     UILocalNotificationDateInterpretation.absoluteTime);
   }
 
@@ -175,6 +178,7 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
                               widget.symptomsAndAllergies,
                               null,
                               context,
+                              widget.babyAddFoodBuildContext,
                             )
                             .then((value) => showNotification(notificationMessage));
                       } else if (widget.completeFoodRecord == false && widget.symptomsAndAllergies == true) {
@@ -188,13 +192,18 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
                               widget.symptomsAndAllergies,
                               widget.symptomsAndAllergiesDesc,
                               context,
+                              widget.babyAddFoodBuildContext,
                             )
                             .then((value) => showNotification(notificationMessage));
                       } else if (widget.completeFoodRecord == false && widget.symptomsAndAllergies == false) {
-                        notificationMessage = "Remember to update your baby's food record after 2 hours.";
+                        notificationMessage = "Baby Food Record upload successfully. Remember to update your baby's food record after 2 hours.";
+                        notificationMessageAfter = "Hey it's already 2 hours, remember to update your baby food record.";
                         careForBabyFunction
-                            .uploadBabyFoodRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, context)
-                            .then((value) => _showNotificationAfter2Hour(notificationMessage));
+                            .uploadBabyFoodRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, context, widget.babyAddFoodBuildContext)
+                            .then((value) {
+                              showNotification(notificationMessage);
+                              _showNotificationAfter2Hour(notificationMessageAfter);
+                            });
                       }
                     },
                     child: Text(
