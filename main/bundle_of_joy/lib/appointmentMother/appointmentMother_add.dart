@@ -19,7 +19,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
   // User
   final User user = FirebaseAuth.instance.currentUser;
   // Hospital & Doctor
-  String hospitalName, doctorName;
+  String hospitalName, doctorName, selectedHospitalID;
   // Date Picker
   DateTime today, pickedDate;
   String d, m, y, dateSelected, formattedDate;
@@ -33,6 +33,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
     // Hospital & Doctor Initialise
     hospitalName = "Not Selected";
     doctorName = "Not Selected";
+    selectedHospitalID = "";
 
     // Date Initialise
     today = DateTime.now();
@@ -111,6 +112,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                             Navigator.of(context).pop();
                             setState(() {
                               hospitalName = snapshot.data.documents[index]['h_name'];
+                              selectedHospitalID = snapshot.data.documents[index]['h_id'];
                             });
                           },
                           child: Container(
@@ -273,7 +275,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
         Container(
           padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02),
           child: StreamBuilder(
-            stream: FirebaseFirestore.instance.collection('doctor').where("role", isEqualTo: "doctor").snapshots(),
+            stream: FirebaseFirestore.instance.collection('doctor').where("specialty", whereIn: ["Gynaecology", "gynaecology"]).where("h_id", isEqualTo: selectedHospitalID).snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -291,12 +293,13 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                 } else if (snapshot.data.documents.isEmpty) {
                   return Center(
                     child: Text(
-                      'There is currently no doctors available',
+                      'There is currently no doctors available in selected hospital',
                       style: TextStyle(
                         fontFamily: 'Comfortaa',
                         fontSize: MediaQuery.of(context).size.width * 0.04,
                         color: Colors.black,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   );
                 } else {
@@ -957,7 +960,7 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                                           height: MediaQuery.of(context).size.height * 0.4,
                                           child: SingleChildScrollView(
                                             child: StreamBuilder(
-                                              stream: FirebaseFirestore.instance.collection('appointment_slot').where("date_string", isEqualTo: dateSelected).snapshots(),
+                                              stream: FirebaseFirestore.instance.collection('appointment_slot').where("date_string", isEqualTo: dateSelected).where("h_id", isEqualTo: selectedHospitalID).where("s_type", whereIn: ["Gynaecology", "gynaecology"]).snapshots(),
                                               builder: (context, snapshot) {
                                                 if (snapshot.hasData) {
                                                   if (snapshot.connectionState == ConnectionState.waiting) {
