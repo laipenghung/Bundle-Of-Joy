@@ -13,7 +13,8 @@ import 'package:intl/intl.dart';
 
 class FoodIntakeTrackUpdate extends StatefulWidget {
   final String foodIntakeRecordID;
-  FoodIntakeTrackUpdate({Key key, @required this.foodIntakeRecordID}) : super(key: key);
+  final BuildContext pendingRecordsListScreenBuildContext;
+  FoodIntakeTrackUpdate({Key key, @required this.foodIntakeRecordID, @required this.pendingRecordsListScreenBuildContext}) : super(key: key);
 
   @override
   _FoodIntakeTrackUpdateState createState() => _FoodIntakeTrackUpdateState();
@@ -117,6 +118,7 @@ class _FoodIntakeTrackUpdateState extends State<FoodIntakeTrackUpdate> {
                   bSugarBefore: bSugarBefore,
                   foodMap: food,
                   recordID: widget.foodIntakeRecordID,
+                  pendingRecordsListScreenBuildContext: widget.pendingRecordsListScreenBuildContext,
                 ),
               ],
             );
@@ -159,6 +161,7 @@ class RecordBloodSugarUpdate extends StatefulWidget {
   final double bSugarBefore;
   final Map foodMap;
   final String recordID;
+  final BuildContext pendingRecordsListScreenBuildContext;
   const RecordBloodSugarUpdate({
     Key key,
     this.svgSrc,
@@ -167,6 +170,7 @@ class RecordBloodSugarUpdate extends StatefulWidget {
     this.selectedTime,
     this.foodMap,
     this.recordID,
+    this.pendingRecordsListScreenBuildContext
   }) : super(key: key);
 
   @override
@@ -592,6 +596,7 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
                         widget.foodMap,
                         context,
                         widget.recordID,
+                        widget.pendingRecordsListScreenBuildContext,
                       )
                       .then((value) => _showNotification());
                 }

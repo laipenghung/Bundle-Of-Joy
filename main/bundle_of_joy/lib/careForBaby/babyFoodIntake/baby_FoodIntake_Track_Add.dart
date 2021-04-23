@@ -1193,6 +1193,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                                         completeFoodRecord: completeFoodRecord,
                                         selectedBabyID: widget.selectedBabyID,
                                         symptomsAndAllergiesDesc: symptomsAndAllergiesDesc,
+                                        babyAddFoodBuildContext: context,
                                       )),
                             );
                           } else {
@@ -1213,6 +1214,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                                       completeFoodRecord: completeFoodRecord,
                                       selectedBabyID: widget.selectedBabyID,
                                       symptomsAndAllergiesDesc: null,
+                                      babyAddFoodBuildContext: context,
                                     )),
                           );
                         } else if (completeFoodRecord == false && symptomsAndAllergies == false) {
@@ -1227,6 +1229,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                                       completeFoodRecord: completeFoodRecord,
                                       selectedBabyID: widget.selectedBabyID,
                                       symptomsAndAllergiesDesc: null,
+                                      babyAddFoodBuildContext: context,
                                     )),
                           );
                         }

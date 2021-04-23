@@ -12,7 +12,8 @@ import '../../main.dart';
 
 class BabyFoodIntakeTrackUpdate extends StatefulWidget {
   final String recordID, selectedBabyID;
-  BabyFoodIntakeTrackUpdate({Key key, this.recordID, this.selectedBabyID}) : super(key: key);
+  final BuildContext babyFoodRecordListContext;
+  BabyFoodIntakeTrackUpdate({Key key, this.recordID, this.selectedBabyID, @required this.babyFoodRecordListContext}) : super(key: key);
 
   @override
   _BabyFoodIntakeTrackUpdateState createState() => _BabyFoodIntakeTrackUpdateState();
@@ -109,6 +110,7 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
                     selectedDate: snapshot.data.data()["selectedDate"],
                     selectedTime: snapshot.data.data()["selectedTime"],
                     foodMap: food,
+                    babyFoodRecordListContext: widget.babyFoodRecordListContext,
                   ),
                   //Update data to database
                 ],
@@ -149,7 +151,8 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
 class RecordSymptomsAndAllergiesUpdate extends StatefulWidget {
   final String svgSrc, selectedBabyID, recordID, selectedDate, selectedTime;
   final Map foodMap;
-  RecordSymptomsAndAllergiesUpdate({Key key, this.svgSrc, this.selectedBabyID, this.recordID, this.selectedDate, this.selectedTime, this.foodMap}) : super(key: key);
+  final BuildContext babyFoodRecordListContext;
+  RecordSymptomsAndAllergiesUpdate({Key key, this.svgSrc, this.selectedBabyID, this.recordID, this.selectedDate, this.selectedTime, this.foodMap, this.babyFoodRecordListContext}) : super(key: key);
 
   @override
   _RecordSymptomsAndAllergiesUpdateState createState() => _RecordSymptomsAndAllergiesUpdateState();
@@ -334,12 +337,14 @@ class _RecordSymptomsAndAllergiesUpdateState extends State<RecordSymptomsAndAlle
                 if (textFieldController.text.isNotEmpty && symptomsAndAllergies == true) {
                   notificationMessage = "Baby food record successfully updated.";
                   careForBabyFunction
-                      .updateBabyFoodRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, symptomsAndAllergies, symptomsAndAllergiesDesc, widget.recordID, context)
+                      .updateBabyFoodRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, 
+                        symptomsAndAllergies, symptomsAndAllergiesDesc, widget.recordID, context, widget.babyFoodRecordListContext)
                       .then((value) => _showNotification(notificationMessage));
                 } else if (symptomsAndAllergies == false) {
                   notificationMessage = "Baby food record successfully updated.";
                   careForBabyFunction
-                      .updateBabyFoodRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, symptomsAndAllergies, null, widget.recordID, context)
+                      .updateBabyFoodRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, 
+                        symptomsAndAllergies, null, widget.recordID, context, widget.babyFoodRecordListContext)
                       .then((value) => _showNotification(notificationMessage));
                 } else if (textFieldController.text.isEmpty && symptomsAndAllergies == true) {
                   _showDialogBox(context);

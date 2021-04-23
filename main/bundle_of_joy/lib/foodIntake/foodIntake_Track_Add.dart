@@ -1349,6 +1349,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                                     foodMap: foodMap,
                                     bSugarBefore: bSugarBefore,
                                     bSugarAfter: bSugarAfter,
+                                    addFoodScreenContext: context,
                                   )),
                         );
                       } else {
@@ -1361,6 +1362,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                                     foodMap: foodMap,
                                     bSugarBefore: bSugarBefore,
                                     bSugarAfter: null,
+                                    addFoodScreenContext: context,
                                   )),
                         );
                       }

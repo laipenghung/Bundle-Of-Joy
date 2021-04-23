@@ -118,6 +118,7 @@ class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
                                       builder: (context) => BabyMedTrackUpadte(
                                             babyTempRecordID: snapshot.data.documents[index]["recordID"],
                                             selectedBabyID: widget.selectedBabyID,
+                                            babyMedRecordListContext: context,
                                           )),
                                 );
                               }

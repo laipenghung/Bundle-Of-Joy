@@ -5,6 +5,7 @@ import 'package:bundle_of_joy/widgets/recordFoodMedsWidget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:path/path.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:intl/intl.dart';
@@ -13,8 +14,9 @@ import '../main.dart';
 class FoodIntakeTrackAddSummary extends StatefulWidget {
   final String selectedDate, selectedTime, bSugarBefore, bSugarAfter;
   final Map foodMap;
+  final BuildContext addFoodScreenContext;
 
-  FoodIntakeTrackAddSummary({Key key, this.selectedDate, this.selectedTime, this.foodMap, this.bSugarBefore, this.bSugarAfter}) : super(key: key);
+  FoodIntakeTrackAddSummary({Key key, this.selectedDate, this.selectedTime, this.foodMap, this.bSugarBefore, this.bSugarAfter, this.addFoodScreenContext}) : super(key: key);
 
   @override
   _FoodIntakeTrackAddSummaryState createState() => _FoodIntakeTrackAddSummaryState();
@@ -22,7 +24,7 @@ class FoodIntakeTrackAddSummary extends StatefulWidget {
 
 class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
   MyApp main = MyApp();
-  String notificationMessage;
+  String notificationMessage, notificationMessageAfter2hour;
 
   void _showNotification(notificationMessage) async {
     await notification(notificationMessage);
@@ -42,7 +44,7 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
     await main.createState().flutterLocalNotificationsPlugin.show(0, 'Food Intake Tracking', notificationMessage, notificationDetails);
   }
 
-  void _showNotificationAfter2Hour(notificationMessage) async {
+  void _showNotificationAfter2Hour(notificationMessageAfter2hour) async {
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation("Asia/Kuching"));
     var scheduledTime = tz.TZDateTime.now(tz.local).add(const Duration(hours: 2));
@@ -57,7 +59,7 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
       styleInformation: BigTextStyleInformation(''),
     );
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(0, 'Food Intake Tracking', notificationMessage, scheduledTime, notificationDetails, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation:
+    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(0, 'Food Intake Tracking', notificationMessageAfter2hour, scheduledTime, notificationDetails, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation:
     UILocalNotificationDateInterpretation.absoluteTime);
   }
 
@@ -186,10 +188,12 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                             widget.bSugarAfter,
                             widget.foodMap,
                             context,
+                            widget.addFoodScreenContext,
                           )
                           .then((value) => _showNotification(notificationMessage));
                     } else {
-                      notificationMessage = "Remember to update your food record after 2 hours.";
+                      notificationMessage = "Food Record upload successfully. Remember to update your food record after 2 hours.";
+                      notificationMessageAfter2hour = "Hey it's already 2 hours, remember to update your food record.";
                       foodIntakeTrackFunction
                           .uploadFoodRecordPending(
                             widget.selectedDate,
@@ -198,8 +202,13 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                             widget.bSugarAfter,
                             widget.foodMap,
                             context,
+                            widget.addFoodScreenContext,
                           )
-                          .then((value) => _showNotificationAfter2Hour(notificationMessage));
+                          // .then((value) => _showNotificationAfter2Hour(notificationMessage))
+                          .then((value) {
+                            _showNotification(notificationMessage);
+                            _showNotificationAfter2Hour(notificationMessageAfter2hour);
+                          });
                     }
                   },
                   child: Text(

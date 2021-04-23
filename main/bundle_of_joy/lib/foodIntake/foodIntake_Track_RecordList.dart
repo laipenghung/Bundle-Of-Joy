@@ -117,7 +117,10 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
                               } else {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => FoodIntakeTrackUpdate(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
+                                  MaterialPageRoute(builder: (context) => FoodIntakeTrackUpdate(
+                                    foodIntakeRecordID: snapshot.data.documents[index]["recordID"],
+                                    pendingRecordsListScreenBuildContext: context,
+                                  )),
                                 );
                               }
                             },
