@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/careForBaby/babyTemp/baby_Med_Track_SneakPeak.dart';
 import 'package:bundle_of_joy/careForBaby/babyTemp/baby_Med_Track_Update.dart';
 import 'package:bundle_of_joy/careForBaby/babyTemp/baby_Med_Track_View.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
@@ -25,6 +26,9 @@ class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference collectionReferenceComplete = _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done");
+    CollectionReference collectionReferencePending = _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Pending");
+
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
@@ -92,7 +96,27 @@ class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
                             recordSecondaryDesc: DateFormat('h:mm a').format(DateTime.parse(snapshot.data.documents[index]['selectedDate'] + " " + snapshot.data.documents[index]['selectedTime'])),
                             babyFoodRecord: false,
                             motherHealthRecord: false,
-                            longPress: () {},
+                            longPress: () {
+                              showModalBottomSheet(
+                                context: context,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                                ),
+                                isScrollControlled: true,
+                                builder: (context) => Container(
+                                  height: MediaQuery.of(context).size.height * 0.8,
+                                  child: SingleChildScrollView(
+                                    physics: BouncingScrollPhysics(),
+                                    child: BabyMedTrackSneakPeak(
+                                      medIntakeRecordID: snapshot.data.documents[index]["recordID"],
+                                      selectedBabyID: widget.selectedBabyID,
+                                      collectionReference: (widget.completeRecord == true)? collectionReferenceComplete : collectionReferencePending,
+                                      completeRecord: widget.completeRecord,
+                                    ),
+                                  ),
+                                )
+                              );
+                            },
                             delete: () {
                               if (widget.completeRecord == true) {
                                 setState(() => databaseTable = "tempRecord_Done");

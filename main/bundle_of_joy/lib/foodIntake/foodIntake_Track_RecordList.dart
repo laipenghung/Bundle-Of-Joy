@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:bundle_of_joy/foodIntake/foodIntake_Track_SneakPeak.dart';
 import 'package:bundle_of_joy/foodIntake/foodIntake_Track_Update.dart';
 import 'package:bundle_of_joy/foodIntake/foodIntake_Track_View.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
@@ -23,6 +22,8 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
   bool descendingDate = true, descendingTime = true;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final User user = FirebaseAuth.instance.currentUser;
+  CollectionReference collectionReferenceComplete = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("foodIntake_Done");
+  CollectionReference collectionReferencePending = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("foodIntake_Pending");
   String databaseTable;
 
   @override
@@ -98,7 +99,24 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
                             babyFoodRecord: false,
                             motherHealthRecord: false,
                             longPress: () {
-                              log("message");
+                              showModalBottomSheet(
+                                context: context,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                                ),
+                                isScrollControlled: true,
+                                builder: (context) => Container(
+                                  height: MediaQuery.of(context).size.height * 0.8,
+                                  child: SingleChildScrollView(
+                                    physics: BouncingScrollPhysics(),
+                                    child: FoodIntakeTrackSneakPeak(
+                                      foodIntakeRecordID: snapshot.data.documents[index]["recordID"],
+                                      collectionReference: (widget.completeRecord == true)? collectionReferenceComplete : collectionReferencePending,
+                                      completeRecord: widget.completeRecord,
+                                    ),
+                                  ),
+                                )
+                              );
                             },
                             delete: () {
                               if (widget.completeRecord == true) {

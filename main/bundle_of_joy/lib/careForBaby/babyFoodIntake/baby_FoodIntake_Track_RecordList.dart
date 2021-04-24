@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/careForBaby/babyFoodIntake/baby_FoodIntake_Track_SneakPeak.dart';
 import 'package:bundle_of_joy/careForBaby/babyFoodIntake/baby_FoodIntake_Track_Update.dart';
 import 'package:bundle_of_joy/careForBaby/babyFoodIntake/baby_FoodIntake_Track_View.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
@@ -24,6 +25,9 @@ class _BabyFoodIntakeTrackRecordListState extends State<BabyFoodIntakeTrackRecor
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference collectionReferenceComplete = _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Done");
+    CollectionReference collectionReferencePending = _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Pending");
+
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
@@ -93,7 +97,27 @@ class _BabyFoodIntakeTrackRecordListState extends State<BabyFoodIntakeTrackRecor
                             motherHealthRecord: false,
                             completeBabyFoodRecord: widget.completeBabyFoodRecord,
                             symptomsAllergies: (widget.completeRecord == true) ? snapshot.data.documents[index]["symptomsAndAllergies"] : null,
-                            longPress: () {},
+                            longPress: () {
+                              showModalBottomSheet(
+                                context: context,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                                ),
+                                isScrollControlled: true,
+                                builder: (context) => Container(
+                                  height: MediaQuery.of(context).size.height * 0.8,
+                                  child: SingleChildScrollView(
+                                    physics: BouncingScrollPhysics(),
+                                    child: BabyFoodIntakeTrackSneakPeak(
+                                      foodIntakeRecordID: snapshot.data.documents[index]["recordID"],
+                                      selectedBabyID: widget.selectedBabyID,
+                                      collectionReference: (widget.completeRecord == true)? collectionReferenceComplete : collectionReferencePending,
+                                      completeRecord: widget.completeRecord,
+                                    ),
+                                  ),
+                                )
+                              );
+                            },
                             delete: () {
                               if (widget.completeRecord == true) {
                                 setState(() => databaseTable = "babyFoodIntake_Done");
