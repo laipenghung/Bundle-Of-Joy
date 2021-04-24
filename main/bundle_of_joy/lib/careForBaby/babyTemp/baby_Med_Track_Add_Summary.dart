@@ -49,7 +49,7 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
   void _showNotificationAfter4Hour(notificationMessageAfter) async {
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation("Asia/Kuching"));
-    var scheduledTime = tz.TZDateTime.now(tz.local).add(const Duration(seconds: 20));
+    var scheduledTime = tz.TZDateTime.now(tz.local).add(const Duration(hours: 4));
 
     AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
       'Schedule Id',
