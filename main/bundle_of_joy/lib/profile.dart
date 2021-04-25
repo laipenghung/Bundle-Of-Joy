@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import "package:flutter/material.dart";
 import 'motherProfile/motherProfile.dart';
 import "auth/auth.dart";
@@ -30,6 +31,7 @@ class _ProfileState extends State<ProfileTab> {
     );
 
     AlertDialog alert = AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
       title: Text(
         "Log Out",
         style: TextStyle(
@@ -50,7 +52,7 @@ class _ProfileState extends State<ProfileTab> {
         cancelButton,
         continueButton,
       ],
-      backgroundColor: Color(0xFFFCFFD5),
+      backgroundColor: appbar3,
     );
 
     return alert;

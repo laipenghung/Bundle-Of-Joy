@@ -1,5 +1,6 @@
 import "dart:async";
 import 'package:bundle_of_joy/motherProfile/motherInfo.dart';
+import 'package:bundle_of_joy/widgets/loadingWidget.dart';
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -185,7 +186,7 @@ class _MotherProfile extends State<MotherProfile> {
           ),
         );
       });
-      return loadingWidget();
+      return LoadingWidget();
     }
   }
 
@@ -222,36 +223,6 @@ class _MotherProfile extends State<MotherProfile> {
       });
   }
 
-  Widget loadingWidget(){
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.38, bottom: 20.0),
-            child: SizedBox(
-              height: MediaQuery.of(context).size.width * 0.18,
-              width: MediaQuery.of(context).size.width * 0.18,
-              child: CircularProgressIndicator(
-                strokeWidth: 5,
-                backgroundColor: Colors.black,
-                valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
-              ),
-            ),
-          ),
-          Text(
-            "Loading..",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: MediaQuery.of(context).size.width * 0.035,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final User user = FirebaseAuth.instance.currentUser;
@@ -278,7 +249,7 @@ class _MotherProfile extends State<MotherProfile> {
                 if (mother.hasData) {
                   return accountVerification(mother, patient, user.uid.toString());
                 } else {
-                  return loadingWidget();
+                  return LoadingWidget();
                 }
             }),
           ],
