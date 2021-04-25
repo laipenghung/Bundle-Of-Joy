@@ -1,4 +1,5 @@
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
+import 'package:bundle_of_joy/widgets/loadingWidget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path/path.dart';
 import 'dart:io';
@@ -30,10 +31,9 @@ class _MotherInfo extends State<MotherInfo> {
       "Edit Date Of Birth",
       "Edit Blood Type",
       "Edit No Of Child",
-      "Edit Personal Phone",
-      "Edit Emergency Contact"
+      "Edit Personal Phone"
     ];
-    final _listField = ["m_name", "m_age", "m_dob", "m_bloodType", "m_no_of_child", "m_phone", "m_emergencyContact"];
+    final _listField = ["m_name", "m_age", "m_dob", "m_bloodType", "m_no_of_child", "m_phone"];
     Future<bool> _selectDate() async {
       DateTime selectedDate = DateTime.now();
       String year, month, day, DOB;
@@ -46,7 +46,7 @@ class _MotherInfo extends State<MotherInfo> {
             return Theme(
               data: ThemeData.light().copyWith(
                 colorScheme: ColorScheme.dark(
-                  surface: Color(int.parse("0xFFFCFFD5")),
+                  surface: appbar3,
                   onSurface: Colors.black,
                 ),
               ),
@@ -77,7 +77,7 @@ class _MotherInfo extends State<MotherInfo> {
             return ButtonBarTheme(
               data: ButtonBarThemeData(alignment: MainAxisAlignment.spaceAround),
               child: AlertDialog(
-                backgroundColor: Color(0xFFFCFFD5),
+                backgroundColor: appbar3,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
                 title: Center(child: Text(_listEditTitles[index])),
                 content: editField(index, document, _listField),
@@ -110,7 +110,7 @@ class _MotherInfo extends State<MotherInfo> {
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               isExpanded: true,
-              dropdownColor: Color(0xFFFCFFD5),
+              dropdownColor: appbar3,
               value: input,
               items: <String>["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map((String value) {
                 return DropdownMenuItem<String>(
@@ -127,7 +127,7 @@ class _MotherInfo extends State<MotherInfo> {
           ),
         );
       });
-    } else if (index == 1 || index == 4 || index == 5 || index == 6) {
+    } else if (index == 1 || index == 4 || index == 5) {
       return Container(
         margin: EdgeInsets.only(left: margin + 20, right: margin + 20),
         child: TextField(
@@ -185,7 +185,7 @@ class _MotherInfo extends State<MotherInfo> {
   Widget profilePage(AsyncSnapshot document, BuildContext context){
     double fontSize = MediaQuery.of(context).size.width * 0.04;
     var patient = document.data;
-    final _listItems = ["Name", "Age", "Date Of Birth", "Blood Type", "No Of Child", "Personal Phone", "Emergency Contact"];
+    final _listItems = ["Name", "Age", "Date Of Birth", "Blood Type", "No Of Child", "Personal Phone"];
     final _listInfo = [
       patient.data()["m_name"].toString(),
       patient.data()["m_age"].toString(),
@@ -193,7 +193,6 @@ class _MotherInfo extends State<MotherInfo> {
       patient.data()["m_bloodType"].toString(),
       patient.data()["m_no_of_child"].toString(),
       patient.data()["m_phone"].toString(),
-      patient.data()["m_emergencyContact"].toString()
     ];
     var photoURL = patient.data()["photoURL"].toString();
     if(photoURL!=null) {
@@ -269,37 +268,6 @@ class _MotherInfo extends State<MotherInfo> {
     );
   }
 
-  Widget loading(BuildContext context){
-    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.width * 0.15,
-            width: MediaQuery.of(context).size.width * 0.15,
-            child: CircularProgressIndicator(
-              strokeWidth: 5,
-              backgroundColor: Colors.black,
-              valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
-          ),
-          Text(
-            "Loading...",
-            style: TextStyle(
-              fontFamily: "Comfortaa",
-              fontSize: fontSizeText,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   // BUILD THE WIDGET
   @override
   Widget build(BuildContext context) {
@@ -325,7 +293,7 @@ class _MotherInfo extends State<MotherInfo> {
           if(document.hasData){
             return profilePage(document, context);
           } else {
-            return loading(context);
+            return LoadingWidget();
           }
         }
       ),

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:bundle_of_joy/appReviewBugsReport.dart';
 import 'package:bundle_of_joy/auth/auth.dart';
 import 'package:bundle_of_joy/sign_up.dart';
@@ -21,7 +20,7 @@ class _UserProfileState extends State<UserProfile> {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
-  AlertDialog _signOut() {
+  Widget _signOut() {
     Widget cancelButton = FlatButton(
       child: Text("Cancel"),
       onPressed: () {
@@ -40,28 +39,32 @@ class _UserProfileState extends State<UserProfile> {
       },
     );
 
-    AlertDialog alert = AlertDialog(
-      title: Text(
-        "Log Out",
-        style: TextStyle(
-          fontFamily: "Comfortaa",
-          fontWeight: FontWeight.bold,
-          fontSize: MediaQuery.of(context).size.height * 0.03,
+    Widget alert = ButtonBarTheme(
+      data: ButtonBarThemeData(alignment: MainAxisAlignment.spaceAround),
+      child: AlertDialog(
+        backgroundColor: appbar3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+        title: Text(
+          "Log Out",
+          style: TextStyle(
+            fontFamily: "Comfortaa",
+            fontWeight: FontWeight.bold,
+            fontSize: MediaQuery.of(context).size.height * 0.03,
+          ),
         ),
-      ),
-      content: Text(
-        "Would you like to log out?",
-        style: TextStyle(
-          fontFamily: "Comfortaa",
-          fontWeight: FontWeight.bold,
-          fontSize: MediaQuery.of(context).size.height * 0.022,
+        content: Text(
+          "Would you like to log out?",
+          style: TextStyle(
+            fontFamily: "Comfortaa",
+            fontWeight: FontWeight.bold,
+            fontSize: MediaQuery.of(context).size.height * 0.022,
+          ),
         ),
+        actions: [
+          cancelButton,
+          continueButton,
+        ],
       ),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-      backgroundColor: Color(0xFFFCFFD5),
     );
 
     return alert;
