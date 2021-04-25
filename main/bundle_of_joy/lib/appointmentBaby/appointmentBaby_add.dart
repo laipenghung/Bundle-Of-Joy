@@ -19,6 +19,9 @@ class AppointmentBabyAdd extends StatefulWidget {
 
 class _AppointmentBabyAddState extends State<AppointmentBabyAdd> {
   final String babyID;
+  String noteToDoctor;
+  TextEditingController noteToDoctorController = TextEditingController();
+
   _AppointmentBabyAddState(this.babyID);
 
   // User
@@ -963,7 +966,11 @@ class _AppointmentBabyAddState extends State<AppointmentBabyAdd> {
                                           height: MediaQuery.of(context).size.height * 0.4,
                                           child: SingleChildScrollView(
                                             child: StreamBuilder(
-                                              stream: FirebaseFirestore.instance.collection('appointment_slot').where("date_string", isEqualTo: dateSelected).where("h_id", isEqualTo: selectedHospitalID).where("s_type", whereIn: ["Pediatrics", "pediatrics"]).snapshots(),
+                                              stream: FirebaseFirestore.instance
+                                                  .collection('appointment_slot')
+                                                  .where("date_string", isEqualTo: dateSelected)
+                                                  .where("h_id", isEqualTo: selectedHospitalID)
+                                                  .where("s_type", whereIn: ["Pediatrics", "pediatrics"]).snapshots(),
                                               builder: (context, snapshot) {
                                                 if (snapshot.hasData) {
                                                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -1290,6 +1297,72 @@ class _AppointmentBabyAddState extends State<AppointmentBabyAdd> {
                 ),
               ),
             ),
+
+            // NOTE
+            SizedBox(
+              width: double.infinity,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(15, 15),
+                      blurRadius: 20,
+                      spreadRadius: 15,
+                      color: Color(0xFFE6E6E6),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        SvgPicture.asset(
+                          "assets/icons/notes.svg",
+                          height: 23,
+                          width: 23,
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            "Note to Doctor (Optional)",
+                            style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width * 0.045,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 15.0),
+                      child: TextFormField(
+                        maxLines: 3,
+                        controller: noteToDoctorController,
+                        onChanged: (val) {
+                          setState(() => noteToDoctor = val);
+                        },
+                        decoration: new InputDecoration(
+                          hintText: "Leave some note to the doctor",
+                          hintStyle: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.035),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(color: Colors.black, width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(color: appbar2, width: 1),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             Container(
               margin: EdgeInsets.fromLTRB(15, 5, 15, 15),
               child: SizedBox(
@@ -1386,7 +1459,7 @@ class _AppointmentBabyAddState extends State<AppointmentBabyAdd> {
           },
         );
       } else {
-        uploadAppointment(hospitalName, doctorName, dateSelected, selectedSession, h.docs[0].data()["h_id"], d.docs[0].data()["d_id"], y.docs[0].data()["s_id"], babyID);
+        uploadAppointment(hospitalName, doctorName, dateSelected, selectedSession, h.docs[0].data()["h_id"], d.docs[0].data()["d_id"], y.docs[0].data()["s_id"], babyID, noteToDoctor);
       }
     }
     // Afternoon
@@ -1408,7 +1481,7 @@ class _AppointmentBabyAddState extends State<AppointmentBabyAdd> {
           },
         );
       } else {
-        uploadAppointment(hospitalName, doctorName, dateSelected, selectedSession, h.docs[0].data()["h_id"], d.docs[0].data()["d_id"], y.docs[0].data()["s_id"], babyID);
+        uploadAppointment(hospitalName, doctorName, dateSelected, selectedSession, h.docs[0].data()["h_id"], d.docs[0].data()["d_id"], y.docs[0].data()["s_id"], babyID, noteToDoctor);
       }
     }
     // Evening
@@ -1430,12 +1503,12 @@ class _AppointmentBabyAddState extends State<AppointmentBabyAdd> {
           },
         );
       } else {
-        uploadAppointment(hospitalName, doctorName, dateSelected, selectedSession, h.docs[0].data()["h_id"], d.docs[0].data()["d_id"], y.docs[0].data()["s_id"], babyID);
+        uploadAppointment(hospitalName, doctorName, dateSelected, selectedSession, h.docs[0].data()["h_id"], d.docs[0].data()["d_id"], y.docs[0].data()["s_id"], babyID, noteToDoctor);
       }
     }
   }
 
-  Future<void> uploadAppointment(hospitalName, doctorName, appointmentDate, appointmentSession, hospitalID, doctorID, slotID, bbID) {
+  Future<void> uploadAppointment(hospitalName, doctorName, appointmentDate, appointmentSession, hospitalID, doctorID, slotID, bbID, noteToDoctor) {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     final User user = FirebaseAuth.instance.currentUser;
 
@@ -1451,6 +1524,8 @@ class _AppointmentBabyAddState extends State<AppointmentBabyAdd> {
       "s_id": slotID,
       "m_id": user.uid,
       "b_id": bbID,
+      "noteToDoctor": noteToDoctor,
+      "case_note": "",
       "a_status": "Pending",
     }).then((value) {
       appointmentRecord.doc(value.id).update({
