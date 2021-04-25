@@ -1350,11 +1350,11 @@ class _AppointmentBabyAddState extends State<AppointmentBabyAdd> {
                           hintStyle: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.035),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
-                            borderSide: BorderSide(color: Colors.black, width: 1),
+                            borderSide: BorderSide(color: Colors.black),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
-                            borderSide: BorderSide(color: appbar2, width: 1),
+                            borderSide: BorderSide(color: appbar2),
                           ),
                         ),
                       ),
@@ -1524,7 +1524,7 @@ class _AppointmentBabyAddState extends State<AppointmentBabyAdd> {
       "s_id": slotID,
       "m_id": user.uid,
       "b_id": bbID,
-      "noteToDoctor": noteToDoctor,
+      "note_to_doctor": noteToDoctor,
       "case_note": "",
       "a_status": "Pending",
     }).then((value) {
