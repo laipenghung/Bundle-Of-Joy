@@ -5,13 +5,13 @@ class HorizontalCardWidget extends StatelessWidget {
   final String svgSrc;
   final String title;
   final String description;
-  final Function press;
+  final Function onTap;
   const HorizontalCardWidget({
     Key key,
     this.svgSrc,
     this.title,
     this.description,
-    this.press,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -33,7 +33,7 @@ class HorizontalCardWidget extends StatelessWidget {
         ],
       ),
       child: InkWell(
-        onTap: press,
+        onTap: onTap,
         child: Row(
           children: <Widget>[
             SizedBox(width: 20),

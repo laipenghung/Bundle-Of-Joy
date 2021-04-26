@@ -68,7 +68,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                   title: "Baby Food Intake Record",
                   description: "View all of your baby's food record.",
                   svgSrc: "assets/icons/verify.svg",
-                  press: () {
+                  onTap: () {
                     Navigator.push(
                       context,
                       //MaterialPageRoute(builder: (context) => BabyFoodIntakeListDone(selectedBabyID: widget.selectedBabyID)),
@@ -87,14 +87,14 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                   title: "Create New Baby Food Record",
                   description: "Create a new food record for your baby.",
                   svgSrc: "assets/icons/add.svg",
-                  press: () {
+                  onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => BabyFoodIntakeTrackAdd(selectedBabyID: widget.selectedBabyID)));
                   }),
               HorizontalCardWidget(
                   title: "Update Pending Baby Food Record",
                   description: "Update your baby's existing food record.",
                   svgSrc: "assets/icons/edit.svg",
-                  press: () {
+                  onTap: () {
                     Navigator.push(
                       context,
                       //MaterialPageRoute(builder: (context) => BabyFoodIntakeListPending(selectedBabyID: widget.selectedBabyID)),
@@ -128,7 +128,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                   title: "Medicine Intake Record",
                   description: "View all of your baby's medicine record.",
                   svgSrc: "assets/icons/verify.svg",
-                  press: () {
+                  onTap: () {
                     Navigator.push(
                       context,
                       //MaterialPageRoute(builder: (context) =>BabyTempListDone(selectedBabyID: widget.selectedBabyID)),
@@ -146,7 +146,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                 title: "Create New Medicine Record",
                 description: "Create a new medicine record for your baby.",
                 svgSrc: "assets/icons/add.svg",
-                press: () {
+                onTap: () {
                   Navigator.push(
                     context,
                     //MaterialPageRoute(builder: (context) => BabyTempAdd1(selectedBabyID: widget.selectedBabyID)),
@@ -158,7 +158,7 @@ class _CareForBabyMainState extends State<CareForBabyMain> {
                 title: "Update Pending Medicine Record",
                 description: "Update your baby's existing medicine record.",
                 svgSrc: "assets/icons/edit.svg",
-                press: () {
+                onTap: () {
                   Navigator.push(
                     context,
                     //MaterialPageRoute(builder: (context) => BabyTempListPending(selectedBabyID: widget.selectedBabyID)),
