@@ -38,7 +38,7 @@ class _AppointmentMotherMainState extends State<AppointmentMotherMain> {
                   title: "View Appointment",
                   description: "View and manage all of your appointments.",
                   svgSrc: "assets/icons/schedule.svg",
-                  press: () {
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => AppointmentMotherRecordList()),
@@ -48,7 +48,7 @@ class _AppointmentMotherMainState extends State<AppointmentMotherMain> {
                   title: "Book An Appointment",
                   description: "Book an appointment with the doctor.",
                   svgSrc: "assets/icons/appointment.svg",
-                  press: () {
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => AppointmentMotherAdd()),

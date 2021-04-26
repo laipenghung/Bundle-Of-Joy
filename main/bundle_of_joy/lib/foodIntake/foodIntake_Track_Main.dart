@@ -48,7 +48,7 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
                 title: "Food Intake Record",
                 description: "View all of your food record.",
                 svgSrc: "assets/icons/verify.svg",
-                press: () {
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -65,7 +65,7 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
                 title: "Create New Food Record",
                 description: "Create a new food record.",
                 svgSrc: "assets/icons/add.svg",
-                press: () {
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => FoodIntakeTrackAdd()),
@@ -76,7 +76,7 @@ class _FoodIntakeTrackMainState extends State<FoodIntakeTrackMain> {
                 title: "Update Pending Food Record",
                 description: "Update your existing food record.",
                 svgSrc: "assets/icons/edit.svg",
-                press: () {
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
