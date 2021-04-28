@@ -24,10 +24,28 @@ class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
   final User user = FirebaseAuth.instance.currentUser;
   String databaseTable;
 
+  static String sortAscByDate = "Sort By Date Ascendingly";
+  static String sortDescByDate = "Sort By Date Descendingly";
+  static List<String> choices = <String>[sortAscByDate, sortDescByDate];
+
   @override
   Widget build(BuildContext context) {
     CollectionReference collectionReferenceComplete = _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done");
     CollectionReference collectionReferencePending = _db.collection("mother").doc(user.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Pending");
+
+    void choiceAction(String choice) {
+      if (choice == sortAscByDate) {
+        setState(() {
+          descendingDate = false;
+          descendingTime = false;
+        });
+      } else if (choice == sortDescByDate) {
+        setState(() {
+          descendingDate = true;
+          descendingTime = true;
+        });
+      }
+    }
 
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
@@ -42,12 +60,21 @@ class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
         backgroundColor: appbar2,
         centerTitle: true,
         actions: <Widget>[
-          IconButton(
-              icon: Icon(
-                Icons.sort_rounded,
-                color: Colors.white,
-              ),
-              onPressed: () {})
+          PopupMenuButton(
+            icon: Icon(
+              Icons.sort_rounded,
+              color: Colors.white,
+            ),
+            onSelected: choiceAction,
+            itemBuilder: (BuildContext context){
+              return choices.map((String choice){
+                return PopupMenuItem(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          )
         ],
       ),
       body: SingleChildScrollView(
