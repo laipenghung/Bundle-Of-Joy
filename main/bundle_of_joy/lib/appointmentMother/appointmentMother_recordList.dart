@@ -105,10 +105,6 @@ class _AppointmentMotherRecordListState extends State<AppointmentMotherRecordLis
               return Center(
                 child: Text(
                   'You have no upcoming appointment.',
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.04,
-                    color: Colors.black.withOpacity(0.65),
-                  ),
                 ),
               );
             } else {
