@@ -82,24 +82,25 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
               if (snapshot.hasData) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.15,
-                      width: MediaQuery.of(context).size.width * 0.15,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 5,
-                        backgroundColor: Colors.black,
-                        valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                    child: Container(
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 5,
+                          backgroundColor: Colors.black,
+                          valueColor: new AlwaysStoppedAnimation<Color>(appbar1),
+                        ),
                       ),
                     ),
                   );
                 } else if (snapshot.data.documents.isEmpty) {
                   return Center(
-                    child: Text(
-                      'There is currently no hospital available',
-                      style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                        color: Colors.black,
+                    child: Container(
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.3),
+                      child: Text(
+                        'There is currently no hospital available',
                       ),
                     ),
                   );
@@ -238,30 +239,33 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                 print("error");
               }
               return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.15,
-                      width: MediaQuery.of(context).size.width * 0.15,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 5,
-                        backgroundColor: Colors.black,
-                        valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                child: Container(
+                  margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 5,
+                          backgroundColor: Colors.black,
+                          valueColor: new AlwaysStoppedAnimation<Color>(appbar1),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.05,
-                    ),
-                    Text(
-                      'Loading...',
-                      style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                        color: Colors.black,
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.05,
                       ),
-                    ),
-                  ],
+                      Text(
+                        'Loading...',
+                        style: TextStyle(
+                          fontFamily: 'Comfortaa',
+                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
@@ -283,26 +287,27 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
               if (snapshot.hasData) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.15,
-                      width: MediaQuery.of(context).size.width * 0.15,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 5,
-                        backgroundColor: Colors.black,
-                        valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                    child: Container(
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.4,
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 5,
+                          backgroundColor: Colors.black,
+                          valueColor: new AlwaysStoppedAnimation<Color>(appbar1),
+                        ),
                       ),
                     ),
                   );
                 } else if (snapshot.data.documents.isEmpty) {
                   return Center(
-                    child: Text(
-                      'There is currently no doctors available in selected hospital',
-                      style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                        color: Colors.black,
+                    child: Container(
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.3),
+                      child: Text(
+                        'There is currently no doctor available\nin selected hospital',
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   );
                 } else {
@@ -503,30 +508,33 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                 print("error");
               }
               return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.15,
-                      width: MediaQuery.of(context).size.width * 0.15,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 5,
-                        backgroundColor: Colors.black,
-                        valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                child: Container(
+                  margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 5,
+                          backgroundColor: Colors.black,
+                          valueColor: new AlwaysStoppedAnimation<Color>(appbar1),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.05,
-                    ),
-                    Text(
-                      'Loading...',
-                      style: TextStyle(
-                        fontFamily: 'Comfortaa',
-                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                        color: Colors.black,
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.05,
                       ),
-                    ),
-                  ],
+                      Text(
+                        'Loading...',
+                        style: TextStyle(
+                          fontFamily: 'Comfortaa',
+                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
@@ -973,14 +981,14 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                                                   if (snapshot.connectionState == ConnectionState.waiting) {
                                                     return Center(
                                                       child: Container(
-                                                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
+                                                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.11),
                                                         child: SizedBox(
                                                           height: MediaQuery.of(context).size.width * 0.15,
                                                           width: MediaQuery.of(context).size.width * 0.15,
                                                           child: CircularProgressIndicator(
                                                             strokeWidth: 5,
                                                             backgroundColor: Colors.black,
-                                                            valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                                                            valueColor: new AlwaysStoppedAnimation<Color>(appbar2),
                                                           ),
                                                         ),
                                                       ),
@@ -988,14 +996,9 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                                                   } else if (snapshot.data.documents.isEmpty) {
                                                     return Center(
                                                       child: Container(
-                                                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.18),
+                                                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
                                                         child: Text(
                                                           'There is currently no slot on this date',
-                                                          style: TextStyle(
-                                                            fontFamily: 'Comfortaa',
-                                                            fontSize: MediaQuery.of(context).size.width * 0.04,
-                                                            color: Colors.black,
-                                                          ),
                                                         ),
                                                       ),
                                                     );
@@ -1252,30 +1255,33 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                                                   print("Snapshot has error");
                                                 }
                                                 return Center(
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      SizedBox(
-                                                        height: MediaQuery.of(context).size.width * 0.15,
-                                                        width: MediaQuery.of(context).size.width * 0.15,
-                                                        child: CircularProgressIndicator(
-                                                          strokeWidth: 5,
-                                                          backgroundColor: Colors.black,
-                                                          valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                                                  child: Container(
+                                                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.11),
+                                                    child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        SizedBox(
+                                                          height: MediaQuery.of(context).size.width * 0.15,
+                                                          width: MediaQuery.of(context).size.width * 0.15,
+                                                          child: CircularProgressIndicator(
+                                                            strokeWidth: 5,
+                                                            backgroundColor: Colors.black,
+                                                            valueColor: new AlwaysStoppedAnimation<Color>(appbar1),
+                                                          ),
                                                         ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: MediaQuery.of(context).size.height * 0.05,
-                                                      ),
-                                                      Text(
-                                                        'Loading...',
-                                                        style: TextStyle(
-                                                          fontFamily: 'Comfortaa',
-                                                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                                                          color: Colors.black,
+                                                        SizedBox(
+                                                          height: MediaQuery.of(context).size.height * 0.05,
                                                         ),
-                                                      ),
-                                                    ],
+                                                        Text(
+                                                          'Loading...',
+                                                          style: TextStyle(
+                                                            fontFamily: 'Comfortaa',
+                                                            fontSize: MediaQuery.of(context).size.width * 0.04,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 );
                                               },
