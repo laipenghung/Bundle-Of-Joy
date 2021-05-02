@@ -35,13 +35,12 @@ class _AppReviewBugsReportState extends State<AppReviewBugsReport> {
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
           child: Column(
             children: [
-              /*HorizontalCardWidgetStyle2(
+              HorizontalCardWidgetStyle2(
                 title: "Review Bundle of Joy App",
-                description: "Provide developer your experience, feedbacks after using the app. Also feel free to " +
-                  "provide us with suggestion on how we can improve the app.",
+                description: "Provide developer your experience, feedbacks after using the app. Also feel free to " + "provide us with suggestion on how we can improve the app.",
                 svgSrc: "assets/icons/rating.svg",
-                onTap: () => launch("https://docs.google.com/forms/d/e/1FAIpQLScOZvmrSwHfEYdxxfvnsSckXp6SAp3N0fclYRG_qr_EZz_B1g/viewform?usp=sf_link"),
-              ),*/
+                onTap: () => launch("https://docs.google.com/forms/d/e/1FAIpQLSe9YlA1NSPkJKkgEiXaqnT3cN58IvYDf0cVLNjLm5N_76AfXg/viewform?usp=sf_link"), //CHANGE
+              ),
               HorizontalCardWidgetStyle2(
                 title: "Bugs And Errors Report",
                 description: "Report all bugs and errors you found while using the Bundle of Joy mobile app.",

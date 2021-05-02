@@ -34,7 +34,7 @@ class _Vaccination extends State<Vaccination> {
         child: Column(
           children: [
             VaccinationWidget(
-              tableTitle: "Vaccination Schedule Table",
+              tableTitle: "Vaccination Record Table",
               tableDesc: "This section display the history of taken vaccination of your baby.",
               svgSrcTable: "assets/icons/table.svg",
               ageListString: ageListString,

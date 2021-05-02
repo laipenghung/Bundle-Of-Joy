@@ -16,9 +16,16 @@ class BabyMedTrackAddSummary extends StatefulWidget {
   final String selectedDate, selectedTime, bTempBefore, bTempAfter, selectedBabyID;
   final Map medsMap;
   final BuildContext babyAddMedBuildContext;
-  BabyMedTrackAddSummary({Key key, @required this.selectedDate, @required this.selectedTime, @required this.bTempBefore, @required this.bTempAfter, 
-    @required this.selectedBabyID, @required this.medsMap, @required this.babyAddMedBuildContext
-  }) : super(key: key);
+  BabyMedTrackAddSummary(
+      {Key key,
+      @required this.selectedDate,
+      @required this.selectedTime,
+      @required this.bTempBefore,
+      @required this.bTempAfter,
+      @required this.selectedBabyID,
+      @required this.medsMap,
+      @required this.babyAddMedBuildContext})
+      : super(key: key);
 
   @override
   _BabyMedTrackAddSummaryState createState() => _BabyMedTrackAddSummaryState();
@@ -61,8 +68,8 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
       styleInformation: BigTextStyleInformation(''),
     );
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(0, 'Baby Medicine Intake Tracking', notificationMessageAfter, scheduledTime, notificationDetails, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation:
-    UILocalNotificationDateInterpretation.absoluteTime);
+    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(0, 'Baby Medicine Intake Tracking', notificationMessageAfter, scheduledTime, notificationDetails,
+        androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
   }
 
   @override
@@ -84,6 +91,7 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
           ),
         ),
         backgroundColor: appbar2,
@@ -125,7 +133,7 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
                 left: 13.0,
               ),
               child: Text(
-                "Conusmed Medicine",
+                "Consumed Medicine",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -190,9 +198,9 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
                       careForBabyFunction
                           .uploadBabyMedsRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.bTempBefore, widget.bTempAfter, widget.medsMap, context, widget.babyAddMedBuildContext)
                           .then((value) {
-                            _showNotification(notificationMessage);
-                            _showNotificationAfter4Hour(notificationMessageAfter);
-                          });
+                        _showNotification(notificationMessage);
+                        _showNotificationAfter4Hour(notificationMessageAfter);
+                      });
                     }
                   },
                   child: Text(
@@ -201,6 +209,7 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: MediaQuery.of(context).size.width * 0.045,
+                      shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                     ),
                   ),
                 ),

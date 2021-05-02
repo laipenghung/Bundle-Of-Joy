@@ -69,7 +69,7 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
                       left: 13.0,
                     ),
                     child: Text(
-                      "Conusmed Food",
+                      "Consumed Food",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -135,6 +135,7 @@ class _BabyFoodIntakeTrackUpdateState extends State<BabyFoodIntakeTrackUpdate> {
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
           ),
         ),
         backgroundColor: appbar2,
@@ -337,14 +338,14 @@ class _RecordSymptomsAndAllergiesUpdateState extends State<RecordSymptomsAndAlle
                 if (textFieldController.text.isNotEmpty && symptomsAndAllergies == true) {
                   notificationMessage = "Baby food record successfully updated.";
                   careForBabyFunction
-                      .updateBabyFoodRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, 
-                        symptomsAndAllergies, symptomsAndAllergiesDesc, widget.recordID, context, widget.babyFoodRecordListContext)
+                      .updateBabyFoodRecordPending(
+                          widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, symptomsAndAllergies, symptomsAndAllergiesDesc, widget.recordID, context, widget.babyFoodRecordListContext)
                       .then((value) => _showNotification(notificationMessage));
                 } else if (symptomsAndAllergies == false) {
                   notificationMessage = "Baby food record successfully updated.";
                   careForBabyFunction
-                      .updateBabyFoodRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, 
-                        symptomsAndAllergies, null, widget.recordID, context, widget.babyFoodRecordListContext)
+                      .updateBabyFoodRecordPending(
+                          widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, symptomsAndAllergies, null, widget.recordID, context, widget.babyFoodRecordListContext)
                       .then((value) => _showNotification(notificationMessage));
                 } else if (textFieldController.text.isEmpty && symptomsAndAllergies == true) {
                   _showDialogBox(context);
@@ -356,6 +357,7 @@ class _RecordSymptomsAndAllergiesUpdateState extends State<RecordSymptomsAndAlle
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: MediaQuery.of(context).size.width * 0.045,
+                  shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                 ),
               ),
             ),

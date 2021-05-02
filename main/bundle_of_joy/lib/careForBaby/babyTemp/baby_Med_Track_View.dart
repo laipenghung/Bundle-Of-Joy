@@ -18,8 +18,7 @@ class BabyMedTrackView extends StatefulWidget {
 class _BabyMedTrackViewState extends State<BabyMedTrackView> {
   @override
   Widget build(BuildContext context) {
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done");
+    CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done");
 
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
@@ -29,6 +28,7 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
           ),
         ),
         backgroundColor: appbar2,
@@ -87,7 +87,7 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
                         left: 13.0,
                       ),
                       child: Text(
-                        "Conusmed Medicine",
+                        "Consumed Medicine",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,

@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -226,7 +227,7 @@ class _AppointmentBabyVerificationState extends State<AppointmentBabyVerificatio
               child: CircularProgressIndicator(
                 strokeWidth: 5,
                 backgroundColor: Colors.black,
-                valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                valueColor: new AlwaysStoppedAnimation<Color>(appbar2),
               ),
             ),
           ),

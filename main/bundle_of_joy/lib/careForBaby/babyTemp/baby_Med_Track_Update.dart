@@ -78,7 +78,7 @@ class _BabyMedTrackUpadteState extends State<BabyMedTrackUpadte> {
                     left: 13.0,
                   ),
                   child: Text(
-                    "Conusmed Medicine",
+                    "Consumed Medicine",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -143,6 +143,7 @@ class _BabyMedTrackUpadteState extends State<BabyMedTrackUpadte> {
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
           ),
         ),
         backgroundColor: appbar2,
@@ -161,9 +162,7 @@ class RecordBodyTempUpdate extends StatefulWidget {
   final double tempBeforeMeds;
   final Map medsMap;
   final BuildContext babyMedRecordListContext;
-  const RecordBodyTempUpdate({Key key, this.svgSrc, this.tempBeforeMeds, this.selectedDate, this.selectedTime, 
-    this.medsMap, this.recordID, this.babyID, this.babyMedRecordListContext
-  }) : super(key: key);
+  const RecordBodyTempUpdate({Key key, this.svgSrc, this.tempBeforeMeds, this.selectedDate, this.selectedTime, this.medsMap, this.recordID, this.babyID, this.babyMedRecordListContext}) : super(key: key);
 
   @override
   _RecordBodyTempUpdateState createState() => _RecordBodyTempUpdateState();
@@ -248,6 +247,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                         fontSize: MediaQuery.of(context).size.width * 0.045,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                       ),
                     ),
                   ),
@@ -310,7 +310,6 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                     ),
                   ],
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.005),
                 Column(children: <Widget>[
                   SizedBox(
                     width: double.infinity,
@@ -362,6 +361,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.045,
+                          shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                         ),
                       ),
                     ),
@@ -537,7 +537,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                             ),
                             isScrollControlled: true,
                             builder: (context) => Container(
-                                  height: MediaQuery.of(context).size.height * 0.35,
+                                  height: MediaQuery.of(context).size.height * 0.4,
                                   child: SingleChildScrollView(
                                     physics: ClampingScrollPhysics(),
                                     child: babyTempModalBottomSheetWidget(context),
@@ -550,6 +550,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
+                          shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                         ),
                       ),
                     ),
@@ -582,8 +583,8 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                   _showDialogBox(context, dialogBoxContent);
                 } else {
                   careForBabyFunction
-                      .updateBabyMedsRecordPending(widget.babyID, widget.selectedDate, widget.selectedTime, widget.tempBeforeMeds.toString(), 
-                        bTempUpdate, widget.medsMap, widget.recordID, context, widget.babyMedRecordListContext)
+                      .updateBabyMedsRecordPending(
+                          widget.babyID, widget.selectedDate, widget.selectedTime, widget.tempBeforeMeds.toString(), bTempUpdate, widget.medsMap, widget.recordID, context, widget.babyMedRecordListContext)
                       .then((value) => _showNotification());
                 }
               },
@@ -593,6 +594,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: MediaQuery.of(context).size.width * 0.045,
+                  shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                 ),
               ),
             ),

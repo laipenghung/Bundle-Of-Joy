@@ -1,13 +1,11 @@
-import 'package:bundle_of_joy/vaccinationAndGrowth/growth/growth_Track_Height_View.dart';
-import 'package:bundle_of_joy/vaccinationAndGrowth/growth/growth_Track_Weight_View.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'growth/growthHeight.dart';
-import 'growth/growthWeight.dart';
-import 'vaccination/vaccination.dart';
+
+import 'growth_Track_Height_View.dart';
+import 'growth_Track_Weight_View.dart';
 
 class VaccinationGrowthMain extends StatefulWidget {
   final String selectedBabyID;
@@ -78,7 +76,7 @@ class _VaccinationGrowthMainState extends State<VaccinationGrowthMain> {
                   ),
                 ),
               ),*/
-              HorizontalCardWidgetStyle2(
+              HorizontalCardWidget(
                 title: "Baby Height Tracking",
                 description: "View your baby's height record.",
                 svgSrc: "assets/icons/height.svg",
@@ -86,7 +84,7 @@ class _VaccinationGrowthMainState extends State<VaccinationGrowthMain> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => GrowthTrackHeightView(selectedBabyID: widget.selectedBabyID, collectionReference: collectionReference)));
                 },
               ),
-              HorizontalCardWidgetStyle2(
+              HorizontalCardWidget(
                 title: "Baby Weight Tracking",
                 description: "View your baby's weight record.",
                 svgSrc: "assets/icons/weight.svg",
@@ -94,14 +92,14 @@ class _VaccinationGrowthMainState extends State<VaccinationGrowthMain> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => GrowthTrackWeightView(selectedBabyID: widget.selectedBabyID, collectionReference: collectionReference)));
                 },
               ),
+              /*
               HorizontalCardWidgetStyle2(
                 title: "Baby Head Circumference Tracking",
                 description: "View your baby's head circumference record.",
                 svgSrc: "assets/icons/baby.svg",
-                onTap: () {
-                  
-                },
+                onTap: () {},
               ),
+              */
             ],
           ),
         ),

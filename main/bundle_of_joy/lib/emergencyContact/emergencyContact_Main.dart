@@ -794,6 +794,7 @@ class _EmergencyContactMainState extends State<EmergencyContactMain> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: MediaQuery.of(context).size.width * 0.045,
+                  shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                 ),
               ),
             ),

@@ -174,7 +174,7 @@ class SymptompAndAllergyFound extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(bottom: 15),
             child: Text(
-              "Section below display the symptomps and allergies shown by your baby.",
+              "Section below display the symptoms and allergies shown by your baby.",
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -236,7 +236,7 @@ class SymptompAndAllergyNotFound extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(bottom: 10),
               child: Text(
-                "Yay, your baby did not shown any signs of symptomps and allergies 2 hour after the meal.",
+                "Yay, your baby did not shown any signs of symptoms and allergies 2 hour after the meal.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -464,7 +464,7 @@ class SymptompAndAllergyFoundSummary extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(bottom: 5),
             child: Text(
-              "Section below display the symptomps and allergies shown by your baby.",
+              "Section below display the symptoms and allergies shown by your baby.",
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: MediaQuery.of(context).size.width * 0.035,

@@ -14,9 +14,9 @@ class BabyFoodIntakeAddSummary extends StatefulWidget {
   final bool symptomsAndAllergies, completeFoodRecord;
   final Map foodMap;
   final BuildContext babyAddFoodBuildContext;
-  BabyFoodIntakeAddSummary({Key key, this.selectedBabyID, this.selectedDate, this.selectedTime, this.foodMap, this.completeFoodRecord, 
-    this.symptomsAndAllergies, this.symptomsAndAllergiesDesc, @required this.babyAddFoodBuildContext
-  }) : super(key: key);
+  BabyFoodIntakeAddSummary(
+      {Key key, this.selectedBabyID, this.selectedDate, this.selectedTime, this.foodMap, this.completeFoodRecord, this.symptomsAndAllergies, this.symptomsAndAllergiesDesc, @required this.babyAddFoodBuildContext})
+      : super(key: key);
 
   @override
   _BabyFoodIntakeAddSummaryState createState() => _BabyFoodIntakeAddSummaryState();
@@ -61,8 +61,8 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
       styleInformation: BigTextStyleInformation(''),
     );
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(0, 'Baby Food Intake Tracking', notificationMessageAfter, scheduledTime, notificationDetails, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation:
-    UILocalNotificationDateInterpretation.absoluteTime);
+    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(0, 'Baby Food Intake Tracking', notificationMessageAfter, scheduledTime, notificationDetails,
+        androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
   }
 
   @override
@@ -75,6 +75,7 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
           ),
         ),
         backgroundColor: appbar2,
@@ -112,7 +113,7 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
                   left: 13.0,
                 ),
                 child: Text(
-                  "Conusmed Food",
+                  "Consumed Food",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -198,12 +199,10 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
                       } else if (widget.completeFoodRecord == false && widget.symptomsAndAllergies == false) {
                         notificationMessage = "Baby Food Record upload successfully. Remember to update your baby's food record after 2 hours.";
                         notificationMessageAfter = "Hey it's already 2 hours, remember to update your baby food record.";
-                        careForBabyFunction
-                            .uploadBabyFoodRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, context, widget.babyAddFoodBuildContext)
-                            .then((value) {
-                              showNotification(notificationMessage);
-                              _showNotificationAfter2Hour(notificationMessageAfter);
-                            });
+                        careForBabyFunction.uploadBabyFoodRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.foodMap, context, widget.babyAddFoodBuildContext).then((value) {
+                          showNotification(notificationMessage);
+                          _showNotificationAfter2Hour(notificationMessageAfter);
+                        });
                       }
                     },
                     child: Text(
@@ -212,6 +211,7 @@ class _BabyFoodIntakeAddSummaryState extends State<BabyFoodIntakeAddSummary> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: MediaQuery.of(context).size.width * 0.045,
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                       ),
                     ),
                   ),

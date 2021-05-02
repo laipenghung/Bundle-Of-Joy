@@ -38,6 +38,7 @@ class _GrowthTrackHeightViewState extends State<GrowthTrackHeightView> {
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
           ),
         ),
         backgroundColor: appbar2,
@@ -112,11 +113,6 @@ class _GrowthTrackHeightViewState extends State<GrowthTrackHeightView> {
               return Center(
                 child: Text(
                   "There is currently no records",
-                  style: TextStyle(
-                    fontFamily: "Comfortaa",
-                    fontSize: fontSizeText,
-                    color: Colors.black,
-                  ),
                 ),
               );
             }
