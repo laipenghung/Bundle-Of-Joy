@@ -47,7 +47,8 @@ class SignInScreenStat extends State<SignInScreen> {
           verificationCompleted: verifiedSuccess,
           verificationFailed: verifiedFailed,
           codeSent: smsCodeSent,
-          codeAutoRetrievalTimeout: autoRetrieve);
+          codeAutoRetrievalTimeout: autoRetrieve
+      );
     } else {
       errorDialog(context);
     }
@@ -58,24 +59,29 @@ class SignInScreenStat extends State<SignInScreen> {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: Color(0xFFFCFFD5),
-            title: Text(
-              "Error!",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: fontSize,
+          return ButtonBarTheme(
+            data: ButtonBarThemeData(alignment: MainAxisAlignment.spaceAround),
+            child: AlertDialog(
+              backgroundColor: Color(0xFFFCFFD5),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+              title: Text(
+                "Error!",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: fontSize,
+                ),
+                textAlign: TextAlign.center,
               ),
+              content: Text("Phone number is invalid or not found!", textAlign: TextAlign.center,),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("Close"),
+                ),
+              ],
             ),
-            content: Text("Phone number is not valid or not found!"),
-            actions: <Widget>[
-              FlatButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Close"),
-              ),
-            ],
           );
         });
   }
@@ -86,41 +92,49 @@ class SignInScreenStat extends State<SignInScreen> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: Color(0xFFFCFFD5),
-            title: Text(
-              "Enter SMS Code",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: fontSize,
+          return ButtonBarTheme(
+            data: ButtonBarThemeData(alignment: MainAxisAlignment.spaceAround),
+            child: AlertDialog(
+              backgroundColor: Color(0xFFFCFFD5),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+              title: Text(
+                "Enter SMS Code",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: fontSize,
+                ),
+                textAlign: TextAlign.center,
               ),
+              content: Container(
+                margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.15),
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  maxLength: 6,
+                  onChanged: (value) {
+                    this.smsCode = value;
+                  },
+                ),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("Done"),
+                  onPressed: () {
+                    User user = FirebaseAuth.instance.currentUser;
+                    if (user != null) {
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) {
+                          return HomeScreen();
+                        }),
+                      );
+                    } else {
+                      signIn();
+                    }
+                  },
+                )
+              ],
             ),
-            content: TextField(
-              keyboardType: TextInputType.number,
-              maxLength: 6,
-              onChanged: (value) {
-                this.smsCode = value;
-              },
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text("Done"),
-                onPressed: () {
-                  User user = FirebaseAuth.instance.currentUser;
-                  if (user != null) {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) {
-                        return HomeScreen();
-                      }),
-                    );
-                  } else {
-                    Navigator.of(context).pop();
-                    signIn();
-                  }
-                },
-              )
-            ],
           );
         });
   }
@@ -131,6 +145,7 @@ class SignInScreenStat extends State<SignInScreen> {
       print("Sign in succeeded: $user");
       Mother newMother = new Mother();
       newMother.addUser(user.user);
+      Navigator.of(context).popUntil((route) => route.isFirst);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) {
           return HomeScreen();

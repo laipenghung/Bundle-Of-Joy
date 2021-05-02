@@ -1,5 +1,6 @@
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
+import 'package:flutter/services.dart';
 import "package:flutter_signin_button/flutter_signin_button.dart";
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import "auth/auth.dart";
@@ -17,7 +18,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     double width = MediaQuery.of(context).size.width * 0.8;
     double fontSize = MediaQuery.of(context).size.width * 0.045;
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        SystemNavigator.pop();
+        return false;
+      },
       child: Scaffold(
         backgroundColor: Color(0xFFFCFFD5),
         body: Column(
@@ -156,7 +160,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           }
                       ),
                     );
-                  }, //TODO:Phone login
+                  },
                   child: Text(
                     "Login here",
                     style: TextStyle(
