@@ -18,12 +18,8 @@ class BabyFoodIntakeTrackView extends StatefulWidget {
 class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
   @override
   Widget build(BuildContext context) {
-    CollectionReference collectionReference = FirebaseFirestore.instance
-        .collection("mother")
-        .doc(FirebaseAuth.instance.currentUser.uid)
-        .collection("baby")
-        .doc(widget.selectedBabyID)
-        .collection("babyFoodIntake_Done");
+    CollectionReference collectionReference =
+        FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("baby").doc(widget.selectedBabyID).collection("babyFoodIntake_Done");
 
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
@@ -33,6 +29,7 @@ class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
           ),
         ),
         backgroundColor: appbar2,
@@ -77,12 +74,7 @@ class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
                     ),
                     //Widget for display Date and Time
                     RecordDateTimeWidget(
-                        svgSrcDate: "assets/icons/testAM.svg",
-                        svgSrcTime: "assets/icons/clock.svg",
-                        date: formattedDate,
-                        dateDesc: babyFoodDateDesc,
-                        time: formattedTime,
-                        timeDesc: babyFoodTimeDesc),
+                        svgSrcDate: "assets/icons/testAM.svg", svgSrcTime: "assets/icons/clock.svg", date: formattedDate, dateDesc: babyFoodDateDesc, time: formattedTime, timeDesc: babyFoodTimeDesc),
                     Container(
                       width: double.infinity,
                       margin: EdgeInsets.only(
@@ -90,7 +82,7 @@ class _BabyFoodIntakeTrackViewState extends State<BabyFoodIntakeTrackView> {
                         left: 13.0,
                       ),
                       child: Text(
-                        "Conusmed Food",
+                        "Consumed Food",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,

@@ -214,6 +214,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
+                          shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                         ),
                       ),
                     ),
@@ -352,6 +353,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
+                          shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                         ),
                       ),
                     ),
@@ -402,6 +404,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                         fontSize: MediaQuery.of(context).size.width * 0.045,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                       ),
                     ),
                   ),
@@ -532,7 +535,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                     ),
                   ],
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.0),
                 Column(children: <Widget>[
                   SizedBox(
                     width: double.infinity,
@@ -583,7 +586,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                             foodQuantityController.clear();
                             quantityMearsurementController.clear();
                             Navigator.of(context).pop();
-                          } else if (foodNameController.text.isNotEmpty && foodQuantityController.text.isNotEmpty && quantityMearsurementController.text.isEmpty){
+                          } else if (foodNameController.text.isNotEmpty && foodQuantityController.text.isNotEmpty && quantityMearsurementController.text.isEmpty) {
                             setState(() {
                               foodQuantityMeasurement = "";
                               foodMap[foodName] = foodQuantity + " " + foodQuantityMeasurement;
@@ -876,7 +879,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                             ),
                             isScrollControlled: true,
                             builder: (context) => Container(
-                                  height: MediaQuery.of(context).size.height * 0.6,
+                                  height: MediaQuery.of(context).size.height * 0.65,
                                   child: SingleChildScrollView(
                                     physics: ClampingScrollPhysics(),
                                     child: foodModalBottomSheetWidget(context),
@@ -889,6 +892,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
+                          shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                         ),
                       ),
                     ),
@@ -1142,6 +1146,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
           ),
         ),
         backgroundColor: appbar2,
@@ -1244,6 +1249,7 @@ class _BabyFoodIntakeTrackAddState extends State<BabyFoodIntakeTrackAdd> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: MediaQuery.of(context).size.width * 0.045,
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                       ),
                     ),
                   ),

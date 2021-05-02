@@ -52,7 +52,7 @@ class RecordBloodSugarDoneWidget extends StatelessWidget {
                     left: 10.0,
                   ),
                   child: Text(
-                    "Blood Sugar Reading",
+                    "Blood Glucose Reading",
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.045,
                       fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class RecordBloodSugarDoneWidget extends StatelessWidget {
                 top: 8.0,
               ),
               child: Text(
-                "Your blood sugar reading before meal and 2 hours after meal.",
+                "Your blood glucose reading before meal and 2 hours after meal.",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -156,25 +156,22 @@ class RecordBloodSugarDoneWidget extends StatelessWidget {
               ),
             ),
             (showAnalyzer == true)
-              ? Column(
-                children: <Widget>[
-                  BloodSugarAnalyzerWidget(
-                    svgSrc: "assets/icons/web-analytics.svg",
-                    bSugarBefore: bSugarBefore,
-                    bSugarAfter: bSugarAfter,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child: FoodRecordBloodSugarInsight(
-                      svgSrc: "assets/icons/insight.svg",
+                ? Column(children: <Widget>[
+                    BloodSugarAnalyzerWidget(
+                      svgSrc: "assets/icons/web-analytics.svg",
+                      bSugarBefore: bSugarBefore,
+                      bSugarAfter: bSugarAfter,
                     ),
-                  ),
-                ]
-              )
-              : (bSugarAfter == null)
-                  ? BloodSugarAddPendingText()
-                  : BloodSugarAddDoneText(),
-
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: FoodRecordBloodSugarInsight(
+                        svgSrc: "assets/icons/insight.svg",
+                      ),
+                    ),
+                  ])
+                : (bSugarAfter == null)
+                    ? BloodSugarAddPendingText()
+                    : BloodSugarAddDoneText(),
           ],
         ),
       ),
@@ -232,7 +229,7 @@ class RecordBloodSugarPendingWidget extends StatelessWidget {
                     left: 10.0,
                   ),
                   child: Text(
-                    "Blood Sugar Reading",
+                    "Blood Glucose Reading",
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.045,
                       fontWeight: FontWeight.bold,
@@ -247,7 +244,7 @@ class RecordBloodSugarPendingWidget extends StatelessWidget {
                 top: 8.0,
               ),
               child: Text(
-                "Your blood sugar reading before meal and 2 hours after meal.",
+                "Your blood glucose reading before meal and 2 hours after meal.",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -309,7 +306,7 @@ class RecordBloodSugarPendingWidget extends StatelessWidget {
                         ),
                         child: Column(children: [
                           TextField(
-                            decoration: InputDecoration(hintText: "Blood Sugar Reading"),
+                            decoration: InputDecoration(hintText: "Blood Glucose Reading"),
                             onChanged: (value) {
                               bSugarUpdate = value;
                             },

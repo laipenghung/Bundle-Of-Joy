@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:bundle_of_joy/foodIntake/foodIntake_Track_Add_Summary.dart';
@@ -197,9 +196,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                         "Pick a date",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          shadows: <Shadow>[
-                            Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
-                          ],
+                          shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                         ),
@@ -393,6 +390,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                         fontSize: MediaQuery.of(context).size.width * 0.045,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                       ),
                     ),
                   ),
@@ -428,7 +426,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 5, bottom: 10),
-                      height: MediaQuery.of(context).size.width * 0.09,
+                      height: MediaQuery.of(context).size.height * 0.05,
                       child: TextFormField(
                         controller: foodNameController,
                         onChanged: (val) => setState(() => foodName = val),
@@ -574,7 +572,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                             foodQuantityController.clear();
                             quantityMearsurementController.clear();
                             Navigator.of(context).pop();
-                          } else if(foodNameController.text.isNotEmpty && foodQuantityController.text.isNotEmpty && quantityMearsurementController.text.isEmpty){
+                          } else if (foodNameController.text.isNotEmpty && foodQuantityController.text.isNotEmpty && quantityMearsurementController.text.isEmpty) {
                             setState(() {
                               foodQuantityMeasurement = "";
                               foodMap[foodName] = foodQuantity + " " + foodQuantityMeasurement;
@@ -618,6 +616,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.045,
+                          shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                         ),
                       ),
                     ),
@@ -765,7 +764,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
               Container(
                 margin: EdgeInsets.only(bottom: 10),
                 child: Text(
-                  "Looks like you haven't add any food. Tap on the buton below to add some food into the record.",
+                  "Looks like you haven't added any food. Tap on the buton below to add some food into the record.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -867,7 +866,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                             ),
                             isScrollControlled: true,
                             builder: (context) => Container(
-                                  height: MediaQuery.of(context).size.height * 0.6,
+                                  height: MediaQuery.of(context).size.height * 0.65,
                                   child: SingleChildScrollView(
                                     physics: ClampingScrollPhysics(),
                                     child: foodModalBottomSheetWidget(context),
@@ -933,6 +932,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                         fontSize: MediaQuery.of(context).size.width * 0.045,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                       ),
                     ),
                   ),
@@ -1030,7 +1030,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                     ),
                   ],
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.035),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.0),
                 Column(children: <Widget>[
                   SizedBox(
                     width: double.infinity,
@@ -1082,6 +1082,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.045,
+                          shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                         ),
                       ),
                     ),
@@ -1262,7 +1263,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                             ),
                             isScrollControlled: true,
                             builder: (context) => Container(
-                                  height: MediaQuery.of(context).size.height * 0.5,
+                                  height: MediaQuery.of(context).size.height * 0.55,
                                   child: SingleChildScrollView(
                                     physics: ClampingScrollPhysics(),
                                     child: bloodGlucoseModalBottomSheetWidget(context),

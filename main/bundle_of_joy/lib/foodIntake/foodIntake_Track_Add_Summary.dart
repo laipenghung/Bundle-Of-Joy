@@ -59,8 +59,8 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
       styleInformation: BigTextStyleInformation(''),
     );
     NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
-    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(0, 'Food Intake Tracking', notificationMessageAfter2hour, scheduledTime, notificationDetails, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation:
-    UILocalNotificationDateInterpretation.absoluteTime);
+    await main.createState().flutterLocalNotificationsPlugin.zonedSchedule(0, 'Food Intake Tracking', notificationMessageAfter2hour, scheduledTime, notificationDetails,
+        androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
   }
 
   @override
@@ -82,6 +82,7 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
           ),
         ),
         backgroundColor: appbar1,
@@ -123,7 +124,7 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                 left: 13.0,
               ),
               child: Text(
-                "Conusmed Food",
+                "Consumed Food",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -147,7 +148,7 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                 left: 13.0,
               ),
               child: Text(
-                "Blood Sugar",
+                "Blood Glucose",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -156,7 +157,7 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                 ),
               ),
             ),
-            //Blood Sugar section
+            //Blood Glucose section
             RecordBloodSugarDoneWidget(
               svgSrc: "assets/icons/blood-donation.svg",
               bSugarBefore: bSugarBefore,
@@ -196,19 +197,19 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                       notificationMessageAfter2hour = "Hey it's already 2 hours, remember to update your food record.";
                       foodIntakeTrackFunction
                           .uploadFoodRecordPending(
-                            widget.selectedDate,
-                            widget.selectedTime,
-                            widget.bSugarBefore,
-                            widget.bSugarAfter,
-                            widget.foodMap,
-                            context,
-                            widget.addFoodScreenContext,
-                          )
+                        widget.selectedDate,
+                        widget.selectedTime,
+                        widget.bSugarBefore,
+                        widget.bSugarAfter,
+                        widget.foodMap,
+                        context,
+                        widget.addFoodScreenContext,
+                      )
                           // .then((value) => _showNotificationAfter2Hour(notificationMessage))
                           .then((value) {
-                            _showNotification(notificationMessage);
-                            _showNotificationAfter2Hour(notificationMessageAfter2hour);
-                          });
+                        _showNotification(notificationMessage);
+                        _showNotificationAfter2Hour(notificationMessageAfter2hour);
+                      });
                     }
                   },
                   child: Text(
@@ -217,6 +218,7 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: MediaQuery.of(context).size.width * 0.045,
+                      shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                     ),
                   ),
                 ),

@@ -161,7 +161,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                     top: 8.0,
                   ),
                   child: Text(
-                    "Please select a date for this food record.",
+                    "Please select a date for this medicine record.",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -204,6 +204,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
+                          shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                         ),
                       ),
                     ),
@@ -299,7 +300,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                     top: 8.0,
                   ),
                   child: Text(
-                    "Please select a time for this food record.",
+                    "Please select a time for this medicine record.",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -342,6 +343,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
+                          shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                         ),
                       ),
                     ),
@@ -392,6 +394,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         fontSize: MediaQuery.of(context).size.width * 0.045,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                       ),
                     ),
                   ),
@@ -432,7 +435,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         controller: medNameController,
                         onChanged: (val) => setState(() => medName = val),
                         decoration: InputDecoration(
-                          hintText: "Enter your food name.",
+                          hintText: "Enter your medicine name.",
                           contentPadding: EdgeInsets.all(5),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -502,7 +505,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         controller: quantityMearsurementController,
                         onChanged: (val) => setState(() => medQuantityMeasurement = val),
                         decoration: InputDecoration(
-                          hintText: "Enter your food quantity measurement. (Optional)",
+                          hintText: "Enter your medicine quantity measurement. (Optional)",
                           contentPadding: EdgeInsets.all(2),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -574,7 +577,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                             medQuantityController.clear();
                             quantityMearsurementController.clear();
                             Navigator.of(context).pop();
-                          }  else if (medNameController.text.isNotEmpty && medQuantityController.text.isNotEmpty && quantityMearsurementController.text.isEmpty){
+                          } else if (medNameController.text.isNotEmpty && medQuantityController.text.isNotEmpty && quantityMearsurementController.text.isEmpty) {
                             setState(() {
                               medQuantityMeasurement = "";
                               medMap[medName] = medQuantity + " " + medQuantityMeasurement;
@@ -618,6 +621,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.045,
+                          shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                         ),
                       ),
                     ),
@@ -867,7 +871,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                             ),
                             isScrollControlled: true,
                             builder: (context) => Container(
-                                  height: MediaQuery.of(context).size.height * 0.6,
+                                  height: MediaQuery.of(context).size.height * 0.65,
                                   child: SingleChildScrollView(
                                     physics: ClampingScrollPhysics(),
                                     child: medicineModalBottomSheetWidget(context),
@@ -880,6 +884,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
+                          shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                         ),
                       ),
                     ),
@@ -930,6 +935,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         fontSize: MediaQuery.of(context).size.width * 0.045,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
+                        shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                       ),
                     ),
                   ),
@@ -1027,7 +1033,6 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                     ),
                   ],
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.035),
                 Column(children: <Widget>[
                   SizedBox(
                     width: double.infinity,
@@ -1079,6 +1084,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.045,
+                          shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                         ),
                       ),
                     ),
@@ -1272,6 +1278,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width * 0.04,
+                          shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                         ),
                       ),
                     ),
@@ -1295,6 +1302,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
           ),
         ),
         backgroundColor: appbar2,
@@ -1370,6 +1378,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: MediaQuery.of(context).size.width * 0.045,
+                      shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
                     ),
                   ),
                 ),

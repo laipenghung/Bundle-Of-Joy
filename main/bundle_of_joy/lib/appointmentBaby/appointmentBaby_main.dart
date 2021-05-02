@@ -43,8 +43,8 @@ class _AppointmentBabyMainState extends State<AppointmentBabyMain> {
           child: Column(
             children: [
               HorizontalCardWidget(
-                title: "View Appointment",
-                description: "View and manage your baby's appointments.",
+                title: "Upcoming Appointment",
+                description: "View and manage your baby's upcoming appointments.",
                 svgSrc: "assets/icons/schedule.svg",
                 onTap: () {
                   Navigator.push(

@@ -68,8 +68,8 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
               color: Colors.white,
             ),
             onSelected: choiceAction,
-            itemBuilder: (BuildContext context){
-              return choices.map((String choice){
+            itemBuilder: (BuildContext context) {
+              return choices.map((String choice) {
                 return PopupMenuItem(
                   value: choice,
                   child: Text(choice),
@@ -87,24 +87,25 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
             if (snapshot.hasData) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.15,
-                    width: MediaQuery.of(context).size.width * 0.15,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 5,
-                      backgroundColor: Colors.black,
-                      valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                  child: Container(
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.3),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.width * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.15,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 5,
+                        backgroundColor: Colors.black,
+                        valueColor: new AlwaysStoppedAnimation<Color>(appbar1),
+                      ),
                     ),
                   ),
                 );
               } else if (snapshot.data.documents.isEmpty) {
                 return Center(
-                  child: Text(
-                    'There is currently no records',
-                    style: TextStyle(
-                      fontFamily: 'Comfortaa',
-                      fontSize: MediaQuery.of(context).size.width * 0.04,
-                      color: Colors.black,
+                  child: Container(
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.35),
+                    child: Text(
+                      'There is currently no record',
                     ),
                   ),
                 );
@@ -133,17 +134,16 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
                                   ),
                                   isScrollControlled: true,
                                   builder: (context) => Container(
-                                    height: MediaQuery.of(context).size.height * 0.8,
-                                    child: SingleChildScrollView(
-                                      physics: BouncingScrollPhysics(),
-                                      child: FoodIntakeTrackSneakPeak(
-                                        foodIntakeRecordID: snapshot.data.documents[index]["recordID"],
-                                        collectionReference: (widget.completeRecord == true)? collectionReferenceComplete : collectionReferencePending,
-                                        completeRecord: widget.completeRecord,
-                                      ),
-                                    ),
-                                  )
-                              );
+                                        height: MediaQuery.of(context).size.height * 0.8,
+                                        child: SingleChildScrollView(
+                                          physics: BouncingScrollPhysics(),
+                                          child: FoodIntakeTrackSneakPeak(
+                                            foodIntakeRecordID: snapshot.data.documents[index]["recordID"],
+                                            collectionReference: (widget.completeRecord == true) ? collectionReferenceComplete : collectionReferencePending,
+                                            completeRecord: widget.completeRecord,
+                                          ),
+                                        ),
+                                      ));
                             },
                             delete: () {
                               if (widget.completeRecord == true) {
@@ -162,10 +162,12 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
                               } else {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => FoodIntakeTrackUpdate(
-                                    foodIntakeRecordID: snapshot.data.documents[index]["recordID"],
-                                    pendingRecordsListScreenBuildContext: context,
-                                  )),
+                                  MaterialPageRoute(
+                                    builder: (context) => FoodIntakeTrackUpdate(
+                                      foodIntakeRecordID: snapshot.data.documents[index]["recordID"],
+                                      pendingRecordsListScreenBuildContext: context,
+                                    ),
+                                  ),
                                 );
                               }
                             },
@@ -178,30 +180,33 @@ class _FoodIntakeTrackRecordListState extends State<FoodIntakeTrackRecordList> {
               print("error");
             }
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.15,
-                    width: MediaQuery.of(context).size.width * 0.15,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 5,
-                      backgroundColor: Colors.black,
-                      valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+              child: Container(
+                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.3),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.width * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.15,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 5,
+                        backgroundColor: Colors.black,
+                        valueColor: new AlwaysStoppedAnimation<Color>(appbar1),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                  ),
-                  Text(
-                    'Loading...',
-                    style: TextStyle(
-                      fontFamily: 'Comfortaa',
-                      fontSize: MediaQuery.of(context).size.width * 0.04,
-                      color: Colors.black,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.05,
                     ),
-                  ),
-                ],
+                    Text(
+                      'Loading...',
+                      style: TextStyle(
+                        fontFamily: 'Comfortaa',
+                        fontSize: MediaQuery.of(context).size.width * 0.04,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },

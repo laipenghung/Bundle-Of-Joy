@@ -113,7 +113,7 @@ class BloodSugarAnalyzerWidget extends StatelessWidget {
             top: 5.0,
           ),
           child: Text(
-            "BoJ Analyzer™ will provide you feedback on the condition of your Blood Sugar based on the Blood Glucose reading you provided.",
+            "BoJ Analyzer™ will provide you feedback on the condition of your Blood Glucose based on the Blood Glucose reading you provided.",
             textAlign: TextAlign.justify,
             style: TextStyle(
               fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -127,7 +127,7 @@ class BloodSugarAnalyzerWidget extends StatelessWidget {
         Container(
           child: Column(
             children: <Widget>[
-              //Blood Sugar before meal
+              //Blood Glucose before meal
               Container(
                 width: double.infinity,
                 margin: EdgeInsets.only(top: 4.0),
@@ -193,7 +193,7 @@ class BloodSugarAnalyzerWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              //Blood Sugar after meal
+              //Blood Glucose after meal
               Container(
                 width: double.infinity,
                 margin: EdgeInsets.only(top: 10.0),

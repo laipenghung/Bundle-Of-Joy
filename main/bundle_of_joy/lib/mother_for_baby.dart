@@ -2,12 +2,13 @@ import 'package:age/age.dart';
 import 'package:bundle_of_joy/appointmentBaby/appointmentBaby_verify.dart';
 import 'package:bundle_of_joy/baby/baby.dart';
 import 'package:bundle_of_joy/careForBaby/careForBaby_Main.dart';
-import 'package:bundle_of_joy/vaccinationAndGrowth/vaccination_growth_main.dart';
-import 'package:bundle_of_joy/vaccinationSchedule/vacScheduleTrackingMain.dart';
+import 'package:bundle_of_joy/vaccination/vaccination_Main.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'vaccinationSchedule/vaccinationSchedule.dart';
+
+import 'growth/growth_Main.dart';
 import 'widgets/cardWidget.dart';
 import 'widgets/genericWidgets.dart';
 
@@ -117,9 +118,6 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                         ),
                         Text(
                           "\t $name",
-                          style: TextStyle(
-                            fontFamily: "Comfortaa",
-                          ),
                         ),
                       ],
                     ),

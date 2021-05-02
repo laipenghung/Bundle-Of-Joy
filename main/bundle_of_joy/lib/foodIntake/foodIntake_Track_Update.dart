@@ -101,7 +101,7 @@ class _FoodIntakeTrackUpdateState extends State<FoodIntakeTrackUpdate> {
                     left: 13.0,
                   ),
                   child: Text(
-                    "Blood Sugar",
+                    "Blood Glucose",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -110,7 +110,7 @@ class _FoodIntakeTrackUpdateState extends State<FoodIntakeTrackUpdate> {
                     ),
                   ),
                 ),
-                //Blood Sugar section
+                //Blood Glucose section
                 RecordBloodSugarUpdate(
                   svgSrc: "assets/icons/blood-donation.svg",
                   selectedDate: snapshot.data.data()["selectedDate"],
@@ -141,6 +141,7 @@ class _FoodIntakeTrackUpdateState extends State<FoodIntakeTrackUpdate> {
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
           ),
         ),
         backgroundColor: appbar1,
@@ -162,16 +163,7 @@ class RecordBloodSugarUpdate extends StatefulWidget {
   final Map foodMap;
   final String recordID;
   final BuildContext pendingRecordsListScreenBuildContext;
-  const RecordBloodSugarUpdate({
-    Key key,
-    this.svgSrc,
-    this.bSugarBefore,
-    this.selectedDate,
-    this.selectedTime,
-    this.foodMap,
-    this.recordID,
-    this.pendingRecordsListScreenBuildContext
-  }) : super(key: key);
+  const RecordBloodSugarUpdate({Key key, this.svgSrc, this.bSugarBefore, this.selectedDate, this.selectedTime, this.foodMap, this.recordID, this.pendingRecordsListScreenBuildContext}) : super(key: key);
 
   @override
   _RecordBloodSugarUpdateState createState() => _RecordBloodSugarUpdateState();
@@ -418,7 +410,7 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
                         left: 10.0,
                       ),
                       child: Text(
-                        "Blood Sugar Reading",
+                        "Blood Glucose Reading",
                         style: TextStyle(
                           fontSize: MediaQuery.of(context).size.width * 0.045,
                           fontWeight: FontWeight.bold,
@@ -433,7 +425,7 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
                     top: 8.0,
                   ),
                   child: Text(
-                    "Your blood sugar reading before meal and 2 hours after meal.",
+                    "Your blood glucose reading before meal and 2 hours after meal.",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -553,7 +545,7 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
                                 ));
                       },
                       child: Text(
-                        "Update Blood Sugar Reading",
+                        "Update Blood Glucose Reading",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -584,7 +576,7 @@ class _RecordBloodSugarUpdateState extends State<RecordBloodSugarUpdate> {
               textColor: Colors.white,
               onPressed: () {
                 if (bSugarUpdateController.text.isEmpty) {
-                  dialogBoxContent = "Looks like u didn't enter anyting into 2 hours after meal section." + "To update your current food record, please make sure you enter Blood Sugar reading 2 hours after meal.";
+                  dialogBoxContent = "Looks like u didn't enter anyting into 2 hours after meal section." + "To update your current food record, please make sure you enter Blood Glucose reading 2 hours after meal.";
                   _showDialogBox(context, dialogBoxContent);
                 } else {
                   foodIntakeTrackFunction

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +36,7 @@ class _AppointmentMotherVerificationState extends State<AppointmentMotherVerific
                         bottom: MediaQuery.of(context).size.height * 0.033,
                       ),
                       child: Text(
-                        "This feature is currently inaccessible becasue your account is still not been verified. To verify your account," +
-                            " please enter the Verifaication Code that provided by the hospital.",
+                        "This feature is currently inaccessible becasue your account is still not been verified. To verify your account," + " please enter the Verifaication Code that provided by the hospital.",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: MediaQuery.of(context).size.width * 0.04,
@@ -61,17 +61,9 @@ class _AppointmentMotherVerificationState extends State<AppointmentMotherVerific
                               _showDialogBox(context);
                             } else {
                               CollectionReference users = FirebaseFirestore.instance.collection("mother");
-                              users
-                                  .doc(uid)
-                                  .update({"pin_code": pin.toString(), "is_verify": true})
-                                  .then((value) => print("Mother profile updated"))
-                                  .catchError((e) => print("Failed to update mother profile: $e"));
+                              users.doc(uid).update({"pin_code": pin.toString(), "is_verify": true}).then((value) => print("Mother profile updated")).catchError((e) => print("Failed to update mother profile: $e"));
 
-                              patient
-                                  .doc(value.docs.first.data()["patient_id"])
-                                  .update({"m_id": uid})
-                                  .then((value) => print("Patient updated"))
-                                  .catchError((e) => print("Failed to update patient: $e"));
+                              patient.doc(value.docs.first.data()["patient_id"]).update({"m_id": uid}).then((value) => print("Patient updated")).catchError((e) => print("Failed to update patient: $e"));
 
                               Navigator.pushReplacement(
                                 context,
@@ -244,7 +236,7 @@ class _AppointmentMotherVerificationState extends State<AppointmentMotherVerific
               child: CircularProgressIndicator(
                 strokeWidth: 5,
                 backgroundColor: Colors.black,
-                valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                valueColor: new AlwaysStoppedAnimation<Color>(appbar1),
               ),
             ),
           ),

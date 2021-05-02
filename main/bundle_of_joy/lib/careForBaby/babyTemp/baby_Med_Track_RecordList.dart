@@ -55,6 +55,7 @@ class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
           ),
         ),
         backgroundColor: appbar2,
@@ -66,8 +67,8 @@ class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
               color: Colors.white,
             ),
             onSelected: choiceAction,
-            itemBuilder: (BuildContext context){
-              return choices.map((String choice){
+            itemBuilder: (BuildContext context) {
+              return choices.map((String choice) {
                 return PopupMenuItem(
                   value: choice,
                   child: Text(choice),
@@ -85,24 +86,25 @@ class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
             if (snapshot.hasData) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.15,
-                    width: MediaQuery.of(context).size.width * 0.15,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 5,
-                      backgroundColor: Colors.black,
-                      valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                  child: Container(
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.width * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.15,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 5,
+                        backgroundColor: Colors.black,
+                        valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+                      ),
                     ),
                   ),
                 );
               } else if (snapshot.data.documents.isEmpty) {
                 return Center(
-                  child: Text(
-                    'There is currently no records',
-                    style: TextStyle(
-                      fontFamily: 'Comfortaa',
-                      fontSize: MediaQuery.of(context).size.width * 0.04,
-                      color: Colors.black,
+                  child: Container(
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.35),
+                    child: Text(
+                      'There is currently no records',
                     ),
                   ),
                 );
@@ -125,24 +127,23 @@ class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
                             motherHealthRecord: false,
                             longPress: () {
                               showModalBottomSheet(
-                                context: context,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-                                ),
-                                isScrollControlled: true,
-                                builder: (context) => Container(
-                                  height: MediaQuery.of(context).size.height * 0.8,
-                                  child: SingleChildScrollView(
-                                    physics: BouncingScrollPhysics(),
-                                    child: BabyMedTrackSneakPeak(
-                                      medIntakeRecordID: snapshot.data.documents[index]["recordID"],
-                                      selectedBabyID: widget.selectedBabyID,
-                                      collectionReference: (widget.completeRecord == true)? collectionReferenceComplete : collectionReferencePending,
-                                      completeRecord: widget.completeRecord,
-                                    ),
+                                  context: context,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
                                   ),
-                                )
-                              );
+                                  isScrollControlled: true,
+                                  builder: (context) => Container(
+                                        height: MediaQuery.of(context).size.height * 0.8,
+                                        child: SingleChildScrollView(
+                                          physics: BouncingScrollPhysics(),
+                                          child: BabyMedTrackSneakPeak(
+                                            medIntakeRecordID: snapshot.data.documents[index]["recordID"],
+                                            selectedBabyID: widget.selectedBabyID,
+                                            collectionReference: (widget.completeRecord == true) ? collectionReferenceComplete : collectionReferencePending,
+                                            completeRecord: widget.completeRecord,
+                                          ),
+                                        ),
+                                      ));
                             },
                             delete: () {
                               if (widget.completeRecord == true) {
@@ -183,30 +184,33 @@ class _BabyMedTrackRecordListState extends State<BabyMedTrackRecordList> {
               print("error");
             }
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.15,
-                    width: MediaQuery.of(context).size.width * 0.15,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 5,
-                      backgroundColor: Colors.black,
-                      valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
+              child: Container(
+                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.width * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.15,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 5,
+                        backgroundColor: Colors.black,
+                        valueColor: new AlwaysStoppedAnimation<Color>(appbar2),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                  ),
-                  Text(
-                    'Loading...',
-                    style: TextStyle(
-                      fontFamily: 'Comfortaa',
-                      fontSize: MediaQuery.of(context).size.width * 0.04,
-                      color: Colors.black,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.05,
                     ),
-                  ),
-                ],
+                    Text(
+                      'Loading...',
+                      style: TextStyle(
+                        fontFamily: 'Comfortaa',
+                        fontSize: MediaQuery.of(context).size.width * 0.04,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },

@@ -28,6 +28,7 @@ class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.045,
+            shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4))],
           ),
         ),
         backgroundColor: appbar1,
@@ -86,7 +87,7 @@ class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
                         left: 13.0,
                       ),
                       child: Text(
-                        "Conusmed Food",
+                        "Consumed Food",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -110,7 +111,7 @@ class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
                         left: 13.0,
                       ),
                       child: Text(
-                        "Blood Sugar",
+                        "Blood Glucose",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -119,7 +120,7 @@ class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
                         ),
                       ),
                     ),
-                    //Blood Sugar section
+                    //Blood Glucose section
                     RecordBloodSugarDoneWidget(
                       svgSrc: "assets/icons/blood-donation.svg",
                       bSugarBefore: bSugarBefore,
