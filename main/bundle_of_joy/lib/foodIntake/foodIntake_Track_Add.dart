@@ -1338,9 +1338,8 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                   color: appbar1,
                   textColor: Colors.white,
                   onPressed: () {
-                    //log(dateToPass); log(timeToPass); log(foodMap.toString()); log(bSugarBefore +" "+ bSugarAfter);
-                    if (foodMap.isNotEmpty && bSugarBefore != null && bSugarBefore != "") {
-                      if (bSugarAfter != null && bSugarAfter != "") {
+                    if (foodMap.isNotEmpty /*&& bSugarBefore != null && bSugarBefore != ""*/) {
+                      if ((bSugarAfter != null && bSugarAfter != "") && (bSugarBefore != null && bSugarBefore != "")) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -1353,7 +1352,7 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                                     addFoodScreenContext: context,
                                   )),
                         );
-                      } else {
+                      } else if ((bSugarAfter == null || bSugarAfter == "") && (bSugarBefore != null && bSugarBefore != "")) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -1366,7 +1365,20 @@ class _FoodIntakeTrackAddState extends State<FoodIntakeTrackAdd> {
                                     addFoodScreenContext: context,
                                   )),
                         );
-                      }
+                      } else if ((bSugarAfter == null || bSugarAfter == "") && (bSugarBefore == null || bSugarBefore == "") ){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FoodIntakeTrackAddSummary(
+                                      selectedDate: dateToPass,
+                                      selectedTime: timeToPass,
+                                      foodMap: foodMap,
+                                      bSugarBefore: null,
+                                      bSugarAfter: null,
+                                      addFoodScreenContext: context,
+                                    )),
+                          );
+                      } 
                     } else {
                       dialogBoxContent = "Looks like you left some section empty. " + "Please make sure u entered all the required field.";
                       _showDialogBox(context, dialogBoxContent);

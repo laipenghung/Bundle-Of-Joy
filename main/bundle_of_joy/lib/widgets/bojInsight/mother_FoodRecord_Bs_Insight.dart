@@ -35,21 +35,23 @@ class _FoodRecordBloodSugarInsightState extends State<FoodRecordBloodSugarInsigh
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
             snapshot.data.docs.forEach((doc) {
-              DateTime parsedDate = DateTime.parse(doc.data()["selectedDate"]);
-              String formattedDate = DateFormat('d MMM').format(parsedDate);
-              String formattedDateYear = DateFormat('yyyy').format(parsedDate);
-              DateTime parsedTime = DateTime.parse(doc.data()["selectedDate"] + " " + doc.data()["selectedTime"]);
-              String formattedTime = DateFormat('h:mm a').format(parsedTime);
-              recordDateTimeListString.add("$formattedDate\n$formattedDateYear\n$formattedTime");
-              bloodSugarList.add(double.parse(doc.data()["bsAfter"].toString()));
-              bloodSugarReading = double.parse(doc.data()["bsAfter"].toString());
-              totalRecordsCount++;
+              if(doc.data()["bsAfter"] != null){
+                DateTime parsedDate = DateTime.parse(doc.data()["selectedDate"]);
+                String formattedDate = DateFormat('d MMM').format(parsedDate);
+                String formattedDateYear = DateFormat('yyyy').format(parsedDate);
+                DateTime parsedTime = DateTime.parse(doc.data()["selectedDate"] + " " + doc.data()["selectedTime"]);
+                String formattedTime = DateFormat('h:mm a').format(parsedTime);
+                recordDateTimeListString.add("$formattedDate\n$formattedDateYear\n$formattedTime");
+                bloodSugarList.add(double.parse(doc.data()["bsAfter"].toString()));
+                bloodSugarReading = double.parse(doc.data()["bsAfter"].toString());
+                totalRecordsCount++;
 
-              if(bloodSugarReading < 5){leftRecordsCount++;}
-              else if(bloodSugarReading > 4.9 && bloodSugarReading < 7.1){excellentRecordsCount++;}
-              else if(bloodSugarReading > 7 && bloodSugarReading < 10.1){goodRecordsCount++;}
-              else if(bloodSugarReading > 10 && bloodSugarReading < 13.1){acceptableRecordsCount++;}
-              else if(bloodSugarReading > 13){poorRecordsCount++;}
+                if(bloodSugarReading < 5){leftRecordsCount++;}
+                else if(bloodSugarReading > 4.9 && bloodSugarReading < 7.1){excellentRecordsCount++;}
+                else if(bloodSugarReading > 7 && bloodSugarReading < 10.1){goodRecordsCount++;}
+                else if(bloodSugarReading > 10 && bloodSugarReading < 13.1){acceptableRecordsCount++;}
+                else if(bloodSugarReading > 13){poorRecordsCount++;}
+              }
             });
 
             recordCountList.add(leftRecordsCount);
