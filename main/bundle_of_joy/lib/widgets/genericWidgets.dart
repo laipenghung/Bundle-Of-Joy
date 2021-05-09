@@ -717,3 +717,46 @@ class VaccineRecordText extends StatelessWidget {
     );
   }
 }
+
+class NoBloodSugarWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(top: 10),
+      child: Center(
+        child: Container(
+          margin: EdgeInsets.only(top: 5, bottom: 5),
+          padding: EdgeInsets.all(5.0),
+          decoration: BoxDecoration(
+            color: Color(0xFFf5f5f5),
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            border: Border.all(color: Colors.red.withOpacity(0.4)),
+          ),
+          child: Column(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(top: 10, bottom: 8),
+                child: SvgPicture.asset(
+                  "assets/icons/warning.svg",
+                  height: 25,
+                  width: 25,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                child: Text(
+                  "You has choose to upload this food record without adding your blood glucose deatails. Hence, you wont able to see your blood glucose details.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.035,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
