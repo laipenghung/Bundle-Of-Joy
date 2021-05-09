@@ -19,6 +19,110 @@ class RecordBloodSugarDoneWidget extends StatelessWidget {
     this.showAnalyzer,
   }) : super(key: key);
 
+  Widget bloodSugarNotNull(BuildContext context){
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(
+            top: 15.0,
+            bottom: 15.0,
+          ),
+          child: Table(
+            //border: TableBorder.all(color: Colors.black),
+            children: [
+              TableRow(children: [
+                TableCell(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      top: 8,
+                      bottom: 8,
+                    ),
+                    decoration: BoxDecoration(
+                        border: Border(
+                      right: BorderSide(
+                        width: 0.5,
+                        color: Colors.black.withOpacity(0.65),
+                      ),
+                    )),
+                    child: Column(children: [
+                      Text(
+                        bSugarBefore.toString() + " mmol/L",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top: 3),
+                        child: Text(
+                          "Before meal",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.033,
+                            color: Colors.black.withOpacity(0.65),
+                          ),
+                        ),
+                      ),
+                    ]),
+                  ),
+                ),
+                TableCell(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      top: 8,
+                      bottom: 8,
+                    ),
+                    child: Column(children: [
+                      Text(
+                        //bSugarAfter.toString() + " mmol/L",
+                        (bSugarAfter == null) ? "-" : bSugarAfter.toString() + " mmol/L",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top: 3),
+                        child: Text(
+                          "2 hours after meal",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.033,
+                            color: Colors.black.withOpacity(0.65),
+                          ),
+                        ),
+                      ),
+                    ]),
+                  ),
+                ),
+              ]),
+            ],
+          ),
+        ),
+        (showAnalyzer == true)
+        ? Column(children: <Widget>[
+            BloodSugarAnalyzerWidget(
+              svgSrc: "assets/icons/web-analytics.svg",
+              bSugarBefore: bSugarBefore,
+              bSugarAfter: bSugarAfter,
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              child: FoodRecordBloodSugarInsight(
+                svgSrc: "assets/icons/insight.svg",
+              ),
+            ),
+          ])
+        : (bSugarAfter == null)
+            ? BloodSugarAddPendingText()
+            : BloodSugarAddDoneText()
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -75,103 +179,7 @@ class RecordBloodSugarDoneWidget extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(
-                top: 15.0,
-                bottom: 15.0,
-              ),
-              child: Table(
-                //border: TableBorder.all(color: Colors.black),
-                children: [
-                  TableRow(children: [
-                    TableCell(
-                      child: Container(
-                        padding: EdgeInsets.only(
-                          top: 8,
-                          bottom: 8,
-                        ),
-                        decoration: BoxDecoration(
-                            border: Border(
-                          right: BorderSide(
-                            width: 0.5,
-                            color: Colors.black.withOpacity(0.65),
-                          ),
-                        )),
-                        child: Column(children: [
-                          Text(
-                            bSugarBefore.toString() + " mmol/L",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.05,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(top: 3),
-                            child: Text(
-                              "Before meal",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.033,
-                                color: Colors.black.withOpacity(0.65),
-                              ),
-                            ),
-                          ),
-                        ]),
-                      ),
-                    ),
-                    TableCell(
-                      child: Container(
-                        padding: EdgeInsets.only(
-                          top: 8,
-                          bottom: 8,
-                        ),
-                        child: Column(children: [
-                          Text(
-                            //bSugarAfter.toString() + " mmol/L",
-                            (bSugarAfter == null) ? "-" : bSugarAfter.toString() + " mmol/L",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.05,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(top: 3),
-                            child: Text(
-                              "2 hours after meal",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.033,
-                                color: Colors.black.withOpacity(0.65),
-                              ),
-                            ),
-                          ),
-                        ]),
-                      ),
-                    ),
-                  ]),
-                ],
-              ),
-            ),
-            (showAnalyzer == true)
-                ? Column(children: <Widget>[
-                    BloodSugarAnalyzerWidget(
-                      svgSrc: "assets/icons/web-analytics.svg",
-                      bSugarBefore: bSugarBefore,
-                      bSugarAfter: bSugarAfter,
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: FoodRecordBloodSugarInsight(
-                        svgSrc: "assets/icons/insight.svg",
-                      ),
-                    ),
-                  ])
-                : (bSugarAfter == null)
-                    ? BloodSugarAddPendingText()
-                    : BloodSugarAddDoneText(),
+            (bSugarBefore == null && bSugarAfter == null)? NoBloodSugarWidget() : bloodSugarNotNull(context),
           ],
         ),
       ),

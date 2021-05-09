@@ -71,7 +71,8 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
     DateTime parsedTime = DateTime.parse(widget.selectedDate + " " + widget.selectedTime);
     String formattedTime = DateFormat('h:mm a').format(parsedTime);
     Map food = widget.foodMap;
-    double bSugarBefore = double.parse(widget.bSugarBefore);
+    // if(widget.bSugarBefore != null){double bSugarBefore = double.parse(widget.bSugarBefore);}
+    
     //double bSugarAfter = double.parse(widget.bSugarAfter);
 
     return Scaffold(
@@ -160,7 +161,7 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
             //Blood Glucose section
             RecordBloodSugarDoneWidget(
               svgSrc: "assets/icons/blood-donation.svg",
-              bSugarBefore: bSugarBefore,
+              bSugarBefore: (widget.bSugarBefore == null) ? null : double.parse(widget.bSugarBefore),
               bSugarAfter: (widget.bSugarAfter == null) ? null : double.parse(widget.bSugarAfter),
               showAnalyzer: false,
             ),
@@ -192,7 +193,20 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                             widget.addFoodScreenContext,
                           )
                           .then((value) => _showNotification(notificationMessage));
-                    } else {
+                    } else if(widget.bSugarAfter == null && widget.bSugarBefore == null){
+                      notificationMessage = "Food Record upload successfully.";
+                      foodIntakeTrackFunction
+                          .uploadFoodRecordDone(
+                            widget.selectedDate,
+                            widget.selectedTime,
+                            widget.bSugarBefore,
+                            widget.bSugarAfter,
+                            widget.foodMap,
+                            context,
+                            widget.addFoodScreenContext,
+                          )
+                          .then((value) => _showNotification(notificationMessage));
+                    }else {
                       notificationMessage = "Food Record upload successfully. Remember to update your food record after 2 hours.";
                       notificationMessageAfter2hour = "Hey it's already 2 hours, remember to update your food record.";
                       foodIntakeTrackFunction

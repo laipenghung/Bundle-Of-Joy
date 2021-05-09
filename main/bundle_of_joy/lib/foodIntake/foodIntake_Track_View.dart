@@ -45,8 +45,8 @@ class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
               DateTime parsedTime = DateTime.parse(snapshot.data.data()["selectedDate"] + " " + snapshot.data.data()["selectedTime"]);
               String formattedTime = DateFormat('h:mm a').format(parsedTime);
               Map food = snapshot.data.data()["foodMap"];
-              double bSugarBefore = double.parse(snapshot.data.data()["bsBefore"]);
-              double bSugarAfter = double.parse(snapshot.data.data()["bsAfter"]);
+              // double bSugarBefore = double.parse(snapshot.data.data()["bsBefore"]);
+              // double bSugarAfter = double.parse(snapshot.data.data()["bsAfter"]);
 
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -123,8 +123,8 @@ class _FoodIntakeTrackViewState extends State<FoodIntakeTrackView> {
                     //Blood Glucose section
                     RecordBloodSugarDoneWidget(
                       svgSrc: "assets/icons/blood-donation.svg",
-                      bSugarBefore: bSugarBefore,
-                      bSugarAfter: bSugarAfter,
+                      bSugarBefore: (snapshot.data.data()["bsBefore"] == null) ? null : double.parse(snapshot.data.data()["bsBefore"]),
+                      bSugarAfter: (snapshot.data.data()["bsAfter"] == null) ? null : double.parse(snapshot.data.data()["bsAfter"]),
                       showAnalyzer: true,
                     )
                   ],
