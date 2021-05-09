@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:bundle_of_joy/MotherHealthTracking/healthTracking_Add.dart';
 import 'package:bundle_of_joy/MotherHealthTracking/healthTracking_RecordView.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:bundle_of_joy/widgets/recordListViewWidget.dart';
@@ -18,12 +18,27 @@ class HealthTrackRecordList extends StatefulWidget {
 
 class _HealthTrackRecordListState extends State<HealthTrackRecordList> {
   bool descendingDate = true;
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
   final User user = FirebaseAuth.instance.currentUser;
   String databaseTable;
 
+  static String sortAscByDate = "Sort By Date Ascendingly";
+  static String sortDescByDate = "Sort By Date Descendingly";
+  static List<String> choices = <String>[sortAscByDate, sortDescByDate];
+
   @override
   Widget build(BuildContext context) {
+    void choiceAction(String choice) {
+      if (choice == sortAscByDate) {
+        setState(() {
+          descendingDate = false;
+        });
+      } else if (choice == sortDescByDate) {
+        setState(() {
+          descendingDate = true;
+        });
+      }
+    }
+
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
@@ -40,12 +55,21 @@ class _HealthTrackRecordListState extends State<HealthTrackRecordList> {
         backgroundColor: appbar1,
         centerTitle: true,
         actions: <Widget>[
-          IconButton(
-              icon: Icon(
-                Icons.sort_rounded,
-                color: Colors.white,
-              ),
-              onPressed: () {})
+          PopupMenuButton(
+            icon: Icon(
+              Icons.sort_rounded,
+              color: Colors.white,
+            ),
+            onSelected: choiceAction,
+            itemBuilder: (BuildContext context) {
+              return choices.map((String choice) {
+                return PopupMenuItem(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          )
         ],
       ),
       body: SingleChildScrollView(
@@ -68,12 +92,10 @@ class _HealthTrackRecordListState extends State<HealthTrackRecordList> {
                 );
               } else if (snapshot.data.documents.isEmpty) {
                 return Center(
-                  child: Text(
-                    'There is currently no records',
-                    style: TextStyle(
-                      fontFamily: 'Comfortaa',
-                      fontSize: MediaQuery.of(context).size.width * 0.04,
-                      color: Colors.black,
+                  child: Container(
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.35),
+                    child: Text(
+                      'There is currently no record',
                     ),
                   ),
                 );
@@ -103,18 +125,6 @@ class _HealthTrackRecordListState extends State<HealthTrackRecordList> {
                                 context,
                                 MaterialPageRoute(builder: (context) => HealthTrackRecordView(healthRecordID: snapshot.data.documents[index]["mh_id"])),
                               );
-                              /*
-                            if(widget.completeRecord == true){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => FoodIntakeTrackView(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
-                              );
-                            }else{
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => FoodIntakeTrackUpdate(foodIntakeRecordID: snapshot.data.documents[index]["recordID"])),
-                              );
-                            } */
                             },
                           ),
                         );
@@ -153,6 +163,16 @@ class _HealthTrackRecordListState extends State<HealthTrackRecordList> {
             );
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HealthTrackingAdd()),
+          );
+        },
+        child: Icon(Icons.add),
+        backgroundColor: appbar1,
       ),
     );
   }

@@ -424,7 +424,7 @@ class HealthRecordBloodSugarWidget extends StatelessWidget {
 
 class HealthRecordBodyPhysiqueWidget extends StatefulWidget {
   final String svgSrc;
-  final int heightReading, weightReading;
+  final double heightReading, weightReading;
   const HealthRecordBodyPhysiqueWidget({
     Key key,
     @required this.svgSrc,

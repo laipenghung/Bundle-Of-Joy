@@ -31,10 +31,11 @@ class _UserProfileState extends State<UserProfile> {
       child: Text("Yes"),
       onPressed: () {
         signOut();
-        Navigator.of(context, rootNavigator: true).push(
+        Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) {
             return SignUpScreen();
           }),
+          (Route route) => false,
         );
       },
     );

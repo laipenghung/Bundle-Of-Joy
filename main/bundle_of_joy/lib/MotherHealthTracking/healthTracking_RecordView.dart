@@ -44,8 +44,8 @@ class _HealthTrackRecordViewState extends State<HealthTrackRecordView> {
               int bPressureSystolic = int.parse(snapshot.data.data()["mh_bloodPressure_sys"].toString());
               int bPressureDiastolic = int.parse(snapshot.data.data()["mh_bloodPressure_dia"].toString());
               double bloodSugarReading = snapshot.data.data()["mh_bloodSugar"].toDouble();
-              int weightReading = snapshot.data.data()["mh_weight"];
-              int heightReading = snapshot.data.data()["mh_height"];
+              double weightReading = snapshot.data.data()["mh_weight"].toDouble();
+              double heightReading = snapshot.data.data()["mh_height"].toDouble();
 
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
