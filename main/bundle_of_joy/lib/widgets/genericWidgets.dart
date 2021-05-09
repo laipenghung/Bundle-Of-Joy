@@ -717,3 +717,105 @@ class VaccineRecordText extends StatelessWidget {
     );
   }
 }
+
+class BloodPressureAddDoneText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    TextStyle normalTextStye = TextStyle(
+      color: Colors.black.withOpacity(0.65),
+      fontSize: MediaQuery.of(context).size.width * 0.033,
+    );
+
+    TextStyle highlightedTextStyle = TextStyle(
+      color: Colors.black.withOpacity(0.8),
+      fontWeight: FontWeight.bold,
+      fontSize: MediaQuery.of(context).size.width * 0.033,
+    );
+
+    return Container(
+      width: double.infinity,
+      child: RichText(
+          textAlign: TextAlign.left,
+          text: TextSpan(style: normalTextStye, children: <TextSpan>[
+            TextSpan(
+              text: "If you wish to view your Blood Pressure condition in detailed mode with BoJ Blood Pressure Analyzer™." + " First, you will have to save the current health record. Then navigate to ",
+            ),
+            TextSpan(
+              text: "Health Tracking",
+              style: highlightedTextStyle,
+            ),
+            TextSpan(
+              text: " and select the health record you wish to view.",
+            ),
+          ])),
+    );
+  }
+}
+
+class BodyPhysiqueAddDoneText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    TextStyle normalTextStye = TextStyle(
+      color: Colors.black.withOpacity(0.65),
+      fontSize: MediaQuery.of(context).size.width * 0.033,
+    );
+
+    TextStyle highlightedTextStyle = TextStyle(
+      color: Colors.black.withOpacity(0.8),
+      fontWeight: FontWeight.bold,
+      fontSize: MediaQuery.of(context).size.width * 0.033,
+    );
+
+    return Container(
+      width: double.infinity,
+      child: RichText(
+          textAlign: TextAlign.left,
+          text: TextSpan(style: normalTextStye, children: <TextSpan>[
+            TextSpan(
+              text: "If you wish to view your Body Physique condition in detailed mode with BoJ Body Physique Analyzer™." + " First, you will have to save the current health record. Then navigate to ",
+            ),
+            TextSpan(
+              text: "Health Tracking",
+              style: highlightedTextStyle,
+            ),
+            TextSpan(
+              text: " and select the health record you wish to view.",
+            ),
+          ])),
+    );
+  }
+}
+
+class BloodGlucoseAddDoneText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    TextStyle normalTextStye = TextStyle(
+      color: Colors.black.withOpacity(0.65),
+      fontSize: MediaQuery.of(context).size.width * 0.033,
+    );
+
+    TextStyle highlightedTextStyle = TextStyle(
+      color: Colors.black.withOpacity(0.8),
+      fontWeight: FontWeight.bold,
+      fontSize: MediaQuery.of(context).size.width * 0.033,
+    );
+
+    return Container(
+      width: double.infinity,
+      child: RichText(
+          textAlign: TextAlign.left,
+          text: TextSpan(style: normalTextStye, children: <TextSpan>[
+            TextSpan(
+              text: "If you wish to view your Blood Glucose condition in detailed mode with BoJ Blood Glucose Analyzer™." + " First, you will have to save the current health record. Then navigate to ",
+            ),
+            TextSpan(
+              text: "Health Tracking",
+              style: highlightedTextStyle,
+            ),
+            TextSpan(
+              text: " and select the health record you wish to view.",
+            ),
+          ])),
+    );
+  }
+}

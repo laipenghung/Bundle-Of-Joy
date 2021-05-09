@@ -52,6 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onPressed: () {
                   signInWithFacebook().then((result){
                     if(result!=null){
+                      Navigator.of(context).popUntil((route) => route.isFirst);
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                             builder: (context){
@@ -81,6 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onPressed: () {
                   signInWithGoogle().then((result){
                     if(result!=null){
+                      Navigator.of(context).popUntil((route) => route.isFirst);
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                             builder: (context){
