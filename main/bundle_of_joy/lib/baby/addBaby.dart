@@ -1,3 +1,4 @@
+import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:age/age.dart";
@@ -22,21 +23,19 @@ class _AddBaby extends State<AddBaby> {
     double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
 
     return Scaffold(
+      backgroundColor: Color(0xFFf5f5f5),
       appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
         title: Text(
-          "Add baby",
+          "Add Baby",
           style: TextStyle(
-            fontFamily: "Comfortaa",
-            fontWeight: FontWeight.bold,
-            fontSize: fontSizeTitle,
-            color: Colors.black,
+            shadows: <Shadow>[
+              Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
+            ],
+            fontSize: MediaQuery.of(context).size.width * 0.045,
+            color: Colors.white,
           ),
         ),
-        backgroundColor: Color(0xFFFCFFD5),
+        backgroundColor: appbar2,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -65,26 +64,26 @@ class _AddBaby extends State<AddBaby> {
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: shortHeight),
-                      width: longWidth,
-                      child: FormBuilderTextField(
-                        attribute: "registered_id",
-                        decoration: InputDecoration(
-                            labelText: "Baby registered ID*",
-                            labelStyle: TextStyle(
-                              fontFamily: "Comfortaa",
-                            )),
-                        validators: [
-                          FormBuilderValidators.required(),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Container(
+                //       margin: EdgeInsets.only(top: shortHeight),
+                //       width: longWidth,
+                //       child: FormBuilderTextField(
+                //         attribute: "registered_id",
+                //         decoration: InputDecoration(
+                //             labelText: "Baby registered ID*",
+                //             labelStyle: TextStyle(
+                //               fontFamily: "Comfortaa",
+                //             )),
+                //         validators: [
+                //           FormBuilderValidators.required(),
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -93,7 +92,7 @@ class _AddBaby extends State<AddBaby> {
                       width: shortWidth,
                       child: FormBuilderDropdown(
                         attribute: "gender",
-                        dropdownColor: Color(0xFFFCFFD5),
+                        dropdownColor: appbar2,
                         decoration: InputDecoration(
                             labelText: "Gender*",
                             labelStyle: TextStyle(
@@ -108,7 +107,7 @@ class _AddBaby extends State<AddBaby> {
                       width: shortWidth,
                       child: FormBuilderDropdown(
                         attribute: "bloodType",
-                        dropdownColor: Color(0xFFFCFFD5),
+                        dropdownColor: appbar2,
                         decoration: InputDecoration(
                             labelText: "Blood Type*",
                             labelStyle: TextStyle(
@@ -132,7 +131,7 @@ class _AddBaby extends State<AddBaby> {
                           return Theme(
                             data: ThemeData.light().copyWith(
                               colorScheme: ColorScheme.dark(
-                                surface: Color(int.parse("0xFFFCFFD5")),
+                                surface: appbar2,
                                 onSurface: Colors.black,
                               ),
                             ),
@@ -171,95 +170,98 @@ class _AddBaby extends State<AddBaby> {
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: shortHeight),
-                      width: longWidth,
-                      child: FormBuilderDateTimePicker(
-                        attribute: "tob",
-                        inputType: InputType.time,
-                        builder: (BuildContext context, Widget child) {
-                          return Theme(
-                            data: ThemeData.light().copyWith(
-                              colorScheme: ColorScheme.dark(
-                                surface: Color(int.parse("0xFFFCFFD5")),
-                                onSurface: Colors.black,
-                              ),
-                            ),
-                            child: child,
-                          );
-                        },
-                        format: DateFormat("H:m"),
-                        decoration: InputDecoration(
-                            labelText: "Time of Birth",
-                            labelStyle: TextStyle(
-                              fontFamily: "Comfortaa",
-                            )),
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: [
+                //     Container(
+                //       margin: EdgeInsets.only(top: shortHeight),
+                //       width: longWidth,
+                //       child: FormBuilderDateTimePicker(
+                //         attribute: "tob",
+                //         inputType: InputType.time,
+                //         builder: (BuildContext context, Widget child) {
+                //           return Theme(
+                //             data: ThemeData.light().copyWith(
+                //               colorScheme: ColorScheme.dark(
+                //                 surface: Color(int.parse("0xFFFCFFD5")),
+                //                 onSurface: Colors.black,
+                //               ),
+                //             ),
+                //             child: child,
+                //           );
+                //         },
+                //         format: DateFormat("H:m"),
+                //         decoration: InputDecoration(
+                //             labelText: "Time of Birth",
+                //             labelStyle: TextStyle(
+                //               fontFamily: "Comfortaa",
+                //             )),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 Padding(
                   padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, bottom: MediaQuery.of(context).size.height * 0.05),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      InkWell(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          height: MediaQuery.of(context).size.height * 0.06,
-                          decoration: myBoxDecoration(),
-                          child: Center(
-                            child: Text(
-                              "Reset",
-                              style: TextStyle(
-                                fontFamily: 'Comfortaa',
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.height * 0.025,
-                                color: Colors.black,
-                              ),
+                      RaisedButton(
+                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05, vertical: MediaQuery.of(context).size.height * 0.015),
+                          child: Text(
+                            'Reset',
+                            style: TextStyle(
+                              fontFamily: 'Comfortaa',
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.height * 0.025,
                             ),
                           ),
-                        ),
-                        onTap: () {
-                          _key.currentState.reset();
-                        },
-                      ),
-                      InkWell(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          height: MediaQuery.of(context).size.height * 0.06,
-                          decoration: myBoxDecoration(),
-                          child: Center(
-                            child: Text(
-                              "Confirm",
-                              style: TextStyle(
-                                fontFamily: 'Comfortaa',
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.height * 0.025,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                        onTap: () {
-                          if (_key.currentState.saveAndValidate()) {
-                            print(_key.currentState.value);
-                            DateTime tob = _key.currentState.value["tob"] ?? DateTime.parse("2020-00-00 00:00:00.000");
-                            Baby baby = new Baby.empty();
-                            baby.addBaby(
-                                _key.currentState.value["name"],
-                                _key.currentState.value["registered_id"],
-                                finalAge,
-                                _key.currentState.value["gender"],
-                                _key.currentState.value["dob"],
-                                tob,
-                                _key.currentState.value["bloodType"],
-                                context);
+                          textColor: Colors.white,
+                          color: Colors.redAccent,
+                          elevation: 3,
+                          onPressed: () {
+                            _key.currentState.reset();
                           }
-                        },
+                      ),
+                      RaisedButton(
+                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05, vertical: MediaQuery.of(context).size.height * 0.015),
+                          child: Text(
+                            'Confirm',
+                            style: TextStyle(
+                              fontFamily: 'Comfortaa',
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.height * 0.025,
+                            ),
+                          ),
+                          textColor: Colors.white,
+                          color: appbar2,
+                          elevation: 3,
+                          onPressed: () {
+                            if (_key.currentState.saveAndValidate()) {
+                              print(_key.currentState.value);
+                              DateTime tob = _key.currentState.value["tob"] ?? DateTime.parse("2020-00-00 00:00:00.000");
+                              Baby baby = new Baby.empty();
+                              baby.addBaby(
+                                  _key.currentState.value["name"],
+                                  "",
+                                  finalAge,
+                                  _key.currentState.value["gender"],
+                                  _key.currentState.value["dob"],
+                                  tob,
+                                  _key.currentState.value["bloodType"],
+                                  context
+                              );
+                              // baby.addBaby(
+                              //     _key.currentState.value["name"],
+                              //     _key.currentState.value["registered_id"],
+                              //     finalAge,
+                              //     _key.currentState.value["gender"],
+                              //     _key.currentState.value["dob"],
+                              //     tob,
+                              //     _key.currentState.value["bloodType"],
+                              //     context
+                              // );
+                            }
+                          }
                       ),
                     ],
                   ),
@@ -269,18 +271,6 @@ class _AddBaby extends State<AddBaby> {
           ),
         ),
       ),
-    );
-  }
-
-  BoxDecoration myBoxDecoration() {
-    return BoxDecoration(
-      color: Color(0xFFFCFFD5),
-      border: Border.all(
-        color: Colors.black,
-        width: 2.0,
-      ),
-      borderRadius: BorderRadius.all(Radius.circular(10.0) //<--- border radius here
-          ),
     );
   }
 }

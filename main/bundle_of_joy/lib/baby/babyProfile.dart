@@ -1,4 +1,5 @@
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
+import 'package:bundle_of_joy/widgets/horizontalCardWidget.dart';
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -51,23 +52,40 @@ class _BabyProfile extends State<BabyProfile> {
             doc.data()[_listField[13]].toInt()));
       });
 
-      return ListView.separated(
-        itemCount: _listBaby.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(_listBaby[index].b_name),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => BabyInfo(baby: _listBaby[index])),
-              );
-            },
-          );
-        },
-        separatorBuilder: (context, index) {
-          return Divider();
-        },
+      // return ListView.separated(
+      //   itemCount: _listBaby.length,
+      //   itemBuilder: (context, index) {
+      //     return ListTile(
+      //       title: Text(_listBaby[index].b_name),
+      //       trailing: Icon(Icons.keyboard_arrow_right),
+      //       onTap: () {
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(builder: (context) => BabyInfo(baby: _listBaby[index])),
+      //         );
+      //       },
+      //     );
+      //   },
+      //   separatorBuilder: (context, index) {
+      //     return Divider();
+      //   },
+      // );
+
+      return ListView.builder(
+          itemCount: _listBaby.length,
+          itemBuilder: (context, index){
+            return HorizontalCardWidget(
+              title: _listBaby[index].b_name,
+              description: "Age: "+_listBaby[index].b_age,
+              svgSrc: _listBaby[index].b_gender.toLowerCase() == "male" ? "assets/icons/boy.svg" : "assets/icons/femenine.svg",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BabyInfo(baby: _listBaby[index])),
+                );
+              },
+            );
+          }
       );
     } else {
       return Container(
