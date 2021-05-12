@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 import '../../main.dart';
 
 class BabyMedTrackAddSummary extends StatefulWidget {
-  final String selectedDate, selectedTime, bTempBefore, bTempAfter, selectedBabyID;
+  final String selectedDate, selectedTime, bTempBefore, bTempAfter, selectedBabyID, reminderTime;
   final Map medsMap;
   final BuildContext babyAddMedBuildContext;
   BabyMedTrackAddSummary(
@@ -24,7 +24,8 @@ class BabyMedTrackAddSummary extends StatefulWidget {
       @required this.bTempAfter,
       @required this.selectedBabyID,
       @required this.medsMap,
-      @required this.babyAddMedBuildContext})
+      @required this.babyAddMedBuildContext,
+      @required this.reminderTime})
       : super(key: key);
 
   @override
@@ -53,10 +54,10 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
     await main.createState().flutterLocalNotificationsPlugin.show(0, 'Baby Medicine Intake Tracking', notificationMessage, notificationDetails);
   }
 
-  void _showNotificationAfter4Hour(notificationMessageAfter) async {
+  void _showNotificationAfter4Hour(notificationMessageAfter, time) async {
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation("Asia/Kuching"));
-    var scheduledTime = tz.TZDateTime.now(tz.local).add(const Duration(hours: 4));
+    var scheduledTime = tz.TZDateTime.now(tz.local).add(Duration(hours: time));
 
     AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
       'Schedule Id',
@@ -171,6 +172,7 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
               svgSrc: "assets/icons/thermometer.svg",
               tempBeforeMeds: tempBeforeMeds,
               tempAferMeds: (widget.bTempAfter == null) ? null : double.parse(widget.bTempAfter),
+              reminderTime: widget.reminderTime,
             ),
             Container(
               margin: EdgeInsets.only(left: 13, right: 13, bottom: 25),
@@ -190,16 +192,18 @@ class _BabyMedTrackAddSummaryState extends State<BabyMedTrackAddSummary> {
                     if (widget.bTempAfter != null) {
                       notificationMessage = "Baby Medicine Record upload successfully.";
                       careForBabyFunction
-                          .uploadBabyMedsRecordDone(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.bTempBefore, widget.bTempAfter, widget.medsMap, context, widget.babyAddMedBuildContext)
+                          .uploadBabyMedsRecordDone(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.bTempBefore, widget.bTempAfter, 
+                            widget.medsMap, context, widget.babyAddMedBuildContext, int.parse(widget.reminderTime))
                           .then((value) => _showNotification(notificationMessage));
                     } else {
                       notificationMessage = "Baby Medicine Record upload successfully. Remember to update your baby's body temperature reading after 4 hours.";
                       notificationMessageAfter = "Hey it's already 4 hours, remember to update your baby medicine record.";
                       careForBabyFunction
-                          .uploadBabyMedsRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.bTempBefore, widget.bTempAfter, widget.medsMap, context, widget.babyAddMedBuildContext)
+                          .uploadBabyMedsRecordPending(widget.selectedBabyID, widget.selectedDate, widget.selectedTime, widget.bTempBefore, 
+                            widget.bTempAfter, widget.medsMap, context, widget.babyAddMedBuildContext, int.parse(widget.reminderTime))
                           .then((value) {
                         _showNotification(notificationMessage);
-                        _showNotificationAfter4Hour(notificationMessageAfter);
+                        _showNotificationAfter4Hour(notificationMessageAfter, int.parse(widget.reminderTime));
                       });
                     }
                   },

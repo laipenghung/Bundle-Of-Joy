@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class RecordBodyTempWidget extends StatelessWidget {
-  final String svgSrc;
+  final String svgSrc, reminderTime;
   final double tempBeforeMeds, tempAferMeds;
   
   const RecordBodyTempWidget({
     Key key,
     this.svgSrc,
+    this.reminderTime,
     this.tempBeforeMeds,
     this.tempAferMeds,
   }) : super(key: key);
@@ -52,7 +53,7 @@ class RecordBodyTempWidget extends StatelessWidget {
               width: double.infinity,
               margin: EdgeInsets.only(top: 8.0,),
               child: Text(
-                "This section display your baby's body temperature before and 4 hours after taking the medicine.",
+                "This section display your baby's body temperature before and " + reminderTime + " hours after taking the medicine.",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -120,7 +121,7 @@ class RecordBodyTempWidget extends StatelessWidget {
                               Container(
                                 padding: EdgeInsets.only(top: 3),
                                 child: Text(
-                                  "After 4 hours",
+                                  "After " + reminderTime + " hours",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: MediaQuery.of(context).size.width * 0.033,
@@ -137,7 +138,7 @@ class RecordBodyTempWidget extends StatelessWidget {
                 ],
               ),
             ),
-            (tempAferMeds == null) ? BabyTempRecordAddText() : BabyTempRecordViewText(),
+            (tempAferMeds == null) ? BabyTempRecordAddText(reminderTime: reminderTime,) : BabyTempRecordViewText(reminderTime: reminderTime,),
           ],
         ),
       ),
