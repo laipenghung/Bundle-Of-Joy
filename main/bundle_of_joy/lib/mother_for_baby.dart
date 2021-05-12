@@ -1,8 +1,10 @@
 import 'package:age/age.dart';
 import 'package:bundle_of_joy/appointmentBaby/appointmentBaby_verify.dart';
+import 'package:bundle_of_joy/baby/addBaby.dart';
 import 'package:bundle_of_joy/baby/baby.dart';
 import 'package:bundle_of_joy/careForBaby/careForBaby_Main.dart';
 import 'package:bundle_of_joy/vaccination/vaccination_Main.dart';
+import 'package:bundle_of_joy/widgets/loadingWidget.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,9 +27,7 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
   Widget _listView(AsyncSnapshot<QuerySnapshot> collection) {
     double width = MediaQuery.of(context).size.width * 0.7;
     double height = MediaQuery.of(context).size.height * 0.04;
-    double paddingTop = MediaQuery.of(context).size.height * 0.05;
-    double fontSizeTitle = MediaQuery.of(context).size.width * 0.05;
-    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
+
     int selected_index = 0;
     String selected_babyID;
     final _listField = [
@@ -67,6 +67,10 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
 
         if (age.days != 0) {
           age_string += age.days.toString() + " days ";
+        }
+
+        if (age.years == 0 && age.months == 0 && age.days == 0) {
+          age_string = "Today";
         }
 
         baby.updateAge(age_string.trim(), doc.data()["b_id"]);
@@ -170,7 +174,6 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                         color: background2,
                         shape: BoxShape.circle,
                       ),
-                      //child: SvgPicture.asset("assets/icons/menu.svg"),
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.05),
@@ -185,18 +188,28 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                       color: Colors.white,
                     ),
                   ),
-                  //SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        margin: EdgeInsets.symmetric(vertical: 20),
-                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                        margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.03),
+                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.02, vertical: MediaQuery.of(context).size.height * 0.005),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: _listView(collection),
+                      ),
+                      IconButton(
+                        iconSize: MediaQuery.of(context).size.height * 0.05,
+                        icon: Icon(Icons.add_circle),
+                        tooltip: 'Add Baby',
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => AddBaby()),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -291,42 +304,30 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
                   ),
                 ),
               ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+              RaisedButton(
+                  child: Text(
+                    'Add Baby',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: fontSizeText,
+                    ),
+                  ),
+                  textColor: Colors.white,
+                  color: appbar2,
+                  elevation: 3,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddBaby()),
+                    );
+                  }
+              ),
             ],
           ),
         ),
       );
     }
-  }
-
-  Widget loading() {
-    double fontSizeText = MediaQuery.of(context).size.width * 0.04;
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.width * 0.15,
-            width: MediaQuery.of(context).size.width * 0.15,
-            child: CircularProgressIndicator(
-              strokeWidth: 5,
-              backgroundColor: Colors.black,
-              valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFFFCFFD5)),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
-          ),
-          Text(
-            "Loading...",
-            style: TextStyle(
-              fontFamily: "Comfortaa",
-              fontSize: fontSizeText,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   //Card view Widget
@@ -336,13 +337,13 @@ class _MotherForBabyHomeState extends State<MotherForBabyHome> {
 
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
-      body: FutureBuilder(
-          future: baby.get(),
+      body: StreamBuilder(
+          stream: baby.snapshots(),
           builder: (context, collection) {
             if (collection.hasData) {
               return hasData(collection);
             } else {
-              return loading();
+              return LoadingWidget();
             }
           }),
     );

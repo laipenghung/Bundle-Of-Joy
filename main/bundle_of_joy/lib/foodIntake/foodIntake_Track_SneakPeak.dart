@@ -79,8 +79,8 @@ class _FoodIntakeTrackSneakPeakState extends State<FoodIntakeTrackSneakPeak> {
                 DateTime parsedTime = DateTime.parse(snapshot.data.data()["selectedDate"] + " " + snapshot.data.data()["selectedTime"]);
                 String formattedTime = DateFormat('h:mm a').format(parsedTime);
                 Map food = snapshot.data.data()["foodMap"];
-                double bSugarBefore = double.parse(snapshot.data.data()["bsBefore"]);
-                if(widget.completeRecord == true){bSugarAfter = double.parse(snapshot.data.data()["bsAfter"]);}
+                double bSugarBefore = snapshot.data.data()["bsBefore"] != null ? double.parse(snapshot.data.data()["bsBefore"]) : 0;
+                if(widget.completeRecord == true){bSugarAfter = snapshot.data.data()["bsAfter"] != null ? double.parse(snapshot.data.data()["bsAfter"]) : 0;}
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(

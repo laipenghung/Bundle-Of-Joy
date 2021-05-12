@@ -194,16 +194,14 @@ class RecordListViewWidget extends StatelessWidget {
             ),
             Flexible(
               flex: 1,
-              child: (motherHealthRecord == false)
-                ?Container(
+              child: Container(
                   child: Center(
                     child: IconButton(
                       icon: Icon(Icons.delete, color: Colors.red,), 
                       onPressed: delete,
                     )
                   ),
-                )
-                :Container(),
+                ),
             ),
           ],
         ),

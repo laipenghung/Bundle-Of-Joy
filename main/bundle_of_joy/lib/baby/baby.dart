@@ -40,14 +40,13 @@ class Baby {
     }).then((value) {
       baby.doc(value.id).update({"b_id": value.id});
       print("Baby Added");
-      /*
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (BuildContext context){
-            return MotherForBabyTab();
-          })
-      );
-      */
+      Navigator.pop(context);
+      // Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (BuildContext context){
+      //       return new MotherForBabyHome();
+      //     })
+      // );
 
       Fluttertoast.showToast(
         msg: "Baby Added",

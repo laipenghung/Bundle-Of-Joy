@@ -18,8 +18,9 @@ class HealthTrackRecordList extends StatefulWidget {
 
 class _HealthTrackRecordListState extends State<HealthTrackRecordList> {
   bool descendingDate = true;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
   final User user = FirebaseAuth.instance.currentUser;
-  String databaseTable;
+  String databaseTable = "health_record";
 
   static String sortAscByDate = "Sort By Date Ascendingly";
   static String sortDescByDate = "Sort By Date Descendingly";
@@ -119,7 +120,9 @@ class _HealthTrackRecordListState extends State<HealthTrackRecordList> {
                             longPress: () {
                               log("message");
                             },
-                            delete: () {},
+                            delete: () {
+                              _db.collection("mother").doc(user.uid).collection(databaseTable).doc(snapshot.data.documents[index]['mh_id']).delete();
+                            },
                             press: () {
                               Navigator.push(
                                 context,
