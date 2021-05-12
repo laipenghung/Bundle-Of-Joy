@@ -22,6 +22,7 @@ class BabyMedTrackUpadte extends StatefulWidget {
 
 class _BabyMedTrackUpadteState extends State<BabyMedTrackUpadte> {
   var bodyWidget;
+  String reminderTime;
 
   void initState() {
     super.initState();
@@ -38,6 +39,11 @@ class _BabyMedTrackUpadteState extends State<BabyMedTrackUpadte> {
           Map medicine = snapshot.data.data()["medsMap"];
           double tempBeforeMeds = double.parse(snapshot.data.data()["bTempBefore"]);
           //double tempAfterMeds = double.parse(snapshot.data.data()["bTempAfter"]);
+          if(snapshot.data.data()["reminderTime"] != null){
+            reminderTime = snapshot.data.data()["reminderTime"].toString();
+          }else{
+            reminderTime = "4";
+          }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -121,6 +127,7 @@ class _BabyMedTrackUpadteState extends State<BabyMedTrackUpadte> {
                   tempBeforeMeds: tempBeforeMeds,
                   medsMap: medicine,
                   babyMedRecordListContext: widget.babyMedRecordListContext,
+                  reminderTime: reminderTime,
                 ),
               ],
             );
@@ -158,11 +165,11 @@ class _BabyMedTrackUpadteState extends State<BabyMedTrackUpadte> {
 }
 
 class RecordBodyTempUpdate extends StatefulWidget {
-  final String svgSrc, selectedDate, selectedTime, recordID, babyID;
+  final String svgSrc, selectedDate, selectedTime, recordID, babyID, reminderTime;
   final double tempBeforeMeds;
   final Map medsMap;
   final BuildContext babyMedRecordListContext;
-  const RecordBodyTempUpdate({Key key, this.svgSrc, this.tempBeforeMeds, this.selectedDate, this.selectedTime, this.medsMap, this.recordID, this.babyID, this.babyMedRecordListContext}) : super(key: key);
+  const RecordBodyTempUpdate({Key key, this.reminderTime, this.svgSrc, this.tempBeforeMeds, this.selectedDate, this.selectedTime, this.medsMap, this.recordID, this.babyID, this.babyMedRecordListContext}) : super(key: key);
 
   @override
   _RecordBodyTempUpdateState createState() => _RecordBodyTempUpdateState();
@@ -279,7 +286,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                   children: <Widget>[
                     ModalSheetText(
                       title: "Body Temperature Reading",
-                      desc: "Body temperature reading 4 hour after medication.",
+                      desc: "Body temperature reading " + widget.reminderTime + " hour after medication.",
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 5, bottom: 15),
@@ -351,7 +358,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                             Navigator.of(context).pop();
                           });
                         } else {
-                          dialogBoxContent = "Please make sure you entered your baby's body temperature reading into the " + "4 hours after medication section.";
+                          dialogBoxContent = "Please make sure you entered your baby's body temperature reading into the " + widget.reminderTime +" hours after medication section.";
                           _showDialogBox(context, dialogBoxContent);
                         }
                       },
@@ -425,7 +432,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                     top: 8.0,
                   ),
                   child: Text(
-                    "This section display your baby's body temperature before and 4 hours after taking the medicine.",
+                    "This section display your baby's body temperature before and " + widget.reminderTime + " hours after taking the medicine.",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -497,7 +504,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                               Container(
                                 padding: EdgeInsets.only(top: 3),
                                 child: Text(
-                                  "After 4 hours",
+                                  "After " + widget.reminderTime + " hours",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: MediaQuery.of(context).size.width * 0.033,
@@ -584,7 +591,8 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                 } else {
                   careForBabyFunction
                       .updateBabyMedsRecordPending(
-                          widget.babyID, widget.selectedDate, widget.selectedTime, widget.tempBeforeMeds.toString(), bTempUpdate, widget.medsMap, widget.recordID, context, widget.babyMedRecordListContext)
+                          widget.babyID, widget.selectedDate, widget.selectedTime, widget.tempBeforeMeds.toString(), bTempUpdate, 
+                            widget.medsMap, widget.recordID, context, widget.babyMedRecordListContext,int.parse(widget.reminderTime))
                       .then((value) => _showNotification());
                 }
               },

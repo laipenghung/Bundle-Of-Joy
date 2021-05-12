@@ -7,7 +7,7 @@ class CareForBabyFunction {
   final User user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<void> uploadBabyMedsRecordDone(selectedBabyID, selectedDate, selectedTime, bTempBefore, bTempAfter, medsMap, babyAddMedSummaryContext, babyAddMedBuildContext) {
+  Future<void> uploadBabyMedsRecordDone(selectedBabyID, selectedDate, selectedTime, bTempBefore, bTempAfter, medsMap, babyAddMedSummaryContext, babyAddMedBuildContext, reminderTime) {
     CollectionReference babyTempRecord = _db.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("tempRecord_Done");
     return babyTempRecord.add({
       "motherID": user.uid,
@@ -17,6 +17,7 @@ class CareForBabyFunction {
       "bTempBefore": bTempBefore,
       "bTempAfter": bTempAfter,
       "medsMap": medsMap,
+      "reminderTime": reminderTime,
     }).then((value) {
       babyTempRecord.doc(value.id).update({
         "recordID": value.id,
@@ -28,7 +29,7 @@ class CareForBabyFunction {
     }).catchError((error) => print(error));
   }
 
-  Future<void> uploadBabyMedsRecordPending(selectedBabyID, selectedDate, selectedTime, bTempBefore, bTempAfter, medsMap, babyAddMedSummaryContext, babyAddMedBuildContext) {
+  Future<void> uploadBabyMedsRecordPending(selectedBabyID, selectedDate, selectedTime, bTempBefore, bTempAfter, medsMap, babyAddMedSummaryContext, babyAddMedBuildContext, reminderTime) {
     CollectionReference babyTempRecord = _db.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("tempRecord_Pending");
     return babyTempRecord.add({
       "motherID": user.uid,
@@ -38,6 +39,7 @@ class CareForBabyFunction {
       "bTempBefore": bTempBefore,
       "bTempAfter": bTempAfter,
       "medsMap": medsMap,
+      "reminderTime": reminderTime,
     }).then((value) {
       babyTempRecord.doc(value.id).update({
         "recordID": value.id,
@@ -49,7 +51,7 @@ class CareForBabyFunction {
     }).catchError((error) => print(error));
   }
 
-  Future<void> updateBabyMedsRecordPending(selectedBabyID, selectedDate, selectedTime, bTempBefore, bTempAfter, medsMap, recordID, babyUpdateMedContext, babyMedRecordListContext) {
+  Future<void> updateBabyMedsRecordPending(selectedBabyID, selectedDate, selectedTime, bTempBefore, bTempAfter, medsMap, recordID, babyUpdateMedContext, babyMedRecordListContext, reminderTime) {
     CollectionReference babyTempRecord = _db.collection("mother").doc(user.uid).collection("baby").doc(selectedBabyID).collection("tempRecord_Done");
     return babyTempRecord.add({
       "motherID": user.uid,
@@ -59,6 +61,7 @@ class CareForBabyFunction {
       "bTempBefore": bTempBefore,
       "bTempAfter": bTempAfter,
       "medsMap": medsMap,
+      "reminderTime": reminderTime,
     }).then((value) {
       babyTempRecord.doc(value.id).update({
         "recordID": value.id,

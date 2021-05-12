@@ -19,6 +19,7 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
   @override
   Widget build(BuildContext context) {
     CollectionReference collectionReference = FirebaseFirestore.instance.collection("mother").doc(FirebaseAuth.instance.currentUser.uid).collection("baby").doc(widget.selectedBabyID).collection("tempRecord_Done");
+    String reminderTime;
 
     return Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
@@ -47,6 +48,12 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
               Map medicine = snapshot.data.data()["medsMap"];
               double tempBeforeMeds = double.parse(snapshot.data.data()["bTempBefore"]);
               double tempAfterMeds = double.parse(snapshot.data.data()["bTempAfter"]);
+
+              if(snapshot.data.data()["reminderTime"] != null){
+                reminderTime = snapshot.data.data()["reminderTime"].toString();
+              }else{
+                reminderTime = "4";
+              }
 
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -125,6 +132,7 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
                       svgSrc: "assets/icons/thermometer.svg",
                       tempBeforeMeds: tempBeforeMeds,
                       tempAferMeds: tempAfterMeds,
+                      reminderTime: reminderTime,
                     ),
                   ],
                 );

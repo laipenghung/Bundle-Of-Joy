@@ -20,12 +20,13 @@ class BabyMedTrackAdd extends StatefulWidget {
 class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
   Map medMap = Map();
   List medNameList = [], medQuantityList = [], medQuantityMeasurementList = [];
-  String medName, medQuantity, medQuantityMeasurement, bTempBefore, bTempAfter, dialogBoxContent;
+  String medName, medQuantity, medQuantityMeasurement, bTempBefore, bTempAfter, dialogBoxContent, reminderTime = "4";
   TextEditingController medNameController = TextEditingController();
   TextEditingController medQuantityController = TextEditingController();
   TextEditingController quantityMearsurementController = TextEditingController();
   TextEditingController bTempBeforeController = TextEditingController();
   TextEditingController bTempAfterController = TextEditingController();
+  TextEditingController reminderTimeController = TextEditingController();
 
   //Used for date section only
   DateTime pickedDate;
@@ -966,6 +967,41 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                 Column(
                   children: <Widget>[
                     ModalSheetText(
+                      title: "Remind me on",
+                      desc: "Time app will remind when to remind you update record.",
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5, bottom: 10),
+                      height: MediaQuery.of(context).size.width * 0.09,
+                      child: TextFormField(
+                        controller: reminderTimeController,
+                        onChanged: (val) => setState(() => reminderTime = val),
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: "Default is 4 hours.",
+                          contentPadding: EdgeInsets.all(5),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.black.withOpacity(0.4),
+                              width: 0.8,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 0.8,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: <Widget>[
+                    ModalSheetText(
                       title: "Body Temperature Reading",
                       desc: "Body Temperature reading before medication.",
                     ),
@@ -1072,6 +1108,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         if (bTempBeforeController.text.isNotEmpty) {
                           bTempBeforeController.clear();
                           bTempAfterController.clear();
+                          reminderTimeController.clear();
                           Navigator.of(context).pop();
                         } else {
                           dialogBoxContent = "Please make sure you entered your baby body temperature reading into the " + "before medication section. Only 4 hour after medication section can be left empty.";
@@ -1150,7 +1187,8 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                     top: 8.0,
                   ),
                   child: Text(
-                    "Your baby body temperature reading before medication and 4 hours after medication. You " + "can leave the 4 hours after medication section empty if u wish to update it later.",
+                    "Your baby body temperature reading before medication and " + reminderTime + " hours after medication. You " + "can leave the " + 
+                      reminderTime + " hours after medication section empty if u wish to update it later.",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -1222,7 +1260,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                               Container(
                                 padding: EdgeInsets.only(top: 3),
                                 child: Text(
-                                  "After 4 hours",
+                                  "After " + reminderTime +" hours",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: MediaQuery.of(context).size.width * 0.033,
@@ -1258,6 +1296,9 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                         if (bTempAfter != null) {
                           bTempAfterController.text = bTempAfter;
                         }
+                        if (reminderTime != null) {
+                          reminderTimeController.text = reminderTime;
+                        }
                         showModalBottomSheet(
                             context: context,
                             shape: RoundedRectangleBorder(
@@ -1265,7 +1306,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                             ),
                             isScrollControlled: true,
                             builder: (context) => Container(
-                                  height: MediaQuery.of(context).size.height * 0.5,
+                                  height: MediaQuery.of(context).size.height * 0.6,
                                   child: SingleChildScrollView(
                                     physics: ClampingScrollPhysics(),
                                     child: bodyTempModalBottomSheetWidget(context),
@@ -1350,6 +1391,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                                     bTempBefore: bTempBefore,
                                     bTempAfter: bTempAfter,
                                     babyAddMedBuildContext: context,
+                                    reminderTime: reminderTime,
                                   )),
                         );
                       } else {
@@ -1364,6 +1406,7 @@ class _BabyMedTrackAddState extends State<BabyMedTrackAdd> {
                                     bTempBefore: bTempBefore,
                                     bTempAfter: null,
                                     babyAddMedBuildContext: context,
+                                    reminderTime: reminderTime,
                                   )),
                         );
                       }

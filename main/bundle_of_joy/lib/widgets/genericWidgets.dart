@@ -187,6 +187,13 @@ class BloodSugarUpdateText extends StatelessWidget {
 }
 
 class BabyTempRecordViewText extends StatelessWidget {
+   final String reminderTime;
+  
+  const BabyTempRecordViewText({
+    Key key,
+    @required this.reminderTime,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     TextStyle normalTextStye = TextStyle(
@@ -206,7 +213,7 @@ class BabyTempRecordViewText extends StatelessWidget {
           text: TextSpan(style: normalTextStye, children: <TextSpan>[
             TextSpan(text: "If your baby's body temperature in the "),
             TextSpan(
-              text: "After 4 hours",
+              text: "After " + reminderTime + " hours",
               style: highlightedTextStyle,
             ),
             TextSpan(
@@ -225,6 +232,13 @@ class BabyTempRecordViewText extends StatelessWidget {
 }
 
 class BabyTempRecordAddText extends StatelessWidget {
+  final String reminderTime;
+  
+  const BabyTempRecordAddText({
+    Key key,
+    @required this.reminderTime,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     TextStyle normalTextStye = TextStyle(
@@ -243,8 +257,8 @@ class BabyTempRecordAddText extends StatelessWidget {
           textAlign: TextAlign.left,
           text: TextSpan(style: normalTextStye, children: <TextSpan>[
             TextSpan(
-              text: "Once you upload the current medicine intake record, you will receive a notification after " +
-                  "4 hours to inform you to update the you baby's body temperature reading after 4 hours taking the medicine. To update it, navigate to ",
+              text: "Once you upload the current medicine intake record, you will receive a notification after " + reminderTime +
+                  " hours to inform you to update the you baby's body temperature reading after " + reminderTime + " hours taking the medicine. To update it, navigate to ",
             ),
             TextSpan(
               text: "Care For Baby",
