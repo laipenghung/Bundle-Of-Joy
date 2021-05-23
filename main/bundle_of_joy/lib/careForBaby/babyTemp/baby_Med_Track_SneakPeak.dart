@@ -1,7 +1,7 @@
 import 'package:bundle_of_joy/careForBaby/babyTemp/baby_Med_Track_Update.dart';
 import 'package:bundle_of_joy/careForBaby/babyTemp/baby_Med_Track_View.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
-import 'package:bundle_of_joy/widgets/sneakPeek/sneakPeakWidgets.dart';
+import 'package:bundle_of_joy/widgets/sneakPeek/sneakPeek_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -12,7 +12,10 @@ class BabyMedTrackSneakPeak extends StatefulWidget {
   final bool completeRecord;
 
   BabyMedTrackSneakPeak({
-    @required this.medIntakeRecordID, @required this.selectedBabyID, @required this.collectionReference, @required this.completeRecord,
+    @required this.medIntakeRecordID,
+    @required this.selectedBabyID,
+    @required this.collectionReference,
+    @required this.completeRecord,
   });
   @override
   _BabyMedTrackSneakPeakState createState() => _BabyMedTrackSneakPeakState();
@@ -30,7 +33,9 @@ class _BabyMedTrackSneakPeakState extends State<BabyMedTrackSneakPeak> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Spacer(flex: 2,),
+              Spacer(
+                flex: 2,
+              ),
               Flexible(
                 flex: 6,
                 child: Container(
@@ -54,13 +59,13 @@ class _BabyMedTrackSneakPeakState extends State<BabyMedTrackSneakPeak> {
                 child: Container(
                   width: double.infinity,
                   child: Align(
-                    alignment: Alignment.center,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.close_rounded,
-                      ),
-                      onPressed: () => Navigator.of(context).pop(),
-                    )),
+                      alignment: Alignment.center,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.close_rounded,
+                        ),
+                        onPressed: () => Navigator.of(context).pop(),
+                      )),
                 ),
               )
             ],
@@ -77,7 +82,9 @@ class _BabyMedTrackSneakPeakState extends State<BabyMedTrackSneakPeak> {
                 String formattedTime = DateFormat('h:mm a').format(parsedTime);
                 Map meds = snapshot.data.data()["medsMap"];
                 double tempBeforeMeds = double.parse(snapshot.data.data()["bTempBefore"]);
-                if(widget.completeRecord == true){tempAfterMeds = double.parse(snapshot.data.data()["bTempAfter"]);}
+                if (widget.completeRecord == true) {
+                  tempAfterMeds = double.parse(snapshot.data.data()["bTempAfter"]);
+                }
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -171,21 +178,34 @@ class _BabyMedTrackSneakPeakState extends State<BabyMedTrackSneakPeak> {
                             color: appbar2,
                             textColor: Colors.white,
                             onPressed: () {
-                              if(widget.completeRecord == true){
+                              if (widget.completeRecord == true) {
                                 Navigator.of(context).pop();
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => BabyMedTrackView(babyTempRecordID: widget.medIntakeRecordID, selectedBabyID: widget.selectedBabyID,)));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BabyMedTrackView(
+                                              babyTempRecordID: widget.medIntakeRecordID,
+                                              selectedBabyID: widget.selectedBabyID,
+                                            )));
                               } else {
                                 Navigator.of(context).pop();
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => BabyMedTrackUpadte(
-                                  babyTempRecordID: widget.medIntakeRecordID, selectedBabyID: widget.selectedBabyID, babyMedRecordListContext: context,
-                                )));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BabyMedTrackUpadte(
+                                              babyTempRecordID: widget.medIntakeRecordID,
+                                              selectedBabyID: widget.selectedBabyID,
+                                              babyMedRecordListContext: context,
+                                            )));
                               }
                             },
                             child: Text(
-                              (widget.completeRecord == true)? "View Detailed Medicine Record" : "Update Medicine Record",
+                              (widget.completeRecord == true) ? "View Detailed Medicine Record" : "Update Medicine Record",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
+                                shadows: <Shadow>[
+                                  Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
+                                ],
                                 fontWeight: FontWeight.bold,
                                 fontSize: MediaQuery.of(context).size.width * 0.045,
                               ),

@@ -1,8 +1,8 @@
 import 'package:bundle_of_joy/foodIntake/foodIntake_Track_Add.dart';
 import 'package:bundle_of_joy/foodIntake/foodIntake_Track_Function.dart';
 import 'package:bundle_of_joy/main.dart';
-import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
-import 'package:bundle_of_joy/widgets/recordFoodMedsWidget.dart';
+import 'package:bundle_of_joy/widgets/record_DateTime_Widget.dart';
+import 'package:bundle_of_joy/widgets/record_FoodMeds_Widget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

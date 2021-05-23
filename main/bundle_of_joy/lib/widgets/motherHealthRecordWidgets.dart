@@ -1,5 +1,5 @@
-import 'package:bundle_of_joy/widgets/bojAnalyzer/healthRecord_BpAnalyzer.dart';
-import 'package:bundle_of_joy/widgets/bojAnalyzer/healthRecord_BsAnalyzer.dart';
+import 'package:bundle_of_joy/widgets/bojAnalyzer/healthRecord_Bp_Analyzer.dart';
+import 'package:bundle_of_joy/widgets/bojAnalyzer/healthRecord_Bs_Analyzer.dart';
 import 'package:bundle_of_joy/widgets/bojInsight/healthRecord_Bp_Insight.dart';
 import 'package:bundle_of_joy/widgets/bojInsight/healthRecord_BodyPhysique_Insight.dart';
 import 'package:bundle_of_joy/widgets/bojInsight/healthRecord_bs_Insight.dart';

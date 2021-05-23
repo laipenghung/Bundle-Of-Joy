@@ -1,7 +1,7 @@
 import 'package:bundle_of_joy/careForBaby/babyFoodIntake/baby_FoodIntake_Track_Update.dart';
 import 'package:bundle_of_joy/careForBaby/babyFoodIntake/baby_FoodIntake_Track_View.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
-import 'package:bundle_of_joy/widgets/sneakPeek/sneakPeakWidgets.dart';
+import 'package:bundle_of_joy/widgets/sneakPeek/sneakPeek_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -12,7 +12,10 @@ class BabyFoodIntakeTrackSneakPeak extends StatefulWidget {
   final bool completeRecord;
 
   BabyFoodIntakeTrackSneakPeak({
-    @required this.foodIntakeRecordID, @required this.selectedBabyID, @required this.collectionReference, @required this.completeRecord,
+    @required this.foodIntakeRecordID,
+    @required this.selectedBabyID,
+    @required this.collectionReference,
+    @required this.completeRecord,
   });
 
   @override
@@ -29,7 +32,9 @@ class _BabyFoodIntakeTrackSneakPeakState extends State<BabyFoodIntakeTrackSneakP
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Spacer(flex: 2,),
+              Spacer(
+                flex: 2,
+              ),
               Flexible(
                 flex: 6,
                 child: Container(
@@ -53,13 +58,13 @@ class _BabyFoodIntakeTrackSneakPeakState extends State<BabyFoodIntakeTrackSneakP
                 child: Container(
                   width: double.infinity,
                   child: Align(
-                    alignment: Alignment.center,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.close_rounded,
-                      ),
-                      onPressed: () => Navigator.of(context).pop(),
-                    )),
+                      alignment: Alignment.center,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.close_rounded,
+                        ),
+                        onPressed: () => Navigator.of(context).pop(),
+                      )),
                 ),
               )
             ],
@@ -101,7 +106,6 @@ class _BabyFoodIntakeTrackSneakPeakState extends State<BabyFoodIntakeTrackSneakP
                         symptomsAndAllergies: symptomsAndAllergies,
                         completeRecords: widget.completeRecord,
                       ),
-                      
                       Container(
                         child: SizedBox(
                           width: double.infinity,
@@ -170,21 +174,34 @@ class _BabyFoodIntakeTrackSneakPeakState extends State<BabyFoodIntakeTrackSneakP
                             color: appbar2,
                             textColor: Colors.white,
                             onPressed: () {
-                              if(widget.completeRecord == true){
+                              if (widget.completeRecord == true) {
                                 Navigator.of(context).pop();
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => BabyFoodIntakeTrackView(recordID: widget.foodIntakeRecordID, selectedBabyID: widget.selectedBabyID,)));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BabyFoodIntakeTrackView(
+                                              recordID: widget.foodIntakeRecordID,
+                                              selectedBabyID: widget.selectedBabyID,
+                                            )));
                               } else {
                                 Navigator.of(context).pop();
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => BabyFoodIntakeTrackUpdate(
-                                  recordID: widget.foodIntakeRecordID, selectedBabyID: widget.selectedBabyID, babyFoodRecordListContext: context,
-                                )));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BabyFoodIntakeTrackUpdate(
+                                              recordID: widget.foodIntakeRecordID,
+                                              selectedBabyID: widget.selectedBabyID,
+                                              babyFoodRecordListContext: context,
+                                            )));
                               }
                             },
                             child: Text(
-                              (widget.completeRecord == true)? "View Detailed Food Record" : "Update Food Record",
+                              (widget.completeRecord == true) ? "View Detailed Food Record" : "Update Food Record",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
+                                shadows: <Shadow>[
+                                  Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
+                                ],
                                 fontWeight: FontWeight.bold,
                                 fontSize: MediaQuery.of(context).size.width * 0.045,
                               ),

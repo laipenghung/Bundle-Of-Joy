@@ -1,7 +1,7 @@
 import 'package:bundle_of_joy/careForBaby/careForBaby_Function.dart';
-import 'package:bundle_of_joy/widgets/recordBabyAfterMealWidget.dart';
-import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
-import 'package:bundle_of_joy/widgets/recordFoodMedsWidget.dart';
+import 'package:bundle_of_joy/widgets/record_Baby_AfterMealWidget.dart';
+import 'package:bundle_of_joy/widgets/record_DateTime_Widget.dart';
+import 'package:bundle_of_joy/widgets/record_FoodMeds_Widget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';

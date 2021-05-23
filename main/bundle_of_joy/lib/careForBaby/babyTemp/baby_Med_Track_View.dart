@@ -1,6 +1,6 @@
-import 'package:bundle_of_joy/widgets/recordBodyTempWidget.dart';
-import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
-import 'package:bundle_of_joy/widgets/recordFoodMedsWidget.dart';
+import 'package:bundle_of_joy/widgets/record_BodyTemp_Widget.dart';
+import 'package:bundle_of_joy/widgets/record_DateTime_Widget.dart';
+import 'package:bundle_of_joy/widgets/record_FoodMeds_Widget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -49,9 +49,9 @@ class _BabyMedTrackViewState extends State<BabyMedTrackView> {
               double tempBeforeMeds = double.parse(snapshot.data.data()["bTempBefore"]);
               double tempAfterMeds = double.parse(snapshot.data.data()["bTempAfter"]);
 
-              if(snapshot.data.data()["reminderTime"] != null){
+              if (snapshot.data.data()["reminderTime"] != null) {
                 reminderTime = snapshot.data.data()["reminderTime"].toString();
-              }else{
+              } else {
                 reminderTime = "4";
               }
 

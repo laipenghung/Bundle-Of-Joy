@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:bundle_of_joy/foodIntake/foodIntake_Track_Update.dart';
 import 'package:bundle_of_joy/foodIntake/foodIntake_Track_View.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
-import 'package:bundle_of_joy/widgets/sneakPeek/sneakPeakWidgets.dart';
+import 'package:bundle_of_joy/widgets/sneakPeek/sneakPeek_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,9 @@ class FoodIntakeTrackSneakPeak extends StatefulWidget {
   final bool completeRecord;
 
   FoodIntakeTrackSneakPeak({
-    @required this.foodIntakeRecordID, @required this.collectionReference, @required this.completeRecord,
+    @required this.foodIntakeRecordID,
+    @required this.collectionReference,
+    @required this.completeRecord,
   });
   @override
   _FoodIntakeTrackSneakPeakState createState() => _FoodIntakeTrackSneakPeakState();
@@ -33,7 +35,9 @@ class _FoodIntakeTrackSneakPeakState extends State<FoodIntakeTrackSneakPeak> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Spacer(flex: 2,),
+              Spacer(
+                flex: 2,
+              ),
               Flexible(
                 flex: 6,
                 child: Container(
@@ -57,13 +61,13 @@ class _FoodIntakeTrackSneakPeakState extends State<FoodIntakeTrackSneakPeak> {
                 child: Container(
                   width: double.infinity,
                   child: Align(
-                    alignment: Alignment.center,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.close_rounded,
-                      ),
-                      onPressed: () => Navigator.of(context).pop(),
-                    )),
+                      alignment: Alignment.center,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.close_rounded,
+                        ),
+                        onPressed: () => Navigator.of(context).pop(),
+                      )),
                 ),
               )
             ],
@@ -80,7 +84,9 @@ class _FoodIntakeTrackSneakPeakState extends State<FoodIntakeTrackSneakPeak> {
                 String formattedTime = DateFormat('h:mm a').format(parsedTime);
                 Map food = snapshot.data.data()["foodMap"];
                 double bSugarBefore = snapshot.data.data()["bsBefore"] != null ? double.parse(snapshot.data.data()["bsBefore"]) : 0;
-                if(widget.completeRecord == true){bSugarAfter = snapshot.data.data()["bsAfter"] != null ? double.parse(snapshot.data.data()["bsAfter"]) : 0;}
+                if (widget.completeRecord == true) {
+                  bSugarAfter = snapshot.data.data()["bsAfter"] != null ? double.parse(snapshot.data.data()["bsAfter"]) : 0;
+                }
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -174,21 +180,27 @@ class _FoodIntakeTrackSneakPeakState extends State<FoodIntakeTrackSneakPeak> {
                             color: appbar1,
                             textColor: Colors.white,
                             onPressed: () {
-                              if(widget.completeRecord == true){
+                              if (widget.completeRecord == true) {
                                 Navigator.of(context).pop();
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => FoodIntakeTrackView(foodIntakeRecordID: widget.foodIntakeRecordID)));
                               } else {
                                 Navigator.of(context).pop();
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => FoodIntakeTrackUpdate(
-                                  foodIntakeRecordID: widget.foodIntakeRecordID, pendingRecordsListScreenBuildContext: context,
-                                )));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FoodIntakeTrackUpdate(
+                                              foodIntakeRecordID: widget.foodIntakeRecordID,
+                                              pendingRecordsListScreenBuildContext: context,
+                                            )));
                               }
                             },
                             child: Text(
-                              (widget.completeRecord == true)? "View Detailed Food Record" : "Update Food Record",
+                              (widget.completeRecord == true) ? "View Detailed Food Record" : "Update Food Record",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                shadows: <Shadow>[Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),],
+                                shadows: <Shadow>[
+                                  Shadow(offset: Offset(2.0, 2.0), blurRadius: 5.0, color: Colors.black.withOpacity(0.4)),
+                                ],
                                 fontWeight: FontWeight.bold,
                                 fontSize: MediaQuery.of(context).size.width * 0.045,
                               ),

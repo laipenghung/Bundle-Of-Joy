@@ -1,6 +1,6 @@
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:bundle_of_joy/widgets/loadingWidget.dart';
-import 'package:bundle_of_joy/widgets/vaccinationWidget.dart';
+import 'package:bundle_of_joy/widgets/vaccination_Widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
@@ -37,7 +37,7 @@ class _VaccinationSchedule extends State<VaccinationSchedule> {
               VaccinationWidget(
                 tableTitle: "Vaccination Schedule Table",
                 tableDesc: "This section display the vaccination schedule record of your baby." +
-                "\nIf the table row is highlighted in green, you are recommended to make an appointment with a pediatrician for injection during that time.",
+                    "\nIf the table row is highlighted in green, you are recommended to make an appointment with a pediatrician for injection during that time.",
                 svgSrcTable: "assets/icons/table.svg",
                 ageListString: ageListString,
                 vaccineNameList: vaccineNameList,

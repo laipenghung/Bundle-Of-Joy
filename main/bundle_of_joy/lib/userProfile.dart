@@ -1,4 +1,4 @@
-import 'package:bundle_of_joy/appReviewBugsReport.dart';
+import 'package:bundle_of_joy/appReview_BugsReport.dart';
 import 'package:bundle_of_joy/auth/auth.dart';
 import 'package:bundle_of_joy/sign_up.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';

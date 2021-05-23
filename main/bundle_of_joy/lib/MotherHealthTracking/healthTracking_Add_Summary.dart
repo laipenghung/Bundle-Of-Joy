@@ -1,9 +1,9 @@
 import 'package:bundle_of_joy/MotherHealthTracking/healthTracking_Function.dart';
 import 'package:bundle_of_joy/widgets/motherHealthRecordWidgets.dart';
-import 'package:bundle_of_joy/widgets/recordBloodGlucoseWidget.dart';
-import 'package:bundle_of_joy/widgets/recordBloodPressureWidget.dart';
-import 'package:bundle_of_joy/widgets/recordBodyPhysiqueWidget.dart';
-import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
+import 'package:bundle_of_joy/widgets/record_BloodGlucose_Widget.dart';
+import 'package:bundle_of_joy/widgets/record_BloodPressure_Widget.dart';
+import 'package:bundle_of_joy/widgets/record_BodyPhysique_Widget.dart';
+import 'package:bundle_of_joy/widgets/record_DateTime_Widget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -16,7 +16,8 @@ class HealthTrackingAddSummary extends StatefulWidget {
   final int dayOfPregnancy, bPressure_dia, bPressure_sys;
   final BuildContext addHealthScreenContext;
 
-  HealthTrackingAddSummary({Key key, this.selectedDate, this.selectedTime, this.bPressure_dia, this.bPressure_sys, this.bSugar, this.dayOfPregnancy, this.height, this.weight, this.addHealthScreenContext}) : super(key: key);
+  HealthTrackingAddSummary({Key key, this.selectedDate, this.selectedTime, this.bPressure_dia, this.bPressure_sys, this.bSugar, this.dayOfPregnancy, this.height, this.weight, this.addHealthScreenContext})
+      : super(key: key);
 
   @override
   _HealthTrackingAddSummaryState createState() => _HealthTrackingAddSummaryState();
@@ -205,18 +206,20 @@ class _HealthTrackingAddSummaryState extends State<HealthTrackingAddSummary> {
                   onPressed: () {
                     if (widget.bPressure_dia != null && widget.bPressure_sys != null && widget.weight != null) {
                       notificationMessage = "Health Record upload successfully.";
-                      healthTrackingFunction.uploadHealthRecord(
-                        widget.selectedDate,
-                        widget.selectedTime,
-                        widget.bPressure_dia,
-                        widget.bPressure_sys,
-                        widget.bSugar,
-                        widget.dayOfPregnancy,
-                        widget.height,
-                        widget.weight,
-                        widget.addHealthScreenContext,
-                        context,
-                      ).then((value) => _showNotification(notificationMessage));
+                      healthTrackingFunction
+                          .uploadHealthRecord(
+                            widget.selectedDate,
+                            widget.selectedTime,
+                            widget.bPressure_dia,
+                            widget.bPressure_sys,
+                            widget.bSugar,
+                            widget.dayOfPregnancy,
+                            widget.height,
+                            widget.weight,
+                            widget.addHealthScreenContext,
+                            context,
+                          )
+                          .then((value) => _showNotification(notificationMessage));
                     }
                   },
                   child: Text(
