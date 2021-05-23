@@ -1,6 +1,6 @@
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:bundle_of_joy/widgets/loadingWidget.dart';
-import 'package:bundle_of_joy/widgets/vaccinationWidget.dart';
+import 'package:bundle_of_joy/widgets/vaccination_Widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";

@@ -2,13 +2,10 @@ import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
-
 import 'package:bundle_of_joy/main.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:async';
-
 import 'package:flutter_svg/svg.dart';
 
 class AppointmentBabyRecordList extends StatefulWidget {

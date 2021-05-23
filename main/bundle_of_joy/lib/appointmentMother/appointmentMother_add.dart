@@ -117,6 +117,16 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                             setState(() {
                               hospitalName = snapshot.data.documents[index]['h_name'];
                               selectedHospitalID = snapshot.data.documents[index]['h_id'];
+
+                              // Reset Doctor
+                              doctorName = "Not Selected";
+
+                              // Reset Session
+                              _amColor = "off";
+                              _pmColor = "off";
+                              _eveColor = "off";
+                              session = "Not Selected";
+                              selectedSession = "Not Selected";
                             });
                           },
                           child: Container(
@@ -322,6 +332,13 @@ class _AppointmentMotherAddState extends State<AppointmentMotherAdd> {
                             Navigator.of(context).pop();
                             setState(() {
                               doctorName = snapshot.data.documents[index]['d_name'];
+
+                              // Reset Session
+                              _amColor = "off";
+                              _pmColor = "off";
+                              _eveColor = "off";
+                              session = "Not Selected";
+                              selectedSession = "Not Selected";
                             });
                           },
                           child: Column(

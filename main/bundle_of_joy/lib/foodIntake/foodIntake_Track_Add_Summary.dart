@@ -1,7 +1,7 @@
 import 'package:bundle_of_joy/foodIntake/foodIntake_Track_Function.dart';
-import 'package:bundle_of_joy/widgets/recordBloodSugarWidget.dart';
-import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
-import 'package:bundle_of_joy/widgets/recordFoodMedsWidget.dart';
+import 'package:bundle_of_joy/widgets/record_BloodSugar_Widget.dart';
+import 'package:bundle_of_joy/widgets/record_DateTime_Widget.dart';
+import 'package:bundle_of_joy/widgets/record_FoodMeds_Widget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -72,7 +72,7 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
     String formattedTime = DateFormat('h:mm a').format(parsedTime);
     Map food = widget.foodMap;
     // if(widget.bSugarBefore != null){double bSugarBefore = double.parse(widget.bSugarBefore);}
-    
+
     //double bSugarAfter = double.parse(widget.bSugarAfter);
 
     return Scaffold(
@@ -193,7 +193,7 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                             widget.addFoodScreenContext,
                           )
                           .then((value) => _showNotification(notificationMessage));
-                    } else if(widget.bSugarAfter == null && widget.bSugarBefore == null){
+                    } else if (widget.bSugarAfter == null && widget.bSugarBefore == null) {
                       notificationMessage = "Food Record upload successfully.";
                       foodIntakeTrackFunction
                           .uploadFoodRecordDone(
@@ -206,7 +206,7 @@ class _FoodIntakeTrackAddSummaryState extends State<FoodIntakeTrackAddSummary> {
                             widget.addFoodScreenContext,
                           )
                           .then((value) => _showNotification(notificationMessage));
-                    }else {
+                    } else {
                       notificationMessage = "Food Record upload successfully. Remember to update your food record after 2 hours.";
                       notificationMessageAfter2hour = "Hey it's already 2 hours, remember to update your food record.";
                       foodIntakeTrackFunction

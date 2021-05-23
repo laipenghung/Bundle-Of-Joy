@@ -1,6 +1,6 @@
 import 'package:bundle_of_joy/careForBaby/careForBaby_Function.dart';
-import 'package:bundle_of_joy/widgets/recordDateTimeWidget.dart';
-import 'package:bundle_of_joy/widgets/recordFoodMedsWidget.dart';
+import 'package:bundle_of_joy/widgets/record_DateTime_Widget.dart';
+import 'package:bundle_of_joy/widgets/record_FoodMeds_Widget.dart';
 import 'package:bundle_of_joy/widgets/genericWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,9 +39,9 @@ class _BabyMedTrackUpadteState extends State<BabyMedTrackUpadte> {
           Map medicine = snapshot.data.data()["medsMap"];
           double tempBeforeMeds = double.parse(snapshot.data.data()["bTempBefore"]);
           //double tempAfterMeds = double.parse(snapshot.data.data()["bTempAfter"]);
-          if(snapshot.data.data()["reminderTime"] != null){
+          if (snapshot.data.data()["reminderTime"] != null) {
             reminderTime = snapshot.data.data()["reminderTime"].toString();
-          }else{
+          } else {
             reminderTime = "4";
           }
 
@@ -169,7 +169,8 @@ class RecordBodyTempUpdate extends StatefulWidget {
   final double tempBeforeMeds;
   final Map medsMap;
   final BuildContext babyMedRecordListContext;
-  const RecordBodyTempUpdate({Key key, this.reminderTime, this.svgSrc, this.tempBeforeMeds, this.selectedDate, this.selectedTime, this.medsMap, this.recordID, this.babyID, this.babyMedRecordListContext}) : super(key: key);
+  const RecordBodyTempUpdate({Key key, this.reminderTime, this.svgSrc, this.tempBeforeMeds, this.selectedDate, this.selectedTime, this.medsMap, this.recordID, this.babyID, this.babyMedRecordListContext})
+      : super(key: key);
 
   @override
   _RecordBodyTempUpdateState createState() => _RecordBodyTempUpdateState();
@@ -358,7 +359,7 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                             Navigator.of(context).pop();
                           });
                         } else {
-                          dialogBoxContent = "Please make sure you entered your baby's body temperature reading into the " + widget.reminderTime +" hours after medication section.";
+                          dialogBoxContent = "Please make sure you entered your baby's body temperature reading into the " + widget.reminderTime + " hours after medication section.";
                           _showDialogBox(context, dialogBoxContent);
                         }
                       },
@@ -590,9 +591,8 @@ class _RecordBodyTempUpdateState extends State<RecordBodyTempUpdate> {
                   _showDialogBox(context, dialogBoxContent);
                 } else {
                   careForBabyFunction
-                      .updateBabyMedsRecordPending(
-                          widget.babyID, widget.selectedDate, widget.selectedTime, widget.tempBeforeMeds.toString(), bTempUpdate, 
-                            widget.medsMap, widget.recordID, context, widget.babyMedRecordListContext,int.parse(widget.reminderTime))
+                      .updateBabyMedsRecordPending(widget.babyID, widget.selectedDate, widget.selectedTime, widget.tempBeforeMeds.toString(), bTempUpdate, widget.medsMap, widget.recordID, context,
+                          widget.babyMedRecordListContext, int.parse(widget.reminderTime))
                       .then((value) => _showNotification());
                 }
               },
